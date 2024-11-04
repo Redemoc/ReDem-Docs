@@ -1,77 +1,65 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "ReDem Documentation",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/ReDem-Logo-Dark.png",
+    "light": "/logo/ReDem-Logo-Light.png",
+    "href": "https://redem.io/"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/ReDem-Fav-Icon.png",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
-    "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+    "primary": "#00a181",
+    "light": "#00a181",
+    "dark": "#00a181",
+    "background": {
+      "dark": "#061836"
     }
   },
+  "sidebar": { "items": "border" },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:support@redem.io"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "ReDem Application",
+    "url": "https://app.redem.io/"
   },
+  "primaryTab": { "name": "User Guide" },
   "tabs": [
     {
       "name": "API Reference",
       "url": "api-reference"
-    }
-  ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "Changelog",
+      "url": "changelog"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Getting Started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "welcome",
+        "account-setup",
+        "quickstart"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "How to integrate",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "api-reference/introduction",
+        "api-reference/async-integration",
+        "api-reference/sync-integration"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "API Reference",
       "pages": [
-        "api-reference/introduction"
+        "api-reference/api-keys",
+        "api-reference/rate-limits",
+        "api-reference/errors"
       ]
     },
     {
@@ -81,11 +69,14 @@
         "api-reference/endpoint/create",
         "api-reference/endpoint/delete"
       ]
+    },
+    {
+      "group": "Releases",
+      "pages": [
+        "changelog/product-changelogs",
+        "changelog/api-changelogs"
+      ]
     }
   ],
-  "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
-  }
+  "versions": ["v3"]
 }
