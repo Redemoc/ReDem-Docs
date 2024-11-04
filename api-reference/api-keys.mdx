@@ -1,0 +1,38 @@
+---
+title: 'API Keys'
+description: 'Lear how API keys work on ReDem'
+icon: "key"
+iconType: "regular"
+---
+
+API Keys in ReDem allow you to programmatically send and retrieve data, making it easy to integrate ReDem into your application or connect with other tools and services.
+
+Users can create multiple API keys, each with specific permissions to control access, making integrations secure and flexible.
+
+## Create API Key
+You can create an API key by following these steps:
+
+<Steps>
+  <Step title="Navigate to manage API Keys">
+    <p> Once you are logged in to [ReDem Application](https://app.redem.io/), navigate to the API Keys section in your profile. </p>
+  </Step>
+  <Step title="Create an API Key">
+    Click on the "Create API Key" button to generate a new key.
+    
+    Give your API key a meaningful name to help you identify its use later.
+    
+    Once you’ve made an API key you should copy it and put it somewhere safe, as you will not be able to see it again once you navigate away.
+  </Step>
+  <Step title="Go and connect with ReDem 🚀">
+    <p>Great! Now that you have your API key, you can use it as a bearer token to securely send or retrieve data from ReDem in any API request.</p>
+    ```plainApiKey_xxx
+        Authorization: Bearer your_api_key_xxx
+    ```
+  </Step>
+</Steps>
+
+**Best practices for API key management:**
+
+- Use separate keys for different environments (development, staging, production).
+- Regularly rotate your keys to maintain security. We recommend every 90 days.
+- If a key is compromised, delete it immediately and generate a new one.

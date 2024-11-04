@@ -1,0 +1,9 @@
+{
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#f8df00",
+    "statusBar.foreground": "#000",
+    "titleBar.activeBackground": "#f8df00",
+    "titleBar.inactiveBackground": "#f8df00",
+  },
+  "files.autoSave": "onFocusChange",
+}
