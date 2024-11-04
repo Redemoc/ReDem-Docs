@@ -41,9 +41,7 @@
     {
       "group": "Getting Started",
       "pages": [
-        "welcome",
-        "account-setup",
-        "quickstart"
+        "welcome"
       ]
     },
     {
