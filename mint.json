@@ -61,7 +61,7 @@
       "pages": [
         "features/data-import",
         "features/benchmarking",
-        "features/clean-survey",
+        "features/cleaning-and-review",
         "features/export-results"
       ]
     },
@@ -79,6 +79,14 @@
         "api-reference/api-keys",
         "api-reference/rate-limits",
         "api-reference/errors"
+      ]
+    },
+    {
+      "group": "Endpoints",
+      "pages": [
+        "api-reference/endpoint/create",
+        "api-reference/endpoint/delete",
+        "api-reference/endpoint/get"
       ]
     },
     {
