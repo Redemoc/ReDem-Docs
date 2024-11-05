@@ -29,7 +29,7 @@
   "primaryTab": { "name": "User Guide" },
   "tabs": [
     {
-      "name": "API Reference",
+      "name": "API Documentation",
       "url": "api-reference"
     },
     {
