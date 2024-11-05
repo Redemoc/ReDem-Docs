@@ -41,7 +41,9 @@
     {
       "group": "Getting Started",
       "pages": [
-        "welcome"
+        "welcome",
+        "account-setup",
+        "how-it-works"
       ]
     },
     {
@@ -75,6 +77,5 @@
         "changelog/api-changelogs"
       ]
     }
-  ],
-  "versions": ["v3"]
+  ]
 }
