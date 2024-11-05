@@ -49,7 +49,7 @@
     {
       "group": "Quality Checks",
       "pages": [
-        "quality-checks/introduction",
+        "quality-checks/redem-score",
         "quality-checks/open-ended-score",
         "quality-checks/coherence-score",
         "quality-checks/time-score",
