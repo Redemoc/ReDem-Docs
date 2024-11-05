@@ -47,6 +47,25 @@
       ]
     },
     {
+      "group": "Quality Checks",
+      "pages": [
+        "quality-checks/introduction",
+        "quality-checks/open-ended-score",
+        "quality-checks/coherence-score",
+        "quality-checks/time-score",
+        "quality-checks/grid-question-score"
+      ]
+    },
+    {
+      "group": "Features",
+      "pages": [
+        "features/data-import",
+        "features/benchmarking",
+        "features/clean-survey",
+        "features/export-results"
+      ]
+    },
+    {
       "group": "How to integrate",
       "pages": [
         "api-reference/introduction",
@@ -60,14 +79,6 @@
         "api-reference/api-keys",
         "api-reference/rate-limits",
         "api-reference/errors"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
       ]
     },
     {
