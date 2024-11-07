@@ -102,5 +102,8 @@
         "changelog/api-changelogs"
       ]
     }
-  ]
+  ],
+  "feedback": {
+    "thumbsRating": true
+  }
 }
