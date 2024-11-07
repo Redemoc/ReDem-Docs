@@ -24,15 +24,15 @@ The following list provides a clear overview of how credits are calculated based
   <thead>
     <tr>
       <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}} >Score Type</th>
-      <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Credit for First Data Point</th>
-      <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Credits per Additional Data Point</th>
+      <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Base Credits</th>
+      <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Additional Credits</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Open-Ended-Score (OES)</td>
-      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>3</td>
-      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>3 (for first question)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1 (for each additional question)</td>
     </tr>
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Time-Score (TS)</td>
@@ -41,8 +41,8 @@ The following list provides a clear overview of how credits are calculated based
     </tr>
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Coherence-Score (CHS)</td>
-      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>2 (for first 20 data points)</td>
-      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.5</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>2 (for first 20 questions)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.5 (for each additional question)</td>
     </tr>
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Grid-Question-Score (GQS)</td>
@@ -52,8 +52,26 @@ The following list provides a clear overview of how credits are calculated based
   </tbody>
 </table>
 
+### 💡Important Credit Rules
+- **The maximum number of credits for the Grid-Question-Score (GQS) is 3 credits per respondent.** <br/>
+Each grid-question item costs 0.1 credit. If a respondent has numerous grid-question items, the maximum charge per respondent for GQS remains capped at 3 credits.
 
-**Find an example of how credits are calculated below:**
+- **The Maximum Number of Credits for Time-Score (TS) is 3 credits per respondent.** <br/>
+No matter how many time-related data points are included for a respondent, the cost for TS will not exceed 1 credit.
+
+- **The Maximum Number of Data Points Considered for Base Credits in Coherence-Score (CHS) is 20.** <br/>
+If a respondent has 20 or fewer CHS data points, the cost is 2 credits. For additional data points beyond 20, each data point incurs an additional cost of 0.5 credits.
+
+- **No Credits for Empty Answers or Missing Values** <br/>
+No credits are calculated for empty answers or missing values within the data. Credits are only applied to valid, present data points.
+
+- **Total Credit Calculation for Surveys** <br/>
+The total cost for a survey is calculated by summing the credit cost for each respondent. Each respondent’s credit requirements are determined based on their individual data points and applied quality checks.
+
+<br/>
+
+### Example of Credit Calculation
+Find an example of how credits are calculated for a single respondent below:
 
 <img className="hidden dark:block" src="/images/Credit-Calculation-Example-Dark.png" />
 <img className="block dark:hidden" src="/images/Credit-Calculation-Example-Light.png" />
