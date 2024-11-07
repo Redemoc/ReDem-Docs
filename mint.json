@@ -57,12 +57,18 @@
       ]
     },
     {
-      "group": "Features",
+      "group": "Core Features",
       "pages": [
         "features/data-import",
         "features/benchmarking",
         "features/cleaning-and-review",
         "features/export-results"
+      ]
+    },
+    {
+      "group": "Miscellaneous",
+      "pages": [
+        "miscellaneous/redem-credits"
       ]
     },
     {
