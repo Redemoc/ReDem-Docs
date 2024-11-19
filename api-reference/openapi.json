@@ -1,148 +1,533 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "ReDem 3.0 API",
-        "description": "Public API for integrating ReDem 3.0",
-        "contact": {
-            "name": "Development Support",
-            "email": "support@redem.io"
-        }
-    },
-    "tags": [
-        {
-            "name": "Respondent",
-            "description": "Respondent related apis"
-        }
-    ],
-    "paths": {
-        "/respondent/add": {
-            "post": {
-                "description": "",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "respondentId": {
-                                        "example": "any"
-                                    },
-                                    "surveyName": {
-                                        "example": "any"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        }
-    },
-    "servers": [
-        {
-            "url": "http://http://localhost:8000"
-        }
-    ],
-    "components": {
-        "securitySchemes": {
-            "bearerAuth": {
-                "type": "apiKey",
-                "in": "header",
-                "name": "Authorization",
-                "description": "Key obtained from the ReDem App"
-            }
-        },
-        "schemas": {
-            "respondentResponse": {
-                "type": "object",
-                "properties": {
-                    "code": {
-                        "type": "number",
-                        "example": 200
-                    },
-                    "message": {
-                        "type": "string",
-                        "example": "Success"
-                    }
-                }
-            },
-            "errorResponse.400": {
-                "type": "object",
-                "properties": {
-                    "code": {
-                        "type": "number",
-                        "example": 400
-                    },
-                    "message": {
-                        "type": "string",
-                        "example": "The request was malformed or invalid. Please check the request parameters."
-                    }
-                }
-            },
-            "errorResponse.401": {
-                "type": "object",
-                "properties": {
-                    "code": {
-                        "type": "number",
-                        "example": 401
-                    },
-                    "message": {
-                        "type": "string",
-                        "example": "Authentication failed or user lacks proper authorization."
-                    }
-                }
-            },
-            "errorResponse.403": {
-                "type": "object",
-                "properties": {
-                    "code": {
-                        "type": "number",
-                        "example": 403
-                    },
-                    "message": {
-                        "type": "string",
-                        "example": "You do not have permission to access this resource."
-                    }
-                }
-            },
-            "errorResponse.404": {
-                "type": "object",
-                "properties": {
-                    "code": {
-                        "type": "string",
-                        "example": "404"
-                    },
-                    "message": {
-                        "type": "string",
-                        "example": "The requested resource could not be found on the server."
-                    }
-                }
-            },
-            "errorResponse.500": {
-                "type": "object",
-                "properties": {
-                    "code": {
-                        "type": "number",
-                        "example": 500
-                    },
-                    "message": {
-                        "type": "string",
-                        "example": "An unexpected error occurred on the server. Please try again later."
-                    }
-                }
-            }
-        }
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API Documentation",
+    "description": "API Documentation for Redem 3.0",
+    "version": "1.0.0",
+    "license": {
+      "name": "MIT"
     }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "AddRespondentRequest": {
+        "description": "Request body for adding a new respondent",
+        "required": [
+          "respondentId",
+          "surveyName"
+        ],
+        "type": "object",
+        "properties": {
+          "respondentId": {
+            "type": "string",
+            "description": "Unique identifier for the respondent",
+            "example": "1234567890"
+          },
+          "surveyName": {
+            "type": "string",
+            "description": "Name of the survey",
+            "example": "survey1"
+          },
+          "needRealtimeResponse": {
+            "type": "boolean",
+            "description": "Flag for realtime response requirement",
+            "example": true
+          }
+        }
+      },
+      "AddRespondentResponse": {
+        "description": "Response structure for respondent operations",
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "example": "1234567890"
+          },
+          "status": {
+            "type": "number",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "COMPLETED"
+          },
+          "results": {
+            "type": "object",
+            "example": {}
+          }
+        }
+      },
+      "RespondentResults": {
+        "description": "Detailed results for a respondent",
+        "type": "object",
+        "properties": {
+          "isRespondentExcluded": {
+            "type": "boolean",
+            "example": true
+          },
+          "redemScore": {
+            "type": "number",
+            "example": 10
+          },
+          "detailedResponse": {
+            "type": "object",
+            "example": {}
+          }
+        }
+      },
+      "Error": {
+        "description": "Error response structure",
+        "required": [
+          "error",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "format": "int32",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "example": "Bad Request"
+          }
+        }
+      },
+      "Survey": {
+        "description": "Survey information",
+        "required": [
+          "surveyName"
+        ],
+        "type": "object",
+        "properties": {
+          "surveyName": {
+            "type": "string",
+            "description": "The name of the survey",
+            "example": "Customer Satisfaction Survey"
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the survey",
+            "example": "ACTIVE"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp",
+            "example": "2024-03-20T10:00:00Z"
+          }
+        }
+      },
+      "CreateSurveyRequest": {
+        "description": "Request body for creating a new survey",
+        "required": [
+          "surveyName"
+        ],
+        "type": "object",
+        "properties": {
+          "surveyName": {
+            "type": "string",
+            "example": "My Survey"
+          }
+        }
+      },
+      "CustomizeSurveyRequest": {
+        "description": "Request body for customizing a survey",
+        "required": [
+          "customField"
+        ],
+        "type": "object",
+        "properties": {
+          "customField": {
+            "type": "string",
+            "example": "Custom value"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Survey",
+      "description": "Survey management"
+    },
+    {
+      "name": "Respondent",
+      "description": "Respondent management"
+    }
+  ],
+  "paths": {
+    "/respondent/add": {
+      "post": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Add a new respondent",
+        "description": "API for adding a new respondent to a survey",
+        "operationId": "addRespondent",
+        "requestBody": {
+          "required": true,
+          "description": "Respondent details to add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRespondentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Respondent added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddRespondentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/respondent/status/{surveyName}/{respondentId}": {
+      "get": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Get respondent status",
+        "description": "API to get the status of a specific respondent for a survey",
+        "operationId": "getRespondentStatus",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "surveyName",
+            "required": true,
+            "description": "The name of the survey",
+            "schema": {
+              "type": "string",
+              "example": "customer-survey-2024"
+            }
+          },
+          {
+            "in": "path",
+            "name": "respondentId",
+            "required": true,
+            "description": "The ID of the respondent",
+            "schema": {
+              "type": "string",
+              "example": "resp-123456"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddRespondentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/respondent/status/{surveyName}": {
+      "get": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Get all respondents",
+        "description": "API to get all respondents for a specific survey",
+        "operationId": "getAllRespondents",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "surveyName",
+            "required": true,
+            "description": "The name of the survey",
+            "schema": {
+              "type": "string",
+              "example": "customer-survey-2024"
+            }
+          },
+          {
+            "in": "query",
+            "name": "needDetailedResponse",
+            "required": false,
+            "description": "Whether to include detailed response",
+            "schema": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddRespondentResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/survey/add": {
+      "post": {
+        "tags": [
+          "Survey"
+        ],
+        "summary": "Create a new survey",
+        "operationId": "addSurvey",
+        "description": "API for creating a new survey",
+        "requestBody": {
+          "required": true,
+          "description": "Survey details to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSurveyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Survey created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Survey"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/survey/customize/{surveyName}": {
+      "post": {
+        "tags": [
+          "Survey"
+        ],
+        "summary": "Customize a survey",
+        "operationId": "customizeSurvey",
+        "description": "API for customizing a survey",
+        "parameters": [
+          {
+            "name": "surveyName",
+            "in": "path",
+            "required": true,
+            "description": "The name of the survey",
+            "schema": {
+              "type": "string",
+              "example": "my-survey-2024"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomizeSurveyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Survey"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/survey/stop/{surveyName}": {
+      "post": {
+        "tags": [
+          "Survey"
+        ],
+        "summary": "Stop a survey",
+        "operationId": "stopSurvey",
+        "description": "API for stopping a survey",
+        "parameters": [
+          {
+            "name": "surveyName",
+            "in": "path",
+            "required": true,
+            "description": "The name of the survey",
+            "schema": {
+              "type": "string",
+              "example": "my-survey-2024"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Survey"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

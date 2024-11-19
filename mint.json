@@ -91,9 +91,12 @@
     {
       "group": "Endpoints",
       "pages": [
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete",
-        "api-reference/endpoint/get"
+        "api-reference/endpoint/addRespondent",
+        "api-reference/endpoint/getRespondentStatus",
+        "api-reference/endpoint/getAllRespondents",
+        "api-reference/endpoint/stopSurvey",
+        "api-reference/endpoint/customizeSurvey",
+        "api-reference/endpoint/addSurvey"
       ]
     },
     {
