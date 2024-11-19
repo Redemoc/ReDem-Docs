@@ -4,3 +4,104 @@ description: 'Learn how the Open-Ended Score calculates'
 icon: "messages"
 iconType: "regular"
 ---
+
+<img src="/images/Open-Ended-Responses Evaluation Example.png" />
+
+## What is the Open-Ended Score?
+By using ReDem, you can evaluate your open-ended question responses by classifying each response into **nine distinct categories**. Each response is carefully scored based on its assigned category.
+
+Our classification methodology combines the accuracy and expertise of **manual checks performed by our team** with the efficiency and intelligence of an **AI model built using GPT-4**. This dual approach ensures you receive a comprehensive and robust evaluation, delivering reliable results tailored to your needs.
+
+## How is the Open-Ended Score calculated?
+- First, all answers to each question are classified into one of our quality categories.
+- Each category is then assigned a score ranging from 0 to 100, reflecting the quality of the response.
+- The individual scores for each open-ended response are aggregated to calculate an overall Open-Ended Score (OES) for each respondent.
+
+## How does ReDem classify responses?
+We classify each response into specific quality categories to give a clearer understanding of the respondent's score. These categories comprehensively cover all key quality aspects of open-ended survey responses. We're always looking to improve and evolve these criteria, ensuring they adapt to new needs and standards.
+
+### <code> Wrong Topic </code>
+- Detects responses that do not align with the topic or question. Specifically, the context of the answer is evaluated against relevant keywords and the question itself.
+- You can choose to enable or disable the context check when importing data.
+  - When adding keywords, ensure they cover a broad enough context to avoid false positives from narrow interpretations.
+  - Please note that both the question and keywords should be in one of the supported languages.
+- Responses that do not match the expected context are categorized as **Wrong Topic** and receive an OES (Overall Evaluation Score) of 30.
+
+
+<Note> This option should only be activated if your questions are meaningful and include relevant keywords. </Note>
+
+### <code> Nonsense </code>
+- Checking for nonsense answers allows us to identify gibberish, random numbers, and other meaningless statements.
+- These responses are categorized as **Nonsense** and are assigned a score of 10.
+
+### <code> Wrong Language </code>
+- If a response is provided in an unexpected language, it is categorized as **Wrong Language** and assigned a score of 20.
+- You can specify which languages are considered "expected." If no expected languages are defined, the language check will not be activated.
+- Open-Ended-Score supports over 100 different languages, including English, German, French, Spanish, Chinese, Japanese, Swedish, and many more.
+
+<Note> Questions without linguistic information (e.g. on brand awareness) are unsuitable for the language check. </Note>
+
+### <code> Duplicate Respondent </code>
+The optional duplicate check helps identify potentially fraudulent responses, including both exact duplicates and partial matches.
+
+- **Duplicate Respondents in a Single Question**
+  - This check identifies responses that are repeated for the same question multiple times.
+  - Such responses are categorized as **Duplicate Respondent** and receive a score of 50 for a single duplicate, while multiple duplicates receive a score of 0.
+
+<img src="/images/Duplicate Respondents in Single Question.png" />
+
+- **Duplicate Respondents Across Multiple Questions**
+  - Our duplicate check also identifies responses that are repeated across multiple questions.
+  - When this behavior is detected, the response is categorized as **Duplicate Respondent** and given a score of 10.
+
+<img src="/images/Duplicate Respondents in multiple questions.png" />
+
+### <code> Duplicate Answer </code>
+- We also check if a respondent's answers are repeated or partially repeated across several questions.
+- Such responses are labeled as **Duplicate Answer** and are scored 50 for a single duplicate or 0 if there are multiple duplicates.
+
+<Note> If a response can be considered both a **Duplicate Respondent** and a **Duplicate Answer**, the **Duplicate Respondent** category takes precedence. </Note>
+
+<img src="/images/Duplicate Answer.png" />
+
+### <code> Copy & Paste Answers </code>
+- If an answer is copied and pasted into a survey text field, our system automatically detects this behavior.
+- Responses identified as **Copy & Paste Answers** are assigned this quality category and receive an OES (Overall Evaluation Score) of 0.
+
+<Note> Please note that this feature is available only when ReDem is integrated with your survey tool. </Note>
+
+### <code> Fake Answers </code>
+- We also check the structure of responses to ensure they follow a plausible pattern.
+- This helps identify responses that, while thematically relevant, may come from external sources like Wikipedia.
+- Responses categorized as **Fake Answers** receive an OES (Overall Evaluation Score) of 0.
+
+### <code> Bad Language </code>
+- Responses containing swear words or offensive language are identified and categorized as **Bad Language**.
+- These responses receive a score of 10.
+
+### <code> Generic Answers </code>
+- Generic statements like "good," "ok," "anything," "yes," and similar are categorized as **Generic Answers**.
+- These responses receive an OES (Overall Evaluation Score) of 50.
+
+### <code> No Information </code>
+- Responses that lack meaningful content, such as "no idea," "nothing," "no comment," or "I don't know," are classified as **No Information**.
+- These responses are assigned an OES (Overall Evaluation Score) of 60.
+
+### <code> Valid Answer </code>
+- Valid responses include all answers that do not fit into any other quality category.
+- Additionally, we evaluate the level of detail in each response. Responses categorized as **Valid Answer** receive an OES (Overall Evaluation Score) ranging from 70 to 100, depending on their level of detail.
+
+<br/>
+
+## Use of GPT-4 for Open-Ended Score
+We use OpenAI's GPT-4 model as the underlying technology to perform most of our quality categories. This model is currently considered to be one of the most advanced Large Language Models (LLM). It enables us to perform extremely sophisticated categorization of responses. The GPT-4 model therefore gives you the power you need to assess the quality of open-ended responses in various aspects.
+
+To ensure highest data protection standards, GPT-4 has been implemented in the ReDem® OES as follows:
+- **Individual Responses & Anonymity:** <br/>
+Open-ended responses are sent to OpenAI on an individual basis, using a fully anonymized ID. This means only the individual responses for each API query are accessible to OpenAI, ensuring that complete survey data is never shared.
+- **ReDem's Exclusive Interaction with OpenAI:** <br/>
+ReDem acts as the sole user vis-à-vis OpenAI. OpenAI is at no time aware of the sources of the imported data.
+- **Data Storage & Retention by OpenAI:** <br/>
+Data sent by ReDem through the API is stored by OpenAI for a maximum period of 30 days. After this, it is permanently and irreversibly deleted. OpenAI does not use this data for training AI models at any time.
+- **GDPR-Compliant Data Transfer:** <br/>
+ReDem and OpenAI have entered into a "Data Processing Agreement" based on EU Standard Contractual Clauses (SCC). This ensures that data transfers to third countries, such as those that may contain personal data in open-ended responses, comply with GDPR standards.
