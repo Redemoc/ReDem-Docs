@@ -26,138 +26,535 @@
       }
     },
     "schemas": {
+      "InterviewQuestion": {
+        "description": "Structure for interview-based questions",
+        "type": "object",
+        "required": [
+          "questionTitle",
+          "answer"
+        ],
+        "properties": {
+          "questionTitle": {
+            "type": "string",
+            "description": "Title or text of the interview question",
+            "example": "What is your opinion about the product?"
+          },
+          "answer": {
+            "type": "string",
+            "description": "Response provided for the interview question",
+            "example": "The product quality is excellent"
+          }
+        }
+      },
+      "DataPoint": {
+        "description": "Individual data point containing question response and quality check settings",
+        "type": "object",
+        "required": [
+          "questionId",
+          "qualityCheck"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "description": "Unique identifier for the question",
+            "example": "Q1"
+          },
+          "qualityCheck": {
+            "type": "string",
+            "enum": [
+              "OES",
+              "TS",
+              "GQS",
+              "PS",
+              "CHS"
+            ],
+            "description": "Type of quality check to perform",
+            "example": "OES"
+          },
+          "openEndedAnswer": {
+            "type": "string",
+            "description": "Response text for open-ended questions",
+            "example": "The service was excellent"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title or text of the question",
+            "example": "How would you rate our service?"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Keywords for analyzing open-ended responses",
+            "example": [
+              "excellent",
+              "service",
+              "quality"
+            ]
+          },
+          "isDuplicateEnabled": {
+            "type": "boolean",
+            "description": "Whether to check for duplicate responses",
+            "example": true
+          },
+          "duration": {
+            "type": "number",
+            "description": "Time spent on question in seconds",
+            "example": 45
+          },
+          "gridQuestions": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "Array of responses for grid questions",
+            "example": [
+              5,
+              4,
+              3,
+              5,
+              4
+            ]
+          },
+          "answer": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "Response value for plain score questions",
+            "example": 5
+          },
+          "interview": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InterviewQuestion"
+            },
+            "description": "Array of interview questions and responses",
+            "example": [
+              {
+                "questionTitle": "What did you like most?",
+                "answer": "The customer service"
+              }
+            ]
+          }
+        }
+      },
       "AddRespondentRequest": {
         "description": "Request body for adding a new respondent",
         "required": [
           "respondentId",
-          "surveyName"
+          "surveyName",
+          "datapoints"
         ],
         "type": "object",
         "properties": {
           "respondentId": {
             "type": "string",
             "description": "Unique identifier for the respondent",
-            "example": "1234567890"
+            "example": "RESP-001"
+          },
+          "projectName": {
+            "type": "string",
+            "description": "Optional project name for grouping",
+            "example": "customer-satisfaction-2024"
           },
           "surveyName": {
             "type": "string",
             "description": "Name of the survey",
-            "example": "survey1"
+            "example": "customer-survey-2024"
+          },
+          "datapoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataPoint"
+            },
+            "description": "Array of question responses"
           },
           "needRealtimeResponse": {
             "type": "boolean",
-            "description": "Flag for realtime response requirement",
+            "description": "Whether to process synchronously",
             "example": true
+          },
+          "needDetailedResponse": {
+            "type": "boolean",
+            "description": "Whether to include detailed scoring",
+            "example": true
+          },
+          "cleaningSettings": {
+            "$ref": "#/components/schemas/CleaningSettings"
+          },
+          "reviewSettings": {
+            "$ref": "#/components/schemas/CleaningSettings"
+          },
+          "missingValues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Values to be treated as missing",
+            "example": [
+              "NA",
+              "N/A",
+              "-"
+            ]
           }
         }
       },
-      "AddRespondentResponse": {
-        "description": "Response structure for respondent operations",
+      "DatapointResponse": {
+        "description": "Quality check results for a single datapoint",
         "type": "object",
         "properties": {
-          "jobId": {
+          "questionId": {
             "type": "string",
-            "example": "1234567890"
+            "description": "ID of the checked question",
+            "example": "Q1"
           },
-          "status": {
+          "qualityCheck": {
+            "type": "string",
+            "enum": [
+              "OES",
+              "TS",
+              "GQS",
+              "PS",
+              "CHS"
+            ],
+            "description": "Type of quality check performed",
+            "example": "OES"
+          },
+          "score": {
             "type": "number",
-            "example": 200
+            "description": "Quality score (0-100)",
+            "example": 85
           },
-          "message": {
+          "category": {
             "type": "string",
-            "example": "COMPLETED"
+            "description": "Quality category",
+            "example": "GOOD"
           },
-          "results": {
-            "type": "object",
-            "example": {}
+          "reason": {
+            "type": "string",
+            "description": "Explanation for the score",
+            "example": "Valid and detailed response"
+          }
+        }
+      },
+      "QualityCheckResponse": {
+        "description": "Aggregated results for a quality check type",
+        "type": "object",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "enum": [
+              "OES",
+              "TS",
+              "GQS",
+              "PS",
+              "CHS"
+            ],
+            "description": "Type of quality check",
+            "example": "OES"
+          },
+          "score": {
+            "type": "number",
+            "description": "Aggregated score (0-100)",
+            "example": 78
+          }
+        }
+      },
+      "DetailedResponse": {
+        "description": "Detailed quality check results",
+        "type": "object",
+        "properties": {
+          "datapointLevelResponse": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DatapointResponse"
+            },
+            "description": "Individual datapoint scores"
+          },
+          "qualityCheckLevelResponse": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QualityCheckResponse"
+            },
+            "description": "Aggregated quality check scores"
           }
         }
       },
       "RespondentResults": {
-        "description": "Detailed results for a respondent",
+        "description": "Complete results for a respondent",
         "type": "object",
         "properties": {
           "isRespondentExcluded": {
             "type": "boolean",
-            "example": true
+            "description": "Exclusion status based on quality",
+            "example": false
           },
           "redemScore": {
             "type": "number",
-            "example": 10
+            "description": "Overall quality score (0-100)",
+            "example": 85
           },
           "detailedResponse": {
+            "$ref": "#/components/schemas/DetailedResponse",
+            "description": "Detailed scoring information"
+          }
+        }
+      },
+      "AddSurveyRequest": {
+        "description": "Request body for creating or customizing a survey",
+        "required": [
+          "surveyName",
+          "cleaningSettings",
+          "reviewSettings"
+        ],
+        "type": "object",
+        "properties": {
+          "projectName": {
+            "type": "string",
+            "description": "Optional project name for grouping surveys",
+            "example": "customer-satisfaction-2024"
+          },
+          "surveyName": {
+            "type": "string",
+            "description": "Unique identifier for the survey",
+            "example": "customer-survey-2024"
+          },
+          "cleaningSettings": {
+            "$ref": "#/components/schemas/CleaningSettings",
+            "example": {
+              "ReDemSettings": true,
+              "CustomSettings": {
+                "redemScore": 80,
+                "qualityChecks": [
+                  {
+                    "type": "OES",
+                    "score": 70,
+                    "minimumAnswers": 5
+                  }
+                ]
+              }
+            }
+          },
+          "reviewSettings": {
+            "$ref": "#/components/schemas/CleaningSettings",
+            "example": {
+              "ReDemSettings": false,
+              "OESCategories": {
+                "validAnswers": true,
+                "genericAnswers": true,
+                "noInformation": true
+              }
+            }
+          }
+        }
+      },
+      "CleaningSettings": {
+        "description": "Configuration for data cleaning and review process",
+        "type": "object",
+        "properties": {
+          "ReDemSettings": {
+            "type": "boolean",
+            "description": "Whether to use default ReDem settings",
+            "example": true
+          },
+          "CustomSettings": {
             "type": "object",
-            "example": {}
-          }
-        }
-      },
-      "Error": {
-        "description": "Error response structure",
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32",
-            "example": 400
+            "description": "Custom configuration for quality checks",
+            "example": {
+              "redemScore": 80,
+              "qualityChecks": [
+                {
+                  "type": "OES",
+                  "score": 70,
+                  "minimumAnswers": 5
+                }
+              ]
+            },
+            "properties": {
+              "redemScore": {
+                "type": "number",
+                "description": "Minimum acceptable ReDem score (0-100)",
+                "example": 80
+              },
+              "qualityChecks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "OES",
+                        "TS",
+                        "GQS",
+                        "PS",
+                        "CHS"
+                      ],
+                      "example": "OES"
+                    },
+                    "score": {
+                      "type": "number",
+                      "example": 70
+                    },
+                    "minimumAnswers": {
+                      "type": "number",
+                      "example": 5
+                    },
+                    "minimumQuestions": {
+                      "type": "number",
+                      "example": 3
+                    },
+                    "minimumItems": {
+                      "type": "number",
+                      "example": 2
+                    }
+                  }
+                }
+              }
+            }
           },
-          "message": {
-            "type": "string",
-            "example": "Bad Request"
+          "OESCategories": {
+            "type": "object",
+            "description": "Configuration for Open-Ended response categories",
+            "example": {
+              "validAnswers": true,
+              "genericAnswers": true,
+              "noInformation": true
+            },
+            "properties": {
+              "validAnswers": {
+                "type": "boolean",
+                "example": true
+              },
+              "genericAnswers": {
+                "type": "boolean",
+                "example": true
+              },
+              "noInformation": {
+                "type": "boolean",
+                "example": true
+              },
+              "badLanguage": {
+                "type": "boolean",
+                "example": true
+              },
+              "nonsense": {
+                "type": "boolean",
+                "example": true
+              },
+              "duplicateAnswer": {
+                "type": "boolean",
+                "example": true
+              },
+              "duplicateRespondent": {
+                "type": "boolean",
+                "example": true
+              },
+              "wrongTopic": {
+                "type": "boolean",
+                "example": true
+              },
+              "wrongLanguage": {
+                "type": "boolean",
+                "example": true
+              },
+              "copyPastAnswer": {
+                "type": "boolean",
+                "example": true
+              },
+              "fakeAnswer": {
+                "type": "boolean",
+                "example": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "ValidationError": {
+        "description": "Validation Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "VALIDATION_ERROR"
+                }
+              }
+            }
           }
         }
       },
-      "Survey": {
-        "description": "Survey information",
-        "required": [
-          "surveyName"
-        ],
-        "type": "object",
-        "properties": {
-          "surveyName": {
-            "type": "string",
-            "description": "The name of the survey",
-            "example": "Customer Satisfaction Survey"
-          },
-          "status": {
-            "type": "string",
-            "description": "Current status of the survey",
-            "example": "ACTIVE"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Creation timestamp",
-            "example": "2024-03-20T10:00:00Z"
+      "UnauthorizedError": {
+        "description": "Unauthorized Access",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UNAUTHORIZED"
+                }
+              }
+            }
           }
         }
       },
-      "CreateSurveyRequest": {
-        "description": "Request body for creating a new survey",
-        "required": [
-          "surveyName"
-        ],
-        "type": "object",
-        "properties": {
-          "surveyName": {
-            "type": "string",
-            "example": "My Survey"
+      "DuplicateError": {
+        "description": "Duplicate Respondent Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "DUPLICATE_RESPONDENT"
+                }
+              }
+            }
           }
         }
       },
-      "CustomizeSurveyRequest": {
-        "description": "Request body for customizing a survey",
-        "required": [
-          "customField"
-        ],
-        "type": "object",
-        "properties": {
-          "customField": {
-            "type": "string",
-            "example": "Custom value"
+      "ServerError": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
           }
         }
       }
@@ -180,11 +577,9 @@
           "Respondent"
         ],
         "summary": "Add a new respondent",
-        "description": "API for adding a new respondent to a survey",
-        "operationId": "addRespondent",
+        "description": "API for adding a new respondent with quality check data",
         "requestBody": {
           "required": true,
-          "description": "Respondent details to add",
           "content": {
             "application/json": {
               "schema": {
@@ -195,34 +590,43 @@
         },
         "responses": {
           "200": {
-            "description": "Respondent added successfully",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddRespondentResponse"
+                  "type": "object",
+                  "properties": {
+                    "jobId": {
+                      "type": "string",
+                      "example": "job-123-456"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "JOB_PROCESSING",
+                        "JOB_COMPLETED"
+                      ],
+                      "example": "JOB_PROCESSING"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/RespondentResults"
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ValidationError"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "409": {
+            "$ref": "#/components/responses/DuplicateError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
@@ -233,27 +637,26 @@
           "Respondent"
         ],
         "summary": "Get respondent status",
-        "description": "API to get the status of a specific respondent for a survey",
-        "operationId": "getRespondentStatus",
+        "description": "Get the quality check status and results for a specific respondent",
         "parameters": [
           {
-            "in": "path",
             "name": "surveyName",
+            "in": "path",
             "required": true,
-            "description": "The name of the survey",
+            "description": "Name of the survey to check",
             "schema": {
               "type": "string",
               "example": "customer-survey-2024"
             }
           },
           {
-            "in": "path",
             "name": "respondentId",
+            "in": "path",
             "required": true,
-            "description": "The ID of the respondent",
+            "description": "ID of the respondent to check",
             "schema": {
               "type": "string",
-              "example": "resp-123456"
+              "example": "RESP-001"
             }
           }
         ],
@@ -263,30 +666,19 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddRespondentResponse"
+                  "$ref": "#/components/schemas/RespondentResults"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ValidationError"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
@@ -297,24 +689,22 @@
           "Respondent"
         ],
         "summary": "Get all respondents",
-        "description": "API to get all respondents for a specific survey",
-        "operationId": "getAllRespondents",
+        "description": "Get quality check results for all respondents in a survey",
         "parameters": [
           {
-            "in": "path",
             "name": "surveyName",
+            "in": "path",
             "required": true,
-            "description": "The name of the survey",
+            "description": "Name of the survey to check",
             "schema": {
               "type": "string",
               "example": "customer-survey-2024"
             }
           },
           {
-            "in": "query",
             "name": "needDetailedResponse",
-            "required": false,
-            "description": "Whether to include detailed response",
+            "in": "query",
+            "description": "Whether to include detailed scoring",
             "schema": {
               "type": "boolean",
               "example": true
@@ -329,31 +719,20 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AddRespondentResponse"
+                    "$ref": "#/components/schemas/RespondentResults"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ValidationError"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
@@ -365,14 +744,13 @@
         ],
         "summary": "Create a new survey",
         "operationId": "addSurvey",
-        "description": "API for creating a new survey",
+        "description": "API for creating a new survey with cleaning and review settings",
         "requestBody": {
           "required": true,
-          "description": "Survey details to create",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSurveyRequest"
+                "$ref": "#/components/schemas/AddSurveyRequest"
               }
             }
           }
@@ -383,30 +761,29 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Survey"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "SURVEY_CREATED"
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ValidationError"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
@@ -416,15 +793,15 @@
         "tags": [
           "Survey"
         ],
-        "summary": "Customize a survey",
+        "summary": "Customize a survey's settings",
         "operationId": "customizeSurvey",
-        "description": "API for customizing a survey",
+        "description": "API for customizing cleaning and review settings of an existing survey",
         "parameters": [
           {
             "name": "surveyName",
             "in": "path",
             "required": true,
-            "description": "The name of the survey",
+            "description": "The name of the survey to customize",
             "schema": {
               "type": "string",
               "example": "my-survey-2024"
@@ -436,95 +813,104 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CustomizeSurveyRequest"
+                "$ref": "#/components/schemas/AddSurveyRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Survey customized successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Survey"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "SURVEY_UPDATED"
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ValidationError"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
     },
     "/survey/stop/{surveyName}": {
-      "post": {
+      "get": {
         "tags": [
           "Survey"
         ],
-        "summary": "Stop a survey",
+        "summary": "Stop a survey and optionally run post-checks",
         "operationId": "stopSurvey",
-        "description": "API for stopping a survey",
+        "description": "API for stopping a survey. Can be triggered from ReDem App or externally. Optionally runs post-checks on the survey data.",
         "parameters": [
           {
             "name": "surveyName",
             "in": "path",
             "required": true,
-            "description": "The name of the survey",
+            "description": "Unique identifier name of the survey to stop",
             "schema": {
               "type": "string",
               "example": "my-survey-2024"
+            }
+          },
+          {
+            "name": "runPostChecks",
+            "in": "query",
+            "required": false,
+            "description": "Whether to run post-checks after stopping the survey",
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "example": true
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Survey successfully stopped",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Survey"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "SURVEY_STOPPED"
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ValidationError"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
