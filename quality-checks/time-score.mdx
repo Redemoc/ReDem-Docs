@@ -4,3 +4,24 @@ description: 'Learn how the Time Score calculates'
 icon: "stopwatch"
 iconType: "regular"
 ---
+
+## What is the Time Score?
+With ReDem, you can evaluate respondents based on the time they spend on any part of a questionnaire (e.g. Total duration, duration per section or duration per question). This feature highlights responses that deviate from expected or typical time durations, helping to identify and address any inconsistencies in how respondents engage with the survey.
+
+Whether someone is rushing through or taking longer than anticipated, the Time Score helps you identify potential issues and improve the overall quality of your survey data.
+
+## Calculation of Individual Time Scores for Each Time Duration
+We evaluate response times by comparing how long a respondent takes with the median time of other respondents for specific parts of the questionnaire.
+
+Time-Scores are calculated as follows:
+- **Less than 10% of the median**: Score = `0`
+- **Between 10% and 50% of the median**: Score = `0-50`
+- **Between 50% to 80%  and between 400% to 1000% of the median**: Score = `50-80`
+- **Between 80% and 400% of the median**: Score = `80-100`
+
+<Note> **Important:** Time-Scores are calculated only when the sample size is at least 30, as the median respondent duration is not sufficiently meaningful below this limit. </Note>
+
+## Calculation of the Total Time Score for a Respondent
+Time-Scores are calculated separately for each specific parts of the questionnaire and then combined into a total score.
+
+To make the score as meaningful as possible, we recommend not only including the total interview duration (LOI) but also providing detailed time values for as many individual parts of the interview as you can. This helps create a clearer and more accurate picture of respondent engagement.
