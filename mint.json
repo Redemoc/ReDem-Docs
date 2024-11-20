@@ -6,6 +6,14 @@
     "light": "/logo/ReDem-Logo-Light.png",
     "href": "https://redem.io/"
   },
+  "font": {
+  "headings": {
+    "family": "Manrope"
+  },
+  "body": {
+    "family": "Manrope"
+  }
+  },
   "favicon": "/ReDem-Fav-Icon.png",
   "colors": {
     "primary": "#00a181",
