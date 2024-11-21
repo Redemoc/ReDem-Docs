@@ -220,7 +220,6 @@
               "OES",
               "TS",
               "GQS",
-              "PS",
               "CHS"
             ],
             "description": "Type of quality check performed",
@@ -584,6 +583,94 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/AddRespondentRequest"
+              },
+              "example": {
+                "respondentId": "RESP497770",
+                "projectName": "Global Vacation Insights 2024",
+                "surveyName": "Highlights from Your Last Vaction",
+                "datapoints": [
+                  {
+                    "questionId": "Q1",
+                    "qualityCheck": "OES",
+                    "openEndedAnswer": "We were at Lake Garda in Italy",
+                    "title": "Where did you spend your last vacation?",
+                    "keywords": ["Beach", "Mountains", "Lake", "Museums", "Europe", "Asia", "Destination"],
+                    "isDuplicateEnabled": true,
+                    "isCopyPaste": false
+                  },
+                  {
+                    "questionId": "durationQ1", 
+                    "qualityCheck": "TS",
+                    "duration": 42670
+                  },
+                  {
+                    "questionId": "Q2", 
+                    "qualityCheck": "GQS",
+                    "gridQuestions": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6] 
+                  },
+                  {
+                    "questionId": "Q3", 
+                    "qualityCheck": "OES",
+                    "openEndedAnswer": "Italian cuisine, especially pizza and fine wine.",
+                    "title": "What was the most memorable part of your last vacation?",
+                    "keywords": ["Cuisine", "Food", "Art", "Adventure", "History", "Landscape", "Culture"],
+                    "isDuplicateEnabled": true,
+                    "isCopyPaste": true
+                  },
+                  {
+                    "questionId": "durationQ3", 
+                    "qualityCheck": "TS",
+                    "duration": 69720
+                  },
+                  {
+                    "questionId": "CHS_Question",
+                    "qualityCheck": "CHS",
+                    "interview": [
+                      { "questionTitle" : "What mode of transport did you use?", "answer": "Car" },
+                      { "questionTitle" : "How many days did you stay?", "answer": 5 }, 
+                      { "questionTitle" : "Did you travel with family?", "answer": "yes" },
+                      { "questionTitle" : "What was your approximate total budget for the trip (in EUR)?", "answer": 1500 },
+                      { "questionTitle" : "What type of accommodation did you stay in?", "answer": "Hotel" }
+                    ]
+                  },
+                  {
+                    "questionId": "Q4", 
+                    "qualityCheck": "GQS",
+                    "gridQuestions": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1] 
+                  },
+                  {
+                    "questionId": "totalDuration", 
+                    "qualityCheck": "TS",
+                    "duration": 256843
+                  }
+                ],
+                "needRealtimeResponse": true,
+                "needDetailedResponse": true,
+                "cleaningSettings": {
+                  "ReDemSettings": false,
+                  "CustomSettings": {
+                    "redemScore": 60,
+                    "qualityChecks": [
+                      {"type": "OES", "score": 30, "minimumAnswers":2},
+                      {"type": "CHS", "score": 20, "minimumQuestions":20},
+                      {"type": "GQS", "score": 10, "minimumItems":15},
+                      {"type": "TS", "score": 20}
+                    ]
+                  },
+                  "OESCategories": {
+                    "validAnswers": false,
+                    "genericAnswers": false,
+                    "noInformation": false,
+                    "badLanguage": false,
+                    "nonsense": false,
+                    "duplicateAnswer": true,
+                    "duplicateRespondent": true,
+                    "wrongTopic": true,
+                    "wrongLanguage": true,
+                    "copyPastAnswer": true,
+                    "fakeAnswer": true
+                  }
+                }
               }
             }
           }
@@ -610,6 +697,32 @@
                     },
                     "results": {
                       "$ref": "#/components/schemas/RespondentResults"
+                    }
+                  }
+                },
+                "example": {
+                  "jobId": "job-497770-2024",
+                  "status": "JOB_COMPLETED",
+                  "results": {
+                    "isRespondentExcluded": false,
+                    "redemScore": 85.5,
+                    "detailedResponse": {
+                      "datapointLevelResponse": [
+                        {"questionId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer", "reason": "ABC"},
+                        {"questionId": "durationQ1", "qualityCheck": "TS", "score": 95},
+                        {"questionId": "Q2", "qualityCheck": "GQS", "score": 90},
+                        {"questionId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer", "reason": "ABC"},
+                        {"questionId": "durationQ3", "qualityCheck": "TS", "score": 50},
+                        {"questionId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                        {"questionId": "Q4", "qualityCheck": "GQS", "score": 80},
+                        {"questionId": "totalDuration", "qualityCheck": "TS", "score": 65}
+                      ],
+                      "qualityCheckLevelResponse": [
+                        {"qualityCheck": "OES", "score": 80},
+                        {"qualityCheck": "CHS", "score": 75},
+                        {"qualityCheck": "GQS", "score": 85},
+                        {"qualityCheck": "TS", "score": 70}
+                      ]
                     }
                   }
                 }

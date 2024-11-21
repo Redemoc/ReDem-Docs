@@ -1,0 +1,76 @@
+---
+title: 'For Survey Tools'
+description: 'Learn how to integrate ReDem with your survey tools'
+icon: "screwdriver-wrench"
+iconType: "regular"
+---
+
+<Info>To integrate ReDem with your survey tool, you'll need a ReDem account. <br/> Don’t have an account yet? Get started by [setting up your account](/account-setup).</Info>
+
+<Steps titleSize="h3">
+  <Step title="Login and create an API key">
+    <p> Login into your ReDem account and create an API key. </p>
+
+    1. Login to ReDem application and navigate to the account
+    2. Create new API key and copy the API Key
+  </Step>
+  <Step title="Prepare your request data">
+    <p>Ensure your data is formatted correctly according to the guidelines before sending it via the API. Below is a sample request object to help you structure your data properly.</p>
+
+    ```javascript Example request body
+    {
+      "respondentId": "RESP497770", 
+      "projectName": "Global Vacation Insights",
+      "surveyName": "Highlights from Your Last Vacation", 
+      "datapoints": [ 
+        {
+          "questionId": "Q1",
+          "qualityCheck": "OES",
+          "openEndedAnswer": "We were at Lake Garda in Italy",
+          "title": "Where did you spend your last vacation?",
+          "keywords": ["Beach", "Mountains", "Lake", "museums0", "Europe", "Asia", "Road Trip", "destination"],
+          "isDuplicateEnabled": true,
+          "isCopyPaste": false
+        },
+        {
+          "questionId": "durationQ1", 
+          "qualityCheck": "TS",
+          "duration": 42670
+        },
+        // ... other datapoints ...
+      ],
+      "needRealtimeResponse": true,
+      "needDetailedResponse": true,
+      "cleaningSettings": {
+        "ReDemSettings": false,
+        "CustomSettings": {
+          "redemScore": 60,
+          "qualityChecks": [
+            {"type": "OES", "score": 30, "minimumAnswers": 2},
+            {"type": "CHS", "score": 20, "minimumQuestions": 20},
+            {"type": "GQS", "score": 10, "minimumItems": 15},
+            {"type": "TS", "score": 20}
+          ]
+        },
+        "OESCategories": {
+          "validAnswers": false,
+          "genericAnswers": false,
+          // ... rest of the Open Ended Categories ...
+        }
+      },
+      "reviewSettings": {}
+    }
+    ```
+
+    <Note>For a complete example and more information on how to use this request object, visit the [Add Respondent](/api-reference/endpoint/addRespondent) endpoint. It provides detailed explanations of all fields and their usage.</Note>
+  </Step>
+  <Step title="Make an API request">
+    <p>Submit an API request to ReDem, including the respondent's information and the API key</p>
+  </Step>
+  <Step title="Interpret the API Response">
+    <p>The API will respond with a JSON object contains the results of the evaluation. Review the result and identify and filter out low-quality respondents.</p>
+  </Step>
+  <Step title="Synchronize respondent evaluations">
+    <p>Synchronize Respondent evaluations with ReDem.</p>
+  </Step>
+</Steps>

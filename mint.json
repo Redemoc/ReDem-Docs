@@ -6,14 +6,6 @@
     "light": "/logo/ReDem-Logo-Light.png",
     "href": "https://redem.io/"
   },
-  "font": {
-  "headings": {
-    "family": "Manrope"
-  },
-  "body": {
-    "family": "Manrope"
-  }
-  },
   "favicon": "/ReDem-Fav-Icon.png",
   "colors": {
     "primary": "#00a181",
@@ -83,17 +75,17 @@
     {
       "group": "How to integrate",
       "pages": [
-        "api-reference/introduction",
-        "api-reference/async-integration",
-        "api-reference/sync-integration"
+        "api-reference/intro/introduction",
+        "api-reference/intro/for-researchers",
+        "api-reference/intro/for-survey-tools"
       ]
     },
     {
-      "group": "API Reference",
+      "group": "API Specifications",
       "pages": [
-        "api-reference/api-keys",
-        "api-reference/rate-limits",
-        "api-reference/errors"
+        "api-reference/api-specifications/api-keys",
+        "api-reference/api-specifications/rate-limits",
+        "api-reference/api-specifications/errors"
       ]
     },
     {
