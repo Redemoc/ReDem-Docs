@@ -154,18 +154,18 @@
         "properties": {
           "respondentId": {
             "type": "string",
-            "description": "Unique identifier for the respondent",
-            "example": "RESP-001"
+            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.\n\n**💡 Important:** The system uses this ID, along with the project and survey names, to uniquely identify the respondent within a survey and project, making it possible for the same respondent to be part of different surveys and projects. \n\nIf the combination of project name, survey name, and respondent ID already exists, an error will be displayed with **Error Code 409**",
+            "example": "RESP497770"
           },
           "projectName": {
             "type": "string",
-            "description": "Optional project name for grouping",
-            "example": "customer-satisfaction-2024"
+            "description": "**The name of the project**, which can include multiple surveys, helping to organize and group related surveys under a single project. \n\n**💡Important:** If the project name already exists, the system will add the respondent under the appropriate survey within that project. If the project name is new, a new project and survey will be created, and the respondent will be added to the new survey. \n\n This field is optional — if no project name is provided, the system will use the survey name as the project name.",
+            "example": "Global Vacation Insights 2024"
           },
           "surveyName": {
             "type": "string",
-            "description": "Name of the survey",
-            "example": "customer-survey-2024"
+            "description": "**The name of the survey**, which helps identify different surveys within a project. \n\n**💡Important:** If the survey name already exists within the specified project, the respondent will be added to it. If the survey name is new but the project exists, a new survey will be created under that project, and the respondent will be added to it. If both the project and survey names are new, a new project and survey will be created, and the respondent will be added to the new survey.",
+            "example": "Highlights from Your Last Vaction"
           },
           "datapoints": {
             "type": "array",
