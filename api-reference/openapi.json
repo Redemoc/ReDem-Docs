@@ -65,7 +65,6 @@
               "OES",
               "TS",
               "GQS",
-              "PS",
               "CHS"
             ],
             "description": "Type of quality check to perform",
@@ -252,7 +251,6 @@
               "OES",
               "TS",
               "GQS",
-              "PS",
               "CHS"
             ],
             "description": "Type of quality check",
@@ -392,7 +390,6 @@
                         "OES",
                         "TS",
                         "GQS",
-                        "PS",
                         "CHS"
                       ],
                       "example": "OES"
