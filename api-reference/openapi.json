@@ -681,48 +681,95 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "jobId": {
-                      "type": "string",
-                      "example": "job-123-456"
+                  "oneOf": [
+                    {
+                      "description": "Detailed response (when needDetailedResponse=true)",
+                      "type": "object",
+                      "properties": {
+                        "jobId": {
+                          "type": "string",
+                          "example": "job-123-456"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "JOB_PROCESSING",
+                            "JOB_COMPLETED"
+                          ]
+                        },
+                        "results": {
+                          "$ref": "#/components/schemas/RespondentResults"
+                        }
+                      }
                     },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "JOB_PROCESSING",
-                        "JOB_COMPLETED"
-                      ],
-                      "example": "JOB_PROCESSING"
-                    },
-                    "results": {
-                      "$ref": "#/components/schemas/RespondentResults"
+                    {
+                      "description": "Simple response (when needDetailedResponse=false)",
+                      "type": "object",
+                      "properties": {
+                        "jobId": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "JOB_PROCESSING",
+                            "JOB_COMPLETED"
+                          ]
+                        },
+                        "results": {
+                          "type": "object",
+                          "properties": {
+                            "isRespondentExcluded": {
+                              "type": "boolean"
+                            },
+                            "redemScore": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
                     }
-                  }
+                  ]
                 },
-                "example": {
-                  "jobId": "job-497770-2024",
-                  "status": "JOB_COMPLETED",
-                  "results": {
-                    "isRespondentExcluded": false,
-                    "redemScore": 85.5,
-                    "detailedResponse": {
-                      "datapointLevelResponse": [
-                        {"questionId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer", "reason": "ABC"},
-                        {"questionId": "durationQ1", "qualityCheck": "TS", "score": 95},
-                        {"questionId": "Q2", "qualityCheck": "GQS", "score": 90},
-                        {"questionId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer", "reason": "ABC"},
-                        {"questionId": "durationQ3", "qualityCheck": "TS", "score": 50},
-                        {"questionId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
-                        {"questionId": "Q4", "qualityCheck": "GQS", "score": 80},
-                        {"questionId": "totalDuration", "qualityCheck": "TS", "score": 65}
-                      ],
-                      "qualityCheckLevelResponse": [
-                        {"qualityCheck": "OES", "score": 80},
-                        {"qualityCheck": "CHS", "score": 75},
-                        {"qualityCheck": "GQS", "score": 85},
-                        {"qualityCheck": "TS", "score": 70}
-                      ]
+                "examples": {
+                  "detailedResponse": {
+                    "summary": "Detailed Response Example",
+                    "value": {
+                      "jobId": "job-497770-2024",
+                      "status": "JOB_COMPLETED",
+                      "results": {
+                        "isRespondentExcluded": false,
+                        "redemScore": 85,
+                        "detailedResponse": {
+                          "datapointLevelResponse": [
+                            {"questionId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer", "reason": "ABC"},
+                            {"questionId": "durationQ1", "qualityCheck": "TS", "score": 95},
+                            {"questionId": "Q2", "qualityCheck": "GQS", "score": 90},
+                            {"questionId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer", "reason": "ABC"},
+                            {"questionId": "durationQ3", "qualityCheck": "TS", "score": 50},
+                            {"questionId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                            {"questionId": "Q4", "qualityCheck": "GQS", "score": 80},
+                            {"questionId": "totalDuration", "qualityCheck": "TS", "score": 65}
+                          ],
+                          "qualityCheckLevelResponse": [
+                            {"qualityCheck": "OES", "score": 80},
+                            {"qualityCheck": "CHS", "score": 75},
+                            {"qualityCheck": "GQS", "score": 85},
+                            {"qualityCheck": "TS", "score": 70}
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "simpleResponse": {
+                    "summary": "Simple Response Example",
+                    "value": {
+                      "jobId": "job-497770-2024",
+                      "status": "JOB_COMPLETED",
+                      "results": {
+                        "isRespondentExcluded": false,
+                        "redemScore": 85
+                      }
                     }
                   }
                 }
