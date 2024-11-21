@@ -680,6 +680,7 @@
                 "schema": {
                   "oneOf": [
                     {
+                      "title": "Sync Detailed Response",
                       "description": "Detailed response (when needDetailedResponse=true and needRealtimeResponse=true)",
                       "type": "object",
                       "properties": {
@@ -698,6 +699,7 @@
                       }
                     },
                     {
+                      "title": "Sync Simple Response",
                       "description": "Simple response (when needDetailedResponse=false and needRealtimeResponse=true)",
                       "type": "object",
                       "properties": {
@@ -724,6 +726,7 @@
                       }
                     },
                     {
+                      "title": "Async Response",
                       "description": "Processing response (when needRealtimeResponse=false)",
                       "type": "object",
                       "properties": {
