@@ -185,22 +185,8 @@
             "example": true
           },
           "cleaningSettings": {
+            "description": "**Cleaning settings for respondents** define the rules for deciding if a respondent should be excluded and marked as low quality. \n\n **💡Important:** If you want to clean respondents, you’ll need to provide cleaning settings. Without these settings, the system will only evaluate respondents and generate scores without marking them as included or excluded. \n\n When cleaning settings are provided, the response will include a variable `isRespondentExcluded`, showing whether the respondent has been excluded based on the applied criteria.",
             "$ref": "#/components/schemas/CleaningSettings"
-          },
-          "reviewSettings": {
-            "$ref": "#/components/schemas/CleaningSettings"
-          },
-          "missingValues": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Values to be treated as missing",
-            "example": [
-              "NA",
-              "N/A",
-              "-"
-            ]
           }
         }
       },
@@ -357,7 +343,7 @@
         "properties": {
           "ReDemSettings": {
             "type": "boolean",
-            "description": "Whether to use default ReDem settings",
+            "description": "**Whether to use default ReDem recommended cleaning settings** \n\n when set to `true`, applies ReDem's recommended cleaning settings to determine whether a respondent should be excluded and categorized as low quality. \n\nThese settings are predefined based on ReDem's expertise and are tailored to the available data points of each respondent. \n\n **⭕ Note:** If ReDem settings is set to `true` and custom settings is also provided, the ReDem recommended settings will be overridden by the custom settings.",
             "example": true
           },
           "CustomSettings": {
