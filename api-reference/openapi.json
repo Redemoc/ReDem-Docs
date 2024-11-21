@@ -680,17 +680,15 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "description": "Detailed response (when needDetailedResponse=true)",
+                      "description": "Detailed response (when needDetailedResponse=true and needRealtimeResponse=true)",
                       "type": "object",
                       "properties": {
                         "jobId": {
-                          "type": "string",
-                          "example": "job-123-456"
+                          "type": "string"
                         },
                         "status": {
                           "type": "string",
                           "enum": [
-                            "JOB_PROCESSING",
                             "JOB_COMPLETED"
                           ]
                         },
@@ -700,7 +698,7 @@
                       }
                     },
                     {
-                      "description": "Simple response (when needDetailedResponse=false)",
+                      "description": "Simple response (when needDetailedResponse=false and needRealtimeResponse=true)",
                       "type": "object",
                       "properties": {
                         "jobId": {
@@ -709,7 +707,6 @@
                         "status": {
                           "type": "string",
                           "enum": [
-                            "JOB_PROCESSING",
                             "JOB_COMPLETED"
                           ]
                         },
@@ -725,11 +722,26 @@
                           }
                         }
                       }
+                    },
+                    {
+                      "description": "Processing response (when needRealtimeResponse=false)",
+                      "type": "object",
+                      "properties": {
+                        "jobId": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "JOB_PROCESSING"
+                          ]
+                        }
+                      }
                     }
                   ]
                 },
                 "examples": {
-                  "detailedResponse": {
+                  "Synchronously Detailed Response": {
                     "summary": "Detailed Response Example",
                     "value": {
                       "jobId": "job-497770-2024",
@@ -758,7 +770,7 @@
                       }
                     }
                   },
-                  "simpleResponse": {
+                  "Synchronously Simple Response": {
                     "summary": "Simple Response Example",
                     "value": {
                       "jobId": "job-497770-2024",
@@ -767,6 +779,13 @@
                         "isRespondentExcluded": false,
                         "redemScore": 85
                       }
+                    }
+                  },
+                  "Asynchronously Response": {
+                    "summary": "Processing Response Example",
+                    "value": {
+                      "jobId": "job-497770-2024",
+                      "status": "JOB_PROCESSING"
                     }
                   }
                 }
