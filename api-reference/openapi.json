@@ -36,8 +36,8 @@
         "properties": {
           "questionTitle": {
             "type": "string",
-            "description": "Title or text of the interview question",
-            "example": "What is your opinion about the product?"
+            "description": "**Contains the title or text of the question**.",
+            "example": "What type of accommodation did you stay in?"
           },
           "answer": {
             "oneOf": [
@@ -48,8 +48,8 @@
                 "type": "string"
               }
             ],
-            "description": "Response provided for the interview question",
-            "example": "The product quality is excellent"
+            "description": "A variable that holds the **respondent's answer for the question**.",
+            "example": "Hotel"
           }
         }
       },
@@ -119,12 +119,13 @@
               },
               "qualityCheck": {
                 "type": "string",
+                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
                 "enum": ["TS"]
               },
               "duration": {
                 "type": "number",
-                "description": "Time spent on question in seconds",
-                "example": 45
+                "description": "This variable contains the information about the **amount of time a respondent spends on each question or a specific section of the survey**. It helps in analyzing response behavior and timing.",
+                "example": 42670
               }
             },
             "required": ["questionId", "qualityCheck", "duration"]
@@ -139,6 +140,7 @@
               },
               "qualityCheck": {
                 "type": "string",
+                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
                 "enum": ["GQS"]
               },
               "gridQuestions": {
@@ -146,7 +148,7 @@
                 "items": {
                   "type": "number"
                 },
-                "description": "Array of responses for grid questions",
+                "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**.",
                 "example": [
                   5,
                   4,
@@ -168,6 +170,7 @@
               },
               "qualityCheck": {
                 "type": "string",
+                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
                 "enum": ["CHS"]
               },
               "interview": {
@@ -175,11 +178,11 @@
                 "items": {
                   "$ref": "#/components/schemas/InterviewQuestion"
                 },
-                "description": "Array of interview questions and responses",
+                "description": "This variable gathers all relevant interviews used to determine whether a respondent is coherent or incoherent.",
                 "example": [
                   {
-                    "questionTitle": "What did you like most?",
-                    "answer": "The customer service"
+                    "questionTitle": "What type of accommodation did you stay in?",
+                    "answer": "Hotel"
                   }
                 ]
               }
@@ -244,7 +247,7 @@
         "properties": {
           "questionId": {
             "type": "string",
-            "description": "ID of the checked question",
+            "description": "**A unique identifier of the question**",
             "example": "Q1"
           },
           "qualityCheck": {
@@ -255,23 +258,23 @@
               "GQS",
               "CHS"
             ],
-            "description": "Type of quality check performed",
+            "description": "**Type of quality check** performed for the data point",
             "example": "OES"
           },
           "score": {
             "type": "number",
-            "description": "Quality score (0-100)",
+            "description": "**Quality score for the data point**, ranging from 0 to 100",
             "example": 85
           },
           "category": {
             "type": "string",
-            "description": "Quality category",
-            "example": "GOOD"
+            "description": "**Quality category** for the data point, this will be only available if the quality check type is set to `OES`",
+            "example": "Valid Answer"
           },
           "reason": {
             "type": "string",
-            "description": "Explanation for the score",
-            "example": "Valid and detailed response"
+            "description": "**Explanation** for the score, this will be only available if the quality check type is set to `CHS`",
+            "example": "The user shows several inconsistencies and contradictions, such as different ..."
           }
         }
       },
@@ -287,12 +290,12 @@
               "GQS",
               "CHS"
             ],
-            "description": "Type of quality check",
+            "description": "**Type of quality check** performed on a respondent",
             "example": "OES"
           },
           "score": {
             "type": "number",
-            "description": "Aggregated score (0-100)",
+            "description": "A numerical **score ranging from 0 to 100** that represents the outcome of a specific quality check",
             "example": 78
           }
         }
@@ -306,14 +309,14 @@
             "items": {
               "$ref": "#/components/schemas/DatapointResponse"
             },
-            "description": "Individual datapoint scores"
+            "description": "Detailed results of quality checks performed at the individual data point level."
           },
           "qualityCheckLevelResponse": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/QualityCheckResponse"
             },
-            "description": "Aggregated quality check scores"
+            "description": "An object containing detailed results for each quality check applied"
           }
         }
       },
@@ -323,12 +326,12 @@
         "properties": {
           "isRespondentExcluded": {
             "type": "boolean",
-            "description": "Exclusion status based on quality",
+            "description": "**Indicates whether a respondent is excluded based on the cleaning settings specified in the request**. If no cleaning settings are defined, the respondent is always included by default.",
             "example": false
           },
           "redemScore": {
             "type": "number",
-            "description": "Overall quality score (0-100)",
+            "description": "**The respondent's overall evaluation score**, ranging from 0 to 100, based on ReDem's quality checks. \n\n For more information refer to the [ReDem Score](/quality-checks/redem-score) section.",
             "example": 85
           },
           "detailedResponse": {
@@ -716,40 +719,38 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "title": "Sync Detailed Response",
-                      "description": "Detailed response (when needDetailedResponse=true and needRealtimeResponse=true)",
+                      "title": "Real-time Detailed Response",
+                      "description": "**Real-time Detailed Response** \n\nThis response mode is triggered when both `needDetailedResponse` and `needRealtimeResponse` are set to `true`. \n\n In this case, the system generates a comprehensive, detailed response and processes it synchronously, meaning the request will wait (`await`) until the complete response is ready before proceeding. This ensures the delivery of in-depth information in real-time.",
                       "type": "object",
                       "properties": {
-                        "jobId": {
-                          "type": "string"
-                        },
                         "status": {
                           "type": "string",
+                          "description": "A variable that **indicates the current state of the job processing**.",
                           "enum": [
                             "JOB_COMPLETED"
                           ]
                         },
                         "results": {
-                          "$ref": "#/components/schemas/RespondentResults"
+                          "$ref": "#/components/schemas/RespondentResults",
+                          "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request** and annotated with quality check results."
                         }
                       }
                     },
                     {
-                      "title": "Sync Simple Response",
-                      "description": "Simple response (when needDetailedResponse=false and needRealtimeResponse=true)",
+                      "title": "Real-time Simple Response",
+                      "description": "**Real-time Simple Response** \n\nThis response mode is triggered when `needDetailedResponse` is set to `false` and `needRealtimeResponse` is set to `true`. \n\n In this case, the system generates a simple response and processes it synchronously, meaning the request will wait (`await`) until the complete response is ready before proceeding. This ensures the delivery of in-depth information in real-time.",
                       "type": "object",
                       "properties": {
-                        "jobId": {
-                          "type": "string"
-                        },
                         "status": {
                           "type": "string",
+                          "description": "A variable that **indicates the current state of the job processing**.",
                           "enum": [
                             "JOB_COMPLETED"
                           ]
                         },
                         "results": {
                           "type": "object",
+                          "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request** and annotated with quality check results.",
                           "properties": {
                             "isRespondentExcluded": {
                               "type": "boolean"
@@ -763,14 +764,12 @@
                     },
                     {
                       "title": "Async Response",
-                      "description": "Processing response (when needRealtimeResponse=false)",
+                      "description": "**Asynchronous Detailed Response** \n\nThis response mode is triggered when `needRealtimeResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoint/getRespondentStatus) endpoint.",
                       "type": "object",
                       "properties": {
-                        "jobId": {
-                          "type": "string"
-                        },
                         "status": {
                           "type": "string",
+                          "description": "A variable that **indicates the current state of the job processing**.",
                           "enum": [
                             "JOB_PROCESSING"
                           ]
@@ -780,20 +779,19 @@
                   ]
                 },
                 "examples": {
-                  "Synchronously Detailed Response": {
+                  "Real-time Detailed Response": {
                     "summary": "Detailed Response Example",
                     "value": {
-                      "jobId": "job-497770-2024",
                       "status": "JOB_COMPLETED",
                       "results": {
                         "isRespondentExcluded": false,
                         "redemScore": 85,
                         "detailedResponse": {
                           "datapointLevelResponse": [
-                            {"questionId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer", "reason": "ABC"},
+                            {"questionId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer"},
                             {"questionId": "durationQ1", "qualityCheck": "TS", "score": 95},
                             {"questionId": "Q2", "qualityCheck": "GQS", "score": 90},
-                            {"questionId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer", "reason": "ABC"},
+                            {"questionId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer"},
                             {"questionId": "durationQ3", "qualityCheck": "TS", "score": 50},
                             {"questionId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
                             {"questionId": "Q4", "qualityCheck": "GQS", "score": 80},
@@ -809,10 +807,9 @@
                       }
                     }
                   },
-                  "Synchronously Simple Response": {
+                  "Real-time Simple Response": {
                     "summary": "Simple Response Example",
                     "value": {
-                      "jobId": "job-497770-2024",
                       "status": "JOB_COMPLETED",
                       "results": {
                         "isRespondentExcluded": false,
@@ -823,7 +820,6 @@
                   "Asynchronously Response": {
                     "summary": "Processing Response Example",
                     "value": {
-                      "jobId": "job-497770-2024",
                       "status": "JOB_PROCESSING"
                     }
                   }

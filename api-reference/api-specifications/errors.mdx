@@ -12,8 +12,9 @@ Here is how an error response looks like:
 ```json
 {
     "error": {
-        "code": "not_found",
-        "message": "The requested resource was not found."
+        "status": "JOB_FAILED",
+        "code": "400",
+        "message": "VALIDATION_ERROR"
     }
 }
 ```
@@ -22,37 +23,42 @@ Here is how an error response looks like:
 If you receive an error code as part of an API call, this is where you can look up what it means
 
 ### <code> bad_request </code>
-- **Status:** 400
+- **code:** 400
 - **Problem:** The request is malformed, either missing required fields, using wrong datatypes, or being syntactically incorrect.
 - **Solution:** Check the request and make sure it is properly formatted.
 
 ### <code> unauthorized </code>
-- **Status:** 401
+- **code:** 401
 - **Problem:** The request has not been applied because it lacks valid authentication credentials for the target resource.
 - **Solution:** Make sure you are using the correct API key or access token.
 
 ### <code> forbidden </code>
-- **Status:** 403
+- **code:** 403
 - **Problem:** The server understood the request, but is refusing to fulfill it because the client lacks proper permission.
 - **Solution:** Make sure you have the necessary permissions to access the resource.
 
 ### <code> not_found </code>
-- **Status:** 404
+- **code:** 404
 - **Problem:** The server has not found anything matching the request URI.
 - **Solution:** Check the request and make sure the resource exists.
 
-### <code> internal_server_error </code>
-- **Status:** 500
-- **Problem:** The server encountered an unexpected condition that prevented it from fulfilling the request.
-- **Solution:** Try again later. If the problem persists, contact support.
-
 ### <code> validation_error </code>
-- **Status:** 501
+- **code:** 405
 - **Problem:** The request body is invalid.
 - **Solution:** Check the request format. If the problem persists, contact support.
 
+### <code> duplicate_respondent </code>
+- **code:** 409
+- **Problem:** The respondent already exists.
+- **Solution:** Check the respondent ID and make sure it is correct.
+
+### <code> internal_server_error </code>
+- **code:** 500
+- **Problem:** The server encountered an unexpected condition that prevented it from fulfilling the request.
+- **Solution:** Try again later. If the problem persists, contact support.
+
 ### <code> processing_error </code>
-- **Status:** 502
+- **code:** 501
 - **Problem:** AI model can be currently overloaded.
 - **Solution:** Please try again later. If the problem persists, contact support.
 
