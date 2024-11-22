@@ -40,83 +40,6 @@
             "example": "What is your opinion about the product?"
           },
           "answer": {
-            "type": "string",
-            "description": "Response provided for the interview question",
-            "example": "The product quality is excellent"
-          }
-        }
-      },
-      "DataPoint": {
-        "description": "Individual data point containing question response and quality check settings",
-        "type": "object",
-        "required": [
-          "questionId",
-          "qualityCheck"
-        ],
-        "properties": {
-          "questionId": {
-            "type": "string",
-            "description": "Unique identifier for the question",
-            "example": "Q1"
-          },
-          "qualityCheck": {
-            "type": "string",
-            "enum": [
-              "OES",
-              "TS",
-              "GQS",
-              "CHS"
-            ],
-            "description": "Type of quality check to perform",
-            "example": "OES"
-          },
-          "openEndedAnswer": {
-            "type": "string",
-            "description": "Response text for open-ended questions",
-            "example": "The service was excellent"
-          },
-          "title": {
-            "type": "string",
-            "description": "Title or text of the question",
-            "example": "How would you rate our service?"
-          },
-          "keywords": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Keywords for analyzing open-ended responses",
-            "example": [
-              "excellent",
-              "service",
-              "quality"
-            ]
-          },
-          "isDuplicateEnabled": {
-            "type": "boolean",
-            "description": "Whether to check for duplicate responses",
-            "example": true
-          },
-          "duration": {
-            "type": "number",
-            "description": "Time spent on question in seconds",
-            "example": 45
-          },
-          "gridQuestions": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            },
-            "description": "Array of responses for grid questions",
-            "example": [
-              5,
-              4,
-              3,
-              5,
-              4
-            ]
-          },
-          "answer": {
             "oneOf": [
               {
                 "type": "number"
@@ -125,23 +48,146 @@
                 "type": "string"
               }
             ],
-            "description": "Response value for plain score questions",
-            "example": 5
-          },
-          "interview": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/InterviewQuestion"
-            },
-            "description": "Array of interview questions and responses",
-            "example": [
-              {
-                "questionTitle": "What did you like most?",
-                "answer": "The customer service"
-              }
-            ]
+            "description": "Response provided for the interview question",
+            "example": "The product quality is excellent"
           }
         }
+      },
+      "DataPoint": {
+        "description": "Individual data point containing question response and quality check settings",
+        "type": "object",
+        "oneOf": [
+          {
+            "title": "OES Data Point",
+            "properties": {
+              "questionId": {
+                "type": "string",
+                "description": "**A unique identifier assigned to each question**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "example": "Q1"
+              },
+              "qualityCheck": {
+                "type": "string",
+                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+                "enum": ["OES"]
+              },
+              "openEndedAnswer": {
+                "type": "string",
+                "description": "A variable that holds the **respondent's answer to an open-ended question**, which is the main part we use for evaluation. \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided.",
+                "example": "We were at Lake Garda in Italy"
+              },
+              "title": {
+                "type": "string",
+                "description": "**Contains the title or text of the open-ended question**, which is used directly to evaluate respondent quality.  \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided.",
+                "example": "Where did you spend your last vacation?"
+              },
+              "keywords": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "**Keywords are used to perform `wrong topic` checks** and help evaluate whether responses are relevant to the topic. \n\nBy default, the `wrong topic` check is disabled. However, if keywords are provided, the system will automatically enable the `wrong topic` check, and respondents will be evaluated to ensure their answers align with the context defined by the provided keywords and title. \n\n For more details on how this works, refer to the [Wrong Topic Check](/quality-checks/open-ended-score#wrong-topic) section.",
+                "example": [
+                  "Beach",
+                  "Mountains",
+                  "Lake"
+                ]
+              },
+              "isDuplicateEnabled": {
+                "type": "boolean",
+                "description": "A variable that indicates **whether duplicate checks are performed on the respondent's answers**. \n\n This checks if an answer is identical to another respondent's answer or if a respondent provided the same answer to multiple questions. \n\n By default, duplicate checks are enabled, but you can disable them by setting this variable to `false`. \n\n For more details on how this works, refer to the [Duplicate Check](/quality-checks/open-ended-score#duplicate-respondent) section.",
+                "example": true,
+                "default": true
+              },
+              "allowedLanguages": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "**Specifies the list of languages allowed for responses**. Answers provided in languages not on this list will be marked as `wrong language`. \n\n If no languages are specified, the wrong language check will not be performed. \n\n For more details on how this works, refer to the [Wrong Language Check](/quality-checks/open-ended-score#wrong-language) section.",
+                "example": ["en", "de", "it"]
+              }
+            },
+            "required": ["questionId", "qualityCheck","openEndedAnswer", "title"]
+          },
+          {
+            "title": "TS Data Point",
+            "properties": {
+              "questionId": {
+                "type": "string",
+                "description": "**A unique identifier assigned to each question**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "example": "Q1"
+              },
+              "qualityCheck": {
+                "type": "string",
+                "enum": ["TS"]
+              },
+              "duration": {
+                "type": "number",
+                "description": "Time spent on question in seconds",
+                "example": 45
+              }
+            },
+            "required": ["questionId", "qualityCheck", "duration"]
+          },
+          {
+            "title": "GQS Data Point",
+            "properties": {
+              "questionId": {
+                "type": "string",
+                "description": "**A unique identifier assigned to each question**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "example": "Q1"
+              },
+              "qualityCheck": {
+                "type": "string",
+                "enum": ["GQS"]
+              },
+              "gridQuestions": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "description": "Array of responses for grid questions",
+                "example": [
+                  5,
+                  4,
+                  3,
+                  5,
+                  4
+                ]
+              }
+            },
+            "required": ["questionId", "qualityCheck", "gridQuestions"]
+          },
+          {
+            "title": "CHS Data Point",
+            "properties": {
+              "questionId": {
+                "type": "string",
+                "description": "**A unique identifier assigned to each question**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "example": "Q1"
+              },
+              "qualityCheck": {
+                "type": "string",
+                "enum": ["CHS"]
+              },
+              "interview": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/InterviewQuestion"
+                },
+                "description": "Array of interview questions and responses",
+                "example": [
+                  {
+                    "questionTitle": "What did you like most?",
+                    "answer": "The customer service"
+                  }
+                ]
+              }
+            },
+            "required": ["questionId", "qualityCheck"]
+          }
+        ],
+        "properties": {}
       },
       "AddRespondentRequest": {
         "description": "Request body for adding a new respondent",
@@ -177,12 +223,14 @@
           "needRealtimeResponse": {
             "type": "boolean",
             "description": "**Indicates whether the response should be processed synchronously**. \n\n Set this to `true` if you need to wait for the response immediately. If you don't need to wait, set it to `false` and use the [Get Respondent Status endpoint](/api-reference/endpoint/getRespondentStatus) later to check the status of the respondent.",
-            "example": true
+            "example": true,
+            "default": true
           },
           "needDetailedResponse": {
             "type": "boolean",
             "description": "**Specifies the level of detail in the response**. Set this to `true` to receive a detailed response, or `false` for a simpler response. Refer to the response structure section later in this document for more information.",
-            "example": true
+            "example": true,
+            "default": true
           },
           "cleaningSettings": {
             "description": "**Cleaning settings for respondents** define the rules for deciding if a respondent should be excluded and marked as low quality. \n\n **💡Important:** If you want to clean respondents, you’ll need to provide cleaning settings. Without these settings, the system will only evaluate respondents and generate scores without marking them as included or excluded. \n\n When cleaning settings are provided, the response will include a variable `isRespondentExcluded`, showing whether the respondent has been excluded based on the applied criteria.",
@@ -579,7 +627,8 @@
                     "title": "Where did you spend your last vacation?",
                     "keywords": ["Beach", "Mountains", "Lake", "Museums", "Europe", "Asia", "Destination"],
                     "isDuplicateEnabled": true,
-                    "isCopyPaste": false
+                    "isCopyPaste": false,
+                    "allowedLanguages": ["en", "de", "it"]
                   },
                   {
                     "questionId": "durationQ1", 
@@ -598,7 +647,8 @@
                     "title": "What was the most memorable part of your last vacation?",
                     "keywords": ["Cuisine", "Food", "Art", "Adventure", "History", "Landscape", "Culture"],
                     "isDuplicateEnabled": true,
-                    "isCopyPaste": true
+                    "isCopyPaste": true,
+                    "allowedLanguages": ["en", "de", "it"]
                   },
                   {
                     "questionId": "durationQ3", 
