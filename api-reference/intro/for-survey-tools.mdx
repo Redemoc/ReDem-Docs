@@ -24,42 +24,47 @@ iconType: "regular"
       "surveyName": "Highlights from Your Last Vacation", 
       "datapoints": [ 
         {
-          "questionId": "Q1",
           "qualityCheck": "OES",
-          "openEndedAnswer": "We were at Lake Garda in Italy",
-          "title": "Where did you spend your last vacation?",
-          "keywords": ["Beach", "Mountains", "Lake", "Museums", "Europe", "Asia", "Road Trip", "destination"],
-          "isDuplicateEnabled": true,
-          "isCopyPaste": false,
+          "dataPointId": "Q1",
+          "question": "Where did you spend your last vacation?",
+          "answer": "We were at Lake Garda in Italy",
+          "keywords": ["Beach", "Mountains", "Lake", "Museums", "Europe", "Asia", "Destination"],
+          "activateDuplicateDetection": true,
           "allowedLanguages": ["en", "de", "it"]
         },
         {
-          "questionId": "durationQ1", 
           "qualityCheck": "TS",
+          "dataPointId": "durationQ1", 
           "duration": 42670
         },
-        // ... other datapoints ...
+        // ... other data points ...
       ],
-      "needRealtimeResponse": true,
-      "needDetailedResponse": true,
       "cleaningSettings": {
-        "ReDemSettings": false,
-        "CustomSettings": {
+        "standardSettings": false,
+        "customSettings": {
           "redemScore": 60,
-          "qualityChecks": [
-            {"type": "OES", "score": 30, "minimumAnswers": 2},
-            {"type": "CHS", "score": 20, "minimumQuestions": 20},
-            {"type": "GQS", "score": 10, "minimumItems": 15},
-            {"type": "TS", "score": 20}
-          ]
-        },
-        "OESCategories": {
-          "validAnswers": false,
-          "genericAnswers": false,
-          // ... rest of the Open Ended Categories ...
+          "OES": {
+            "score": 30,
+            "minimumAnswers": 2,
+            "categories": {
+              "genericAnswers": {"exclude":true, "minDataPoints": 2},
+              "noInformation": {"exclude":true, "minDataPoints": 2},
+              // ... other categories ...
+            }
+          },
+          "CHS": {
+            "score": 20
+          },
+          "GQS": {
+            "score": 10,
+            "minimumItems": 15
+          },
+          "TS": {
+            "score": 20
+          }
         }
       },
-      "reviewSettings": {}
+      "synchronousResponse": true,
     }
     ```
 

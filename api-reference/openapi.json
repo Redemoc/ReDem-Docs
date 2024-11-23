@@ -26,15 +26,15 @@
       }
     },
     "schemas": {
-      "InterviewQuestion": {
+      "InterviewData": {
         "description": "Structure for interview-based questions",
         "type": "object",
         "required": [
-          "questionTitle",
+          "question",
           "answer"
         ],
         "properties": {
-          "questionTitle": {
+          "question": {
             "type": "string",
             "description": "**Contains the title or text of the question**.",
             "example": "What type of accommodation did you stay in?"
@@ -58,27 +58,27 @@
         "type": "object",
         "oneOf": [
           {
-            "title": "OES Data Point",
+            "title": "OES Data point",
             "properties": {
-              "questionId": {
-                "type": "string",
-                "description": "**A unique identifier assigned to each question**, ensuring that every data point is distinctly tracked and referenced within the system.",
-                "example": "Q1"
-              },
               "qualityCheck": {
                 "type": "string",
                 "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
                 "enum": ["OES"]
               },
-              "openEndedAnswer": {
+              "dataPointId": {
                 "type": "string",
-                "description": "A variable that holds the **respondent's answer to an open-ended question**, which is the main part we use for evaluation. \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided.",
-                "example": "We were at Lake Garda in Italy"
+                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "example": "Q1"
               },
-              "title": {
+              "question": {
                 "type": "string",
                 "description": "**Contains the title or text of the open-ended question**, which is used directly to evaluate respondent quality.  \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided.",
                 "example": "Where did you spend your last vacation?"
+              },
+              "answer": {
+                "type": "string",
+                "description": "A variable that holds the **respondent's answer to an open-ended question**, which is the main part we use for evaluation. \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided.",
+                "example": "We were at Lake Garda in Italy"
               },
               "keywords": {
                 "type": "array",
@@ -92,9 +92,9 @@
                   "Lake"
                 ]
               },
-              "isDuplicateEnabled": {
+              "activateDuplicateDetection": {
                 "type": "boolean",
-                "description": "A variable that indicates **whether duplicate checks are performed on the respondent's answers**. \n\n This checks if an answer is identical to another respondent's answer or if a respondent provided the same answer to multiple questions. \n\n By default, duplicate checks are enabled, but you can disable them by setting this variable to `false`. \n\n For more details on how this works, refer to the [Duplicate Check](/quality-checks/open-ended-score#duplicate-respondent) section.",
+                "description": "A variable that indicates **whether duplicate checks are performed on the respondent's answers**. \n\n This checks if an answer is identical to another respondent's answer or if a respondent provided the same answer to multiple questions. \n\n By default, duplicate checks are active, but you can deactivate them by setting this variable to `false`. \n\n For more details on how this works, refer to the [Duplicate Check](/quality-checks/open-ended-score#duplicate-respondent) section.",
                 "example": true,
                 "default": true
               },
@@ -107,20 +107,20 @@
                 "example": ["en", "de", "it"]
               }
             },
-            "required": ["questionId", "qualityCheck","openEndedAnswer", "title"]
+            "required": ["dataPointId", "qualityCheck","answer", "question"]
           },
           {
-            "title": "TS Data Point",
+            "title": "TS Data point",
             "properties": {
-              "questionId": {
-                "type": "string",
-                "description": "**A unique identifier assigned to each question**, ensuring that every data point is distinctly tracked and referenced within the system.",
-                "example": "Q1"
-              },
               "qualityCheck": {
                 "type": "string",
                 "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
                 "enum": ["TS"]
+              },
+              "dataPointId": {
+                "type": "string",
+                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "example": "Q1"
               },
               "duration": {
                 "type": "number",
@@ -128,22 +128,22 @@
                 "example": 42670
               }
             },
-            "required": ["questionId", "qualityCheck", "duration"]
+            "required": ["dataPointId", "qualityCheck", "duration"]
           },
           {
-            "title": "GQS Data Point",
+            "title": "GQS Data point",
             "properties": {
-              "questionId": {
-                "type": "string",
-                "description": "**A unique identifier assigned to each question**, ensuring that every data point is distinctly tracked and referenced within the system.",
-                "example": "Q1"
-              },
               "qualityCheck": {
                 "type": "string",
                 "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
                 "enum": ["GQS"]
               },
-              "gridQuestions": {
+              "dataPointId": {
+                "type": "string",
+                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "example": "Q1"
+              },
+              "gridQuestionPattern": {
                 "type": "array",
                 "items": {
                   "type": "number"
@@ -158,36 +158,36 @@
                 ]
               }
             },
-            "required": ["questionId", "qualityCheck", "gridQuestions"]
+            "required": ["dataPointId", "qualityCheck", "gridQuestionPattern"]
           },
           {
             "title": "CHS Data Point",
             "properties": {
-              "questionId": {
-                "type": "string",
-                "description": "**A unique identifier assigned to each question**, ensuring that every data point is distinctly tracked and referenced within the system.",
-                "example": "Q1"
-              },
               "qualityCheck": {
                 "type": "string",
                 "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
                 "enum": ["CHS"]
               },
-              "interview": {
+              "dataPointId": {
+                "type": "string",
+                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "example": "Q1"
+              },
+              "interviewData": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/InterviewQuestion"
+                  "$ref": "#/components/schemas/InterviewData"
                 },
                 "description": "This variable gathers all relevant interviews used to determine whether a respondent is coherent or incoherent.",
                 "example": [
                   {
-                    "questionTitle": "What type of accommodation did you stay in?",
+                    "question": "What type of accommodation did you stay in?",
                     "answer": "Hotel"
                   }
                 ]
               }
             },
-            "required": ["questionId", "qualityCheck"]
+            "required": ["dataPointId", "qualityCheck", "interviewData"]
           }
         ],
         "properties": {}
@@ -196,58 +196,47 @@
         "description": "Request body for adding a new respondent",
         "required": [
           "respondentId",
-          "surveyName",
-          "datapoints"
+          "projectName",
+          "dataPoints"
         ],
         "type": "object",
         "properties": {
           "respondentId": {
             "type": "string",
-            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.\n\n**💡 Important:** The system uses this ID, along with the project and survey names, to uniquely identify the respondent within a survey and project, making it possible for the same respondent to be part of different surveys and projects. \n\nIf the combination of project name, survey name, and respondent ID already exists, an error will be displayed with **Error Code 409**",
+            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.\n\n**💡 Important:** The system uses this ID, along with the survey name, to uniquely identify the respondent within a survey, making it possible for the same respondent to be part of different surveys. \n\nIf the combination of survey name and respondent ID already exists, an error will be displayed with **Error Code 409**",
             "example": "RESP497770"
           },
           "projectName": {
             "type": "string",
-            "description": "**The name of the project**, which can include multiple surveys, helping to organize and group related surveys under a single project. \n\n**💡Important:** If the project name already exists, the system will add the respondent under the appropriate survey within that project. If the project name is new, a new project and survey will be created, and the respondent will be added to the new survey. \n\n This field is optional — if no project name is provided, the system will use the survey name as the project name.",
+            "description": "**The name of the project**, which helps identify different projects. \n\n**💡Important:** If the project name already exists, the system will add the respondent under the appropriate project. If the project name is new, a new project will be created, and the respondent will be added to the new project. \n\n **⭕ Note:** Each project within the organization should have its own unique identifier.",
             "example": "Global Vacation Insights 2024"
           },
-          "surveyName": {
-            "type": "string",
-            "description": "**The name of the survey**, which helps identify different surveys within a project. \n\n**💡Important:** If the survey name already exists within the specified project, the respondent will be added to it. If the survey name is new but the project exists, a new survey will be created under that project, and the respondent will be added to it. If both the project and survey names are new, a new project and survey will be created, and the respondent will be added to the new survey.",
-            "example": "Highlights from Your Last Vaction"
-          },
-          "datapoints": {
+          "dataPoints": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DataPoint"
             },
             "description": "Array of question responses"
           },
-          "needRealtimeResponse": {
+          "cleaningSettings": {
+            "description": "**Cleaning settings for respondents** define the rules for deciding if a respondent should be excluded and marked as low quality. \n\n **💡Important:** If you want to clean respondents, you’ll need to provide cleaning settings. Without these settings, the system will only evaluate respondents and generate scores without marking them as included or excluded. \n\n When cleaning settings are provided, the response will include a variable `isExcluded`, showing whether the respondent has been excluded based on the applied criteria.",
+            "$ref": "#/components/schemas/CleaningSettings"
+          },
+          "synchronousResponse": {
             "type": "boolean",
             "description": "**Indicates whether the response should be processed synchronously**. \n\n Set this to `true` if you need to wait for the response immediately. If you don't need to wait, set it to `false` and use the [Get Respondent Status endpoint](/api-reference/endpoint/getRespondentStatus) later to check the status of the respondent.",
             "example": true,
             "default": true
-          },
-          "needDetailedResponse": {
-            "type": "boolean",
-            "description": "**Specifies the level of detail in the response**. Set this to `true` to receive a detailed response, or `false` for a simpler response. Refer to the response structure section later in this document for more information.",
-            "example": true,
-            "default": true
-          },
-          "cleaningSettings": {
-            "description": "**Cleaning settings for respondents** define the rules for deciding if a respondent should be excluded and marked as low quality. \n\n **💡Important:** If you want to clean respondents, you’ll need to provide cleaning settings. Without these settings, the system will only evaluate respondents and generate scores without marking them as included or excluded. \n\n When cleaning settings are provided, the response will include a variable `isRespondentExcluded`, showing whether the respondent has been excluded based on the applied criteria.",
-            "$ref": "#/components/schemas/CleaningSettings"
           }
         }
       },
-      "DatapointResponse": {
+      "DataPointsQualityResponse": {
         "description": "Quality check results for a single datapoint",
         "type": "object",
         "properties": {
-          "questionId": {
+          "dataPointId": {
             "type": "string",
-            "description": "**A unique identifier of the question**",
+            "description": "**A unique identifier of the data point**",
             "example": "Q1"
           },
           "qualityCheck": {
@@ -300,31 +289,11 @@
           }
         }
       },
-      "DetailedResponse": {
-        "description": "Detailed quality check results",
-        "type": "object",
-        "properties": {
-          "datapointLevelResponse": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DatapointResponse"
-            },
-            "description": "Detailed results of quality checks performed at the individual data point level."
-          },
-          "qualityCheckLevelResponse": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/QualityCheckResponse"
-            },
-            "description": "An object containing detailed results for each quality check applied"
-          }
-        }
-      },
       "RespondentResults": {
         "description": "Complete results for a respondent",
         "type": "object",
         "properties": {
-          "isRespondentExcluded": {
+          "isExcluded": {
             "type": "boolean",
             "description": "**Indicates whether a respondent is excluded based on the cleaning settings specified in the request**. If no cleaning settings are defined, the respondent is always included by default.",
             "example": false
@@ -334,9 +303,19 @@
             "description": "**The respondent's overall evaluation score**, ranging from 0 to 100, based on ReDem's quality checks. \n\n For more information refer to the [ReDem Score](/quality-checks/redem-score) section.",
             "example": 85
           },
-          "detailedResponse": {
-            "$ref": "#/components/schemas/DetailedResponse",
-            "description": "Detailed scoring information"
+          "dataPointsQuality": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataPointsQualityResponse"
+            },
+            "description": "Detailed results of quality checks performed at the individual data point level."
+          },
+          "overallRespondentQuality": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QualityCheckResponse"
+            },
+            "description": "An object containing detailed results for each quality check applied"
           }
         }
       },
@@ -392,118 +371,144 @@
         "description": "Configuration for data cleaning and review process",
         "type": "object",
         "properties": {
-          "ReDemSettings": {
+          "standardSettings": {
             "type": "boolean",
-            "description": "**Whether to use default ReDem recommended cleaning settings** \n\n when set to `true`, applies ReDem's recommended cleaning settings to determine whether a respondent should be excluded and categorized as low quality. \n\nThese settings are predefined based on ReDem's expertise and are tailored to the available data points of each respondent. \n\n **⭕ Note:** If ReDem settings is set to `true` and custom settings is also provided, the ReDem recommended settings will be overridden by the custom settings.",
+            "description": "**Whether to use standard cleaning settings** \n\n when set to `true`, applies standard cleaning settings to determine whether a respondent should be excluded and categorized as low quality. \n\nThese settings are predefined based on ReDem's expertise and are tailored to the available data points of each respondent. \n\n **⭕ Note:** If standard settings is set to `true` and custom settings is also provided, the standard settings will be overridden by the custom settings.",
             "example": true
           },
           "CustomSettings": {
             "type": "object",
             "description": "Custom configuration for quality checks",
-            "example": {
-              "redemScore": 80,
-              "qualityChecks": [
-                {
-                  "type": "OES",
-                  "score": 70,
-                  "minimumAnswers": 5
-                }
-              ]
-            },
             "properties": {
               "redemScore": {
                 "type": "number",
                 "description": "Minimum acceptable ReDem score (0-100)",
                 "example": 80
               },
-              "qualityChecks": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "OES",
-                        "TS",
-                        "GQS",
-                        "CHS"
-                      ],
-                      "example": "OES"
-                    },
-                    "score": {
-                      "type": "number",
-                      "example": 70
-                    },
-                    "minimumAnswers": {
-                      "type": "number",
-                      "example": 5
-                    },
-                    "minimumQuestions": {
-                      "type": "number",
-                      "example": 3
-                    },
-                    "minimumItems": {
-                      "type": "number",
-                      "example": 2
+              "OES": {
+                "type": "object",
+                "properties": {
+                  "score": {
+                    "type": "number",
+                    "description": "Minimum score threshold for OES checks",
+                    "example": 60
+                  },
+                  "minDataPoints": {
+                    "type": "number",
+                    "description": "Minimum number of data points required",
+                    "example": 2
+                  },
+                  "categories": {
+                    "type": "object",
+                    "properties": {
+                      "genericAnswers": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      },
+                      "noInformation": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      },
+                      "badLanguage": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      },
+                      "nonsense": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      },
+                      "duplicateAnswer": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      },
+                      "duplicateRespondent": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      },
+                      "wrongTopic": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      },
+                      "wrongLanguage": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      },
+                      "copyPastAnswer": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      },
+                      "fakeAnswer": {
+                        "type": "object",
+                        "properties": {
+                          "exclude": { "type": "boolean" },
+                          "minDataPoints": { "type": "number" }
+                        }
+                      }
                     }
                   }
                 }
-              }
-            }
-          },
-          "OESCategories": {
-            "type": "object",
-            "description": "Configuration for Open-Ended response categories",
-            "example": {
-              "validAnswers": true,
-              "genericAnswers": true,
-              "noInformation": true
-            },
-            "properties": {
-              "validAnswers": {
-                "type": "boolean",
-                "example": true
               },
-              "genericAnswers": {
-                "type": "boolean",
-                "example": true
+              "CHS": {
+                "type": "object",
+                "properties": {
+                  "score": {
+                    "type": "number",
+                    "description": "Minimum score threshold for CHS checks",
+                    "example": 50
+                  }
+                }
               },
-              "noInformation": {
-                "type": "boolean",
-                "example": true
+              "GQS": {
+                "type": "object",
+                "properties": {
+                  "score": {
+                    "type": "number",
+                    "description": "Minimum score threshold for GQS checks",
+                    "example": 40
+                  },
+                  "minDataPoints": {
+                    "type": "number",
+                    "description": "Minimum number of data points required",
+                    "example": 2
+                  }
+                }
               },
-              "badLanguage": {
-                "type": "boolean",
-                "example": true
-              },
-              "nonsense": {
-                "type": "boolean",
-                "example": true
-              },
-              "duplicateAnswer": {
-                "type": "boolean",
-                "example": true
-              },
-              "duplicateRespondent": {
-                "type": "boolean",
-                "example": true
-              },
-              "wrongTopic": {
-                "type": "boolean",
-                "example": true
-              },
-              "wrongLanguage": {
-                "type": "boolean",
-                "example": true
-              },
-              "copyPastAnswer": {
-                "type": "boolean",
-                "example": true
-              },
-              "fakeAnswer": {
-                "type": "boolean",
-                "example": true
+              "TS": {
+                "type": "object",
+                "properties": {
+                  "score": {
+                    "type": "number",
+                    "description": "Minimum score threshold for TS checks",
+                    "example": 20
+                  }
+                }
               }
             }
           }
@@ -621,92 +626,95 @@
               "example": {
                 "respondentId": "RESP497770",
                 "projectName": "Global Vacation Insights 2024",
-                "surveyName": "Highlights from Your Last Vaction",
-                "datapoints": [
+                "dataPoints": [
                   {
-                    "questionId": "Q1",
                     "qualityCheck": "OES",
-                    "openEndedAnswer": "We were at Lake Garda in Italy",
-                    "title": "Where did you spend your last vacation?",
+                    "dataPointId": "Q1",
+                    "question": "Where did you spend your last vacation?",
+                    "answer": "We were at Lake Garda in Italy",
                     "keywords": ["Beach", "Mountains", "Lake", "Museums", "Europe", "Asia", "Destination"],
-                    "isDuplicateEnabled": true,
-                    "isCopyPaste": false,
+                    "activateDuplicateDetection": true,
                     "allowedLanguages": ["en", "de", "it"]
                   },
                   {
-                    "questionId": "durationQ1", 
                     "qualityCheck": "TS",
+                    "dataPointId": "durationQ1", 
                     "duration": 42670
                   },
                   {
-                    "questionId": "Q2", 
                     "qualityCheck": "GQS",
-                    "gridQuestions": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6] 
+                    "dataPointId": "Q2", 
+                    "gridQuestionPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6] 
                   },
                   {
-                    "questionId": "Q3", 
                     "qualityCheck": "OES",
-                    "openEndedAnswer": "Italian cuisine, especially pizza and fine wine.",
-                    "title": "What was the most memorable part of your last vacation?",
+                    "dataPointId": "Q3", 
+                    "question": "What was the most memorable part of your last vacation?",
+                    "answer": "Italian cuisine, especially pizza and fine wine.",
                     "keywords": ["Cuisine", "Food", "Art", "Adventure", "History", "Landscape", "Culture"],
-                    "isDuplicateEnabled": true,
-                    "isCopyPaste": true,
+                    "activateDuplicateDetection": true,
                     "allowedLanguages": ["en", "de", "it"]
                   },
                   {
-                    "questionId": "durationQ3", 
                     "qualityCheck": "TS",
+                    "dataPointId": "durationQ3", 
                     "duration": 69720
                   },
                   {
-                    "questionId": "CHS_Question",
                     "qualityCheck": "CHS",
-                    "interview": [
-                      { "questionTitle" : "What mode of transport did you use?", "answer": "Car" },
-                      { "questionTitle" : "How many days did you stay?", "answer": 5 }, 
-                      { "questionTitle" : "Did you travel with family?", "answer": "yes" },
-                      { "questionTitle" : "What was your approximate total budget for the trip (in EUR)?", "answer": 1500 },
-                      { "questionTitle" : "What type of accommodation did you stay in?", "answer": "Hotel" }
+                    "dataPointId": "CHS_Question",
+                    "interviewData": [
+                      { "question": "What mode of transport did you use?", "answer": "Car" },
+                      { "question": "How many days did you stay?", "answer": 5 }, 
+                      { "question": "Did you travel with family?", "answer": "yes" },
+                      { "question": "What was your approximate total budget for the trip (in EUR)?", "answer": 1500 },
+                      { "question": "What type of accommodation did you stay in?", "answer": "Hotel" }
                     ]
                   },
                   {
-                    "questionId": "Q4", 
                     "qualityCheck": "GQS",
-                    "gridQuestions": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1] 
+                    "dataPointId": "Q4",
+                    "gridQuestionPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1] 
                   },
                   {
-                    "questionId": "totalDuration", 
                     "qualityCheck": "TS",
+                    "dataPointId": "totalDuration",
                     "duration": 256843
                   }
                 ],
-                "needRealtimeResponse": true,
-                "needDetailedResponse": true,
                 "cleaningSettings": {
-                  "ReDemSettings": false,
+                  "standardSettings": false,
                   "CustomSettings": {
                     "redemScore": 60,
-                    "qualityChecks": [
-                      {"type": "OES", "score": 30, "minimumAnswers":2},
-                      {"type": "CHS", "score": 20, "minimumQuestions":20},
-                      {"type": "GQS", "score": 10, "minimumItems":15},
-                      {"type": "TS", "score": 20}
-                    ]
-                  },
-                  "OESCategories": {
-                    "validAnswers": false,
-                    "genericAnswers": false,
-                    "noInformation": false,
-                    "badLanguage": false,
-                    "nonsense": false,
-                    "duplicateAnswer": true,
-                    "duplicateRespondent": true,
-                    "wrongTopic": true,
-                    "wrongLanguage": true,
-                    "copyPastAnswer": true,
-                    "fakeAnswer": true
+                    "OES": {
+                      "score": 30,
+                      "minimumAnswers": 2,
+                      "categories": {
+                        "genericAnswers": {"exclude":true, "minDataPoints": 2},
+                        "noInformation": {"exclude":true, "minDataPoints": 2},
+                        "badLanguage": {"exclude":true, "minDataPoints": 2},
+                        "nonsense": {"exclude":true, "minDataPoints": 1},
+                        "duplicateAnswer": {"exclude":true, "minDataPoints": 1},
+                        "duplicateRespondent": {"exclude":true, "minDataPoints": 1},
+                        "wrongTopic": {"exclude":true, "minDataPoints": 1},
+                        "wrongLanguage": {"exclude":true, "minDataPoints": 1},
+                        "copyPastAnswer": {"exclude":true, "minDataPoints": 1},
+                        "fakeAnswer": {"exclude":true, "minDataPoints": 1}
+                      }
+                    },
+                    "CHS": {
+                      "score": 20
+                    },
+                    "GQS": {
+                      "score": 10,
+                      "minimumItems": 15
+                    },
+                    "TS": {
+                      "score": 20
+                    }
                   }
-                }
+                },
+                "synchronousResponse": true
               }
             }
           }
@@ -719,8 +727,8 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "title": "Real-time Detailed Response",
-                      "description": "**Real-time Detailed Response** \n\nThis response mode is triggered when both `needDetailedResponse` and `needRealtimeResponse` are set to `true`. \n\n In this case, the system generates a comprehensive, detailed response and processes it synchronously, meaning the request will wait (`await`) until the complete response is ready before proceeding. This ensures the delivery of in-depth information in real-time.",
+                      "title": "Synchronous Response",
+                      "description": "**Synchronous Response** \n\nThis response mode is triggered when both `needDetailedResponse` and `needRealtimeResponse` are set to `true`. \n\n In this case, the system generates a comprehensive, detailed response and processes it synchronously, meaning the request will wait (`await`) until the complete response is ready before proceeding. This ensures the delivery of in-depth information in real-time.",
                       "type": "object",
                       "properties": {
                         "status": {
@@ -730,41 +738,15 @@
                             "JOB_COMPLETED"
                           ]
                         },
-                        "results": {
+                        "dataPointsQuality": {
                           "$ref": "#/components/schemas/RespondentResults",
                           "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request** and annotated with quality check results."
                         }
                       }
                     },
                     {
-                      "title": "Real-time Simple Response",
-                      "description": "**Real-time Simple Response** \n\nThis response mode is triggered when `needDetailedResponse` is set to `false` and `needRealtimeResponse` is set to `true`. \n\n In this case, the system generates a simple response and processes it synchronously, meaning the request will wait (`await`) until the complete response is ready before proceeding. This ensures the delivery of in-depth information in real-time.",
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "description": "A variable that **indicates the current state of the job processing**.",
-                          "enum": [
-                            "JOB_COMPLETED"
-                          ]
-                        },
-                        "results": {
-                          "type": "object",
-                          "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request** and annotated with quality check results.",
-                          "properties": {
-                            "isRespondentExcluded": {
-                              "type": "boolean"
-                            },
-                            "redemScore": {
-                              "type": "number"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "title": "Async Response",
-                      "description": "**Asynchronous Detailed Response** \n\nThis response mode is triggered when `needRealtimeResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoint/getRespondentStatus) endpoint.",
+                      "title": "Asynchronous Response",
+                      "description": "**Asynchronous Response** \n\nThis response mode is triggered when `needRealtimeResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoint/getRespondentStatus) endpoint.",
                       "type": "object",
                       "properties": {
                         "status": {
@@ -779,41 +761,29 @@
                   ]
                 },
                 "examples": {
-                  "Real-time Detailed Response": {
+                  "Synchronous Response": {
                     "summary": "Detailed Response Example",
                     "value": {
                       "status": "JOB_COMPLETED",
-                      "results": {
-                        "isRespondentExcluded": false,
+                      "qualityAssessment": {
+                        "isExcluded": false,
                         "redemScore": 85,
-                        "detailedResponse": {
-                          "datapointLevelResponse": [
-                            {"questionId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer"},
-                            {"questionId": "durationQ1", "qualityCheck": "TS", "score": 95},
-                            {"questionId": "Q2", "qualityCheck": "GQS", "score": 90},
-                            {"questionId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer"},
-                            {"questionId": "durationQ3", "qualityCheck": "TS", "score": 50},
-                            {"questionId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
-                            {"questionId": "Q4", "qualityCheck": "GQS", "score": 80},
-                            {"questionId": "totalDuration", "qualityCheck": "TS", "score": 65}
-                          ],
-                          "qualityCheckLevelResponse": [
-                            {"qualityCheck": "OES", "score": 80},
-                            {"qualityCheck": "CHS", "score": 75},
-                            {"qualityCheck": "GQS", "score": 85},
-                            {"qualityCheck": "TS", "score": 70}
-                          ]
-                        }
-                      }
-                    }
-                  },
-                  "Real-time Simple Response": {
-                    "summary": "Simple Response Example",
-                    "value": {
-                      "status": "JOB_COMPLETED",
-                      "results": {
-                        "isRespondentExcluded": false,
-                        "redemScore": 85
+                        "dataPointsQuality": [
+                          {"dataPointId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer"},
+                          {"dataPointId": "durationQ1", "qualityCheck": "TS", "score": 95},
+                          {"dataPointId": "Q2", "qualityCheck": "GQS", "score": 90},
+                          {"dataPointId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer"},
+                          {"dataPointId": "durationQ3", "qualityCheck": "TS", "score": 50},
+                          {"dataPointId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                          {"dataPointId": "Q4", "qualityCheck": "GQS", "score": 80},
+                          {"dataPointId": "totalDuration", "qualityCheck": "TS", "score": 65}
+                        ],
+                        "overallRespondentQuality": [
+                          {"qualityCheck": "OES", "score": 80},
+                          {"qualityCheck": "CHS", "score": 75},
+                          {"qualityCheck": "GQS", "score": 85},
+                          {"qualityCheck": "TS", "score": 70}
+                        ]
                       }
                     }
                   },
