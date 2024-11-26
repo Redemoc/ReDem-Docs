@@ -30,11 +30,8 @@
   "tabs": [
     {
       "name": "API Documentation",
-      "url": "api-reference"
-    },
-    {
-      "name": "Changelog",
-      "url": "changelog"
+      "url": "api-reference",
+      "version": "Beta"
     }
   ],
   "navigation": [
@@ -92,7 +89,7 @@
       "group": "Endpoints",
       "pages": [
         "api-reference/endpoint/addRespondent",
-        "api-reference/endpoint/getRespondentStatus",
+        "api-reference/endpoint/getRespondent",
         "api-reference/endpoint/getAllRespondents",
         "api-reference/endpoint/stopSurvey"
       ]
@@ -107,5 +104,11 @@
   ],
   "feedback": {
     "thumbsRating": true
-  }
+  },
+  "api": {
+    "playground": {
+      "mode": "hide"
+    }
+  },
+  "versions": ["Beta"]
 }

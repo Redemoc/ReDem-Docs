@@ -143,7 +143,7 @@
                 "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
                 "example": "Q1"
               },
-              "gridQuestionPattern": {
+              "gridAnswersPattern": {
                 "type": "array",
                 "items": {
                   "type": "number"
@@ -644,7 +644,7 @@
                   {
                     "qualityCheck": "GQS",
                     "dataPointId": "Q2", 
-                    "gridQuestionPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6] 
+                    "gridAnswersPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6] 
                   },
                   {
                     "qualityCheck": "OES",
@@ -674,7 +674,7 @@
                   {
                     "qualityCheck": "GQS",
                     "dataPointId": "Q4",
-                    "gridQuestionPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1] 
+                    "gridAnswersPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1] 
                   },
                   {
                     "qualityCheck": "TS",
