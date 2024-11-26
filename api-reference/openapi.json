@@ -942,24 +942,24 @@
                     "value": {
                       "status": "JOB_COMPLETED",
                       "qualityAssessment": {
-                    "isExcluded": false,
-                    "redemScore": 85,
-                    "dataPointsQuality": [
-                      {"dataPointId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer"},
-                      {"dataPointId": "durationQ1", "qualityCheck": "TS", "score": 95},
-                      {"dataPointId": "Q2", "qualityCheck": "GQS", "score": 90},
-                      {"dataPointId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer"},
-                      {"dataPointId": "durationQ3", "qualityCheck": "TS", "score": 50},
-                      {"dataPointId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
-                      {"dataPointId": "Q4", "qualityCheck": "GQS", "score": 80},
-                      {"dataPointId": "totalDuration", "qualityCheck": "TS", "score": 65}
-                    ],
-                    "overallRespondentQuality": [
-                      {"qualityCheck": "OES", "score": 80},
-                      {"qualityCheck": "CHS", "score": 75},
-                      {"qualityCheck": "GQS", "score": 85},
-                      {"qualityCheck": "TS", "score": 70}
-                    ]
+                        "isExcluded": false,
+                        "redemScore": 85,
+                        "dataPointsQuality": [
+                          {"dataPointId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer"},
+                          {"dataPointId": "durationQ1", "qualityCheck": "TS", "score": 95},
+                          {"dataPointId": "Q2", "qualityCheck": "GQS", "score": 90},
+                          {"dataPointId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer"},
+                          {"dataPointId": "durationQ3", "qualityCheck": "TS", "score": 50},
+                          {"dataPointId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                          {"dataPointId": "Q4", "qualityCheck": "GQS", "score": 80},
+                          {"dataPointId": "totalDuration", "qualityCheck": "TS", "score": 65}
+                        ],
+                        "overallRespondentQuality": [
+                          {"qualityCheck": "OES", "score": 80},
+                          {"qualityCheck": "CHS", "score": 75},
+                          {"qualityCheck": "GQS", "score": 85},
+                          {"qualityCheck": "TS", "score": 70}
+                        ]
                       }
                     }
                   },
@@ -1003,25 +1003,16 @@
           "Respondent"
         ],
         "summary": "Get all respondents",
-        "description": "Get quality check results for all respondents in a survey",
+        "description": "Get quality check results and status for all respondents in a specific project",
         "parameters": [
           {
-            "name": "surveyName",
+            "name": "projectName",
             "in": "path",
             "required": true,
-            "description": "Name of the survey to check",
+            "description": "**The name of the project**, which helps identify different projects. \n\n If the project name is not existing in the system, an error will be displayed with **Error Status 404**",
             "schema": {
               "type": "string",
-              "example": "customer-survey-2024"
-            }
-          },
-          {
-            "name": "needDetailedResponse",
-            "in": "query",
-            "description": "Whether to include detailed scoring",
-            "schema": {
-              "type": "boolean",
-              "example": true
+              "example": "Global Vacation Insights 2024"
             }
           }
         ],
@@ -1033,14 +1024,61 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RespondentResults"
+                    "type": "object",
+                    "properties": {
+                      "respondentId": {
+                        "type": "string",
+                        "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project.",
+                        "example": "RESP497770"
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "A variable that **indicates the current state of the job**.",
+                        "enum": ["JOB_COMPLETED", "JOB_PROCESSING", "JOB_FAILED"]
+                      },
+                      "qualityAssessment": {
+                        "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
+                        "$ref": "#/components/schemas/RespondentResults"
+                      }
+                    }
                   }
-                }
+                },
+                "example": [
+                    { 
+                      "respondentId": "RESP497770",
+                      "status": "JOB_COMPLETED",
+                      "qualityAssessment": {
+                        "isExcluded": false,
+                        "redemScore": 85,
+                        "dataPointsQuality": [
+                          {"dataPointId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer"},
+                          {"dataPointId": "durationQ1", "qualityCheck": "TS", "score": 95},
+                          {"dataPointId": "Q2", "qualityCheck": "GQS", "score": 90},
+                          {"dataPointId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer"},
+                          {"dataPointId": "durationQ3", "qualityCheck": "TS", "score": 50},
+                          {"dataPointId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                          {"dataPointId": "Q4", "qualityCheck": "GQS", "score": 80},
+                          {"dataPointId": "totalDuration", "qualityCheck": "TS", "score": 65}
+                        ],
+                        "overallRespondentQuality": [
+                          {"qualityCheck": "OES", "score": 80},
+                          {"qualityCheck": "CHS", "score": 75},
+                          {"qualityCheck": "GQS", "score": 85},
+                          {"qualityCheck": "TS", "score": 70}
+                        ]
+                      }
+                    },
+                    { "respondentId": "RESP497771", "status": "JOB_PROCESSING" },
+                    { "respondentId": "RESP497772", "status": "JOB_FAILED" }
+                ]
               }
             }
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
+          },
+          "404": {
+            "$ref": "#/components/responses/ProjectNotFoundError"
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
