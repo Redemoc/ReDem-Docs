@@ -775,12 +775,12 @@
                           "type": "string",
                           "description": "A variable that **indicates the current state of the job processing**.",
                           "enum": [
-                            "JOB_COMPLETED"
+                            "JOB_COMPLETED", "JOB_FAILED"
                           ]
                         },
                         "qualityAssessment": {
                           "$ref": "#/components/schemas/RespondentResults",
-                          "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request** and annotated with quality check results."
+                          "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request**. \n\n **⭕ Note:** If the respondent's status is `JOB_FAILED`, this variable will return `null`."
                         }
                       }
                     },
@@ -802,7 +802,7 @@
                 },
                 "examples": {
                   "Synchronous Response": {
-                    "summary": "Detailed Response Example",
+                    "summary": "Synchronous Response Example",
                     "value": {
                       "status": "JOB_COMPLETED",
                       "qualityAssessment": {
@@ -828,7 +828,7 @@
                     }
                   },
                   "Asynchronously Response": {
-                    "summary": "Processing Response Example",
+                    "summary": "Asynchronous Response Example",
                     "value": {
                       "status": "JOB_PROCESSING"
                     }
@@ -875,10 +875,9 @@
             "in": "path",
             "required": true,
             "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project. \n\n If the combination of project name and respondent ID does not exist, an error will be displayed with **Error Status 405**",
-            
             "schema": {
               "type": "string",
-              "example": "RESP-001"
+              "example": "RESP497770"
             }
           }
         ],
@@ -888,10 +887,92 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "qualityAssessment": {
-                      "$ref": "#/components/schemas/RespondentResults"
+                  "oneOf": [
+                    {
+                      "title": "Job Completed",
+                      "description": "This response mode available when job status is `JOB_COMPLETED`. \n\n In this case, the system generates a comprehensive, quality assessment of the respondent.",
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "description": "A variable that **indicates the current state of the job**.",
+                          "enum": [
+                            "JOB_COMPLETED"
+                          ]
+                        },
+                        "qualityAssessment": {
+                          "description": "This variable **represents respondent data that has been evaluated based on the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
+                          "$ref": "#/components/schemas/RespondentResults"
+                        }
+                      }
+                    },
+                    {
+                      "title": "Job Processing",
+                      "description": "This response mode available when job status is `JOB_PROCESSING`. \n\n In this case, the system will only return the status of the job, without the quality assessment of the respondent.",
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "description": "A variable that **indicates the current state of the job**.",
+                          "enum": [
+                            "JOB_PROCESSING"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "title": "Job Failed",
+                      "description": "This response mode available when job status is `JOB_FAILED`. \n\n In this case, the system will only return the status of the job, without the quality assessment of the respondent.",
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "description": "A variable that **indicates the current state of the job**.",
+                          "enum": [
+                            "JOB_FAILED"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Job Completed": {
+                    "summary": "Job Completed Example",
+                    "value": {
+                      "status": "JOB_COMPLETED",
+                      "qualityAssessment": {
+                    "isExcluded": false,
+                    "redemScore": 85,
+                    "dataPointsQuality": [
+                      {"dataPointId": "Q1", "qualityCheck": "OES", "score": 85, "category": "Valid Answer"},
+                      {"dataPointId": "durationQ1", "qualityCheck": "TS", "score": 95},
+                      {"dataPointId": "Q2", "qualityCheck": "GQS", "score": 90},
+                      {"dataPointId": "Q3", "qualityCheck": "OES", "score": 75, "category": "Valid Answer"},
+                      {"dataPointId": "durationQ3", "qualityCheck": "TS", "score": 50},
+                      {"dataPointId": "CHS_Question", "qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                      {"dataPointId": "Q4", "qualityCheck": "GQS", "score": 80},
+                      {"dataPointId": "totalDuration", "qualityCheck": "TS", "score": 65}
+                    ],
+                    "overallRespondentQuality": [
+                      {"qualityCheck": "OES", "score": 80},
+                      {"qualityCheck": "CHS", "score": 75},
+                      {"qualityCheck": "GQS", "score": 85},
+                      {"qualityCheck": "TS", "score": 70}
+                    ]
+                      }
+                    }
+                  },
+                  "Job Processing": {
+                    "summary": "Job Processing Example",
+                    "value": {
+                      "status": "JOB_PROCESSING"
+                    }
+                  },
+                  "Job Failed": {
+                    "summary": "Job Failed Example",
+                    "value": {
+                      "status": "JOB_FAILED"
                     }
                   }
                 }
