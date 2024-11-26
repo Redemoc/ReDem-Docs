@@ -203,7 +203,7 @@
         "properties": {
           "respondentId": {
             "type": "string",
-            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.\n\n**💡 Important:** The system uses this ID, along with the survey name, to uniquely identify the respondent within a survey, making it possible for the same respondent to be part of different surveys. \n\nIf the combination of survey name and respondent ID already exists, an error will be displayed with **Error Code 409**",
+            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project.\n\n**💡 Important:** The system uses this ID, along with the project name, to uniquely identify the respondent within a project, making it possible for the same respondent to be part of different projects. \n\nIf the combination of project name and respondent ID already exists, an error will be displayed with **Error Status 409**",
             "example": "RESP497770"
           },
           "projectName": {
@@ -290,7 +290,7 @@
         }
       },
       "RespondentResults": {
-        "description": "Complete results for a respondent",
+        "description": "Complete quality assessment for a respondent",
         "type": "object",
         "properties": {
           "isExcluded": {
@@ -320,7 +320,7 @@
         }
       },
       "AddSurveyRequest": {
-        "description": "Request body for creating or customizing a survey",
+        "description": "Request body for creating or customizing a project",
         "required": [
           "surveyName",
           "cleaningSettings",
@@ -335,7 +335,7 @@
           },
           "surveyName": {
             "type": "string",
-            "description": "Unique identifier for the survey",
+            "description": "Unique identifier for the project",
             "example": "customer-survey-2024"
           },
           "cleaningSettings": {
@@ -595,6 +595,46 @@
             }
           }
         }
+      },
+      "ProjectNotFoundError": {
+        "description": "Project Not Found Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "PROJECT_NOT_FOUND"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RespondentNotFoundError": {
+        "description": "Respondent Not Found Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "RESPONDENT_NOT_FOUND"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -738,7 +778,7 @@
                             "JOB_COMPLETED"
                           ]
                         },
-                        "dataPointsQuality": {
+                        "qualityAssessment": {
                           "$ref": "#/components/schemas/RespondentResults",
                           "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request** and annotated with quality check results."
                         }
@@ -817,24 +857,25 @@
         "tags": [
           "Respondent"
         ],
-        "summary": "Get respondent status",
-        "description": "Get the quality check status and results for a specific respondent",
+        "summary": "Get respondent results",
+        "description": "Get the quality check results and status for a specific respondent",
         "parameters": [
           {
-            "name": "surveyName",
+            "name": "projectName",
             "in": "path",
             "required": true,
-            "description": "Name of the survey to check",
+            "description": "**The name of the project**, which helps identify different projects. \n\n If the project name is not existing in the system, an error will be displayed with **Error Status 404**",
             "schema": {
               "type": "string",
-              "example": "customer-survey-2024"
+              "example": "Global Vacation Insights 2024"
             }
           },
           {
             "name": "respondentId",
             "in": "path",
             "required": true,
-            "description": "ID of the respondent to check",
+            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project. \n\n If the combination of project name and respondent ID does not exist, an error will be displayed with **Error Status 405**",
+            
             "schema": {
               "type": "string",
               "example": "RESP-001"
@@ -847,7 +888,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RespondentResults"
+                  "type": "object",
+                  "properties": {
+                    "qualityAssessment": {
+                      "$ref": "#/components/schemas/RespondentResults"
+                    }
+                  }
                 }
               }
             }
@@ -857,6 +903,12 @@
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/ProjectNotFoundError"
+          },
+          "405": {
+            "$ref": "#/components/responses/RespondentNotFoundError"
           },
           "500": {
             "$ref": "#/components/responses/ServerError"
