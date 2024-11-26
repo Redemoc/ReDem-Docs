@@ -812,7 +812,7 @@
         }
       }
     },
-    "/respondent/status/{surveyName}/{respondentId}": {
+    "/respondent/result/{projectName}/{respondentId}": {
       "get": {
         "tags": [
           "Respondent"
@@ -864,7 +864,7 @@
         }
       }
     },
-    "/respondent/status/{surveyName}": {
+    "/respondent/result/{projectName}": {
       "get": {
         "tags": [
           "Respondent"
@@ -1032,7 +1032,7 @@
         }
       }
     },
-    "/survey/stop/{surveyName}": {
+    "/project/stop/{projectName}": {
       "get": {
         "tags": [
           "Survey"
