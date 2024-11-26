@@ -57,9 +57,7 @@
       "group": "Core Features",
       "pages": [
         "features/data-import",
-        "features/benchmarking",
-        "features/cleaning-and-review",
-        "features/export-results"
+        "features/cleaning-and-review"
       ]
     },
     {
@@ -92,13 +90,6 @@
         "api-reference/endpoint/getRespondent",
         "api-reference/endpoint/getAllRespondents",
         "api-reference/endpoint/stopSurvey"
-      ]
-    },
-    {
-      "group": "Releases",
-      "pages": [
-        "changelog/product-changelogs",
-        "changelog/api-changelogs"
       ]
     }
   ],
