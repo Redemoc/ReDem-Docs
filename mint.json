@@ -31,7 +31,7 @@
     {
       "name": "API Documentation",
       "url": "api-reference",
-      "version": "Beta"
+      "version": "V3 (Beta)"
     }
   ],
   "navigation": [
@@ -101,5 +101,5 @@
       "mode": "hide"
     }
   },
-  "versions": ["Beta"]
+  "versions": ["V3 (Beta)"]
 }
