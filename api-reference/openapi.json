@@ -513,6 +513,96 @@
             }
           }
         }
+      },
+      "EstimateRespondentRequest": {
+        "description": "Request body for estimating the maximum number of credits needed for a respondent",
+        "required": [
+          "OESDataPoints",
+          "GQSAnswers",
+          "TSDataPoints",
+          "CHSInterviews"
+        ],
+        "type": "object",
+        "properties": {
+          "OESDataPoints": {
+            "type": "number",
+            "description": "**Number of OES data points** that need to consider for quality checks"
+          },
+          "GQSAnswers": {
+            "type": "number",
+            "description": "**Number of GQS answers** that need to consider for quality checks"
+          },
+          "TSDataPoints": {
+            "type": "number",
+            "description": "**Number of TS data points** that need to consider for quality checks"
+          },
+          "CHSInterviews": {
+            "type": "number",
+            "description": "**Number of CHS interviews** that need to consider for quality checks"
+          }
+        }
+      },
+      "EstimationBreakdown": {
+        "description": "Detailed breakdown of the number of credits estimated for a respondent",
+        "type": "object",
+        "properties": {
+          "OES": {
+            "type": "object",
+            "description": "Detailed breakdown of the number of OES credits estimated for a respondent",
+            "properties": {
+              "credits": {
+                "type": "number",
+                "description": "Number of OES credits estimated for a respondent"
+              },
+              "dataPoints": {
+                "type": "number",
+                "description": "Number of OES data points estimated for a respondent"
+              }
+            }
+          },
+          "GQS": {
+            "type": "object",
+            "description": "Detailed breakdown of the number of GQS credits estimated for a respondent",
+            "properties": {
+              "credits": {
+                "type": "number",
+                "description": "Number of GQS credits estimated for a respondent"
+              },
+              "answers": {
+                "type": "number",
+                "description": "Number of GQS answers estimated for a respondent"
+              }
+            }
+          },
+          "TS": {
+            "type": "object",
+            "description": "Detailed breakdown of the number of TS credits estimated for a respondent",
+            "properties": {
+              "credits": {
+                "type": "number",
+                "description": "Number of TS credits estimated for a respondent"
+              },
+              "dataPoints": {
+                "type": "number",
+                "description": "Number of TS data points estimated for a respondent"
+              }
+            }
+          },
+          "CHS": {
+            "type": "object",
+            "description": "Detailed breakdown of the number of CHS credits estimated for a respondent",
+            "properties": {
+              "credits": {
+                "type": "number",
+                "description": "Number of CHS credits estimated for a respondent"
+              },
+              "interviews": {
+                "type": "number",
+                "description": "Number of CHS interviews estimated for a respondent"
+              }
+            }
+          }
+        }
       }
     },
     "responses": {
@@ -1331,6 +1421,84 @@
                           "status": "JOB_FAILED"
                         }
                       ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/respondent/estimate": {
+      "get": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Estimate the maximum number of credits needed for a respondent",
+        "operationId": "estimateRespondent",
+        "description": "API for estimating the maximum number of credits needed for a respondent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstimateRespondentRequest"
+              },
+              "example": {
+                "OESDataPoints": 2,
+                "GQSAnswers": 35,
+                "TSDataPoints": 2,
+                "CHSInterviews": 25
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "estimate": {
+                      "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
+                      "type": "object",
+                      "properties": {
+                        "totalCredits": {
+                          "type": "number",
+                          "description": "This variable **represents the total number of credits** estimated for a respondent."
+                        },
+                        "estimationBreakdown": {
+                          "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
+                          "$ref": "#/components/schemas/EstimationBreakdown"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": 200,
+                  "estimate": {
+                    "totalCredits": 12,
+                    "estimationBreakdown": {
+                      "OES": {"credits": 4, "dataPoints": 2},
+                      "GQS": {"credits": 3, "answers": 35},
+                      "TS": {"credits": 1, "dataPoints": 2},
+                      "CHS": {"credits": 4, "interviews": 25}
                     }
                   }
                 }
