@@ -1,0 +1,69 @@
+---
+title: 'Behavior Tracking'
+description: 'Learn how to track respondent behavior'
+icon: "eye"
+iconType: "regular"
+---
+
+<Steps titleSize="h3">
+  <Step title="Implementing a JavaScript Tracker for User Behavior Data">
+    <p> Copy the simple **JavaScript tracker code** (attached) into your survey platform’s frontend codebase or UI. This ensures that, whenever respondent complete surveys, it tracks input behavior data for open-ended questions directly from their individual browsers. </p>
+  </Step>
+  <Step title="Integrate ReDem API into your workflow">
+    <p>Save this input_behavior data in your database. Alternatively, if you are directly calling our API from the end user’s browser, you can pass the data directly without saving it on your side.</p>
+
+    ```javascript
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const inputField = document.getElementById("input_behavior");
+        const submitButton = document.getElementById("submit_button");
+        let isCopyPaste = false;
+
+
+        function updateBehaviorData(eventType, value) {
+            let behaviorData = JSON.parse(sessionStorage.getItem("input_behavior_data")) || [];
+            behaviorData.push({
+                type: eventType,
+                value: value,
+                timestamp: new Date().toISOString()
+            });
+            sessionStorage.setItem("input_behavior_data", JSON.stringify(behaviorData));
+        }
+
+        inputField.addEventListener("input", function (event) {
+          updateBehaviorData(event.type, event.target.value);
+        });
+
+        inputField.addEventListener("paste", function (event) {
+          isCopyPaste = true;
+          let pasteData = event.clipboardData.getData('text');
+          updateBehaviorData(event.type, pasteData);
+        });
+
+        //this could be is the same event in your platform to go to next page or submit or save data to send to redem API later on
+        submitButton.addEventListener("click", function () {
+          const behaviorData = JSON.parse(sessionStorage.getItem("input_behavior_data"));
+          console.log("Input Behavior Data:", behaviorData);
+          console.log("Open Ended Answer:", inputField.value);
+          console.log("Is Copy Paste:", isCopyPaste);
+              
+          ///TODO
+          doAction()
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+      });
+    </script>
+    ```
+  </Step>
+  <Step title="Use API response to trigger your next step">
+    <p>Pass the data in an additional variable  inputBehavior as below with its other relevant open ended question’s correct **datapoint**.</p>
+
+    ```javascript
+      respondentBody.datapoints[i].inputBehavior = inputBehavior; //new variable
+      respondentBody.datapoints[i].openEndedAnswer = value; //you already have this
+      respondentBody.datapoints[i].isCopyPaste = isCopyPaste; //you already have this but it might not have worked without the tracker
+    ```
+  </Step>
+</Steps>
