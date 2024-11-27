@@ -30,11 +30,8 @@
   "tabs": [
     {
       "name": "API Documentation",
-      "url": "api-reference"
-    },
-    {
-      "name": "Changelog",
-      "url": "changelog"
+      "url": "api-reference",
+      "version": "V3 (Beta)"
     }
   ],
   "navigation": [
@@ -60,9 +57,7 @@
       "group": "Core Features",
       "pages": [
         "features/data-import",
-        "features/benchmarking",
-        "features/cleaning-and-review",
-        "features/export-results"
+        "features/cleaning-and-review"
       ]
     },
     {
@@ -92,20 +87,20 @@
       "group": "Endpoints",
       "pages": [
         "api-reference/endpoint/addRespondent",
-        "api-reference/endpoint/getRespondentStatus",
+        "api-reference/endpoint/getRespondent",
         "api-reference/endpoint/getAllRespondents",
-        "api-reference/endpoint/stopSurvey"
-      ]
-    },
-    {
-      "group": "Releases",
-      "pages": [
-        "changelog/product-changelogs",
-        "changelog/api-changelogs"
+        "api-reference/endpoint/stopSurvey",
+        "api-reference/endpoint/estimateRespondent"
       ]
     }
   ],
   "feedback": {
     "thumbsRating": true
-  }
+  },
+  "api": {
+    "playground": {
+      "mode": "hide"
+    }
+  },
+  "versions": ["V3 (Beta)"]
 }
