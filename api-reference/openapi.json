@@ -240,11 +240,6 @@
         "description": "Quality check results for a single datapoint",
         "type": "object",
         "properties": {
-          "dataPointId": {
-            "type": "string",
-            "description": "**A unique identifier of the data point**",
-            "example": "Q1"
-          },
           "qualityCheck": {
             "type": "string",
             "enum": [
@@ -255,6 +250,11 @@
             ],
             "description": "**Type of quality check** performed for the data point",
             "example": "OES"
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**A unique identifier of the data point**",
+            "example": "Q1"
           },
           "score": {
             "type": "number",
