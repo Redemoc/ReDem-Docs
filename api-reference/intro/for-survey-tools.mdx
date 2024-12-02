@@ -22,7 +22,7 @@ iconType: "regular"
     ```javascript Example request body
     {
       "respondentId": "RESP497770", 
-      "projectName": "Global Vacation Insights 2024",
+      "surveyName": "Global Vacation Insights 2024",
       "dataPoints": [ 
         {
           "qualityCheck": "OES",
@@ -40,30 +40,21 @@ iconType: "regular"
         },
         // ... other data points ...
       ],
+      "activateCleaning": true,
       "cleaningSettings": {
-        "standardSettings": false,
-        "customSettings": {
-          "redemScore": 60,
-          "OES": {
-            "score": 30,
-            "minimumAnswers": 2,
-            "categories": {
-              "genericAnswers": {"exclude":true, "minDataPoints": 2},
-              "noInformation": {"exclude":true, "minDataPoints": 2},
-              // ... other categories ...
-            }
-          },
-          "CHS": {
-            "score": 20
-          },
-          "GQS": {
-            "score": 10,
-            "minimumItems": 15
-          },
-          "TS": {
-            "score": 20
+        "redemScore": 60,
+        "OES": {
+          "score": 60,
+          "minDataPoints":2,
+          "categories": {
+            "genericAnswersnoInformation": {"exclude": false, "minDataPoints":2},
+            "noInformation": {"exclude": false, "minDataPoints":2},
+            // ... other categories ...
           }
-        }
+        },
+        "CHS": {"score": 50},
+        "GQS": {"score": 40, "minDataPoints":2},
+        "TS": {"score": 20}
       },
       "synchronousResponse": false,
     }
