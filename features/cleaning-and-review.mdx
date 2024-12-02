@@ -1,6 +1,61 @@
 ---
-title: 'Cleaning and Review'
-description: 'Learn how the Cleaning and Review works in ReDem'
+title: 'Data Cleaning'
+description: 'Learn how the Data Cleaning works in ReDem'
 icon: "broom-wide"
 iconType: "regular"
 ---
+
+## Why data cleaning matters?
+Data cleaning is one of the most important steps to ensure the quality of your analysis. Beyond finding inconsistencies and irrelevant data, it plays a key role in **identifying poor-quality respondents or artificialy created responses**.
+
+ReDem's data cleaning feature **simplifies and automates** the process of identifying low-quality respondents and artificialy created responses, ensuring a **standardized and transparent** approach built on the foundation of ReDem's comprehensive evaluations.
+
+## How does cleaning work?
+Each respondent evaluated by ReDem undergoes a series of quality checks. These checks help us to assign a score and categorize each response provided by the respondent. This process forms the foundation of ReDem's data cleaning feature.
+
+In ReDem, there are two main ways to clean your data:
+
+### Using ReDem Default Cleaning Settings
+With the ReDem team's expertise and the quality checks applied to each respondent, we've designed default cleaning settings to handle the most common scenarios.
+
+Here's an overview of the defaults settings:
+
+**ReDem Score**: `60` <br/> Respondent with a **ReDem score below 60** are flagged as excluded.
+
+**Open-Ended Score (OES)** - `60` <br/> Applies if a respondent **OES score is below 60 and provides at least two valid open-ended responses** are flagged as excluded.
+
+**Open-Ended Response Categories**: <br/> Each category below outlines the criteria for flagging respondents based on their open-ended responses. Respondents are flagged as excluded if their responses meet the respective conditions.
+- **Generic Answer**: <br/> The respondent has **two or more** open-ended responses classified as generic.
+- **No Information**: <br/> If respondent has **two or more** open-ended responses that classified as no information.
+- **Bad Language**: <br/> If respondent has **two or more** open-ended responses that classified as bad language.
+- **Nonsense**: <br/> If respondent has **two or more** open-ended responses that classified as nonsense.
+- **Duplicate Answer**: <br/> If respondent has **two or more** open-ended responses that classified as duplicate answer.
+- **Duplicate Respondent**: <br/> If respondent has **two or more** open-ended responses that classified as duplicate respondent.
+- **Wrong Topic**: <br/> If respondent has **two or more** open-ended responses that classified as wrong topic.
+- **Wrong Language**: <br/> If respondent has **two or more** open-ended responses that classified as wrong language.
+- **Copy-Paste Answer**: <br/> If respondent has **two or more** open-ended responses that classified as copy-paste answer.
+- **Fake Answer**: <br/> If respondent has **one or more** open-ended responses that classified as fake answer.
+
+**Coherence Score (CHS)**: `50` <br/> Applies if a respondent **CHS score is below 50** are flagged as excluded.
+
+**Grid-Question Score (GQS)**: `40` <br/> Applies if a respondent **GQS score is below 40 and has at least two valid grid-question data points** are flagged as excluded.
+
+**Time Score (TS)**: `20` <br/> Applies if a respondent **TS score is below 20** are flagged as excluded.
+
+
+### Using Custom Cleaning Settings
+To customize the cleaning process, you can create your own custom cleaning settings by defining specific thresholds for each quality check. This allows you to tailor the cleaning criteria to suit your unique requirements, ensuring more precise and relevant results.
+
+## What is the outcome of the cleaning process?
+The cleaning process categorizes each response as either Included or Excluded, with clear reasons provided for any exclusions. This ensures transparency and helps identify areas that may need further attention or adjustments.
+
+Set of Reasons for Exclusion:
+- `ReDem Score Threshold`: The respondent's ReDem score is below than default threshold.
+- `Open-Ended Score Threshold`: The respondent's OES score is below than default threshold.
+- `Open-Ended Category`: The respondent's responses meet the criteria for one or more of the Open-ended answer categories.
+- `Coherence Score Threshold`: The respondent's CHS score is below than default threshold.
+- `Grid-Question Score Threshold`: The respondent's GQS score is below than default threshold.
+- `Time Score Threshold`: The respondent's TS score is below than default threshold.
+
+This structured reasoning provides clarity on exclusions and enables users to refine their criteria based on the analysis.
+
