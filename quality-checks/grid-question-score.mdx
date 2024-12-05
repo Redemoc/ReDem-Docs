@@ -1,28 +1,26 @@
 ---
-title: 'Grid-Question Score'
-description: 'Learn how the Grid-Question Score calculates'
+title: "Grid-Question Score"
+description: "Learn how the Grid-Question Score identifies click patterns"
 icon: "list"
 iconType: "regular"
 ---
 
-<img src="/images/GQS-Example.png" alt="Grid-Question Score Example" />
+![Grid-Question Score Example](/images/GQS-Example.png)
 
 ## What is the Grid-Question Score?
-ReDem makes it easy to evaluate responses to grid questions. The Grid-Question Score (GQS) checks how respondents behave when answering matrix-style questions. Our unique set of checks, combined with machine learning, identifies and analyzes various answer patterns within these questions.
+
+ReDem simplifies the evaluation of grid questions with the Grid-Question Score (GQS). This innovative metric leverages machine learning and a unique set of checks to analyze respondent behavior and detect patterns in matrix-style answers.
 
 ## How is the Grid-Question Score calculated?
-We compare responses to identify different patterns and spot the poor response behaviour. 
 
-The closer the response pattern of a respondent is to a recognized "bad" response pattern—such as straightlining (selecting the same response option for all items in a grid) or zigzag patterns—the lower their score.
-
-An individual score is generated for each grid question, and these individual scores are then combined into an overall score.
+We analyze responses to identify patterns and detect poor respondent behavior. The closer a respondent's answer pattern aligns with recognized "bad" patterns—like straightlining (selecting the same option across all grid items) or zigzagging—the lower their score. Each grid question is scored individually, and these scores are aggregated into an overall performance score.
 
 <Note>
-It is important to note that patterns in the responses (with the exception of straightlining) can only be identified if the items are imported in the order in which they were viewed by the respondent.
+  Response patterns (excluding straightlining) can only be detected if ReDem is used in real-time via our API, through survey software with integrated ReDem functionalities, or if items are imported in the exact order they were presented to respondents.
 </Note>
 
 ## What patterns does the Grid-Question Score check for?
-Currently, we focus on analyzing specific response patterns to compare the response behaviour of respondents. Here are the key patterns we check for:
 
-<img src="/images/Pattern-for-GQS.png" alt="Grid-Question Score patterns" />
+We currently focus on analyzing specific response patterns to assess respondent behavior. Key patterns include:
 
+![Grid-Question Score patterns](/images/Pattern-for-GQS.png)
