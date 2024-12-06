@@ -8,3 +8,29 @@ iconType: "regular"
 The coherence score is an AI-driven metric that evaluates the plausibility and logical consistency of responses throughout an entire interview, from screening questions to socio-demographics. This highly robust quality check detects contradictions and inconsistencies, making manipulation nearly impossible. Unlike traditional trap questions—which fraudsters and AI bots can easily identify—the Coherence Score is a game-changer in fraud detection. It works seamlessly within regular questionnaires, identifying inconsistencies without relying on special questions. For example, it can flag contradictions, like a respondent claiming regular subway use while living in a city without one.
 
 Additionally, the Coherence Score minimizes false positives by avoiding the disqualification of respondents who may have misclicked or momentarily lost focus but otherwise performed acceptably. This innovative approach not only enhances fraud detection but also ensures more accurate and fair assessments.
+
+## How is the Coherence-Score calculated?
+
+The Coherence Score evaluates the entire interview and assigns a score ranging from 0 to 100. Alongside the score, the system provides a detailed explanation of the rating and a list of incoherent questions. The explanation summarizes the overall quality of the interview, while the list highlights specific questions where the respondent's answers were inconsistent or contradictory, offering valuable insights into areas of potential concern.
+
+## Use of GPT-4 for Coherence-Score
+
+ReDem uses GPT-4 hosted on Microsoft Azure with a deployment in the EU region.
+
+### Individual Responses & Anonymity
+
+Each interview is sent to the GPT-4 deployment using a fully anonymized ID. Only the individual interview is shared per API query, ensuring that full survey datasets are never accessible to Microsoft Azure.
+
+### Exclusive Interaction with Azure
+
+ReDem is the sole user interacting with Azure. Azure is never informed about the origin or source of the imported data.
+
+### Data Residency
+
+Data for the Coherence Score is only transmitted, stored and processed in the EU.&#x20;
+
+### GDPR-Compliant Data Transfers
+
+ReDem and Azure operate under a “Data Processing Agreement” based on EU Standard Contractual Clauses (SCC), ensuring all data transfers comply with GDPR regulations, including those involving personal data in interview responses.
+
+This robust implementation provides the power and security you need to confidently assess the coherence of survey responses.
