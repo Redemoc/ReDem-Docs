@@ -1,49 +1,54 @@
 ---
-title: 'ReDem Credits'
-description: 'What ReDem-Credits are and how you can use them'
+title: "ReDem Credits"
+description: "What ReDem credits are and how to use them."
 icon: "coins"
 iconType: "regular"
 ---
 
 ## What are ReDem Credits?
 
-ReDem Credits serve as the currency for paying for quality checks on your survey data. <br/>
-You can acquire credits through individual annual plans. To learn more about available credit plans or to sign up for a new plan, [click here](https://redem.io/pricing/).
+ReDem Credits are the currency used to pay for quality checks on your survey data.
+
+You can purchase credits through annual subscription plans. To learn more about available plans or to sign up [click here](https://redem.io/pricing/).
 
 ## Basics of ReDem Credits
-To import data into ReDem, you need to spend ReDem credits. The credits required are based on the quality checks selected for each respondent. 
-The minimum cost is **4 credits per respondent**, with the total potentially increasing depending on the quality parameters you choose to apply. 
 
-This way, you have control over balancing cost and the level of data quality you want! 
+Analyzing data with ReDem requires ReDem credits, with the amount depending on the quality checks selected for each respondent.
+
+The minimum cost is 4 credits per respondent, with additional credits required based on the quality parameters you choose. This flexible approach allows you to balance costs while achieving your desired level of data quality!
 
 ## How Credit Calculation Works?
 
-The following list provides a clear overview of how credits are calculated based on Quality Scores. All calculations are performed on a per-respondent basis:
+The following list offers a clear overview of how credits are calculated based on Quality Scores, with all calculations applied on a per-respondent basis:
 
 <table>
   <thead>
     <tr>
-      <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}} >Score Type</th>
+      <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Score Type</th>
       <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Base Credits</th>
       <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Additional Credits</th>
     </tr>
   </thead>
+
   <tbody>
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Open-Ended-Score (OES)</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>3 (for first question)</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1 (for each additional question)</td>
     </tr>
+
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Time-Score (TS)</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>-</td>
     </tr>
+
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Coherence-Score (CHS)</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>3 (for first 20 questions)</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.2 (for each additional question)</td>
     </tr>
+
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Grid-Question-Score (GQS)</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.1 per item (max 3 credits)</td>
@@ -53,25 +58,23 @@ The following list provides a clear overview of how credits are calculated based
 </table>
 
 ### 💡Important Credit Rules
-- **The maximum number of credits for the Grid-Question-Score (GQS) is 3 credits per respondent.** <br/>
-Each grid-question item costs 0.1 credit. If a respondent has numerous grid-question items, the maximum charge per respondent for GQS remains capped at 3 credits.
 
-- **The Maximum Number of Credits for Time-Score (TS) is 3 credits per respondent.** <br/>
-No matter how many time-related data points are included for a respondent, the cost for TS will not exceed 1 credit.
+* **Grid-Question Score (GQS):** The maximum charge is capped at **3 credits per respondent**. Each grid-question item costs **0.1 credit**, but even if a respondent has numerous items, the total cost for GQS will not exceed 3 credits.
 
-- **The Maximum Number of Data Points Considered for Base Credits in Coherence-Score (CHS) is 20.** <br/>
-If a respondent has 20 or fewer CHS data points, the cost is 3 credits. For additional data points beyond 20, each data point incurs an additional cost of 0.2 credits.
+* **Time Score (TS):** The maximum cost is **1 credit per respondent**, regardless of the number of time-related data points included.
 
-- **No Credits for Empty Answers or Missing Values** <br/>
-No credits are calculated for empty answers or missing values within the data. Credits are only applied to valid, present data points.
+* **Coherence Score (CHS):** A maximum of **20 data points** is included in the base calculation, costing **3 credits** per respondent. For additional data points beyond 20, each incurs an extra cost of **0.2 credits**.
 
-- **Total Credit Calculation for Surveys** <br/>
-The total cost for a survey is calculated by summing the credit cost for each respondent. Each respondent’s credit requirements are determined based on their individual data points and applied quality checks.
+* **No Credits for Empty Answers or Missing Values:** Credits are only applied to valid, present data points. No credits are charged for empty responses or missing values.<br />
+  No credits are calculated for empty answers or missing values within the data. Credits are only applied to valid, present data points.
 
-<br/>
+* **Total Credit Calculation for Surveys**: The total cost of a survey is calculated by adding up the credit costs for all respondents. Each respondent's credit usage is determined by their individual data points and the quality checks applied.<br />
+
+
+<br />
 
 ### Sample Credit Calculation
-Find an example of how credits are calculated for a single respondent below:
 
-<img className="hidden dark:block" src="/images/Credit-Calculation-Example-Dark.png" />
-<img className="block dark:hidden" src="/images/Credit-Calculation-Example-Light.png" />
+Here’s an example of how credits are calculated for a single respondent:
+
+<img classname="block dark:hidden" src="/images/Credit-Calculation-Example-Light.png" />
