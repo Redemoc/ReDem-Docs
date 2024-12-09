@@ -1207,28 +1207,47 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "respondentId": {
-                        "type": "string",
-                        "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project.",
-                        "example": "RESP497770"
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "A variable that **indicates the current state of the job**.",
-                        "enum": ["JOB_COMPLETED", "JOB_PROCESSING", "JOB_FAILED"]
-                      },
-                      "respondentQuality": {
-                        "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
-                        "$ref": "#/components/schemas/RespondentResults"
+                  "type": "object",
+                  "properties": {
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable that **indicates whether the operation was successful or not**.",
+                      "enum":[true,false]
+                    },
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "This is an array of objects, **each representing a respondent in the project**.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "respondentId": {
+                            "type": "string",
+                            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project.",
+                            "example": "RESP497770"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "A variable that **indicates the current state of the job**.",
+                            "enum": ["JOB_COMPLETED", "JOB_PROCESSING", "JOB_FAILED"]
+                          },
+                          "respondentQuality": {
+                            "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
+                            "$ref": "#/components/schemas/RespondentResults"
+                          }
+                        }
                       }
+
                     }
                   }
                 },
-                "example": [
+                "example": {
+                  "success":true,
+                  "message":"Respondents quality retrieved successfully",
+                  "results": [
                     { 
                       "respondentId": "RESP497770",
                       "status": "JOB_COMPLETED",
@@ -1256,7 +1275,8 @@
                     },
                     { "respondentId": "RESP497771", "status": "JOB_PROCESSING" },
                     { "respondentId": "RESP497772", "status": "JOB_FAILED" }
-                ]
+                  ]
+                }
               }
             }
           },
