@@ -208,7 +208,7 @@
           },
           "surveyName": {
             "type": "string",
-            "description": "**The name of the survery**, which helps identify different surveys. \n\n**💡Important:** If the survey name already exists, the system will add the respondent under the appropriate survey. If the survey name is new, a new survey will be created, and the respondent will be added to the new survey. \n\n **⭕ Note:** Each survey within the organization should have its own unique identifier.",
+            "description": "**The name of the survery**, which helps identify different surveys. \n\n**💡Important:** If the survey name already exists, the system will add the respondent under the appropriate survey. If the survey name is new, a new survey will be created, and the respondent will be added to the new survey. \n\n **⭕ Note:** Each survey identifier must be unique for a given user.",
             "example": "Global Vacation Insights 2024"
           },
           "dataPoints": {
@@ -875,6 +875,7 @@
                         },
                         "results":{
                           "type":"object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                           "properties":{
                             "status": {
                               "type": "string",
@@ -907,6 +908,7 @@
                         },
                         "results":{
                           "type":"object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                           "properties":{
                             "status": {
                               "type": "string",
@@ -1034,6 +1036,7 @@
                         },
                         "results": {
                           "type": "object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                           "properties": {
                             "status": {
                               "type": "string",
@@ -1066,6 +1069,7 @@
                         },
                         "results": {
                           "type": "object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                           "properties": {
                             "status": {
                               "type": "string",
@@ -1094,6 +1098,7 @@
                         },
                         "results": {
                           "type": "object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                           "properties": {
                             "status": {
                               "type": "string",
@@ -1448,6 +1453,7 @@
                     },
                     "results": {
                       "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                       "properties": {
                         "status": {
                           "type": "number",
@@ -1511,34 +1517,49 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "number"
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable that **indicates whether the operation was successful or not**.",
+                      "enum":[true,false]
                     },
-                    "estimate": {
-                      "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                    },
+                    "results": {
                       "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                       "properties": {
-                        "totalCredits": {
-                          "type": "number",
-                          "description": "This variable **represents the total number of credits** estimated for a respondent."
-                        },
-                        "estimationBreakdown": {
+                        "estimate": {
                           "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
-                          "$ref": "#/components/schemas/EstimationBreakdown"
+                          "type": "object",
+                          "properties": {
+                            "totalCredits": {
+                              "type": "number",
+                              "description": "This variable **represents the total number of credits** estimated for a respondent."
+                            },
+                            "estimationBreakdown": {
+                              "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
+                              "$ref": "#/components/schemas/EstimationBreakdown"
+                            }
+                          }
                         }
                       }
                     }
                   }
                 },
                 "example": {
-                  "status": 200,
-                  "estimate": {
-                    "totalCredits": 12,
-                    "estimationBreakdown": {
-                      "OES": {"credits": 4, "dataPoints": 2},
-                      "GQS": {"credits": 3, "answers": 35},
-                      "TS": {"credits": 1, "dataPoints": 2},
-                      "CHS": {"credits": 4, "interviews": 25}
+                  "success": true,
+                  "message": "Estimate retrieved successfully",
+                  "results": {
+                    "estimate": {
+                      "totalCredits": 12,
+                      "estimationBreakdown": {
+                        "OES": {"credits": 4, "dataPoints": 2},
+                        "GQS": {"credits": 3, "answers": 35},
+                        "TS": {"credits": 1, "dataPoints": 2},
+                        "CHS": {"credits": 4, "interviews": 25}
+                      }
                     }
                   }
                 }
