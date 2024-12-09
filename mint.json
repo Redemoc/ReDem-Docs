@@ -4,7 +4,7 @@
   "logo": {
     "dark": "/logo/ReDem-Logo-Dark.png",
     "light": "/logo/ReDem-Logo-Light.png",
-    "href": "https://redem.io/"
+    "href": "https://docs.redem.io/"
   },
   "favicon": "/ReDem-Fav-Icon.png",
   "colors": {
@@ -23,7 +23,7 @@
     }
   ],
   "topbarCtaButton": {
-    "name": "ReDem Application",
+    "name": "Login",
     "url": "https://app.redem.io/"
   },
   "primaryTab": { "name": "User Guide" },
@@ -56,7 +56,6 @@
     {
       "group": "Core Features",
       "pages": [
-        "features/data-import",
         "features/cleaning-and-review"
       ]
     },
