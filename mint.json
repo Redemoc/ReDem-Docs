@@ -79,7 +79,7 @@
       "pages": [
         "api-reference/api-specifications/api-keys",
         "api-reference/api-specifications/rate-limits",
-        "api-reference/api-specifications/errors"
+        "api-reference/api-specifications/response-structure"
       ]
     },
     {

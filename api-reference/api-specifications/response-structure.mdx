@@ -1,0 +1,50 @@
+---
+title: 'Response Structure'
+description: 'Get familiar with the response structure for all ReDem endpoints'
+icon: "brackets-curly"
+iconType: "regular"
+---
+
+The ReDem API Response is designed to provide clear, consistent, and well-structured data essential for seamless integration and efficient processing. Every API response follows a standardized format, ensuring easy parsing and error handling.
+
+This structure promotes transparency, reduces ambiguity, and supports fast debugging. The response format aligns with **RESTful principles** and adheres to **OpenAPI standards**, guaranteeing reliability, predictability, and comprehensive support for all user interactions.
+
+### ✅ Success Response
+The success response of the ReDem API indicates that the request has been processed successfully. This response is well-structured and provides crucial information about the request's status. 
+
+The success response follows a standardized format to ensure consistency, predictability, and ease of use for developers.
+
+Success responses are structured as follows:
+
+```json Sample success response for "Add Respondent"
+{
+    "success": true,
+    "message": "Respondent Evaluated successfully",
+    "results": {
+        "status": "JOB_COMPLETED",
+        "respondentQuality": {
+            "isExcluded": true,
+            "reasonsForExclusion": [
+                "Open Ended Score Threshold",
+                "Coherence Score Threshold"
+            ],
+            "redemScore": 85,
+           // ... rest of the response object ...
+        }
+    }
+}
+```
+
+### ❗Error Response
+The error response of the ReDem API is returned when a request fails due to various reasons. This response provides clear, actionable information to help developers identify and resolve the cause of the error. The response format is consistent, ensuring easy parsing and fast debugging.
+
+```json Sample error response for "Add Respondent"
+{
+    "success": false,
+    "message": "Validation failed",
+    "errors": {
+        "0": "\"surveyName\" is required",
+        "1": "\"dataPoints[0].dataPointId\" is required"
+    }
+}
+```
