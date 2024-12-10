@@ -208,7 +208,7 @@
           },
           "surveyName": {
             "type": "string",
-            "description": "**The name of the survery**, which helps identify different surveys. \n\n**💡Important:** If the survey name already exists, the system will add the respondent under the appropriate survey. If the survey name is new, a new survey will be created, and the respondent will be added to the new survey. \n\n **⭕ Note:** Each survey within the organization should have its own unique identifier.",
+            "description": "**The name of the survery**, which helps identify different surveys. \n\n**💡Important:** If the survey name already exists, the system will add the respondent under the appropriate survey. If the survey name is new, a new survey will be created, and the respondent will be added to the new survey. \n\n **⭕ Note:** Each survey identifier must be unique for a given user.",
             "example": "Global Vacation Insights 2024"
           },
           "dataPoints": {
@@ -864,16 +864,31 @@
                       "description": "**Synchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `true`. \n\n In this case, the system generates a comprehensive, detailed response and processes it synchronously, meaning the request will wait (`await`) until the complete response is ready before proceeding. This ensures the delivery of in-depth information in real-time.",
                       "type": "object",
                       "properties": {
-                        "status": {
-                          "type": "string",
-                          "description": "A variable that **indicates the current state of the job processing**.",
-                          "enum": [
-                            "JOB_COMPLETED", "JOB_FAILED"
-                          ]
+                        "success":{
+                          "type":"boolean",
+                          "description":"A variable that **indicates whether the operation was successful or not**.",
+                          "enum":[true,false]
                         },
-                        "respondentQuality": {
-                          "$ref": "#/components/schemas/RespondentResults",
-                          "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request**. \n\n **⭕ Note:** If the respondent's status is `JOB_FAILED`, this variable will return `null`."
+                        "message":{
+                          "type":"string",
+                          "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results":{
+                          "type":"object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "properties":{
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that **indicates the current state of the job processing**.",
+                              "enum": [
+                                "JOB_COMPLETED", "JOB_FAILED"
+                              ]
+                            },
+                            "respondentQuality": {
+                              "$ref": "#/components/schemas/RespondentResults",
+                              "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request**. \n\n **⭕ Note:** If the respondent's status is `JOB_FAILED`, this variable will return `null`."
+                            }
+                          }
                         }
                       }
                     },
@@ -882,12 +897,27 @@
                       "description": "**Asynchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoint/getRespondentStatus) endpoint.",
                       "type": "object",
                       "properties": {
-                        "status": {
-                          "type": "string",
-                          "description": "A variable that **indicates the current state of the job processing**.",
-                          "enum": [
-                            "JOB_PROCESSING"
-                          ]
+                        "success":{
+                          "type":"boolean",
+                          "description":"A variable that **indicates whether the operation was successful or not**.",
+                          "enum":[true,false]
+                        },
+                        "message":{
+                          "type":"string",
+                          "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results":{
+                          "type":"object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "properties":{
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that **indicates the current state of the job processing**.",
+                              "enum": [
+                                "JOB_PROCESSING"
+                              ]
+                            }
+                          }
                         }
                       }
                     }
@@ -897,34 +927,42 @@
                   "Synchronous Response": {
                     "summary": "Synchronous Response Example",
                     "value": {
-                      "status": "JOB_COMPLETED",
-                      "respondentQuality": {
-                        "isExcluded": true,
-                        "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
-                        "redemScore": 85,
-                        "qualityScoreSummary": [
-                          {"qualityCheck": "OES", "score": 80},
-                          {"qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
-                          {"qualityCheck": "GQS", "score": 85},
-                          {"qualityCheck": "TS", "score": 70}
-                        ],
-                        "dataPointsSummary": [
-                          {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "Valid Answer"},
-                          {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": 95},
-                          {"qualityCheck": "GQS", "dataPointId": "Q2", "score": 90},
-                          {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "Valid Answer"},
-                          {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": 50},
-                          {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
-                          {"qualityCheck": "GQS", "dataPointId": "Q4", "score": 80},
-                          {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": 65}
-                        ]
+                      "success":true,
+                      "message":"Respondent Evaluated successfully",
+                      "results":{
+                        "status": "JOB_COMPLETED",
+                        "respondentQuality": {
+                          "isExcluded": true,
+                          "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
+                          "redemScore": 85,
+                          "qualityScoreSummary": [
+                            {"qualityCheck": "OES", "score": 80},
+                            {"qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                            {"qualityCheck": "GQS", "score": 85},
+                            {"qualityCheck": "TS", "score": 70}
+                          ],
+                          "dataPointsSummary": [
+                            {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "Valid Answer"},
+                            {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": 95},
+                            {"qualityCheck": "GQS", "dataPointId": "Q2", "score": 90},
+                            {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "Valid Answer"},
+                            {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": 50},
+                            {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                            {"qualityCheck": "GQS", "dataPointId": "Q4", "score": 80},
+                            {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": 65}
+                          ]
+                        }
                       }
                     }
                   },
                   "Asynchronously Response": {
                     "summary": "Asynchronous Response Example",
                     "value": {
-                      "status": "JOB_PROCESSING"
+                      "success":true,
+                      "message":"Respondent Queued for Evaluation",
+                      "results":{
+                        "status": "JOB_PROCESSING"
+                      }
                     }
                   }
                 }
@@ -987,16 +1025,31 @@
                       "description": "This response mode available when job status is `JOB_COMPLETED`. \n\n In this case, the system generates a comprehensive, quality assessment of the respondent.",
                       "type": "object",
                       "properties": {
-                        "status": {
-                          "type": "string",
-                          "description": "A variable that **indicates the current state of the job**.",
-                          "enum": [
-                            "JOB_COMPLETED"
-                          ]
+                        "success":{
+                          "type":"boolean",
+                          "description":"A variable that **indicates whether the operation was successful or not**.",
+                          "enum":[true,false]
                         },
-                        "respondentQuality": {
-                          "description": "This variable **represents respondent data that has been evaluated based on the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
-                          "$ref": "#/components/schemas/RespondentResults"
+                        "message":{
+                          "type":"string",
+                          "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results": {
+                          "type": "object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that **indicates the current state of the job**.",
+                              "enum": [
+                                "JOB_COMPLETED"
+                              ]
+                            },
+                            "respondentQuality": {
+                              "description": "This variable **represents respondent data that has been evaluated based on the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
+                              "$ref": "#/components/schemas/RespondentResults"
+                            }
+                          }
                         }
                       }
                     },
@@ -1005,12 +1058,27 @@
                       "description": "This response mode available when job status is `JOB_PROCESSING`. \n\n In this case, the system will only return the status of the job, without the quality assessment of the respondent.",
                       "type": "object",
                       "properties": {
-                        "status": {
-                          "type": "string",
-                          "description": "A variable that **indicates the current state of the job**.",
-                          "enum": [
-                            "JOB_PROCESSING"
-                          ]
+                        "success":{
+                          "type":"boolean",
+                          "description":"A variable that **indicates whether the operation was successful or not**.",
+                          "enum":[true,false]
+                        },
+                        "message":{
+                          "type":"string",
+                          "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results": {
+                          "type": "object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that **indicates the current state of the job**.",
+                              "enum": [
+                                "JOB_PROCESSING"
+                              ]
+                            }
+                          }
                         }
                       }
                     },
@@ -1019,12 +1087,27 @@
                       "description": "This response mode available when job status is `JOB_FAILED`. \n\n In this case, the system will only return the status of the job, without the quality assessment of the respondent.",
                       "type": "object",
                       "properties": {
-                        "status": {
-                          "type": "string",
-                          "description": "A variable that **indicates the current state of the job**.",
-                          "enum": [
-                            "JOB_FAILED"
-                          ]
+                        "success":{
+                          "type":"boolean",
+                          "description":"A variable that **indicates whether the operation was successful or not**.",
+                          "enum":[true,false]
+                        },
+                        "message":{
+                          "type":"string",
+                          "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results": {
+                          "type": "object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that **indicates the current state of the job**.",
+                              "enum": [
+                                "JOB_FAILED"
+                              ]
+                            }
+                          }
                         }
                       }
                     }
@@ -1034,40 +1117,52 @@
                   "Job Completed": {
                     "summary": "Job Completed Example",
                     "value": {
-                      "status": "JOB_COMPLETED",
-                      "qualityAssessment": {
-                        "isExcluded": false,
-                        "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
-                        "redemScore": 85,
-                        "qualityScoreSummary": [
-                          {"qualityCheck": "OES", "score": 80},
-                          {"qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
-                          {"qualityCheck": "GQS", "score": 85},
-                          {"qualityCheck": "TS", "score": 70}
-                        ],
-                        "dataPointsSummary": [
-                          {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "Valid Answer"},
-                          {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": 95},
-                          {"qualityCheck": "GQS", "dataPointId": "Q2", "score": 90},
-                          {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "Valid Answer"},
-                          {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": 50},
-                          {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
-                          {"qualityCheck": "GQS", "dataPointId": "Q4", "score": 80},
-                          {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": 65}
-                        ]
+                      "success":true,
+                      "message":"Respondent quality retrieved successfully",
+                      "results":{
+                        "status": "JOB_COMPLETED",
+                        "qualityAssessment": {
+                          "isExcluded": false,
+                          "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
+                          "redemScore": 85,
+                          "qualityScoreSummary": [
+                            {"qualityCheck": "OES", "score": 80},
+                            {"qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                            {"qualityCheck": "GQS", "score": 85},
+                            {"qualityCheck": "TS", "score": 70}
+                          ],
+                          "dataPointsSummary": [
+                            {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "Valid Answer"},
+                            {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": 95},
+                            {"qualityCheck": "GQS", "dataPointId": "Q2", "score": 90},
+                            {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "Valid Answer"},
+                            {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": 50},
+                            {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                            {"qualityCheck": "GQS", "dataPointId": "Q4", "score": 80},
+                            {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": 65}
+                          ]
+                        }
                       }
                     }
                   },
                   "Job Processing": {
                     "summary": "Job Processing Example",
                     "value": {
-                      "status": "JOB_PROCESSING"
+                      "success":true,
+                      "message":"Respondent quality retrieved successfully",
+                      "results":{
+                        "status": "JOB_PROCESSING"
+                      }
                     }
                   },
                   "Job Failed": {
                     "summary": "Job Failed Example",
                     "value": {
-                      "status": "JOB_FAILED"
+                      "success":true,
+                      "message":"Respondent quality retrieved successfully",
+                      "results":{
+                        "status": "JOB_FAILED"
+                      }
                     }
                   }
                 }
@@ -1117,28 +1212,47 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "respondentId": {
-                        "type": "string",
-                        "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project.",
-                        "example": "RESP497770"
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "A variable that **indicates the current state of the job**.",
-                        "enum": ["JOB_COMPLETED", "JOB_PROCESSING", "JOB_FAILED"]
-                      },
-                      "respondentQuality": {
-                        "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
-                        "$ref": "#/components/schemas/RespondentResults"
+                  "type": "object",
+                  "properties": {
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable that **indicates whether the operation was successful or not**.",
+                      "enum":[true,false]
+                    },
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "This is an array of objects, **each representing a respondent in the project**.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "respondentId": {
+                            "type": "string",
+                            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project.",
+                            "example": "RESP497770"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "A variable that **indicates the current state of the job**.",
+                            "enum": ["JOB_COMPLETED", "JOB_PROCESSING", "JOB_FAILED"]
+                          },
+                          "respondentQuality": {
+                            "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
+                            "$ref": "#/components/schemas/RespondentResults"
+                          }
+                        }
                       }
+
                     }
                   }
                 },
-                "example": [
+                "example": {
+                  "success":true,
+                  "message":"Respondents quality retrieved successfully",
+                  "results": [
                     { 
                       "respondentId": "RESP497770",
                       "status": "JOB_COMPLETED",
@@ -1166,7 +1280,8 @@
                     },
                     { "respondentId": "RESP497771", "status": "JOB_PROCESSING" },
                     { "respondentId": "RESP497772", "status": "JOB_FAILED" }
-                ]
+                  ]
+                }
               }
             }
           },
@@ -1317,17 +1432,6 @@
               "type": "string",
               "example": "Global Vacation Insights 2024"
             }
-          },
-          {
-            "name": "runPostChecks",
-            "in": "query",
-            "required": false,
-            "description": "Whether to **run post-checks after stopping the project**. \n\n This option enables you to reassess the quality of all respondents within the project. For example, when calculating the Total Score (TS) or identifying duplicate respondents, the evaluation can use either the entire sample or a subset. \n\n **By activating this option, each respondent's quality is re-evaluated based on the full sample**, ensuring a more comprehensive and consistent analysis.",
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "example": true
-            }
           }
         ],
         "responses": {
@@ -1336,99 +1440,34 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "Without Post-Check",
-                      "description": "This response mode is triggered when `runPostChecks` is set to `false`. **In this case, the project is terminated without conducting any post-checks.**",
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "number",
-                          "example": 200
-                        }
-                      }
+                  "type": "object",
+                  "properties": {
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable that **indicates whether the operation was successful or not**.",
+                      "enum":[true,false]
                     },
-                    {
-                      "title": "With Post-Check",
-                      "description": "This response mode is triggered when `runPostChecks` is set to `true`. **In this case, the project is terminated after conducting post-checks.**",
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                    },
+                    "results": {
                       "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                       "properties": {
                         "status": {
                           "type": "number",
                           "example": 200
-                        },
-                        "respondents": {
-                          "type": "array",
-                          "description": "This is an array of objects, **each representing a respondent in the project**.",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "respondentId": {
-                                "type": "string",
-                                "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project.",
-                                "example": "RESP497770"
-                              },
-                              "status": {
-                                "type": "string",
-                                "description": "A variable that **indicates the current state of the job**.",
-                                "enum": ["JOB_COMPLETED", "JOB_PROCESSING", "JOB_FAILED"]
-                              },
-                              "respondentQuality": {
-                                "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
-                                "$ref": "#/components/schemas/RespondentResults"
-                              }
-                            }
-                          }
                         }
                       }
                     }
-                  ]
+                  }
                 },
-                "examples": {
-                  "Without Post-Check": {
-                    "value": {
-                      "status": 200
-                    }
-                  },
-                  "With Post-Check": {
-                    "value": {
-                      "status": 200,
-                      "respondents": [
-                        { 
-                          "respondentId": "RESP497770",
-                          "status": "JOB_COMPLETED",
-                          "respondentQuality": {
-                            "isExcluded": false,
-                            "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
-                            "redemScore": 85,
-                            "qualityScoreSummary": [
-                              {"qualityCheck": "OES", "score": 80},
-                              {"qualityCheck": "CHS", "score": 75},
-                              {"qualityCheck": "GQS", "score": 85},
-                              {"qualityCheck": "TS", "score": 70}
-                            ],
-                            "dataPointsSummary": [
-                              {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "Valid Answer"},
-                              {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": 95},
-                              {"qualityCheck": "GQS", "dataPointId": "Q2", "score": 90},
-                              {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "Valid Answer"},
-                              {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": 50},
-                              {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
-                              {"qualityCheck": "GQS", "dataPointId": "Q4", "score": 80},
-                              {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": 65}
-                            ]
-                          }
-                        },
-                        {
-                          "respondentId": "RESP497771",
-                          "status": "JOB_PROCESSING"
-                        },
-                        {
-                          "respondentId": "RESP497772",
-                          "status": "JOB_FAILED"
-                        }
-                      ]
-                    }
+                "example": {
+                  "success": true,
+                  "message": "Survey Stopped successfully",
+                  "results": {
+                    "status": 200
                   }
                 }
               }
@@ -1478,34 +1517,49 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "number"
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable that **indicates whether the operation was successful or not**.",
+                      "enum":[true,false]
                     },
-                    "estimate": {
-                      "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                    },
+                    "results": {
                       "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                       "properties": {
-                        "totalCredits": {
-                          "type": "number",
-                          "description": "This variable **represents the total number of credits** estimated for a respondent."
-                        },
-                        "estimationBreakdown": {
+                        "estimate": {
                           "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
-                          "$ref": "#/components/schemas/EstimationBreakdown"
+                          "type": "object",
+                          "properties": {
+                            "totalCredits": {
+                              "type": "number",
+                              "description": "This variable **represents the total number of credits** estimated for a respondent."
+                            },
+                            "estimationBreakdown": {
+                              "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
+                              "$ref": "#/components/schemas/EstimationBreakdown"
+                            }
+                          }
                         }
                       }
                     }
                   }
                 },
                 "example": {
-                  "status": 200,
-                  "estimate": {
-                    "totalCredits": 12,
-                    "estimationBreakdown": {
-                      "OES": {"credits": 4, "dataPoints": 2},
-                      "GQS": {"credits": 3, "answers": 35},
-                      "TS": {"credits": 1, "dataPoints": 2},
-                      "CHS": {"credits": 4, "interviews": 25}
+                  "success": true,
+                  "message": "Estimate retrieved successfully",
+                  "results": {
+                    "estimate": {
+                      "totalCredits": 12,
+                      "estimationBreakdown": {
+                        "OES": {"credits": 4, "dataPoints": 2},
+                        "GQS": {"credits": 3, "answers": 35},
+                        "TS": {"credits": 1, "dataPoints": 2},
+                        "CHS": {"credits": 4, "interviews": 25}
+                      }
                     }
                   }
                 }
