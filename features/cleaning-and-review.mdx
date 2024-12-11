@@ -17,15 +17,22 @@ Every respondent evaluated by ReDem undergoes a series of rigorous quality check
 
 ReDem offers two primary methods for cleaning your data::
 
-### Using ReDem Default Cleaning Settings
+### ReDem Default Cleaning Settings
 
-Leveraging the ReDem team’s expertise and comprehensive quality checks, we’ve developed default cleaning settings tailored to address the most common scenarios.
+Built on ReDem’s expertise, our default cleaning settings effectively address the most common data quality issues.
 
-Here’s a summary of the default settings:
+**Overview of Default Settings:**
+An interview is flagged for exclusion if **any** of the following criteria are met:
 
-**ReDem Score**: `60` <br /> Respondent with a **ReDem score below 60** are flagged as excluded.
+* **ReDem Score \< 60**: Interviews scoring below 60 are flagged.
 
-**Open-Ended Score (OES)** - `60` <br /> Applies if a respondent **OES score is below 60 and provides at least two valid open-ended responses** are flagged as excluded.
+* **Open-Ended Score (OES) \< 30**: Interviews with an OES below 30 are flagged.
+
+* **Time Score (TS) \< 20**: Interviews with a TS below 20 are flagged.
+
+### Using Custom Cleaning Settings
+
+To customize the cleaning process, you can create your own custom cleaning settings by defining specific thresholds for each quality check. This allows you to tailor the cleaning criteria to suit your unique requirements, ensuring more precise and relevant results.
 
 **Open-Ended Response Categories**: <br /> Each category below outlines the criteria for flagging respondents based on their open-ended responses. Respondents are flagged as excluded if their responses meet the respective conditions.
 
@@ -49,32 +56,20 @@ Here’s a summary of the default settings:
 
 * **Fake Answer**: <br /> If respondent has **one or more** open-ended responses that classified as fake answer.
 
-**Coherence Score (CHS)**: `50` <br /> Applies if a respondent **CHS score is below 50** are flagged as excluded.
-
-**Grid-Question Score (GQS)**: `40` <br /> Applies if a respondent **GQS score is below 40 and has at least two valid grid-question data points** are flagged as excluded.
-
-**Time Score (TS)**: `20` <br /> Applies if a respondent **TS score is below 20** are flagged as excluded.
-
-### Using Custom Cleaning Settings
-
-To customize the cleaning process, you can create your own custom cleaning settings by defining specific thresholds for each quality check. This allows you to tailor the cleaning criteria to suit your unique requirements, ensuring more precise and relevant results.
-
 ## What is the outcome of the cleaning process?
 
-The cleaning process categorizes each response as either `Included` or `Excluded`, with clear reasons provided for any exclusions. This ensures transparency and helps identify areas that may need further attention or adjustments.
+The cleaning process classifies each response as either **Included** or **Excluded**, with clear reasons provided for exclusions. This ensures transparency and highlights areas that may require further attention or adjustments.
 
-Set of Reasons for Exclusion:
+**Reasons for Exclusion** (only one needs to be true):
 
-* `ReDem Score Threshold`: The respondent's ReDem score is below than default threshold.
+* **ReDem Score Threshold**: Respondent’s ReDem Score is below the default (60) or a custom threshold.
 
-* `Open-Ended Score Threshold`: The respondent's OES score is below than default threshold.
+* **Open-Ended Score (OES) Threshold**: Respondent’s OES is below the default (30) or a custom threshold.
 
-* `Open-Ended Category`: The respondent's responses meet the criteria for one or more of the Open-ended answer categories.
+* **Time Score (TS) Threshold**: Respondent’s TS is below the default (20) or a custom threshold.
 
-* `Coherence Score Threshold`: The respondent's CHS score is below than default threshold.
+* **Grid-Question Score (GQS) Threshold**: Respondent’s GQS is below a custom threshold.
 
-* `Grid-Question Score Threshold`: The respondent's GQS score is below than default threshold.
+* **Coherence Score (CHS) Threshold**: Respondent’s CHS is below a custom threshold.
 
-* `Time Score Threshold`: The respondent's TS score is below than default threshold.
-
-This structured reasoning provides clarity on exclusions and enables users to refine their criteria based on the analysis.
+This structured reasoning provides clear insights into exclusions, empowering users to refine their criteria based on the analysis.
