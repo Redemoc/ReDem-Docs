@@ -24,37 +24,59 @@ Built on ReDem’s expertise, our default cleaning settings effectively address 
 **Overview of Default Settings:**
 An interview is flagged for exclusion if **any** of the following criteria are met:
 
-* **ReDem Score \< 60**: Interviews scoring below 60 are flagged.
+- **ReDem Score \< 60**: Interviews scoring below 60 are flagged.
 
-* **Open-Ended Score (OES) \< 30**: Interviews with an OES below 30 are flagged.
+- **Open-Ended Score (OES) \< 30**: Interviews with an OES below 30 are flagged.
 
-* **Time Score (TS) \< 20**: Interviews with a TS below 20 are flagged.
+- **Time Score (TS) \< 20**: Interviews with a TS below 20 are flagged.
 
 ### Using Custom Cleaning Settings
 
-To customize the cleaning process, you can create your own custom cleaning settings by defining specific thresholds for each quality check. This allows you to tailor the cleaning criteria to suit your unique requirements, ensuring more precise and relevant results.
+To customize the cleaning process, you can define specific thresholds for each quality check, creating your own custom cleaning settings. This approach allows you to tailor the criteria to your unique requirements, ensuring more precise and relevant results.
 
-**Open-Ended Response Categories**: <br /> Each category below outlines the criteria for flagging respondents based on their open-ended responses. Respondents are flagged as excluded if their responses meet the respective conditions.
+You can customize the following key quality checks by setting thresholds that determine when respondents should be flagged or excluded:
 
-* **Generic Answer**: <br /> The respondent has **two or more** open-ended responses classified as generic.
+- **ReDem Score**: <br/> Set a threshold for the overall ReDem Score to filter out low-quality responses.
 
-* **No Information**: <br /> If respondent has **two or more** open-ended responses that classified as no information.
+- **Open-Ended Score (OES)**: <br/> Define a threshold for the overall Open-Ended Score and set a minimum number of data points to filter out low-quality responses.
 
-* **Bad Language**: <br /> If respondent has **two or more** open-ended responses that classified as bad language.
+- **Time Score (TS)**: <br/> Set a threshold for the Time Score and number of data points to filter out low-quality responses
 
-* **Nonsense**: <br /> If respondent has **two or more** open-ended responses that classified as nonsense.
+- **Grid-Question Score (GQS)**: <br/> Define a threshold for the Grid-Question Score and set a minimum number of items to filter out low-quality responses.
 
-* **Duplicate Answer**: <br /> If respondent has **two or more** open-ended responses that classified as duplicate answer.
+- **Coherence Score (CHS)**: <br/> Set a threshold for the Coherence Score to filter out low-quality responses.
 
-* **Duplicate Respondent**: <br /> If respondent has **two or more** open-ended responses that classified as duplicate respondent.
+- **Open-Ended Response Categories**: <br/> Respondents are flagged for exclusion if their open-ended responses meet specified criteria. Each category can require a minimum number of flagged data points for exclusion.
 
-* **Wrong Topic**: <br /> If respondent has **two or more** open-ended responses that classified as wrong topic.
+  - **Generic Answer**
+  - **Bad Language**
+  - **No Information**
+  - **Duplicate Respondent**
+  - **Duplicate Answer**
+  - **Nonsense**
+  - **Wrong Language**
+  - **Copy-Paste Answer**
+  - **Wrong Topic**
+  - **Fake Answer**
 
-* **Wrong Language**: <br /> If respondent has **two or more** open-ended responses that classified as wrong language.
 
-* **Copy-Paste Answer**: <br /> If respondent has **two or more** open-ended responses that classified as copy-paste answer.
+Here’s an example of a cleaning settings object that can be used to customize the cleaning process via the API:
+```javascript
+  "redemScore": 60,
+  "OES": {
+    "score": 60,
+    "minDataPoints":2,
+    "categories": {
+      "genericAnswers": {"exclude": true, "minDataPoints":2},
+      "noInformation": {"exclude": true, "minDataPoints":3},
+      // ... other categories ...
+    }
+  },
+  "CHS": {"score": 50},
+  "GQS": {"score": 40, "minDataPoints":2},
+  "TS": {"score": 20}
+```
 
-* **Fake Answer**: <br /> If respondent has **one or more** open-ended responses that classified as fake answer.
 
 ## What is the outcome of the cleaning process?
 
@@ -62,14 +84,14 @@ The cleaning process classifies each response as either **Included** or **Exclud
 
 **Reasons for Exclusion** (only one needs to be true):
 
-* **ReDem Score Threshold**: Respondent’s ReDem Score is below the default (60) or a custom threshold.
+- **ReDem Score Threshold**: Respondent’s ReDem Score is below the default (60) or a custom threshold.
 
-* **Open-Ended Score (OES) Threshold**: Respondent’s OES is below the default (30) or a custom threshold.
+- **Open-Ended Score (OES) Threshold**: Respondent’s OES is below the default (30) or a custom threshold.
 
-* **Time Score (TS) Threshold**: Respondent’s TS is below the default (20) or a custom threshold.
+- **Time Score (TS) Threshold**: Respondent’s TS is below the default (20) or a custom threshold.
 
-* **Grid-Question Score (GQS) Threshold**: Respondent’s GQS is below a custom threshold.
+- **Grid-Question Score (GQS) Threshold**: Respondent’s GQS is below a custom threshold.
 
-* **Coherence Score (CHS) Threshold**: Respondent’s CHS is below a custom threshold.
+- **Coherence Score (CHS) Threshold**: Respondent’s CHS is below a custom threshold.
 
 This structured reasoning provides clear insights into exclusions, empowering users to refine their criteria based on the analysis.

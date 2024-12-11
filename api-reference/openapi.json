@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8000"
+      "url": "https://live-api.beta.redem.io/"
     }
   ],
   "security": [
@@ -969,15 +969,6 @@
               }
             }
           },
-          "400": {
-            "$ref": "#/components/responses/ValidationError"
-          },
-          "401": {
-            "$ref": "#/components/responses/UnauthorizedError"
-          },
-          "409": {
-            "$ref": "#/components/responses/DuplicateError"
-          },
           "500": {
             "$ref": "#/components/responses/ServerError"
           }
@@ -1169,18 +1160,6 @@
               }
             }
           },
-          "400": {
-            "$ref": "#/components/responses/ValidationError"
-          },
-          "401": {
-            "$ref": "#/components/responses/UnauthorizedError"
-          },
-          "404": {
-            "$ref": "#/components/responses/ProjectNotFoundError"
-          },
-          "405": {
-            "$ref": "#/components/responses/RespondentNotFoundError"
-          },
           "500": {
             "$ref": "#/components/responses/ServerError"
           }
@@ -1284,15 +1263,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "$ref": "#/components/responses/ValidationError"
-          },
-          "404": {
-            "$ref": "#/components/responses/ProjectNotFoundError"
-          },
-          "401": {
-            "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
             "$ref": "#/components/responses/ServerError"
@@ -1473,12 +1443,6 @@
               }
             }
           },
-          "400": {
-            "$ref": "#/components/responses/ValidationError"
-          },
-          "401": {
-            "$ref": "#/components/responses/UnauthorizedError"
-          },
           "500": {
             "$ref": "#/components/responses/ServerError"
           }
@@ -1565,12 +1529,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "$ref": "#/components/responses/ValidationError"
-          },
-          "401": {
-            "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
             "$ref": "#/components/responses/ServerError"

@@ -62,7 +62,6 @@
     {
       "group": "Miscellaneous",
       "pages": [
-        "miscellaneous/redem-credits",
         "miscellaneous/questionnaire-criteria"
       ]
     },
@@ -78,7 +77,6 @@
       "group": "API Specifications",
       "pages": [
         "api-reference/api-specifications/api-keys",
-        "api-reference/api-specifications/rate-limits",
         "api-reference/api-specifications/response-structure"
       ]
     },
