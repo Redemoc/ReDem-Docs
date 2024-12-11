@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8000"
+      "url": "https://live-api.beta.redem.io/"
     }
   ],
   "security": [
