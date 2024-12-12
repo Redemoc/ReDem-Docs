@@ -5,17 +5,171 @@ icon: "telescope"
 iconType: "regular"
 ---
 
+<Info>To integrate ReDem with your survey tool, you'll need a ReDem account. <br /> Don’t have an account yet? Get started by [setting up your account](/account-setup).</Info>
+
 <Steps titleSize="h3">
-  <Step title="Login and create a ReDem API key">
+  <Step title="Login and create an API key">
     Log in to your ReDem account and navigate to the account settings.
     Generate a new API key and copy it for use.
   </Step>
 
-  <Step title="Integrate ReDem API into your workflow">
-    Use your API key to authenticate requests and seamlessly integrate the ReDem API into your workflow.
+  <Step title="Prepare your request data">
+    Ensure your data is formatted correctly according to the guidelines before sending it via the API. Below is a sample request object to help you structure your data properly.
+
+    <p>As a researcher, we **recommend adopting an synchronous response approach**. Therefore, keep the `synchronousResponse` field set to `true`. It allows you to get a response from ReDem in real time.</p>
+
+    <p> Use your survey tool to scrape data and format the request data as follows:</p>
+
+    ```javascript Example request body
+    {
+      "respondentId": "RESP497770", 
+      "surveyName": "Global Vacation Insights 2024",
+      "dataPoints": [ 
+        {
+          "qualityCheck": "OES",
+          "dataPointId": "Q1",
+          "question": "Where did you spend your last vacation?",
+          "answer": "We were at Lake Garda in Italy",
+          "keywords": ["Beach", "Mountains", "Lake", "Museums", "Europe", "Asia", "Destination"],
+          "activateDuplicateDetection": true,
+          "allowedLanguages": ["en", "de", "it"]
+        },
+        {
+          "qualityCheck": "TS",
+          "dataPointId": "durationQ1", 
+          "duration": 42670
+        },
+        // ... other data points ...
+      ],
+      "activateCleaning": true,
+      "cleaningSettings": {
+        "redemScore": 60,
+        "OES": {
+          "score": 60,
+          "minDataPoints":2,
+          "categories": {
+            "genericAnswers": {"exclude": false, "minDataPoints":2},
+            "noInformation": {"exclude": false, "minDataPoints":2},
+            // ... other categories ...
+          }
+        },
+        "CHS": {"score": 50},
+        "GQS": {"score": 40, "minDataPoints":2},
+        "TS": {"score": 20}
+      },
+      "synchronousResponse": true,
+    }
+    ```
+
+    <Note>For a complete example and more information on how to use this request object, visit the [Add Respondent](/api-reference/endpoint/addRespondent) endpoint. It provides detailed explanations of all fields and their usage.</Note>
+  </Step>
+
+  <Step title="Make an API request">
+    <p>Submit an API request to ReDem, including the respondent's information and the API key</p>
+
+    ```javascript Example request (JavaScript)
+    const options = {
+      method: 'POST',
+      headers: {Authorization: 'Bearer <token>', 'Content-Type': 'application/json'},
+      body: '{"respondentId":"RESP497770","projectName":"Global Vacation Insights 2024","dataPoints":[{"qualityCheck":"OES","dataPointId":"Q1","question":"Where did you spend your last vacation?","answer":"We were at Lake Garda in Italy","keywords":["Beach","Mountains","Lake","Museums","Europe","Asia","Destination"],"activateDuplicateDetection":true,"allowedLanguages":["en","de","it"]},{"qualityCheck":"TS","dataPointId":"durationQ1","duration":42670},{"qualityCheck":"GQS","dataPointId":"Q2","gridAnswersPattern":[7,8,9,1,3,5,2,5,9,6]},{"qualityCheck":"OES","dataPointId":"Q3","question":"What was the most memorable part of your last vacation?","answer":"Italian cuisine, especially pizza and fine wine.","keywords":["Cuisine","Food","Art","Adventure","History","Landscape","Culture"],"activateDuplicateDetection":true,"allowedLanguages":["en","de","it"]},{"qualityCheck":"TS","dataPointId":"durationQ3","duration":69720},{"qualityCheck":"CHS","dataPointId":"CHS_Question","interviewData":[{"question":"What mode of transport did you use?","answer":"Car"},{"question":"How many days did you stay?","answer":5},{"question":"Did you travel with family?","answer":"yes"},{"question":"What was your approximate total budget for the trip (in EUR)?","answer":1500},{"question":"What type of accommodation did you stay in?","answer":"Hotel"}]},{"qualityCheck":"GQS","dataPointId":"Q4","gridAnswersPattern":[2,1,4,3,5,2,3,1,1,1]},{"qualityCheck":"TS","dataPointId":"totalDuration","duration":256843}],"cleaningSettings":{"standardSettings":false,"CustomSettings":{"redemScore":60,"OES":{"score":30,"minimumAnswers":2,"categories":{"genericAnswers":{"exclude":true,"minDataPoints":2},"noInformation":{"exclude":true,"minDataPoints":2},"badLanguage":{"exclude":true,"minDataPoints":2},"nonsense":{"exclude":true,"minDataPoints":1},"duplicateAnswer":{"exclude":true,"minDataPoints":1},"duplicateRespondent":{"exclude":true,"minDataPoints":1},"wrongTopic":{"exclude":true,"minDataPoints":1},"wrongLanguage":{"exclude":true,"minDataPoints":1},"copyPastAnswer":{"exclude":true,"minDataPoints":1},"fakeAnswer":{"exclude":true,"minDataPoints":1}}},"CHS":{"score":20},"GQS":{"score":10,"minimumItems":15},"TS":{"score":20}}},"synchronousResponse":true}'
+    };
+
+    fetch('https://live-api.beta.redem.io/respondent/add', options)
+      .then(response => response.json())
+      .then(response => console.log(response))
+      .catch(err => console.error(err));
+    ```
+
+    <Note>For a complete example and more information on how to send the request, visit the [Add Respondent](/api-reference/endpoint/addRespondent) endpoint. It provides detailed explanations of all fields and their usage.</Note>
   </Step>
 
   <Step title="Use ReDem API response to trigger your next step">
     <p>Use the API response to trigger your next step in your workflow.</p>
+
+    <p>Retrieve the response from ReDem, and use any relevant information from it to trigger the next step in your workflow.</p>
+
+    ```javascript Example response (JavaScript)
+      {
+        "success": true,
+        "message": "Respondent Evaluated successfully",
+        "results": {
+          "status": "JOB_COMPLETED",
+          "respondentQuality": {
+            "isExcluded": true,
+            "reasonsForExclusion": [
+              "Open Ended Score Threshold",
+              "Coherence Score Threshold"
+            ],
+            "redemScore": 85,
+            "qualityScoreSummary": [
+              {
+                "qualityCheck": "OES",
+                "score": 80
+              },
+              {
+                "qualityCheck": "CHS",
+                "score": 75,
+                "reason": "The user shows several inconsistencies and contradictions, such as different ..."
+              },
+              {
+                "qualityCheck": "GQS",
+                "score": 85
+              },
+              {
+                "qualityCheck": "TS",
+                "score": 70
+              }
+            ],
+            "dataPointsSummary": [
+              {
+                "qualityCheck": "OES",
+                "dataPointId": "Q1",
+                "score": 85,
+                "category": "Valid Answer"
+              },
+              {
+                "qualityCheck": "TS",
+                "dataPointId": "durationQ1",
+                "score": 95
+              },
+              {
+                "qualityCheck": "GQS",
+                "dataPointId": "Q2",
+                "score": 90
+              },
+              {
+                "qualityCheck": "OES",
+                "dataPointId": "Q3",
+                "score": 75,
+                "category": "Valid Answer"
+              },
+              {
+                "qualityCheck": "TS",
+                "dataPointId": "durationQ3",
+                "score": 50
+              },
+              {
+                "qualityCheck": "CHS",
+                "dataPointId": "CHS_Question",
+                "score": 75,
+                "reason": "The user shows several inconsistencies and contradictions, such as different ..."
+              },
+              {
+                "qualityCheck": "GQS",
+                "dataPointId": "Q4",
+                "score": 80
+              },
+              {
+                "qualityCheck": "TS",
+                "dataPointId": "totalDuration",
+                "score": 65
+              }
+            ]
+          }
+        }
+      }
+    ```
+
+    <Note>For a complete example and more information on how to use this response object, visit the [Add Respondent](/api-reference/endpoint/addRespondent) endpoint. It provides detailed explanations of all fields and their usage.</Note>
   </Step>
 </Steps>

@@ -72,7 +72,7 @@ iconType: "regular"
       body: '{"respondentId":"RESP497770","projectName":"Global Vacation Insights 2024","dataPoints":[{"qualityCheck":"OES","dataPointId":"Q1","question":"Where did you spend your last vacation?","answer":"We were at Lake Garda in Italy","keywords":["Beach","Mountains","Lake","Museums","Europe","Asia","Destination"],"activateDuplicateDetection":true,"allowedLanguages":["en","de","it"]},{"qualityCheck":"TS","dataPointId":"durationQ1","duration":42670},{"qualityCheck":"GQS","dataPointId":"Q2","gridAnswersPattern":[7,8,9,1,3,5,2,5,9,6]},{"qualityCheck":"OES","dataPointId":"Q3","question":"What was the most memorable part of your last vacation?","answer":"Italian cuisine, especially pizza and fine wine.","keywords":["Cuisine","Food","Art","Adventure","History","Landscape","Culture"],"activateDuplicateDetection":true,"allowedLanguages":["en","de","it"]},{"qualityCheck":"TS","dataPointId":"durationQ3","duration":69720},{"qualityCheck":"CHS","dataPointId":"CHS_Question","interviewData":[{"question":"What mode of transport did you use?","answer":"Car"},{"question":"How many days did you stay?","answer":5},{"question":"Did you travel with family?","answer":"yes"},{"question":"What was your approximate total budget for the trip (in EUR)?","answer":1500},{"question":"What type of accommodation did you stay in?","answer":"Hotel"}]},{"qualityCheck":"GQS","dataPointId":"Q4","gridAnswersPattern":[2,1,4,3,5,2,3,1,1,1]},{"qualityCheck":"TS","dataPointId":"totalDuration","duration":256843}],"cleaningSettings":{"standardSettings":false,"CustomSettings":{"redemScore":60,"OES":{"score":30,"minimumAnswers":2,"categories":{"genericAnswers":{"exclude":true,"minDataPoints":2},"noInformation":{"exclude":true,"minDataPoints":2},"badLanguage":{"exclude":true,"minDataPoints":2},"nonsense":{"exclude":true,"minDataPoints":1},"duplicateAnswer":{"exclude":true,"minDataPoints":1},"duplicateRespondent":{"exclude":true,"minDataPoints":1},"wrongTopic":{"exclude":true,"minDataPoints":1},"wrongLanguage":{"exclude":true,"minDataPoints":1},"copyPastAnswer":{"exclude":true,"minDataPoints":1},"fakeAnswer":{"exclude":true,"minDataPoints":1}}},"CHS":{"score":20},"GQS":{"score":10,"minimumItems":15},"TS":{"score":20}}},"synchronousResponse":false}'
     };
 
-    fetch('http://localhost:8000/respondent/add', options)
+    fetch('https://live-api.beta.redem.io/respondent/add', options)
       .then(response => response.json())
       .then(response => console.log(response))
       .catch(err => console.error(err));
@@ -86,7 +86,11 @@ iconType: "regular"
 
     ```javascript Example response (JavaScript)
       {
-        "status": "JOB_PROGRESS"
+        "success": true,
+        "message": "Respondent Queued for Evaluation",
+        "results": {
+          "status": "JOB_PROCESSING"
+        }
       }
     ```
 
