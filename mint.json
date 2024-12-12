@@ -99,8 +99,5 @@
       "mode": "hide"
     }
   },
-  "versions": ["V3 (Beta)"],
-  "metadata": {
-    "og:image": "/images/documentation-hero.png"
-  }
+  "versions": ["V3 (Beta)"]
 }
