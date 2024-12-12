@@ -53,12 +53,32 @@
           }
         }
       },
+      "InteractionData": {
+        "description": "Structure for interaction-based questions",
+        "type": "object",
+        "required": ["value", "interactionType", "timestamp"],
+        "properties": {
+          "value": { 
+            "type": "string",
+            "description": "The value of the interaction, which should include the final value once the interaction is complete."
+          },
+          "interactionType": { 
+            "type": "string",
+            "description": "The type of interaction the respondent had with the data point. \n\n ⭕ **Note:** Currently, only `KEYSTROKE` interactions are supported. In the future, support for interactions such as mouse clicks, mouse movements, and others will be added.",
+            "enum": ["KEYSTROKE"]
+          },
+          "timestamp": { 
+            "type": "string",
+            "description": "The timestamp of the interaction. The timestamp is in the format `YYYY-MM-DDTHH:MM:SS.SSSZ`."
+          }
+        }
+      },
       "DataPoint": {
-        "description": "Individual data point containing question response and quality check settings",
+        "description": "An array of data points that are used for quality checks for each respondent.",
         "type": "object",
         "oneOf": [
           {
-            "title": "OES Data point",
+            "title": "OES",
             "properties": {
               "qualityCheck": {
                 "type": "string",
@@ -110,7 +130,7 @@
             "required": ["dataPointId", "qualityCheck","answer", "question"]
           },
           {
-            "title": "TS Data point",
+            "title": "TS",
             "properties": {
               "qualityCheck": {
                 "type": "string",
@@ -131,7 +151,7 @@
             "required": ["dataPointId", "qualityCheck", "duration"]
           },
           {
-            "title": "GQS Data point",
+            "title": "GQS",
             "properties": {
               "qualityCheck": {
                 "type": "string",
@@ -161,7 +181,7 @@
             "required": ["dataPointId", "qualityCheck", "gridQuestionPattern"]
           },
           {
-            "title": "CHS Data Point",
+            "title": "CHS",
             "properties": {
               "qualityCheck": {
                 "type": "string",
@@ -183,6 +203,36 @@
                   {
                     "question": "What type of accommodation did you stay in?",
                     "answer": "Hotel"
+                  }
+                ]
+              }
+            },
+            "required": ["dataPointId", "qualityCheck", "interviewData"]
+          },
+          {
+            "title": "IVS",
+            "properties": {
+              "qualityCheck": {
+                "type": "string",
+                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+                "enum": ["IVS"]
+              },
+              "dataPointId": {
+                "type": "string",
+                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "example": "Q1"
+              },
+              "interactionData": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/InteractionData"
+                },
+                "description": "This variable compiles all relevant information about the interaction of the respondent with the data point.",
+                "example": [
+                  {
+                    "value": "W",
+                    "interactionType": "keystroke",
+                    "timestamp": "2024-12-01T06:22:59.833Z"
                   }
                 ]
               }
@@ -216,7 +266,7 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint"
             },
-            "description": "An array of data points that are used for quality checks for each respondent."
+            "description": "An array of data points that are used for quality checks for each respondent. \n\n 💡 **Important:** The `Interaction Validity Score (IVS)` quality check type is not currently available like other quality checks. We are in the process of developing this quality check algorithm. For now, this variable is being used to collect interaction data. The Interaction Validity Score (IVS) will be available in the near future."
           },
           "activateCleaning": {
             "type": "boolean",
@@ -817,6 +867,21 @@
                     "qualityCheck": "TS",
                     "dataPointId": "totalDuration",
                     "duration": 256843
+                  },
+                  {
+                    "qualityCheck": "IVS",
+                    "dataPointId": "interactionsQ1",
+                    "interactionData": [
+                      { "value": "W", "interactionType": "keystroke", "timestamp": "2024-12-01T06:22:59.809Z" },
+                      { "value": "We", "interactionType": "keystroke", "timestamp": "2024-12-01T06:22:59.833Z" },
+                      { "value": "We ", "interactionType": "keystroke", "timestamp": "2024-12-01T06:22:59.909Z" },
+                      { "value": "We w", "interactionType": "keystroke", "timestamp": "2024-12-01T06:22:59.962Z" },
+                      { "value": "We we", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.024Z" },
+                      { "value": "We were", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.086Z" },
+                      { "value": "We were ", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.148Z" },
+                      { "value": "We were a", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.210Z" },
+                      { "value": "We were at", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.272Z" }
+                    ]
                   }
                 ],
                 "activateCleaning": true,
