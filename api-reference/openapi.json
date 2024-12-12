@@ -872,15 +872,15 @@
                     "qualityCheck": "IVS",
                     "dataPointId": "interactionsQ1",
                     "interactionData": [
-                      { "value": "W", "interactionType": "keystroke", "timestamp": "2024-12-01T06:22:59.809Z" },
-                      { "value": "We", "interactionType": "keystroke", "timestamp": "2024-12-01T06:22:59.833Z" },
-                      { "value": "We ", "interactionType": "keystroke", "timestamp": "2024-12-01T06:22:59.909Z" },
-                      { "value": "We w", "interactionType": "keystroke", "timestamp": "2024-12-01T06:22:59.962Z" },
-                      { "value": "We we", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.024Z" },
-                      { "value": "We were", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.086Z" },
-                      { "value": "We were ", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.148Z" },
-                      { "value": "We were a", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.210Z" },
-                      { "value": "We were at", "interactionType": "keystroke", "timestamp": "2024-12-01T06:23:00.272Z" }
+                      { "value": "W", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:22:59.809Z" },
+                      { "value": "We", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:22:59.833Z" },
+                      { "value": "We ", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:22:59.909Z" },
+                      { "value": "We w", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:22:59.962Z" },
+                      { "value": "We we", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.024Z" },
+                      { "value": "We were", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.086Z" },
+                      { "value": "We were ", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.148Z" },
+                      { "value": "We were a", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.210Z" },
+                      { "value": "We were at", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.272Z" }
                     ]
                   }
                 ],
