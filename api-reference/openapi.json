@@ -178,7 +178,7 @@
                 "items": {
                   "$ref": "#/components/schemas/InterviewData"
                 },
-                "description": "This variable gathers all relevant interviews used to determine whether a respondent is coherent or incoherent.",
+                "description": "This variable compiles all relevant questions and answer pairs used to assess whether a respondent is coherent or incoherent.",
                 "example": [
                   {
                     "question": "What type of accommodation did you stay in?",
@@ -203,7 +203,7 @@
         "properties": {
           "respondentId": {
             "type": "string",
-            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project.\n\n**💡 Important:** The system uses this ID, along with the project name, to uniquely identify the respondent within a project, making it possible for the same respondent to be part of different projects. \n\nIf the combination of project name and respondent ID already exists, an error will be displayed with **Error Status 409**",
+            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.\n\n**💡 Important:** The system uses this ID, along with the survey name, to uniquely identify the respondent within a survey, making it possible for the same respondent to be part of different projects. \n\nIf the combination of survey name and respondent ID already exists, an error will be displayed with **Error Status 409**",
             "example": "RESP497770"
           },
           "surveyName": {
@@ -216,7 +216,7 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint"
             },
-            "description": "Array of question responses"
+            "description": "An array of data points that are used for quality checks for each respondent."
           },
           "activateCleaning": {
             "type": "boolean",
@@ -225,7 +225,7 @@
             "default": true
           },
           "cleaningSettings": {
-            "description": "**Cleaning settings for respondents** define the rules for deciding if a respondent should be excluded and marked as low quality. \n\n **💡Important:** If no cleaning settings are defined and cleaning is activated, the system will apply the default cleaning settings to determine whether a respondent should be excluded and marked as low quality.",
+            "description": "**Cleaning settings for respondents** define the rules for deciding if a respondent should be excluded and marked as low quality. \n\n **💡Important:** If no cleaning settings are defined and cleaning is activated, the system will apply the default cleaning settings to determine whether a respondent should be excluded and marked as low quality. \n \n For more details on how cleaning works, refer to the [Data Cleaning](/cleaning-and-review) section.",
             "$ref": "#/components/schemas/CleaningSettings"
           },
           "synchronousResponse": {
@@ -338,7 +338,7 @@
         }
       },
       "AddSurveyRequest": {
-        "description": "Request body for creating or customizing a project",
+        "description": "Request body for creating or customizing a survey",
         "required": [
           "surveyName",
           "cleaningSettings",
@@ -348,12 +348,12 @@
         "properties": {
           "projectName": {
             "type": "string",
-            "description": "Optional project name for grouping surveys",
+            "description": "Optional survey name for grouping surveys",
             "example": "customer-satisfaction-2024"
           },
           "surveyName": {
             "type": "string",
-            "description": "Unique identifier for the project",
+            "description": "Unique identifier for the survey",
             "example": "customer-survey-2024"
           },
           "cleaningSettings": {
@@ -997,7 +997,7 @@
             "name": "respondentId",
             "in": "path",
             "required": true,
-            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project. \n\n If the combination of project name and respondent ID does not exist, an error will be displayed with **Error Status 405**",
+            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey. \n\n If the combination of survey name and respondent ID does not exist, an error will be displayed with **Error Status 405**",
             "schema": {
               "type": "string",
               "example": "RESP497770"
@@ -1172,7 +1172,7 @@
           "Respondent"
         ],
         "summary": "Get all respondents",
-        "description": "Get quality check results and status for all respondents in a specific project",
+        "description": "Get quality check results and status for all respondents in a specific survey",
         "parameters": [
           {
             "name": "surveyName",
@@ -1204,13 +1204,13 @@
                     },
                     "results": {
                       "type": "array",
-                      "description": "This is an array of objects, **each representing a respondent in the project**.",
+                      "description": "This is an array of objects, **each representing a respondent in the survey**.",
                       "items": {
                         "type": "object",
                         "properties": {
                           "respondentId": {
                             "type": "string",
-                            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the project.",
+                            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.",
                             "example": "RESP497770"
                           },
                           "status": {
