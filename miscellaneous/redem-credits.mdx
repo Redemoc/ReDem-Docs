@@ -27,6 +27,7 @@ The following list offers a clear overview of how credits are calculated based o
       <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Score Type</th>
       <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Base Credits</th>
       <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Additional Credits</th>
+      <th style={{border: '1px solid #e3e3e3', padding: '10px', backgroundColor: '#F0F0F0', textAlign: 'left'}}>Maximum Credits</th>
     </tr>
   </thead>
 
@@ -34,36 +35,40 @@ The following list offers a clear overview of how credits are calculated based o
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Open-Ended-Score (OES)</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>3 (for first question)</td>
-      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1 (for each additional question)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.5 (for each additional question)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>7.5</td>
     </tr>
 
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Time-Score (TS)</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>-</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1</td>
     </tr>
 
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Coherence-Score (CHS)</td>
-      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>3 (for first 20 questions)</td>
-      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.2 (for each additional question)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>4 (for first 100 questions)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.03 (for each additional question)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>-</td>
     </tr>
 
     <tr>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Grid-Question-Score (GQS)</td>
-      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.1 per item (max 3 credits)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.05 per item</td>
       <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>-</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>2</td>
     </tr>
   </tbody>
 </table>
 
 ### 💡Important Credit Rules
 
-* **Grid-Question Score (GQS):** The maximum charge is capped at **3 credits per respondent**. Each grid-question item costs **0.1 credit**, but even if a respondent has numerous items, the total cost for GQS will not exceed 3 credits.
+* **Grid-Question Score (GQS):** The maximum charge is capped at **2 credits per respondent**. Each grid-question item **costs 0.05 credits**, but even if a respondent has numerous items, the total cost for GQS will not exceed 2 credits.
 
 * **Time Score (TS):** The maximum cost is **1 credit per respondent**, regardless of the number of time-related data points included.
 
-* **Coherence Score (CHS):** A maximum of **20 data points** is included in the base calculation, costing **3 credits** per respondent. For additional data points beyond 20, each incurs an extra cost of **0.2 credits**.
+* **Coherence Score (CHS):** A maximum of **100 data questions** are included in the base calculation, costing **4 credits** per respondent. For additional question beyond 100, each incurs an extra cost of **0.03 credits**.
 
 * **No Credits for Empty Answers or Missing Values:** Credits are only applied to valid, present data points. No credits are charged for empty responses or missing values.
 
@@ -75,4 +80,4 @@ The following list offers a clear overview of how credits are calculated based o
 
 Here’s an example of how credits are calculated for a single respondent:
 
-<img classname="block dark:hidden" src="/images/Credit-Calculation-Example-Light.png" />
+<img classname="block dark:hidden" src="/images/Credit-Calculation-Example.png" />
