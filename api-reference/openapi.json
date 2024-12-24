@@ -266,7 +266,7 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint"
             },
-            "description": "An array of data points that are used for quality checks for each respondent. \n\n 💡 **Important:** The `Behavioral Analytics Score (BAS)` quality check type is not currently available like other quality checks. We are in the process of developing this quality check. For now, this variable is being used to collect interaction data. The Behavioral Analytics Score (BAS) will be available in the near future."
+            "description": "An array of data points that are used for quality checks for each respondent. Note that for the Coherence Score (CHS), there can only be one data point. This data point should contain the entire interview.\n\n 💡 **Important:** The `Behavioral Analytics Score (BAS)` quality check type is not currently available like other quality checks. We are in the process of developing this quality check. For now, this variable is being used to collect interaction data. The Behavioral Analytics Score (BAS) will be available in the near future."
           },
           "activateCleaning": {
             "type": "boolean",
