@@ -190,7 +190,7 @@
               },
               "dataPointId": {
                 "type": "string",
-                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system. Note that there can be only one CHS datapoint per respondent. This datapoint should contain the entire interview.",
                 "example": "Q1"
               },
               "interviewData": {
