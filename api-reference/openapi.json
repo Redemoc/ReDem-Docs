@@ -168,7 +168,7 @@
                 "items": {
                   "type": "number"
                 },
-                "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**.",
+                "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**. \n\n 🧪 **Validations:**  \n - A **minimum of 7** and a **maximum of 50** answers are allowed for each grid question. \n - Each answer must be provided as a **numeric value**.",
                 "example": [
                   5,
                   4,
@@ -198,7 +198,7 @@
                 "items": {
                   "$ref": "#/components/schemas/InterviewData"
                 },
-                "description": "This variable compiles all relevant questions and answer pairs used to assess whether a respondent is coherent or incoherent.",
+                "description": "This variable compiles all relevant questions and answer pairs used to assess whether a respondent is coherent or incoherent. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** interviews are allowed per respondent.",
                 "example": [
                   {
                     "question": "What type of accommodation did you stay in?",
@@ -266,7 +266,7 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint"
             },
-            "description": "An array of data points that are used for quality checks for each respondent. Note that for the Coherence Score (CHS), there can only be one data point. This data point should contain the entire interview.\n\n 💡 **Important:** The `Behavioral Analytics Score (BAS)` quality check type is not currently available like other quality checks. We are in the process of developing this quality check. For now, this variable is being used to collect interaction data. The Behavioral Analytics Score (BAS) will be available in the near future."
+            "description": "An array of data points that are used for quality checks for each respondent. Note that for the Coherence Score (CHS), there can only be one data point. This data point should contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will result in validation errors. Ensure data points per respondent stay within the limits. \n\n💡 **Important:** The `Behavioral Analytics Score (BAS)` quality check type is not currently available like other quality checks. We are in the process of developing this quality check. For now, this variable is being used to collect interaction data. The Behavioral Analytics Score (BAS) will be available in the near future."
           },
           "activateCleaning": {
             "type": "boolean",
