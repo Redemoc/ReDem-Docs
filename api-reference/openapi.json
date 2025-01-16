@@ -273,7 +273,7 @@
             "type": "boolean",
             "description": "**Indicates whether cleaning should be applied to the respondent**. \n\n **💡Important:** To clean respondents, ensure that this variable is set to `true`. Without this setting, the system will evaluate respondents, generate scores, and always mark them as included. \n\n When cleaning is activated, the response will include a variable, isExcluded, indicating whether the respondent has been excluded based on the applied criteria.",
             "example": true,
-            "default": true
+            "default": false
           },
           "cleaningSettings": {
             "description": "**Cleaning settings for respondents** define the rules for deciding if a respondent should be excluded and marked as low quality. \n\n **💡Important:** If no cleaning settings are defined and cleaning is activated, the system will apply the default cleaning settings to determine whether a respondent should be excluded and marked as low quality. \n \n For more details on how cleaning works, refer to the [Data Cleaning](/cleaning-and-review) section.",
