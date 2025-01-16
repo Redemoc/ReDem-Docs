@@ -813,7 +813,7 @@
               },
               "example": {
                 "respondentId": "RESP497770",
-                "projectName": "Global Vacation Insights 2024",
+                "surveyName": "Global Vacation Insights 2024",
                 "dataPoints": [
                   {
                     "qualityCheck": "OES",
@@ -886,32 +886,34 @@
                   }
                 ],
                 "activateCleaning": true,
-                "redemScore": 60,
-                "OES": {
-                  "score": 30,
-                  "minimumAnswers": 2,
-                  "categories": {
-                    "genericAnswers": {"exclude":true, "minDataPoints": 2},
-                    "noInformation": {"exclude":true, "minDataPoints": 2},
-                    "badLanguage": {"exclude":true, "minDataPoints": 2},
-                    "nonsense": {"exclude":true, "minDataPoints": 1},
-                    "duplicateAnswer": {"exclude":true, "minDataPoints": 1},
-                    "duplicateRespondent": {"exclude":true, "minDataPoints": 1},
-                    "wrongTopic": {"exclude":true, "minDataPoints": 1},
-                    "wrongLanguage": {"exclude":true, "minDataPoints": 1},
-                    "copyPastAnswer": {"exclude":true, "minDataPoints": 1},
-                    "fakeAnswer": {"exclude":true, "minDataPoints": 1}
+                "cleaningSettings": {
+                  "redemScore": 60,
+                  "OES": {
+                    "score": 30,
+                    "minimumAnswers": 2,
+                    "categories": {
+                      "genericAnswers": {"exclude":true, "minDataPoints": 2},
+                      "noInformation": {"exclude":true, "minDataPoints": 2},
+                      "badLanguage": {"exclude":true, "minDataPoints": 2},
+                      "nonsense": {"exclude":true, "minDataPoints": 1},
+                      "duplicateAnswer": {"exclude":true, "minDataPoints": 1},
+                      "duplicateRespondent": {"exclude":true, "minDataPoints": 1},
+                      "wrongTopic": {"exclude":true, "minDataPoints": 1},
+                      "wrongLanguage": {"exclude":true, "minDataPoints": 1},
+                      "copyPastAnswer": {"exclude":true, "minDataPoints": 1},
+                      "fakeAnswer": {"exclude":true, "minDataPoints": 1}
+                    }
+                  },
+                  "CHS": {
+                    "score": 20
+                  },
+                  "GQS": {
+                    "score": 10,
+                    "minimumItems": 15
+                  },
+                  "TS": {
+                    "score": 20
                   }
-                },
-                "CHS": {
-                  "score": 20
-                },
-                "GQS": {
-                  "score": 10,
-                  "minimumItems": 15
-                },
-                "TS": {
-                  "score": 20
                 },
                 "synchronousResponse": true
               }
