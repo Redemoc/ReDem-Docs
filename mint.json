@@ -95,10 +95,5 @@
   "feedback": {
     "thumbsRating": true
   },
-  "api": {
-    "playground": {
-      "mode": "hide"
-    }
-  },
   "versions": ["V3 (Beta)"]
 }

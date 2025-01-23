@@ -1043,7 +1043,7 @@
         }
       }
     },
-    "/respondent/result/{surveyName}/{respondentId}": {
+    "/respondent/getRespondent/{surveyName}/{respondentId}": {
       "get": {
         "tags": [
           "Respondent"
@@ -1234,7 +1234,7 @@
         }
       }
     },
-    "/respondent/result/{surveyName}": {
+    "/respondent/getAllRespondents/{surveyName}": {
       "get": {
         "tags": [
           "Respondent"
@@ -1517,7 +1517,7 @@
         }
       }
     },
-    "/respondent/estimate": {
+    "/respondent/estimation": {
       "get": {
         "tags": [
           "Respondent"
