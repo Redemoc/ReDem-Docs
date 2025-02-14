@@ -106,7 +106,7 @@
                 "items": {
                   "type": "string"
                 },
-                "description": "**Keywords are used to perform `wrong topic` checks** and help evaluate whether responses are relevant to the topic. \n\nBy default, the `wrong topic` check is disabled. However, if keywords are provided, the system will automatically enable the `wrong topic` check, and respondents will be evaluated to ensure their answers align with the context defined by the provided keywords and title. \n\n For more details on how this works, refer to the [Wrong Topic Check](/quality-checks/open-ended-score#wrong-topic) section.",
+                "description": "**Keywords are used to perform `wrong topic` checks** and help evaluate whether responses are relevant to the topic. \n\nBy default, the `wrong topic` check is disabled. However, if keywords are provided, the system will automatically enable the `wrong topic` check, and respondents will be evaluated to ensure their answers align with the context defined by the provided keywords and title. \n\n For more details on how this works, refer to the [Wrong Topic Check](/quality-checks/open-ended-score#wrong-topic) section. \n\n 🧪 **Validations:**  \n - A **maximum of 10** keywords are allowed for each question.",
                 "example": [
                   "Beach",
                   "Mountains",
@@ -124,7 +124,7 @@
                 "items": {
                   "type": "string"
                 },
-                "description": "**Specifies the list of languages allowed for responses**. Answers provided in languages not on this list will be marked as `wrong language`. \n\n If no languages are specified, the wrong language check will not be performed. \n\n For more details on how this works, refer to the [Wrong Language Check](/quality-checks/open-ended-score#wrong-language) section.",
+                "description": "**Specifies the list of languages allowed for responses**. Answers provided in languages not on this list will be marked as `wrong language`. \n\n If no languages are specified, the wrong language check will not be performed. \n\n For more details on how this works, refer to the [Wrong Language Check](/quality-checks/open-ended-score#wrong-language) section. \n\n 🧪 **Validations:**  \n - Allowed languages should be represented using **two-letter ISO 639-1 language codes.**",
                 "example": ["en", "de", "it"]
               }
             },
