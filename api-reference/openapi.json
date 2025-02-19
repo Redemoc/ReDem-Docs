@@ -254,7 +254,7 @@
         "properties": {
           "respondentId": {
             "type": "string",
-            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.\n\n**💡 Important:** The system uses this ID, along with the survey name, to uniquely identify the respondent within a survey, making it possible for the same respondent to be part of different projects. \n\nIf the combination of survey name and respondent ID already exists, an error will be displayed with **Error Status 409**",
+            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.\n\n**💡 Important:** The system uses this ID, along with the survey name, to uniquely identify the respondent within a survey, making it possible for the same respondent to be part of different projects. \n\nIf the combination of survey name and respondent ID already exists, an error will be displayed.",
             "example": "RESP497770"
           },
           "surveyName": {
