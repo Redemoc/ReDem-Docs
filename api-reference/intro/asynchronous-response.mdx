@@ -1,11 +1,11 @@
 ---
-title: 'For Survey Tools'
+title: 'Asynchronous Response'
 description: 'Learn how to integrate ReDem with your survey tools'
-icon: "screwdriver-wrench"
+icon: "arrows-rotate"
 iconType: "regular"
 ---
 
-<Info>To integrate ReDem with your survey tool, you'll need a ReDem account. <br /> Don’t have an account yet? Get started by [setting up your account](/account-setup).</Info>
+<Info>To integrate with ReDem, you must have a ReDem account. <br /> Don’t have an account yet? Get started by [setting up your account](/account-setup).</Info>
 
 <Steps titleSize="h3">
   <Step title="Login and create an API key">
@@ -16,7 +16,7 @@ iconType: "regular"
   <Step title="Prepare your request data">
     Ensure your data is formatted correctly according to the guidelines before sending it via the API. Below is a sample request object to help you structure your data properly.
 
-    <p>As a survey tool, we **recommend adopting an asynchronous response approach**. Therefore, keep the `synchronousResponse` field set to `false`. It allows you to continue engaging with your respondents without waiting for a response from ReDem.</p>
+    <p>In an asynchronous response approach, it is recommended to keep the `synchronousResponse` field set to `false`. This allows you to continue engaging with your respondents without waiting for a response from ReDem..</p>
 
     ```javascript Example request body
     {
@@ -98,7 +98,7 @@ iconType: "regular"
   </Step>
 
   <Step title="Synchronize respondent evaluations">
-    <p>Since an asynchronous response approach is recommended, you can synchronize respondent evaluations from ReDem into your survey tool at any time.</p>
+    <p>Since an asynchronous response approach is recommended, you can synchronize respondent evaluations from ReDem at any time.</p>
 
     <p> To streamline the process, you can set up an automated job that performs the synchronization on a regular basis, ensuring your data remains up-to-date without requiring manual intervention. </p>
 

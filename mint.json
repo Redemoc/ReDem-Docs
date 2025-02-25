@@ -70,8 +70,8 @@
       "group": "How to integrate",
       "pages": [
         "api-reference/intro/introduction",
-        "api-reference/intro/for-researchers",
-        "api-reference/intro/for-survey-tools"
+        "api-reference/intro/synchronous-response",
+        "api-reference/intro/asynchronous-response"
       ]
     },
     {
