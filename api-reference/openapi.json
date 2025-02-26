@@ -77,171 +77,177 @@
       "DataPoint": {
         "description": "An array of data points that are used for quality checks for each respondent.",
         "type": "object",
-        "oneOf": [
-          {
-            "title": "OES",
-            "properties": {
-              "qualityCheck": {
-                "type": "string",
-                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
-                "enum": ["OES"]
-              },
-              "dataPointId": {
-                "type": "string",
-                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
-                "example": "Q1"
-              },
-              "question": {
-                "type": "string",
-                "description": "**Contains the title or text of the open-ended question**, which is used directly to evaluate respondent quality.  \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided.",
-                "example": "Where did you spend your last vacation?"
-              },
-              "answer": {
-                "type": "string",
-                "description": "A variable that holds the **respondent's answer to an open-ended question**, which is the main part we use for evaluation. \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided.",
-                "example": "We were at Lake Garda in Italy"
-              },
-              "keywords": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "description": "**Keywords are used to perform `wrong topic` checks** and help evaluate whether responses are relevant to the topic. \n\nBy default, the `wrong topic` check is disabled. However, if keywords are provided, the system will automatically enable the `wrong topic` check, and respondents will be evaluated to ensure their answers align with the context defined by the provided keywords and title. \n\n For more details on how this works, refer to the [Wrong Topic Check](/quality-checks/open-ended-score#wrong-topic) section. \n\n 🧪 **Validations:**  \n - A **maximum of 10** keywords are allowed for each question.",
-                "example": [
-                  "Beach",
-                  "Mountains",
-                  "Lake"
-                ]
-              },
-              "activateDuplicateDetection": {
-                "type": "boolean",
-                "description": "A variable that indicates **whether duplicate checks are performed on the respondent's answers**. \n\n This checks if an answer is identical to another respondent's answer or if a respondent provided the same answer to multiple questions. \n\n By default, duplicate checks are active, but you can deactivate them by setting this variable to `false`. \n\n For more details on how this works, refer to the [Duplicate Check](/quality-checks/open-ended-score#duplicate-respondent) section.",
-                "example": true,
-                "default": true
-              },
-              "allowedLanguages": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "description": "**Specifies the list of languages allowed for responses**. Answers provided in languages not on this list will be marked as `wrong language`. \n\n If no languages are specified, the wrong language check will not be performed. \n\n For more details on how this works, refer to the [Wrong Language Check](/quality-checks/open-ended-score#wrong-language) section. \n\n 🧪 **Validations:**  \n - Allowed languages should be represented using **two-letter ISO 639-1 language codes.**",
-                "example": ["en", "de", "it"]
-              }
-            },
-            "required": ["dataPointId", "qualityCheck","answer", "question"]
-          },
-          {
-            "title": "TS",
-            "properties": {
-              "qualityCheck": {
-                "type": "string",
-                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
-                "enum": ["TS"]
-              },
-              "dataPointId": {
-                "type": "string",
-                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
-                "example": "Q1"
-              },
-              "duration": {
-                "type": "number",
-                "description": "This variable contains the information about the **amount of time a respondent spends on each question or a specific section of the survey**. It helps in analyzing response behavior and timing.",
-                "example": 42670
-              }
-            },
-            "required": ["dataPointId", "qualityCheck", "duration"]
-          },
-          {
-            "title": "GQS",
-            "properties": {
-              "qualityCheck": {
-                "type": "string",
-                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
-                "enum": ["GQS"]
-              },
-              "dataPointId": {
-                "type": "string",
-                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
-                "example": "Q1"
-              },
-              "gridAnswersPattern": {
-                "type": "array",
-                "items": {
-                  "type": "number"
-                },
-                "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**. \n\n 🧪 **Validations:**  \n - A **minimum of 7** and a **maximum of 50** answers are allowed for each grid question. \n - Each answer must be provided as a **numeric value**.",
-                "example": [
-                  5,
-                  4,
-                  3,
-                  5,
-                  4
-                ]
-              }
-            },
-            "required": ["dataPointId", "qualityCheck", "gridQuestionPattern"]
-          },
-          {
-            "title": "CHS",
-            "properties": {
-              "qualityCheck": {
-                "type": "string",
-                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
-                "enum": ["CHS"]
-              },
-              "dataPointId": {
-                "type": "string",
-                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system. Note that there can be only one CHS datapoint per respondent. This datapoint should contain the entire interview.",
-                "example": "Q1"
-              },
-              "interviewData": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/InterviewData"
-                },
-                "description": "This variable compiles all relevant questions and answer pairs used to assess whether a respondent is coherent or incoherent. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** interviews are allowed per respondent.",
-                "example": [
-                  {
-                    "question": "What type of accommodation did you stay in?",
-                    "answer": "Hotel"
-                  }
-                ]
-              }
-            },
-            "required": ["dataPointId", "qualityCheck", "interviewData"]
-          },
-          {
-            "title": "BAS",
-            "properties": {
-              "qualityCheck": {
-                "type": "string",
-                "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
-                "enum": ["BAS"]
-              },
-              "dataPointId": {
-                "type": "string",
-                "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
-                "example": "Q1"
-              },
-              "interactionData": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/InteractionData"
-                },
-                "description": "This variable compiles all relevant information about the interaction of the respondent with the data point.",
-                "example": [
-                  {
-                    "value": "W",
-                    "interactionType": "keystroke",
-                    "timestamp": "2024-12-01T06:22:59.833Z"
-                  }
-                ]
-              }
-            },
-            "required": ["dataPointId", "qualityCheck", "interviewData"]
+        "discriminator": {
+          "propertyName": "qualityCheck",
+          "mapping": {
+            "OES": "#/components/schemas/OESDataPoint",
+            "TS": "#/components/schemas/TSDataPoint", 
+            "GQS": "#/components/schemas/GQSDataPoint",
+            "CHS": "#/components/schemas/CHSDataPoint",
+            "BAS": "#/components/schemas/BASDataPoint"
           }
-        ],
-        "properties": {}
+        },
+        "oneOf": [
+          { "$ref": "#/components/schemas/OESDataPoint" },
+          { "$ref": "#/components/schemas/TSDataPoint" },
+          { "$ref": "#/components/schemas/GQSDataPoint" },
+          { "$ref": "#/components/schemas/CHSDataPoint" },
+          { "$ref": "#/components/schemas/BASDataPoint" }
+        ]
+      },
+      "OESDataPoint": {
+        "type": "object",
+        "title": "OES",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+            "enum": ["OES"]
+          },
+          "dataPointId": {
+            "type": "string",
+            "x-mintlify-id": "oes-data-point-id",
+            "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+            "example": "Q1"
+          },
+          "question": {
+            "type": "string",
+            "description": "**Contains the title or text of the open-ended question**, which is used directly to evaluate respondent quality.  \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided.",
+            "example": "Where did you spend your last vacation?"
+          },
+          "answer": {
+            "type": "string",
+            "description": "A variable that holds the **respondent's answer to an open-ended question**, which is the main part we use for evaluation. \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided.",
+            "example": "We were at Lake Garda in Italy"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "**Keywords are used to perform `wrong topic` checks** and help evaluate whether responses are relevant to the topic. \n\nBy default, the `wrong topic` check is disabled. However, if keywords are provided, the system will automatically enable the `wrong topic` check, and respondents will be evaluated to ensure their answers align with the context defined by the provided keywords and title. \n\n For more details on how this works, refer to the [Wrong Topic Check](/quality-checks/open-ended-score#wrong-topic) section. \n\n 🧪 **Validations:**  \n - A **maximum of 10** keywords are allowed for each question.",
+            "example": ["Beach", "Mountains", "Lake"]
+          },
+          "activateDuplicateDetection": {
+            "type": "boolean",
+            "description": "A variable that indicates **whether duplicate checks are performed on the respondent's answers**. \n\n This checks if an answer is identical to another respondent's answer or if a respondent provided the same answer to multiple questions. \n\n By default, duplicate checks are active, but you can deactivate them by setting this variable to `false`. \n\n For more details on how this works, refer to the [Duplicate Check](/quality-checks/open-ended-score#duplicate-respondent) section.",
+            "example": true,
+            "default": true
+          },
+          "allowedLanguages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "**Specifies the list of languages allowed for responses**. Answers provided in languages not on this list will be marked as `wrong language`. \n\n If no languages are specified, the wrong language check will not be performed. \n\n For more details on how this works, refer to the [Wrong Language Check](/quality-checks/open-ended-score#wrong-language) section. \n\n 🧪 **Validations:**  \n - Allowed languages should be represented using **two-letter ISO 639-1 language codes.**",
+            "example": ["en", "de", "it"]
+          }
+        },
+        "required": ["dataPointId", "qualityCheck", "answer", "question"]
+      },
+      "TSDataPoint": {
+        "type": "object",
+        "title": "TS",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+            "enum": ["TS"]
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+            "example": "Q1"
+          },
+          "duration": {
+            "type": "number",
+            "description": "This variable contains the information about the **amount of time a respondent spends on each question or a specific section of the survey**. It helps in analyzing response behavior and timing.",
+            "example": 42670
+          }
+        },
+        "required": ["dataPointId", "qualityCheck", "duration"]
+      },
+      "GQSDataPoint": {
+        "type": "object",
+        "title": "GQS",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+            "enum": ["GQS"]
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+            "example": "Q1"
+          },
+          "gridAnswersPattern": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**. \n\n 🧪 **Validations:**  \n - A **minimum of 7** and a **maximum of 50** answers are allowed for each grid question. \n - Each answer must be provided as a **numeric value**.",
+            "example": [5, 4, 3, 5, 4]
+          }
+        },
+        "required": ["dataPointId", "qualityCheck", "gridAnswersPattern"]
+      },
+      "CHSDataPoint": {
+        "type": "object",
+        "title": "CHS",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+            "enum": ["CHS"]
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system. Note that there can be only one CHS datapoint per respondent. This datapoint should contain the entire interview.",
+            "example": "Q1"
+          },
+          "interviewData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InterviewData"
+            },
+            "description": "This variable compiles all relevant questions and answer pairs used to assess whether a respondent is coherent or incoherent. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** interviews are allowed per respondent.",
+            "example": [{
+              "question": "What type of accommodation did you stay in?",
+              "answer": "Hotel"
+            }]
+          }
+        },
+        "required": ["dataPointId", "qualityCheck", "interviewData"]
+      },
+      "BASDataPoint": {
+        "type": "object",
+        "title": "BAS",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+            "enum": ["BAS"]
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**A unique identifier assigned to each data point**, ensuring that every data point is distinctly tracked and referenced within the system.",
+            "example": "Q1"
+          },
+          "interactionData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InteractionData"
+            },
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point.",
+            "example": [{
+              "value": "W",
+              "interactionType": "keystroke",
+              "timestamp": "2024-12-01T06:22:59.833Z"
+            }]
+          }
+        },
+        "required": ["dataPointId", "qualityCheck", "interactionData"]
       },
       "AddRespondentRequest": {
         "description": "Request body for adding a new respondent",
