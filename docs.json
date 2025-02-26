@@ -1,0 +1,109 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "ReDem Documentation",
+  "colors": {
+    "primary": "#00a181",
+    "light": "#00a181",
+    "dark": "#00a181"
+  },
+  "favicon": "/ReDem-Fav-Icon.png",
+  "navigation": {
+    "versions": [
+      {
+        "version": "V3 (Beta)",
+        "tabs": [
+          {
+            "tab": "User Guide",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "welcome",
+                  "account-setup",
+                  "how-it-works"
+                ]
+              },
+              {
+                "group": "Quality Checks",
+                "pages": [
+                  "quality-checks/redem-score",
+                  "quality-checks/open-ended-score",
+                  "quality-checks/coherence-score",
+                  "quality-checks/time-score",
+                  "quality-checks/grid-question-score"
+                ]
+              },
+              {
+                "group": "Core Features",
+                "pages": [
+                  "features/cleaning-and-review"
+                ]
+              },
+              {
+                "group": "Miscellaneous",
+                "pages": [
+                  "miscellaneous/redem-credits",
+                  "miscellaneous/questionnaire-criteria"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Documentation",
+            "groups": [
+              {
+                "group": "How to integrate",
+                "pages": [
+                  "api-reference/intro/introduction",
+                  "api-reference/intro/synchronous-response",
+                  "api-reference/intro/asynchronous-response"
+                ]
+              },
+              {
+                "group": "API Specifications",
+                "pages": [
+                  "api-reference/api-specifications/api-keys",
+                  "api-reference/api-specifications/response-structure"
+                ]
+              },
+              {
+                "group": "Endpoints",
+                "pages": [
+                  "api-reference/endpoint/addRespondent",
+                  "api-reference/endpoint/getRespondent",
+                  "api-reference/endpoint/getAllRespondents",
+                  "api-reference/endpoint/stopSurvey",
+                  "api-reference/endpoint/estimateRespondent"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/ReDem-Logo-Light.png",
+    "dark": "/logo/ReDem-Logo-Dark.png",
+    "href": "https://docs.redem.io/"
+  },
+  "background": {
+    "color": {
+      "dark": "#061836"
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:support@redem.io"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Login",
+      "href": "https://app.redem.io/"
+    }
+  }
+}
