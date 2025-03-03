@@ -74,7 +74,7 @@
                   "api-reference/endpoint/getRespondent",
                   "api-reference/endpoint/getAllRespondents",
                   "api-reference/endpoint/stopSurvey",
-                  "api-reference/endpoint/estimateRespondent"
+                  "api-reference/endpoint/creditCalculation"
                 ]
               }
             ]

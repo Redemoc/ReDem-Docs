@@ -627,35 +627,40 @@
           }
         }
       },
-      "EstimateRespondentRequest": {
-        "description": "Request body for estimating the maximum number of credits needed for a respondent",
+      "CreditCalculationRequest": {
+        "description": "Request body for calculating the maximum number of credits needed for a respondent",
         "required": [
           "OESDataPoints",
           "GQSAnswers",
           "TSDataPoints",
-          "CHSInterviews"
+          "CHSAnswers",
+          "BASDataPoints"
         ],
         "type": "object",
         "properties": {
           "OESDataPoints": {
             "type": "number",
-            "description": "**Number of OES data points** that need to consider for quality checks"
+            "description": "**Number of OES data points** that need to consider for quality checks. \n **⭕ Note:** If OES data points are unavailable, you can set this value to `0`."
           },
           "GQSAnswers": {
             "type": "number",
-            "description": "**Number of GQS answers** that need to consider for quality checks"
+            "description": "**Number of GQS answers** that need to consider for quality checks. \n **⭕ Note:** If GQS answers are unavailable, you can set this value to `0`."
           },
           "TSDataPoints": {
             "type": "number",
-            "description": "**Number of TS data points** that need to consider for quality checks"
+            "description": "**Number of TS data points** that need to consider for quality checks. \n **⭕ Note:** If TS data points are unavailable, you can set this value to `0`."
           },
-          "CHSInterviews": {
+          "CHSAnswers": {
             "type": "number",
-            "description": "**Number of CHS interviews** that need to consider for quality checks"
+            "description": "**Number of CHS answers** that need to consider for quality checks.\n **⭕ Note:** If CHS answers are unavailable, you can set this value to `0`."
+          },
+          "BASDataPoints": {
+            "type": "number",
+            "description": "**Number of BAS data points** that need to consider for quality checks. \n **⭕ Note:** If BAS data points are unavailable, you can set this value to `0`."
           }
         }
       },
-      "EstimationBreakdown": {
+      "CalculationBreakdown": {
         "description": "Detailed breakdown of the number of credits estimated for a respondent",
         "type": "object",
         "properties": {
@@ -709,9 +714,23 @@
                 "type": "number",
                 "description": "Number of CHS credits estimated for a respondent"
               },
-              "interviews": {
+              "answers": {
                 "type": "number",
                 "description": "Number of CHS interviews estimated for a respondent"
+              }
+            }
+          },
+          "BAS": {
+            "type": "object",
+            "description": "Detailed breakdown of the number of BAS credits estimated for a respondent",
+            "properties": {
+              "credits": {
+                "type": "number",
+                "description": "Number of BAS credits estimated for a respondent"
+              },
+              "answers": {
+                "type": "number",
+                "description": "Number of BAS data points estimated for a respondent"
               }
             }
           }
@@ -1573,7 +1592,7 @@
         ],
         "summary": "Stop a survey",
         "operationId": "stopSurvey",
-        "description": "API for stopping a survey. Can be triggered when the survey is completed. A **stopped survey no longer accepts new respondents**, preventing further additions.",
+        "description": "API for stopping a survey. Can be triggered when the survey is completed.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1654,33 +1673,34 @@
         }
       }
     },
-    "/respondent/estimation": {
-      "get": {
+    "/creditCalculation": {
+      "post": {
         "tags": [
           "Respondent"
         ],
-        "summary": "Estimate the maximum number of credits needed for a respondent",
-        "operationId": "estimateRespondent",
-        "description": "API for estimating the maximum number of credits needed for a respondent",
+        "summary": "Calculate the maximum number of credits needed for a respondent",
+        "operationId": "creditCalculation",
+        "description": "API for calculating the maximum number of credits needed for a respondent",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EstimateRespondentRequest"
+                "$ref": "#/components/schemas/CreditCalculationRequest"
               },
               "example": {
                 "OESDataPoints": 2,
                 "GQSAnswers": 35,
                 "TSDataPoints": 2,
-                "CHSInterviews": 25
+                "CHSAnswers": 25,
+                "BASDataPoints": 2
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "When a request is successfully processed, the API returns a 200 OK status code along with the expected data.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1699,17 +1719,17 @@
                       "type": "object",
                       "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                       "properties": {
-                        "estimate": {
-                          "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
+                        "creditCalculation": {
+                          "description": "This variable **represents the detailed breakdown of the number of credits** calculated for a respondent.",
                           "type": "object",
                           "properties": {
                             "totalCredits": {
                               "type": "number",
-                              "description": "This variable **represents the total number of credits** estimated for a respondent."
+                              "description": "This variable **represents the total number of credits** calculated for a respondent."
                             },
-                            "estimationBreakdown": {
-                              "description": "This variable **represents the detailed breakdown of the number of credits** estimated for a respondent.",
-                              "$ref": "#/components/schemas/EstimationBreakdown"
+                            "calculationBreakdown": {
+                              "description": "This variable **represents the detailed breakdown of the number of credits** calculated for a respondent.",
+                              "$ref": "#/components/schemas/CalculationBreakdown"
                             }
                           }
                         }
@@ -1719,15 +1739,16 @@
                 },
                 "example": {
                   "success": true,
-                  "message": "Estimate retrieved successfully",
+                  "message": "Credit calculation successfully retrieved",
                   "results": {
-                    "estimate": {
+                    "creditCalculation": {
                       "totalCredits": 12,
-                      "estimationBreakdown": {
+                      "calculationBreakdown": {
                         "OES": {"credits": 4, "dataPoints": 2},
                         "GQS": {"credits": 3, "answers": 35},
                         "TS": {"credits": 1, "dataPoints": 2},
-                        "CHS": {"credits": 4, "interviews": 25}
+                        "CHS": {"credits": 4, "answers": 25},
+                        "BAS": {"credits": 4, "dataPoints": 2}
                       }
                     }
                   }
@@ -1735,8 +1756,48 @@
               }
             }
           },
-          "500": {
-            "$ref": "#/components/responses/ServerError"
+          "400": {
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.", 
+                      "type": "object"
+                    },
+                    {
+                      "title": "Failed to calculate credits",
+                      "description": "This error occurs when the **system fails to calculate the credits**. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success":false,
+                      "message":"Validation Error",
+                      "errors":{
+                        "0": "\"OESDataPoints\" is required",
+                        "1": "\"GQSAnswers\" is required",
+                        "2": "\"TSDataPoints\" is required",
+                        "3": "\"CHSAnswers\" is required",
+                        "4": "\"BASDataPoints\" is required"
+                      }
+                    }
+                  },
+                  "Failed to calculate credits": {
+                    "value": {
+                      "success":false,
+                      "message":"Failed to calculate credits",
+                      "errors":{}
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
