@@ -736,6 +736,19 @@
             "example": "RESP497770"
           }
         }
+      },
+      "GetAllRespondentsRequest": {
+        "description": "Request body for getting all respondents",
+        "required": [
+          "surveyName"
+        ],
+        "type": "object",
+        "properties": {
+          "surveyName": {
+            "type": "string",
+            "description": "**The name of the survey**, which helps identify different surveys."
+          }
+        }
       }
     },
     "responses": {
@@ -1387,7 +1400,8 @@
                       "success":false,
                       "message":"Validation Error",
                       "errors":{
-                        "0": "\"surveyName\" is required"
+                        "0": "\"surveyName\" is required",
+                        "1": "\"respondentId\" is required"
                       }
                     }
                   },
@@ -1412,28 +1426,28 @@
         }
       }
     },
-    "/respondent/getAllRespondents/{surveyName}": {
-      "get": {
+    "/getAllRespondents": {
+      "post": {
         "tags": [
           "Respondent"
         ],
         "summary": "Get all respondents",
         "description": "Get quality check results and status for all respondents in a specific survey",
-        "parameters": [
-          {
-            "name": "surveyName",
-            "in": "path",
-            "required": true,
-            "description": "**The name of the survey**, which helps identify different surveys. \n\n If the survey name is not existing in the system, an error will be displayed with **Error Status 404**",
-            "schema": {
-              "type": "string",
-              "example": "Global Vacation Insights 2024"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAllRespondentsRequest"
+              },
+              "example": {
+                "surveyName": "Global Vacation Insights 2024"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "When a request is successfully processed, the API responds with a `200 OK` status code and the expected data.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1461,11 +1475,11 @@
                           },
                           "status": {
                             "type": "string",
-                            "description": "A variable that **indicates the current state of the job**.",
-                            "enum": ["JOB_COMPLETED", "JOB_PROCESSING", "JOB_FAILED"]
+                            "description": "A variable that **indicates the current state of the respondent**. \n\n **💡Important:** Even if a respondent fails evaluation, the response status will still be `COMPLETED`. \n\n **⭕ Note:** The value -999 is a predefined code returned by ReDem whenever a respondent cannot be evaluated. This applies to all quality scores, including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS.",
+                            "enum": ["COMPLETED", "QUEUED"]
                           },
                           "respondentQuality": {
-                            "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the respondent/add request**. \n\n **⭕ Note:** this variable will only available if the job status is `JOB_COMPLETED`.",
+                            "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the /addRespondent request**. \n\n **⭕ Note:** this variable will only available if the respondent status is `COMPLETED`.",
                             "$ref": "#/components/schemas/RespondentResults"
                           }
                         }
@@ -1510,8 +1524,44 @@
               }
             }
           },
-          "500": {
-            "$ref": "#/components/responses/ServerError"
+          "400": {
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.", 
+                      "type": "object"
+                    },
+                    {
+                      "title": "Survey not found",
+                      "description": "This error occurs when the **requested survey does not exist in the system**. It may happen if the survey name is incorrect, has been deleted, or was never created. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success":false,
+                      "message":"Validation Error",
+                      "errors":{
+                        "0": "\"surveyName\" is required"
+                      }
+                    }
+                  },
+                  "Survey not found": {
+                    "value": {
+                      "success":false,
+                      "message":"Survey not found",
+                      "errors":{}
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
