@@ -29,6 +29,10 @@ Responses failing to align with the expected context are classified as "Wrong To
 
 Enable this option only if your questions are meaningful and contain relevant keywords.
 
+### `  AI Generated Answer  `
+
+We analyze response structures to ensure they follow a plausible pattern, helping to detect thematically relevant but externally sourced answers, such as those from Wikipedia or AI chatbots like ChatGPD. Responses identified as "**Fake Answers**" are assigned a score of 0.
+
 ### `  Nonsense  `
 
 Enabling nonsense detection identifies gibberish, random numbers, and meaningless statements. Such responses are classified as "Nonsense" and assigned a score of 10.
@@ -58,10 +62,6 @@ We verify if a respondent's answers are repeated or partially repeated across mu
 <Note> If a response qualifies as both "Duplicate Respondent" and "Duplicate Answer," the "Duplicate Respondent" category takes precedence.</Note>
 
 ![](</images/Duplicate Answer.png>)
-
-### `  Fake Answers  `
-
-We analyze response structures to ensure they follow a plausible pattern, helping to detect thematically relevant but externally sourced answers, such as those from Wikipedia or AI chatbots like ChatGPD. Responses identified as "**Fake Answers**" are assigned a score of 0.
 
 ### `  Bad Language  `
 
