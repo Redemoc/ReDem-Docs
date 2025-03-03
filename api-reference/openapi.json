@@ -1566,29 +1566,29 @@
         }
       }
     },
-    "/survey/stop/{surveyName}": {
-      "get": {
+    "/stopSurvey": {
+      "post": {
         "tags": [
           "Survey"
         ],
-        "summary": "Stop a survey and optionally run post-checks",
+        "summary": "Stop a survey",
         "operationId": "stopSurvey",
-        "description": "API for stopping a survey. Can be triggered when the survey is completed. Optionally runs post-checks on the survey data.",
-        "parameters": [
-          {
-            "name": "surveyName",
-            "in": "path",
-            "required": true,
-            "description": "**The name of the survey**, which helps identify different surveys. \n\n If the survey name is not existing in the system, an error will be displayed with **Error Status 404**",
-            "schema": {
-              "type": "string",
-              "example": "Global Vacation Insights 2024"
+        "description": "API for stopping a survey. Can be triggered when the survey is completed. A **stopped survey no longer accepts new respondents**, preventing further additions.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAllRespondentsRequest"
+              },
+              "example": {
+                "surveyName": "Global Vacation Insights 2024"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Survey successfully stopped",
+            "description": "When a request is successfully processed, the API returns a 200 OK status code along with the expected data.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1602,31 +1602,54 @@
                     "message":{
                       "type":"string",
                       "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
-                    },
-                    "results": {
-                      "type": "object",
-                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
-                      "properties": {
-                        "status": {
-                          "type": "number",
-                          "example": 200
-                        }
-                      }
                     }
                   }
                 },
                 "example": {
                   "success": true,
-                  "message": "Survey Stopped successfully",
-                  "results": {
-                    "status": 200
-                  }
+                  "message": "Survey successfully stopped"
                 }
               }
             }
           },
-          "500": {
-            "$ref": "#/components/responses/ServerError"
+          "400": {
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.", 
+                      "type": "object"
+                    },
+                    {
+                      "title": "Survey not found",
+                      "description": "This error occurs when the **requested survey does not exist in the system**. It may happen if the survey name is incorrect, has been deleted, or was never created. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success":false,
+                      "message":"Validation Error",
+                      "errors":{
+                        "0": "\"surveyName\" is required"
+                      }
+                    }
+                  },
+                  "Survey not found": {
+                    "value": {
+                      "success":false,
+                      "message":"Survey not found",
+                      "errors":{}
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
