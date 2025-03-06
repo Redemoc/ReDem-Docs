@@ -10,45 +10,120 @@ iconType: "regular"
     <p> Copy the simple **JavaScript tracker code** (attached) into your survey platform’s frontend codebase or UI. This ensures that, whenever respondent complete surveys, it tracks input behavior data for open-ended questions directly from their individual browsers. </p>
   </Step>
   <Step title="Integrate ReDem API into your workflow">
-    <p>Save this input_behavior data in your database. Alternatively, if you are directly calling our API from the end user’s browser, you can pass the data directly without saving it on your side.</p>
+    <p>We are using this script to persist this input_behavior in the browser until you are ready to call the API</p>
 
     ```javascript
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const inputField = document.getElementById("input_behavior");
+        const textarea = document.getElementById("input_behavior");
         const submitButton = document.getElementById("submit_button");
-        let isCopyPaste = false;
-
-
-        function updateBehaviorData(eventType, value) {
-            let behaviorData = JSON.parse(sessionStorage.getItem("input_behavior_data")) || [];
-            behaviorData.push({
-                type: eventType,
+      
+        // Constants
+        const INTERACTION_TYPES = {
+            KEYSTROKE: 'KEYSTROKE',
+            COPYPASTE: 'COPYANDPASTE'
+        };
+      
+        // Question ID - This would typically come from your survey tool, you need to edit this
+        const QUESTION_ID = "<BAS_QuestionID>";
+        
+        // State variables
+        let startTime = null;
+        let oldText = "";
+      
+        // Initialize or retrieve interaction data from sessionStorage
+        const getInteractionData = () => {
+            const storedData = sessionStorage.getItem("interaction_data");
+            return storedData ? JSON.parse(storedData) : [];
+        };
+      
+        let interactionData = getInteractionData();
+      
+        // Function to push interaction data and save to sessionStorage
+        const pushInteraction = (value, interactionType) => {
+            interactionData.push({
                 value: value,
+                interactionType: interactionType,
                 timestamp: new Date().toISOString()
             });
-            sessionStorage.setItem("input_behavior_data", JSON.stringify(behaviorData));
+          
+            // Save to sessionStorage
+            sessionStorage.setItem("interaction_data", JSON.stringify(interactionData));
+        };
+      
+        // Initialize or retrieve startTime from sessionStorage
+        const storedStartTime = sessionStorage.getItem("start_time");
+        if (storedStartTime) {
+            startTime = parseInt(storedStartTime);
         }
-
-        inputField.addEventListener("input", function (event) {
-          updateBehaviorData(event.type, event.target.value);
+      
+        // Handle input changes
+        textarea.addEventListener('input', (e) => {
+            // Ignore paste events as they're handled separately
+            if (e.inputType === 'insertFromPaste') return;
+          
+            if (!startTime) {
+                startTime = Date.now();
+                sessionStorage.setItem("start_time", startTime.toString());
+            }
+          
+            const newInteraction = {
+                value: e.target.value,
+                interactionType: INTERACTION_TYPES.KEYSTROKE
+            };
+          
+            pushInteraction(newInteraction.value, newInteraction.interactionType);
+            oldText = e.target.value;
         });
-
-        inputField.addEventListener("paste", function (event) {
-          isCopyPaste = true;
-          let pasteData = event.clipboardData.getData('text');
-          updateBehaviorData(event.type, pasteData);
+      
+        // Handle paste events
+        textarea.addEventListener('paste', (e) => {
+            if (!startTime) {
+                startTime = Date.now();
+                sessionStorage.setItem("start_time", startTime.toString());
+            }
+            
+            const cursorPosition = e.target.selectionStart;
+            const currentValue = e.target.value;
+            const pastedText = e.clipboardData?.getData('text') || '';
+            
+            // Construct the new complete text by combining existing and pasted content
+            const newText = currentValue.slice(0, cursorPosition) + pastedText + currentValue.slice(cursorPosition);
+            
+            const newInteraction = {
+                value: newText,
+                interactionType: INTERACTION_TYPES.COPYPASTE
+            };
+            
+            pushInteraction(newInteraction.value, newInteraction.interactionType);
         });
-
-        //this could be is the same event in your platform to go to next page or submit or save data to send to redem API later on
+      
+        // Handle form submission
         submitButton.addEventListener("click", function () {
-          const behaviorData = JSON.parse(sessionStorage.getItem("input_behavior_data"));
-          console.log("Input Behavior Data:", behaviorData);
-          console.log("Open Ended Answer:", inputField.value);
-          console.log("Is Copy Paste:", isCopyPaste);
-              
-          // Perform your action here
+            // Get the latest interaction data from sessionStorage
+            interactionData = getInteractionData();
+          
+            // Calculate total time spent
+            const totalTimeMs = startTime ? Date.now() - startTime : 0;
+          
+            // Save final BAS data per each question
+            saveBASDataPerQuestion();
+          
+            // Display results on the page - Not part of integration script only the internal playground
+            displayResults();
         });
+
+
+        // Function to save data in BAS format
+        const saveBASDataPerQuestion = () => {
+            const basData = {
+                "qualityCheck": "BAS",
+                "dataPointId": QUESTION_ID,
+                "interactionData": interactionData
+            };
+          
+            sessionStorage.setItem(QUESTION_ID, JSON.stringify(basData));
+        };
       });
     </script>
     ```
