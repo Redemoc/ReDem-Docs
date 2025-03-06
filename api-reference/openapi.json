@@ -1621,12 +1621,35 @@
                     "message":{
                       "type":"string",
                       "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                    },
+                    "results": {
+                      "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                      "properties": {
+                        "surveyId": { 
+                          "type": "string",
+                          "description": "A variable that **indicates the survey**."
+                        },
+                        "surveyName": {
+                          "type": "string",
+                          "description": "A variable that **indicates the survey name**."
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "A variable that **indicates the status of the survey**."
+                        }
+                      }
                     }
                   }
                 },
                 "example": {
                   "success": true,
-                  "message": "Survey successfully stopped"
+                  "message": "Survey successfully stopped",
+                  "results": {
+                    "surveyId": "SURVEY1234567890",
+                    "surveyName": "Global Vacation Insights 2024",
+                    "status": "STOPPED"
+                  }
                 }
               }
             }
