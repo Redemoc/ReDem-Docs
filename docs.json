@@ -88,11 +88,6 @@
     "dark": "/logo/ReDem-Logo-Dark.png",
     "href": "https://docs.redem.io/"
   },
-  "api": {
-    "playground": {
-      "display": "none"
-    }
-  },
   "background": {
     "color": {
       "dark": "#061836"
