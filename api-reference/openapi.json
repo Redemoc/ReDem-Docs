@@ -55,7 +55,7 @@
         }
       },
       "InteractionData": {
-        "description": "Structure for interaction-based questions",
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** If you want more information on tracking input behavior data for text-based questions directly from individual browsers, please contact us. We are ready to assist you with the best practices.",
         "type": "object",
         "required": ["value", "interactionType", "timestamp"],
         "properties": {
@@ -239,7 +239,6 @@
             "items": {
               "$ref": "#/components/schemas/InteractionData"
             },
-            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point.",
             "example": [{
               "value": "W",
               "interactionType": "keystroke",
