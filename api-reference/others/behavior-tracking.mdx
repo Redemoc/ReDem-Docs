@@ -129,12 +129,6 @@ iconType: "regular"
     ```
   </Step>
   <Step title="Use API response to trigger your next step">
-    <p>Pass the data in an additional variable  inputBehavior as below with its other relevant open ended question’s correct **datapoint**.</p>
-
-    ```javascript
-      respondentBody.datapoints[i].inputBehavior = inputBehavior; //new variable
-      respondentBody.datapoints[i].openEndedAnswer = value; //you already have this
-      respondentBody.datapoints[i].isCopyPaste = isCopyPaste; //you already have this but it might not have worked without the tracker
-    ```
+    <p>When you are making the API call to ReDem use this structure from the session storage and make sure to connect `QUESTION_ID` during the integration process</p>
   </Step>
 </Steps>
