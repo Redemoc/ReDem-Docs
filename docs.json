@@ -31,7 +31,8 @@
                   "quality-checks/open-ended-score",
                   "quality-checks/coherence-score",
                   "quality-checks/time-score",
-                  "quality-checks/grid-question-score"
+                  "quality-checks/grid-question-score",
+                  "quality-checks/behavior-analysis-score"
                 ]
               },
               {
