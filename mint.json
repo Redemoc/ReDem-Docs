@@ -91,6 +91,12 @@
         "api-reference/endpoint/stopSurvey",
         "api-reference/endpoint/creditCalculation"
       ]
+    },
+    {
+      "group": "Others",
+      "pages": [
+        "api-reference/others/change-log"
+      ]
     }
   ],
   "feedback": {

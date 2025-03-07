@@ -1,0 +1,61 @@
+---
+title: 'Change Log'
+description: 'Learn about the changes in the API'
+icon: "bullhorn"
+iconType: "regular"
+---
+
+<Update label="2025-03-05" description="Unversioned changes">
+  ## API endpoint updates
+  The following API endpoint changes have been implemented to improve consistency and standardization:
+
+  <code style={{ color: "red" }}>POST /respondent/add</code> → <code style={{ color: "green" }}>POST /addRespondent</code> <br/>
+  - The `interactionData` field within `dataPoints` → `qualityCheck: BAS` has been modified to support additional interaction types. Now, it has been expanded to include both `KEYSTROKE` and `COPYANDPASTE` interactions, enhancing tracking capabilities.
+  - Enhanced the **request body cleaning settings** by allowing **activate/deactivate** options for each quality check and enhanced **cleaning settings** by introducing **Behavioral Analytics Score (BAS)** along with its categories.
+  - Renamed the **Fake Answer** category in **Open-Ended Score (OES)** to **AI-Generated Answer**.
+  - We have **enhanced** the response structure by adding a field to retrieve **Behavioral Analytics Score (BAS)** results.
+
+  <code style={{ color: "red" }}>GET /respondent/getRespondent</code> → <code style={{ color: "green" }}>POST /getRespondent</code> <br/>
+  - Previously with `GET` request we pass the `surveyName` and `respondentId` as a path parameters. Now we pass it in the request body. 
+  
+  <code style={{ color: "red" }}>GET /respondent/getAllRespondents</code> → <code style={{ color: "green" }}>POST /getAllRespondents</code> <br/>
+  - Previously with `GET` request we pass the `surveyName` as a path parameter. Now we pass it in the request body.
+
+  <code style={{ color: "red" }}>GET /survey/stop</code> → <code style={{ color: "green" }}>POST /stopSurvey</code> <br/>
+  - Previously with `GET` request we pass the `surveyName` as a path parameter. Now we pass it in the request body.
+
+  <code style={{ color: "red" }}>GET /respondent/estimation</code> → <code style={{ color: "green" }}>POST /creditCalculation</code> <br/>
+  - Introduced a new variable, **`BASDataPoints`**, to specify the number of BAS data points required for credit calculation when evaluating a respondent.
+  - Rename the variable **`CHSInterviews`** to **`CHSAnswers`** in the request body.
+  - We have introduced a new response structure for the `POST /creditCalculation` endpoint, improving clarity by renaming several fields for better self-explanatory representation.
+
+  ## Enhanced the quality checks by introducing Behavior Analysis Score (BAS)
+  We have enhanced the quality checks by introducing **Behavior Analysis Score (BAS)** to evaluate the respondent's behavior and provide a score and categories based on the behavior.
+  - Removed the **Copy-Paste** category from **Open-Ended Score (OES)** and incorporated it under **Behavioral Analytics Score (BAS)**.
+
+  ## Streamlined the API response in error cases
+  When a request fails due to invalid input or other errors, the all API returns a **400 Bad Request** status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.
+</Update>
+
+<Update label="2025-02-20" description="V3 (Beta)">
+  ## **ReDem 3.0 API - Initial Release**  
+
+  This initial release of the **ReDem API** empowers you to seamlessly integrate ReDem into your workflows and applications. As the backbone of our platform, the API provides direct access to all ReDem features, from real-time data insights to smooth integration with existing systems.  
+
+  Since the **ReDem Application** is entirely powered by this API, anything you can do in the app, you can also achieve programmatically—without limitations, unlocking endless possibilities!
+
+  ### 🎉 Key Endpoints
+  - <code style={{ color: "green" }}> POST /respondent/add</code> - Add a respondent to a survey.
+  - <code style={{ color: "green" }}> GET /respondent/getRespondent</code> - Get a respondent's details.
+  - <code style={{ color: "green" }}> GET /respondent/getAllRespondents</code> - Get all respondents for a survey.
+  - <code style={{ color: "green" }}> GET /survey/stop</code> - Stop a survey.
+  - <code style={{ color: "green" }}> GET /respondent/estimation</code> - Get a respondent's estimation.
+
+
+
+</Update>
+
+
+
+
+
