@@ -17,18 +17,25 @@ Every respondent evaluated by ReDem undergoes a series of rigorous quality check
 
 ReDem offers two primary methods for cleaning your data::
 
-### ReDem Default Cleaning Settings
+### ReDem Recommended Cleaning Settings
 
 Built on ReDem’s expertise, our default cleaning settings effectively address the most common data quality issues.
 
-**Overview of Default Settings:**
-An interview is flagged for exclusion if **any** of the following criteria are met:
+**Overview of Recommended Settings:**
+Predefined thresholds for R-Score, OES (including Open-Ended Response Categories), CHS, GQS, and TS are applied as recommend settings. An interview is flagged for exclusion if **any** of the following criteria are met:
 
-- **ReDem Score \< 60**: Interviews scoring below 60 are flagged.
+- **ReDem Score (R-Score)**: Respondents with an R-Score below 60 are excluded.
 
-- **Open-Ended Score (OES) \< 30**: Interviews with an OES below 30 are flagged.
+- **Open-Ended Score (OES) & Response Categories:**: 
+Respondents with an OES below 40 are excluded if they provide at least two open-ended responses.
 
-- **Time Score (TS) \< 20**: Interviews with a TS below 20 are flagged.
+Respondents flagged in at least two open-ended responses for wrong language, bad language, fake answer/copy paste, nonsense or wrong topic are excluded.
+
+- **Coherence Score (CHS)**: Respondents with a CHS below 30 are excluded.
+
+- **Grid-Question Score (GQS)**: Respondents with a GQS below 20 and at least two valid grid-question responses are excluded.
+
+- **Time Score (TS)**: Respondents with a TS below 20 are excluded.
 
 ### Using Custom Cleaning Settings
 
