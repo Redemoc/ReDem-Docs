@@ -10,7 +10,7 @@ iconType: "regular"
 
   The following API endpoint changes have been implemented to improve consistency and standardization:
 
-  `POST /respondent/add` → `POST /addRespondent` <br />
+  <code style={{ color: "red" }}> POST /respondent/add </code> → `POST /addRespondent` <br />
 
   * The `interactionData` field within `dataPoints` → `qualityCheck: BAS` has been modified to support additional interaction types. Now, it has been expanded to include both `KEYSTROKE` and `COPYANDPASTE` interactions, enhancing tracking capabilities.
 
@@ -20,19 +20,19 @@ iconType: "regular"
 
   * We have **enhanced** the response structure by adding a field to retrieve **Behavioral Analytics Score (BAS)** results.
 
-  `GET /respondent/getRespondent` → `POST /getRespondent` <br />
+  <code style={{ color: "red" }}> GET /respondent/getRespondent </code> → `POST /getRespondent` <br />
 
   * Previously with `GET` request we pass the `surveyName` and `respondentId` as a path parameters. Now we pass it in the request body.
 
-  `GET /respondent/getAllRespondents` → `POST /getAllRespondents` <br />
+  <code style={{ color: "red" }}> GET /respondent/getAllRespondents </code> → `POST /getAllRespondents` <br />
 
   * Previously with `GET` request we pass the `surveyName` as a path parameter. Now we pass it in the request body.
 
-  `GET /survey/stop` → `POST /stopSurvey` <br />
+  <code style={{ color: "red" }}> GET /survey/stop </code> → `POST /stopSurvey` <br />
 
   * Previously with `GET` request we pass the `surveyName` as a path parameter. Now we pass it in the request body.
 
-  `GET /respondent/estimation` → `POST /creditCalculation` <br />
+  <code style={{ color: "red" }}> GET /respondent/estimation </code> → `POST /creditCalculation` <br />
 
   * Introduced a new variable, **`BASDataPoints`**, to specify the number of BAS data points required for credit calculation when evaluating a respondent.
 
