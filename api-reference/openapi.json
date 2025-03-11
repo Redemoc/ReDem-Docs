@@ -1542,7 +1542,7 @@
                       "status": "COMPLETED",
                       "respondentQuality": {
                         "isExcluded": false,
-                        "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
+                        "reasonsForExclusion": [],
                         "redemScore": -999,
                         "dataPointsSummary": [
                           {"qualityCheck": "OES", "dataPointId": "Q1", "score": -999, "category": "N/A"},
