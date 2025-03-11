@@ -1512,7 +1512,7 @@
                   "results": [
                     { 
                       "respondentId": "RESP497770",
-                      "status": "JOB_COMPLETED",
+                      "status": "COMPLETED",
                       "respondentQuality": {
                         "isExcluded": false,
                         "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
@@ -1535,8 +1535,33 @@
                         ]
                       }
                     },
-                    { "respondentId": "RESP497771", "status": "JOB_PROCESSING" },
-                    { "respondentId": "RESP497772", "status": "JOB_FAILED" }
+                    { "respondentId": "RESP497771", "status": "PROCESSING" },
+                    { "respondentId": "RESP497772", "status": "PROCESSING" },
+                    { 
+                      "respondentId": "RESP497773",
+                      "status": "COMPLETED",
+                      "respondentQuality": {
+                        "isExcluded": false,
+                        "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
+                        "redemScore": -999,
+                        "dataPointsSummary": [
+                          {"qualityCheck": "OES", "dataPointId": "Q1", "score": -999, "category": "N/A"},
+                          {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": -999},
+                          {"qualityCheck": "GQS", "dataPointId": "Q2", "score": -999},
+                          {"qualityCheck": "OES", "dataPointId": "Q3", "score": -999, "category": "N/A"},
+                          {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": -999},
+                          {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": -999, "reason": "N/A"},
+                          {"qualityCheck": "GQS", "dataPointId": "Q4", "score": -999},
+                          {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": -999}
+                        ],
+                        "qualityScoreSummary": [
+                          {"qualityCheck": "OES", "score": -999},
+                          {"qualityCheck": "CHS", "score": -999, "reason": "N/A"},
+                          {"qualityCheck": "GQS", "score": -999},
+                          {"qualityCheck": "TS", "score": -999}
+                        ]
+                      }
+                    }
                   ]
                 }
               }
