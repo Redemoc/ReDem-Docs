@@ -88,17 +88,27 @@ Here’s an example of a cleaning settings object that can be used to customize 
 ```javascript
   "redemScore": 60,
   "OES": {
+    "activate": true,
     "score": 60,
     "minDataPoints":2,
     "categories": {
-      "genericAnswers": {"exclude": true, "minDataPoints":2},
-      "noInformation": {"exclude": true, "minDataPoints":3},
+      "GENERIC_ANSWER": {"activate": true, "minDataPoints":2},
+      "NO_INFORMATION": {"activate": true, "minDataPoints":3},
       // ... other categories ...
     }
   },
-  "CHS": {"score": 50},
-  "GQS": {"score": 40, "minDataPoints":2},
-  "TS": {"score": 20}
+  "CHS": {"activate": true,"score": 50},
+  "GQS": {"activate": true,"score": 40, "minDataPoints":2},
+  "TS": {"activate": true,"score": 20},
+  "BAS": {
+    "activate": true,
+    "score": 60, 
+    "minDataPoints":2,
+    "categories": {
+      "UNNATURAL_TYPING": {"activate": true, "minDataPoints":2},
+      "COPY_AND_PASTE": {"activate": true, "minDataPoints":2},
+    }
+  }
 ```
 
 ## What is the outcome of the cleaning process?

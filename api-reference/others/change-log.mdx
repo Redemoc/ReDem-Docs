@@ -5,6 +5,40 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2025-03-11" description="Unversioned changes">
+  ## API endpoint updates
+
+  The <code style={{ color: "green" }}> POST /respondent/add </code> endpoint has been updated to rename parameters in the cleaning settings, changing from **camelCase to UPPERCASE_UNDERSCORE** formatting.
+
+  The following is an example of the new cleaning settings object:
+  ```javascript
+    "redemScore": 60,
+    "OES": {
+      "activate": true,
+      "score": 60,
+      "minDataPoints":2,
+      "categories": {
+        "GENERIC_ANSWER": {"activate": true, "minDataPoints":2},
+        "NO_INFORMATION": {"activate": true, "minDataPoints":3},
+        // ... other categories ...
+      }
+    },
+    "CHS": {"activate": true,"score": 50},
+    "GQS": {"activate": true,"score": 40, "minDataPoints":2},
+    "TS": {"activate": true,"score": 20},
+    "BAS": {
+      "activate": true,
+      "score": 60, 
+      "minDataPoints":2,
+      "categories": {
+        "UNNATURAL_TYPING": {"activate": true, "minDataPoints":2},
+        "COPY_AND_PASTE": {"activate": true, "minDataPoints":2},
+      }
+    }
+  ```
+  
+</Update>
+
 <Update label="2025-03-05" description="Unversioned changes">
   ## API endpoint updates
 
