@@ -65,7 +65,8 @@
                 "group": "API Specifications",
                 "pages": [
                   "api-reference/api-specifications/api-keys",
-                  "api-reference/api-specifications/response-structure"
+                  "api-reference/api-specifications/response-structure",
+                  "api-reference/api-specifications/rate-limits"
                 ]
               },
               {

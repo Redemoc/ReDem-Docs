@@ -4,3 +4,11 @@ description: 'Learn about ReDem’s API rate limits.'
 icon: "clock"
 iconType: "regular"
 ---
+
+## Rate Limits & Performance Considerations
+The API supports best performance (3~5s response time) for a **maximum throughput of 1 request per second**, with up to **5 concurrent requests allowed within a rolling 5-second window**. This limit apply collectively to all **ReDem clients within the Shared Tier**.
+
+If you require higher throughput, the API can handle increased request volumes; however, this may result in longer wait times due to shared resource usage with first come first serve concept.
+
+**⭕ Note:** <br/>
+For clients with specific performance requirements or higher scalability needs, we recommend reaching out to support@redem.io to discuss the Dedicated Tier. The Dedicated Tier offers greater flexibility, allowing you to scale infrastructure to meet your critical workload demands with ReDem.
