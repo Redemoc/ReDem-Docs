@@ -473,63 +473,63 @@
               "categories": {
                 "type": "object",
                 "properties": {
-                  "genericAnswers": {
+                  "GENERIC_ANSWERS": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
                       "minDataPoints": { "type": "number" }
                     }
                   },
-                  "noInformation": {
+                  "NO_INFORMATION": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
                       "minDataPoints": { "type": "number" }
                     }
                   },
-                  "badLanguage": {
+                  "BAD_LANGUAGE": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
                       "minDataPoints": { "type": "number" }
                     }
                   },
-                  "nonsense": {
+                  "NONSENSE": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
                       "minDataPoints": { "type": "number" }
                     }
                   },
-                  "duplicateAnswer": {
+                  "DUPLICATE_ANSWER": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
                       "minDataPoints": { "type": "number" }
                     }
                   },
-                  "duplicateRespondent": {
+                  "DUPLICATE_RESPONDENT": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
                       "minDataPoints": { "type": "number" }
                     }
                   },
-                  "wrongTopic": {
+                  "WRONG_TOPIC": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
                       "minDataPoints": { "type": "number" }
                     }
                   },
-                  "wrongLanguage": {
+                  "WRONG_LANGUAGE": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
                       "minDataPoints": { "type": "number" }
                     }
                   },
-                  "AIGeneratedAnswer": {
+                  "AI_GENERATED_ANSWER": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
@@ -606,14 +606,14 @@
               "categories": {
                 "type": "object",
                 "properties": {
-                  "unnaturalTyping": {
+                  "UNNATURAL_TYPING": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
                       "minDataPoints": { "type": "number" }
                     }
                   },
-                  "copyAndPaste": {
+                  "COPY_AND_PASTE": {
                     "type": "object",
                     "properties": {
                       "activate": { "type": "boolean" },
@@ -999,15 +999,15 @@
                     "score": 30,
                     "minDataPoints": 2,
                     "categories": {
-                      "genericAnswers": {"activate": true, "minDataPoints": 2},
-                      "noInformation": {"activate": true, "minDataPoints": 2},
-                      "badLanguage": {"activate": true, "minDataPoints": 2},
-                      "nonsense": {"activate": true, "minDataPoints": 1},
-                      "duplicateAnswer": {"activate": true, "minDataPoints": 1},
-                      "duplicateRespondent": {"activate": true, "minDataPoints": 1},
-                      "wrongTopic": {"activate": true, "minDataPoints": 1},
-                      "wrongLanguage": {"activate": true, "minDataPoints": 1},
-                      "AIGeneratedAnswer": {"activate": true, "minDataPoints": 1}
+                      "GENERIC_ANSWERS": {"activate": true, "minDataPoints": 2},
+                      "NO_INFORMATION": {"activate": true, "minDataPoints": 2},
+                      "BAD_LANGUAGE": {"activate": true, "minDataPoints": 2},
+                      "NONSENSE": {"activate": true, "minDataPoints": 1},
+                      "DUPLICATE_ANSWER": {"activate": true, "minDataPoints": 1},
+                      "DUPLICATE_RESPONDENT": {"activate": true, "minDataPoints": 1},
+                      "WRONG_TOPIC": {"activate": true, "minDataPoints": 1},
+                      "WRONG_LANGUAGE": {"activate": true, "minDataPoints": 1},
+                      "AI_GENERATED_ANSWER": {"activate": true, "minDataPoints": 1}
                     }
                   },
                   "CHS": {
@@ -1028,8 +1028,8 @@
                     "score": 10,
                     "minDataPoints": 2,
                     "categories": {
-                      "unnaturalTyping": {"activate": true, "minDataPoints": 2},
-                      "copyAndPaste": {"activate": true, "minDataPoints": 2}
+                      "UNNATURAL_TYPING": {"activate": true, "minDataPoints": 2},
+                      "COPY_AND_PASTE": {"activate": true, "minDataPoints": 2}
                     }
                   }
                 },
