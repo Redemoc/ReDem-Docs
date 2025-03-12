@@ -1017,7 +1017,7 @@
                   "GQS": {
                     "activate": true,
                     "score": 10,
-                    "minDataPoints": 15
+                    "minDataPoints": 2
                   },
                   "TS": {
                     "activate": true,
