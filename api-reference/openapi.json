@@ -241,7 +241,7 @@
             },
             "example": [{
               "value": "W",
-              "interactionType": "keystroke",
+              "interactionType": "KEYSTROKE",
               "timestamp": "2024-12-01T06:22:59.833Z"
             }]
           }
