@@ -49,24 +49,24 @@
                 "type": "string"
               }
             ],
-            "description": "A variable that holds the **respondent's answer for the question**.",
+            "description": "A variable that stores the **respondent’s answer to the question**.",
             "example": "Hotel"
           }
         }
       },
       "InteractionData": {
-        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** If you want more information on tracking input behavior data for text-based questions directly from individual browsers, please contact us. We are ready to assist you with the best practices.",
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)",
         "type": "object",
         "required": ["value", "interactionType", "timestamp"],
         "properties": {
-          "value": { 
-            "type": "string",
-            "description": "The value of the interaction, which should include the final value once the interaction is complete."
-          },
           "interactionType": { 
             "type": "string",
             "description": "The type of interaction the respondent had with the data point. \n\n ⭕ **Note:** Currently, the API supports `KEYSTROKE` and `COPY_AND_PASTE` interactions. Future updates will extend support to additional interactions, such as **mouse clicks, mouse movements**, and more.",
             "enum": ["KEYSTROKE", "COPY_AND_PASTE"]
+          },
+          "value": { 
+            "type": "string",
+            "description": "The value of the interaction, which should include the final value once the interaction is complete."
           },
           "timestamp": { 
             "type": "string",
@@ -75,7 +75,7 @@
         }
       },
       "DataPoint": {
-        "description": "An array of data points that are used for quality checks for each respondent.",
+        "description": "An array of data points used to perform quality checks on each respondent.",
         "type": "object",
         "discriminator": {
           "propertyName": "qualityCheck",
@@ -204,14 +204,14 @@
           "dataPointId": {
             "type": "string",
             "description": "**A unique identifier assigned to each data point**, allowing users to pick a customized name. This name will be used to identify and reference the data point later within the system. Note that there can be only one CHS datapoint per respondent. This datapoint should contain the entire interview.",
-            "example": "Q1"
+            "example": "CHS_DataPoint"
           },
           "interviewData": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/InterviewData"
             },
-            "description": "This variable compiles all relevant questions and answer pairs used to assess whether a respondent is coherent or incoherent. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** interviews are allowed per respondent.",
+            "description": "This variable aggregates all relevant question-answer pairs used to evaluate the respondent’s coherence. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** question/answer pairs are allowed per respondent.",
             "example": [{
               "question": "What type of accommodation did you stay in?",
               "answer": "Hotel"
@@ -240,8 +240,8 @@
               "$ref": "#/components/schemas/InteractionData"
             },
             "example": [{
-              "value": "W",
               "interactionType": "KEYSTROKE",
+              "value": "W",
               "timestamp": "2024-12-01T06:22:59.833Z"
             }]
           }
@@ -271,21 +271,21 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint"
             },
-            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
+            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 1000 question/answer pairs** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
           },
           "activateCleaning": {
             "type": "boolean",
-            "description": "**Indicates whether cleaning should be applied to the respondent**. \n\n **💡Important:** To clean respondents, ensure that this variable is set to `true`. Without this setting, the system will evaluate respondents, generate scores, and always mark them as included. \n\n When cleaning is activated, the response will include a variable, isExcluded, indicating whether the respondent has been excluded based on the applied criteria.",
+            "description": "**Indicates whether cleaning should be applied to the respondent**. \n\n **💡Important:** To remove bad respondents automatically, ensure this variable is set to true. \n\n When cleaning is enabled, the response will include the variable isExcluded, which indicates whether the respondent has been excluded based on the applied criteria.",
             "example": true,
             "default": false
           },
           "cleaningSettings": {
-            "description": "**Cleaning settings for respondents** define the rules for deciding if a respondent should be excluded and marked as low quality. \n\n **💡Important:** If no cleaning settings are defined and cleaning is activated, the system will apply the default cleaning settings to determine whether a respondent should be excluded and marked as low quality.\n\n 🧪 **Validations:** When sending cleaning settings, you must include the following object exactly as specified. Any deviation from this structure will result in a validation error. \n \n For more details on how cleaning works, refer to the [Data Cleaning](/cleaning-and-review) section.",
+            "description": "Cleaning settings **define the rules for determining whether a respondent should be excluded and marked as low quality**.\n\n **💡Important:** If no custom cleaning settings are defined and cleaning is enabled, the system will apply ReDem’s default cleaning settings. You can view the default settings here: [Default Cleaning Settings](/features/cleaning-and-review#redem-recommended-cleaning-settings) \n \n For more details on how cleaning works, refer to the [Data Cleaning](/features/cleaning-and-review) section.",
             "$ref": "#/components/schemas/CleaningSettings"
           },
           "synchronousResponse": {
             "type": "boolean",
-            "description": "**Indicates whether the response should be processed synchronously**. \n\n Set this to `true` if you need to wait for the response immediately. If you don't need to wait, set it to `false` and use the [Get Respondent Status endpoint](/api-reference/endpoint/getRespondentStatus) later to check the status of the respondent.",
+            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don’t need to wait; you can later check the respondent’s status using the [Get Respondent Status endpoint](/api-reference/endpoint/getRespondentStatus).",
             "example": true,
             "default": true
           }
@@ -330,7 +330,7 @@
         }
       },
       "QualityCheckResponse": {
-        "description": "Aggregated results for a quality check type",
+        "description": "Aggregated results for a quality score type",
         "type": "object",
         "properties": {
           "qualityCheck": {
@@ -342,17 +342,17 @@
               "CHS",
               "BAS"
             ],
-            "description": "**Type of quality check** performed on a respondent",
+            "description": "**Type of quality score** performed on a respondent",
             "example": "OES"
           },
           "score": {
             "type": "number",
-            "description": "A numerical **score ranging from 0 to 100** that represents the outcome of a specific quality check",
+            "description": "A numerical **score ranging from 0 to 100** that reflects the overall outcome of a specific quality score section. This score is derived from the collective evaluation of all data point scores.",
             "example": 78
           },
           "reason": {
             "type": "string",
-            "description": "**Reason for the score**, this will be only available if the quality check type is set to `CHS`",
+            "description": "**Reason for the score**, this will be only available if the quality score type is set to `CHS`",
             "example": "The user shows several inconsistencies and contradictions, such as different ..."
           }
         }
@@ -375,7 +375,7 @@
           },
           "redemScore": {
             "type": "number",
-            "description": "**The respondent's overall evaluation score**, ranging from 0 to 100, based on ReDem's quality checks. \n\n For more information refer to the [ReDem Score](/quality-checks/redem-score) section.",
+            "description": "**A weighted average score** (0–100) calculated based on the applied quality scores.. \n\n For more information refer to the [ReDem Score](/quality-checks/redem-score) section.",
             "example": 85
           },
           "qualityScoreSummary": {
@@ -383,7 +383,7 @@
             "items": {
               "$ref": "#/components/schemas/QualityCheckResponse"
             },
-            "description": "An object containing detailed results for each quality check applied"
+            "description": "An object containing detailed results for each quality score applied"
           },
           "dataPointsSummary": {
             "type": "array",
@@ -978,15 +978,15 @@
                     "qualityCheck": "BAS",
                     "dataPointId": "interactionsQ1",
                     "interactionData": [
-                      { "value": "W", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:22:59.809Z" },
-                      { "value": "We", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:22:59.833Z" },
-                      { "value": "We ", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:22:59.909Z" },
-                      { "value": "We w", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:22:59.962Z" },
-                      { "value": "We we", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.024Z" },
-                      { "value": "We were", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.086Z" },
-                      { "value": "We were ", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.148Z" },
-                      { "value": "We were a", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.210Z" },
-                      { "value": "We were at", "interactionType": "KEYSTROKE", "timestamp": "2024-12-01T06:23:00.272Z" }
+                      { "interactionType": "KEYSTROKE","value": "W",  "timestamp": "2024-12-01T06:22:59.809Z" },
+                      { "interactionType": "KEYSTROKE","value": "We", "timestamp": "2024-12-01T06:22:59.833Z" },
+                      { "interactionType": "KEYSTROKE","value": "We ", "timestamp": "2024-12-01T06:22:59.909Z" },
+                      { "interactionType": "KEYSTROKE","value": "We w", "timestamp": "2024-12-01T06:22:59.962Z" },
+                      { "interactionType": "KEYSTROKE","value": "We we", "timestamp": "2024-12-01T06:23:00.024Z" },
+                      { "interactionType": "KEYSTROKE","value": "We were", "timestamp": "2024-12-01T06:23:00.086Z" },
+                      { "interactionType": "KEYSTROKE","value": "We were ", "timestamp": "2024-12-01T06:23:00.148Z" },
+                      { "interactionType": "KEYSTROKE","value": "We were a", "timestamp": "2024-12-01T06:23:00.210Z" },
+                      { "interactionType": "KEYSTROKE","value": "We were at", "timestamp": "2024-12-01T06:23:00.272Z" }
                     ]
                   }
                 ],
@@ -1046,12 +1046,12 @@
                   "oneOf": [
                     {
                       "title": "Synchronous Response",
-                      "description": "**Synchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `true`. \n\n In this case, the system generates a comprehensive, detailed response and processes it synchronously, meaning the request will wait (`await`) until the complete response is ready before proceeding. This ensures the delivery of in-depth information in real-time.",
+                      "description": "**Synchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `true`. \n\n In this mode, the system generates a detailed response containing all quality parameters of the respondent. The request will wait (`await`) until the full response is ready before proceeding.",
                       "type": "object",
                       "properties": {
                         "success":{
                           "type":"boolean",
-                          "description":"A variable that **indicates whether the operation was successful or not**.",
+                          "description":"A variable indicating whether the **operation was successful**.",
                           "enum":[true,false]
                         },
                         "message":{
@@ -1060,7 +1060,7 @@
                         },
                         "results":{
                           "type":"object",
-                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "description": "This variable includes **all quality parameters associated with a respondent**.",
                           "properties":{
                             "respondentId": {
                               "type": "string",
@@ -1075,7 +1075,7 @@
                             },
                             "respondentQuality": {
                               "$ref": "#/components/schemas/RespondentResults",
-                              "description": "This variable represents **respondent data that has been evaluated according to the quality checks specified in the request**. \n\n **💡Important:** Even if a respondent fails evaluation, the response will still be returned with results with an error code of `-999` instead of valid scores. \n\n **⭕ Note:** The value `-999` is a predefined code returned by **ReDem** whenever a respondent cannot be evaluated. This applies to all quality scores, **including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS**."
+                              "description": "This variable includes **all quality parameters associated with a respondent**. \n\n **💡Important:** Even if a respondent fails evaluation, the response will still be returned with results with an error code of `-999` instead of valid scores. \n\n **⭕ Note:** The value `-999` is a predefined code returned by **ReDem** whenever a respondent cannot be evaluated. This applies to all quality scores, **including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS**."
                             }
                           }
                         }
@@ -1088,7 +1088,7 @@
                       "properties": {
                         "success":{
                           "type":"boolean",
-                          "description":"A variable that **indicates whether the operation was successful or not**.",
+                          "description":"A variable indicating whether the **operation was successful**.",
                           "enum":[true,false]
                         },
                         "message":{
@@ -1097,7 +1097,7 @@
                         },
                         "results":{
                           "type":"object",
-                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "description": "This variable includes **all quality parameters associated with a respondent**.",
                           "properties":{
                             "respondentId": {
                               "type": "string",
@@ -1137,10 +1137,10 @@
                             {"qualityCheck": "BAS", "score": 75}
                           ],
                           "dataPointsSummary": [
-                            {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "VAILD_ANSWER"},
+                            {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "VALID_ANSWER"},
                             {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": 95},
                             {"qualityCheck": "GQS", "dataPointId": "Q2", "score": 90},
-                            {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "VAILD_ANSWER"},
+                            {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "VALID_ANSWER"},
                             {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": 50},
                             {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
                             {"qualityCheck": "GQS", "dataPointId": "Q4", "score": 80},
