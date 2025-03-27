@@ -744,7 +744,7 @@
         "properties": {
           "surveyName": {
             "type": "string",
-            "description": "**The name of the survery**, which helps identify different surveys.",
+            "description": "**The name of the survery**.",
             "example": "Global Vacation Insights 2024"
           },
           "respondentId": {
@@ -763,7 +763,7 @@
         "properties": {
           "surveyName": {
             "type": "string",
-            "description": "**The name of the survey**, which helps identify different surveys."
+            "description": "**The name of the survey**."
           }
         }
       }
@@ -1251,7 +1251,7 @@
           "Respondent"
         ],
         "summary": "Get respondent results",
-        "description": "Get the quality check results and status for a specific respondent",
+        "description": "Retrieve the quality check results and status for a specific respondent.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1279,7 +1279,7 @@
                       "properties": {
                         "success":{
                           "type":"boolean",
-                          "description":"A variable that **indicates whether the operation was successful or not**.",
+                          "description":"A variable indicating whether the **operation was successful**.",
                           "enum":[true,false]
                         },
                         "message":{
@@ -1288,7 +1288,7 @@
                         },
                         "results": {
                           "type": "object",
-                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "description": "This variable includes **all quality parameters associated with a respondent**.",
                           "properties": {
                             "respondentId": {
                               "type": "string",
@@ -1449,7 +1449,7 @@
           "Respondent"
         ],
         "summary": "Get all respondents",
-        "description": "Get quality check results and status for all respondents in a specific survey",
+        "description": "Retrieve the quality check results and status for all respondents in a specific survey.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1472,7 +1472,7 @@
                   "properties": {
                     "success":{
                       "type":"boolean",
-                      "description":"A variable that **indicates whether the operation was successful or not**.",
+                      "description":"A variable indicating whether the **operation was successful**.",
                       "enum":[true,false]
                     },
                     "message":{
@@ -1481,7 +1481,7 @@
                     },
                     "results": {
                       "type": "array",
-                      "description": "This is an array of objects, **each representing a respondent in the survey**.",
+                      "description": "This variable includes **all quality parameters associated with a respondent**.",
                       "items": {
                         "type": "object",
                         "properties": {
@@ -1615,7 +1615,7 @@
         ],
         "summary": "Stop a survey",
         "operationId": "stopSurvey",
-        "description": "API for stopping a survey. Can be triggered when the survey is completed.",
+        "description": "API endpoint for stopping a survey. This can be triggered once the survey is completed.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1630,7 +1630,7 @@
         },
         "responses": {
           "200": {
-            "description": "When a request is successfully processed, the API returns a 200 OK status code along with the expected data.",
+            "description": "Upon successful processing, the API returns a 200 OK status code along with the expected data.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1638,7 +1638,7 @@
                   "properties": {
                     "success":{
                       "type":"boolean",
-                      "description":"A variable that **indicates whether the operation was successful or not**.",
+                      "description":"A variable indicating whether the **operation was successful**.",
                       "enum":[true,false]
                     },
                     "message":{
@@ -1655,7 +1655,7 @@
                         },
                         "status": {
                           "type": "string",
-                          "description": "A variable that **indicates the status of the survey**."
+                          "description": "A variable that **indicates the status of the survey**. \n\n **⭕ Note:** ReDem surveys have two possible statuses: `RUNNING` and `STOPPED`. The survey status will be updated to `STOPPED` once the survey is stopped."
                         }
                       }
                     }
