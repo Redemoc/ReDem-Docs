@@ -638,23 +638,23 @@
         "properties": {
           "OESDataPoints": {
             "type": "number",
-            "description": "**Number of OES data points** that need to consider for quality checks. \n **⭕ Note:** If OES data points are unavailable, you can set this value to `0`."
+            "description": "**The number of data points** to be used for the Open-Ended Score (OES). \n **⭕ Note:** If no OES data points are available, this value can be set to `0`."
           },
           "GQSAnswers": {
             "type": "number",
-            "description": "**Number of GQS answers** that need to consider for quality checks. \n **⭕ Note:** If GQS answers are unavailable, you can set this value to `0`."
+            "description": "**The number of data points** to be used for the Grid-Question Score (GQS). \n **⭕ Note:** If no GQS answers are available, this value can be set to `0`."
           },
           "TSDataPoints": {
             "type": "number",
-            "description": "**Number of TS data points** that need to consider for quality checks. \n **⭕ Note:** If TS data points are unavailable, you can set this value to `0`."
+            "description": "**The number of data points** to be used for the Time Score (TS). \n **⭕ Note:** If no TS data points are available, this value can be set to `0`."
           },
           "CHSAnswers": {
             "type": "number",
-            "description": "**Number of CHS answers** that need to consider for quality checks.\n **⭕ Note:** If CHS answers are unavailable, you can set this value to `0`."
+            "description": "**The number of data points** to be used for the Coherence Score (CHS). \n **⭕ Note:** If no CHS answers are available, this value can be set to `0`."
           },
           "BASDataPoints": {
             "type": "number",
-            "description": "**Number of BAS data points** that need to consider for quality checks. \n **⭕ Note:** If BAS data points are unavailable, you can set this value to `0`."
+            "description": "**The number of data points** to be used for the Behavioral-Analytics Score (BAS). \n **⭕ Note:** If no BAS data points are available, this value can be set to `0`."
           }
         }
       },
@@ -1721,7 +1721,7 @@
         ],
         "summary": "Calculate the maximum number of credits needed for a respondent",
         "operationId": "creditCalculation",
-        "description": "API for calculating the maximum number of credits needed for a respondent",
+        "description": "API endpoint for calculating the required number of credits for a respondent.",
         "requestBody": {
           "required": true,
           "content": {
@@ -1749,7 +1749,7 @@
                   "properties": {
                     "success":{
                       "type":"boolean",
-                      "description":"A variable that **indicates whether the operation was successful or not**.",
+                      "description":"A variable indicating whether the **operation was successful**.",
                       "enum":[true,false]
                     },
                     "message":{
