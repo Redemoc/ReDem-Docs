@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://live-api.beta.redem.io/"
+      "url": "https://api.redem.io/"
     }
   ],
   "security": [
