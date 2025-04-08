@@ -1,13 +1,13 @@
 ---
 title: 'Response Structure'
-description: 'Get familiar with the response structure for all ReDem endpoints'
+description: 'Understand the standardized response format used across all ReDem endpoints.'
 icon: "brackets-curly"
 iconType: "regular"
 ---
 
-The ReDem API Response is designed to provide clear, consistent, and well-structured data essential for seamless integration and efficient processing. Every API response follows a standardized format, ensuring easy parsing and error handling.
+The ReDem API delivers clear, consistent, and well-structured responses to ensure seamless integration and efficient processing. Each response follows a standardized format aligned with **RESTful principles** and **OpenAPI standards**.
 
-This structure promotes transparency, reduces ambiguity, and supports fast debugging. The response format aligns with **RESTful principles** and adheres to **OpenAPI standards**, guaranteeing reliability, predictability, and comprehensive support for all user interactions.
+This structure enhances transparency, simplifies parsing and error handling, and supports fast debugging—ensuring reliability and predictability in every interaction.
 
 ### ✅ Success Response
 The success response of the ReDem API indicates that the request has been processed successfully. This response is well-structured and provides crucial information about the request's status. 
@@ -15,6 +15,9 @@ The success response of the ReDem API indicates that the request has been proces
 The success response follows a standardized format to ensure consistency, predictability, and ease of use for developers.
 
 Success responses are structured as follows:
+- `success`: A variable indicating whether the operation was successful.
+- `message`: A variable that human-readable message providing additional context or confirmation of the requested action.
+- `results`: This object serves as a container to hold the results for the requested data, encapsulating all relevant information and outputs in a structured format.
 
 ```json Sample success response for "Add Respondent"
 {
@@ -35,8 +38,13 @@ Success responses are structured as follows:
 }
 ```
 
-### ❗Error Response
+### ⚠️ Error Response
 The error response of the ReDem API is returned when a request fails due to various reasons. This response provides clear, actionable information to help developers identify and resolve the cause of the error. The response format is consistent, ensuring easy parsing and fast debugging.
+
+Error responses are structured as follows:
+- `success`: A variable indicating whether the operation was successful.
+- `message`: A variable that human-readable message providing additional context or confirmation of the requested action.
+- `errors`: This object serves as a container to hold the errors for the requested data.
 
 ```json Sample error response for "Add Respondent"
 {

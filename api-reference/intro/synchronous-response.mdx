@@ -1,6 +1,6 @@
 ---
 title: 'Synchronous Response'
-description: 'Learn how to use ReDem as a researcher'
+description: 'Learn how to integrate ReDem and instantly receive all quality information'
 icon: "arrow-up-arrow-down"
 iconType: "regular"
 ---
@@ -8,9 +8,8 @@ iconType: "regular"
 <Info>To integrate with ReDem, you must have a ReDem account. <br /> Don’t have an account yet? Get started by [setting up your account](/account-setup).</Info>
 
 <Steps titleSize="h3">
-  <Step title="Login and create an API key">
-    Log in to your ReDem account and navigate to the account settings.
-    Generate a new API key and copy it for use.
+  <Step title="Request an API key">
+    Contact us at support@redem.io to request an API key.
   </Step>
 
   <Step title="Prepare your request data">
@@ -18,7 +17,7 @@ iconType: "regular"
 
     <p>For a synchronous response approach, the `synchronousResponse` field **must always be set to `true`**. This ensures you receive responses from ReDem in real time.</p>
 
-    <p> Use your survey tool to scrape data and format the request data as follows:</p>
+    <p> Please format the request data as shown below:</p>
 
     ```javascript Example request body
     {
@@ -32,7 +31,7 @@ iconType: "regular"
           "answer": "We were at Lake Garda in Italy",
           "keywords": ["Beach", "Mountains", "Lake", "Museums", "Europe", "Asia", "Destination"],
           "activateDuplicateDetection": true,
-          "allowedLanguages": ["en", "de", "it"]
+          "allowedLanguages": ["en"]
         },
         {
           "qualityCheck": "TS",
@@ -45,27 +44,30 @@ iconType: "regular"
       "cleaningSettings": {
         "redemScore": 60,
         "OES": {
-          "score": 60,
+          "score": 40,
           "minDataPoints":2,
           "categories": {
-            "genericAnswers": {"exclude": false, "minDataPoints":2},
-            "noInformation": {"exclude": false, "minDataPoints":2},
+            "BAD_LANGUAGE": {"exclude": true, "minDataPoints":2},
+            "NONSENSE": {"exclude": true, "minDataPoints":2},
+            "WRONG_TOPIC": {"exclude": true, "minDataPoints":2},
+            "WRONG_LANGUAGE": {"exclude": true, "minDataPoints":2},
+            "AI_GENERATED_ANSWER": {"exclude": true, "minDataPoints":2},
             // ... other categories ...
           }
         },
-        "CHS": {"score": 50},
-        "GQS": {"score": 40, "minDataPoints":2},
+        "CHS": {"score": 30},
+        "GQS": {"score": 20, "minDataPoints":2},
         "TS": {"score": 20}
       },
       "synchronousResponse": true,
     }
     ```
 
-    <Note>For a complete example and more information on how to use this request object, visit the [Add Respondent](/api-reference/endpoint/addRespondent) endpoint. It provides detailed explanations of all fields and their usage.</Note>
+    <Note>For a full example and detailed guidance on using this request object, visit the [Add Respondent](/api-reference/endpoint/addRespondent) endpoint. It includes explanations of all fields and their usage.</Note>
   </Step>
 
   <Step title="Make an API request">
-    <p>Submit an API request to ReDem, including the respondent's information and the API key</p>
+    <p> At the end of the survey, just before the respondent reaches the ‘complete’ state, submit an API request to ReDem including the respondent’s information and your API key.</p>
 
     ```javascript Example request (JavaScript)
     const options = {
@@ -80,13 +82,10 @@ iconType: "regular"
       .catch(err => console.error(err));
     ```
 
-    <Note>For a complete example and more information on how to send the request, visit the [Add Respondent](/api-reference/endpoint/addRespondent) endpoint. It provides detailed explanations of all fields and their usage.</Note>
   </Step>
 
-  <Step title="Use ReDem API response to trigger your next step">
-    <p>Use the API response to trigger your next step in your workflow.</p>
-
-    <p>Retrieve the response from ReDem, and use any relevant information from it to trigger the next step in your workflow.</p>
+  <Step title="Use the ReDem API response to trigger your next step (Cleaning)">
+    <p>Retrieve the response from ReDem to trigger the next step in your workflow. If cleaning is enabled, low-quality responses will be excluded before reaching the complete state, while high-quality responses will be retained as complete.</p>
 
     ```javascript Example response (JavaScript)
       {
@@ -170,6 +169,6 @@ iconType: "regular"
       }
     ```
 
-    <Note>For a complete example and more information on how to use this response object, visit the [Add Respondent](/api-reference/endpoint/addRespondent) endpoint. It provides detailed explanations of all fields and their usage.</Note>
+    <Note>For a full example and detailed guidance on using this response object, visit the [Add Respondent](/api-reference/endpoint/addRespondent) endpoint. It includes explanations of all fields and their usage.</Note>
   </Step>
 </Steps>
