@@ -55,7 +55,7 @@
         }
       },
       "InteractionData": {
-        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)",
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io) \n\n 🧪 **Validations:**  \n - A **minimum of 3** interactions are needed to compute a score. \n", 
         "type": "object",
         "required": ["value", "interactionType", "timestamp"],
         "properties": {
