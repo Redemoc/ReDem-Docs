@@ -24,22 +24,15 @@ Built on ReDem’s expertise, our default cleaning settings effectively address 
 **Overview of Recommended Settings:**
 Predefined thresholds for R-Score, OES (including Open-Ended Response Categories), CHS, GQS, and TS are applied as recommend settings. An interview is flagged for exclusion if **any** of the following criteria are met:
 
-* **ReDem Score (R-Score)**: Respondents with an R-Score below 60 are excluded.
-
-* **Open-Ended Score (OES) & Response Categories:**
+- **ReDem Score (R-Score)**: Respondents with an R-Score below 60 are excluded.
+- **Open-Ended Score (OES) & Response Categories:**
   Respondents with an OES below 40 are excluded if they provide at least two open-ended responses.
 
-
-
-
-
   Respondents flagged in at least two open-ended responses for wrong language, bad language, fake answer/copy paste, nonsense or wrong topic are excluded.
-
-* **Coherence Score (CHS)**: Respondents with a CHS below 30 are excluded.
-
-* **Grid-Question Score (GQS)**: Respondents with a GQS below 20 and at least two valid grid-question responses are excluded.
-
-* **Time Score (TS)**: Respondents with a TS below 20 are excluded.
+- **Coherence Score (CHS)**: Respondents with a CHS below 30 are excluded.
+- **Grid-Question Score (GQS)**: Respondents with a GQS below 20 and at least two valid grid-question responses are excluded.
+- **Time Score (TS)**: Respondents with a TS below 20 are excluded.
+- **Behavioral Analytics Score (BAS)**: Respondents with a BAS below 20 and at least two valid BAS data points are excluded.
 
 ### Using Custom Cleaning Settings
 
@@ -47,41 +40,39 @@ To customize the cleaning process, you can define specific thresholds for each q
 
 You can customize the following key quality checks by setting thresholds that determine when respondents should be flagged or excluded:
 
-* **ReDem Score**: <br/>
-Set a threshold for the overall ReDem Score to filter out low-quality responses.
+- **ReDem Score**: 
 
-* **Open-Ended Score (OES)**: <br/>
-Define a threshold for the overall Open-Ended Score and set a minimum number of data points to filter out low-quality responses.
+  
+  Set a threshold for the overall ReDem Score to filter out low-quality responses.
+- **Open-Ended Score (OES)**: 
 
-* **Time Score (TS)**: <br/>
-Set a threshold for the Time Score and number of data points to filter out low-quality responses
+  
+  Define a threshold for the overall Open-Ended Score and set a minimum number of data points to filter out low-quality responses.
+- **Time Score (TS)**: 
 
-* **Grid-Question Score (GQS)**:<br/>
-Define a threshold for the Grid-Question Score and set a minimum number of data points to filter out low-quality responses.
+  
+  Set a threshold for the Time Score and number of data points to filter out low-quality responses
+- **Grid-Question Score (GQS)**:
 
-* **Coherence Score (CHS)**:<br/>
-Set a threshold for the Coherence Score and set a minimum number of data points to filter out low-quality responses.
+  
+  Define a threshold for the Grid-Question Score and set a minimum number of data points to filter out low-quality responses.
+- **Coherence Score (CHS)**:
 
-* **Open-Ended Response Categories**:<br/>
-Respondents are flagged for exclusion if their open-ended responses meet specified criteria. Each category can require a minimum number of flagged data points for exclusion.
+  
+  Set a threshold for the Coherence Score and set a minimum number of data points to filter out low-quality responses.
+- **Open-Ended Response Categories**:
 
-  * **Generic Answer**
-
-  * **Bad Language**
-
-  * **No Information**
-
-  * **Duplicate Respondent**
-
-  * **Duplicate Answer**
-
-  * **Nonsense**
-
-  * **Wrong Language**
-
-  * **Wrong Topic**
-
-  * **AI Generated Answer**
+  
+  Respondents are flagged for exclusion if their open-ended responses meet specified criteria. Each category can require a minimum number of flagged data points for exclusion.
+  - **Generic Answer**
+  - **Bad Language**
+  - **No Information**
+  - **Duplicate Respondent**
+  - **Duplicate Answer**
+  - **Nonsense**
+  - **Wrong Language**
+  - **Wrong Topic**
+  - **AI Generated Answer**
 
 Here’s an example of a cleaning settings object that can be used to customize the cleaning process via the API:
 
@@ -128,10 +119,10 @@ The cleaning process classifies each response as either **Included** or **Exclud
 
 This structured reasoning provides clear insights into exclusions, empowering users to refine their criteria based on the analysis.
 
-
 ## Example of How the Cleaning Process Works
 
 As an example, let's consider the cleaning settings applied to a specific respondent:
+
 ```javascript
   "redemScore": 60,
   "OES": {
@@ -156,41 +147,47 @@ To better understand how cleaning settings are applied, let's consider different
 
 <AccordionGroup>
   <Accordion title="Respondent with Low ReDem Score and Low OES Score">
-    **Input:** <br/>
-    The respondent has a **ReDem Score of 50** and an **OES Score of 60**. They have provided **4 valid answers for OES data points**, **3 of which are categorized as `GENERIC_ANSWER`**.
+    **Input:** 
 
-    **Output:** <br/>
-    The respondent is **excluded** because their **ReDem Score falls below the threshold**. Additionally, their **OES Score is below the defined threshold**, and they have provided **more than 2 valid answers for OES data points**, with **3 categorized as `GENERIC_ANSWER`**, exceeding the threshold set in the cleaning settings. 
+    
+    The respondent has a **ReDem Score of 50** and an **OES Score of 60**. They have provided **4 valid answers for OES data points**, **`3 of which are categorized as GENERIC_ANSWER`**.
+
+    **Output:** 
+
+    
+    The respondent is **excluded** because their **ReDem Score falls below the threshold**. Additionally, their **OES Score is below the defined threshold**, and they have provided **more than 2 valid answers for OES data points**, with **`3 categorized as GENERIC_ANSWER`**, exceeding the threshold set in the cleaning settings.
   </Accordion>
-
   <Accordion title="Respondent with Low OES Score">
-    **Input:** <br/>
-    The respondent has a **ReDem Score of 70** and an **OES Score of 30**. They have provided **2 valid answers for OES data points**, with **1 categorized as a `GENERIC_ANSWER`**.
+    **Input:** 
 
-    **Output:** <br/>
+    
+    The respondent has a **ReDem Score of 70** and an **OES Score of 30**. They have provided **2 valid answers for OES data points**, with **`1 categorized as a GENERIC_ANSWER`**.
+
+    **Output:** 
+
+    
     The respondent is **excluded** because their **Open-Ended Score is below the threshold** and they have provided **2 valid answers for OES data points**.
   </Accordion>
-
   <Accordion title="Respondent with more `GENERIC_ANSWERS` than the threshold">
-    **Input:** <br/>
-    The respondent has a **ReDem Score of 70** and an **OES Score of 50**. They have provided **4 valid answers for OES data points**, with **3 categorized as `GENERIC_ANSWER`**.
+    **Input:** 
 
-    **Output:** <br/>
-    The respondent is **excluded** despite their **ReDem Score and Open-Ended Score being above the threshold**, because **more than 2 of their answers are categorized as `GENERIC_ANSWER`**, exceeding the threshold defined in the cleaning settings.
+    
+    The respondent has a **ReDem Score of 70** and an **OES Score of 50**. They have provided **4 valid answers for OES data points**, with **`3 categorized as GENERIC_ANSWER`**.
+
+    **Output:** 
+
+    
+    The respondent is **excluded** despite their **ReDem Score and Open-Ended Score being above the threshold**, because **`more than 2 of their answers are categorized as GENERIC_ANSWER`**, exceeding the threshold defined in the cleaning settings.
   </Accordion>
-
   <Accordion title="Respondent who should not be excluded">
-    **Input:** <br/>
+    **Input:** 
+
+    
     The respondent has a **ReDem Score of 70** and an **OES Score of 30**. They have provided only **one valid OES data point**, which is categorized as a **`GENERIC_ANSWER`**.
 
-    **Output:** <br/>
+    **Output:** 
+
+    
     The respondent should **not be excluded** because they **do not meet the minimum valid OES data points requirement for cleaning**, even though their **OES Score is below the threshold**.
   </Accordion>
 </AccordionGroup>
-
-
-
-
-
-
-
