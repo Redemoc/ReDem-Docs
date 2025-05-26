@@ -11,7 +11,7 @@
   "navigation": {
     "versions": [
       {
-        "version": "V3 (Beta)",
+        "version": "V1",
         "tabs": [
           {
             "tab": "User Guide",
@@ -23,7 +23,12 @@
                   "account-setup",
                   "how-it-works"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "tab": "Knowledge Base",
+            "groups": [
               {
                 "group": "Quality Checks",
                 "pages": [
