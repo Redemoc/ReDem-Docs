@@ -1,21 +1,33 @@
 ---
 title: "ReDem Credits"
-description: "What ReDem credits are and how to use them."
+description: "What ReDem Credits are and how they are used."
 icon: "coins"
 iconType: "regular"
 ---
 
 ## What are ReDem Credits?
 
-ReDem Credits serve as the currency for conducting quality checks on your survey data. You can purchase credits through annual subscription plans.
+ReDem Credits are the internal currency used to run quality checks on your survey data. Credits can be purchased as part of an annual subscription plan.
 
 ## Basics of ReDem Credits
 
-Analyzing data with ReDem requires ReDem Credits, with the number of credits needed varying based on the quality checks selected for each respondent.
+Analyzing data with ReDem requires ReDem Credits, with the number of credits needed varying based on the **credit calculation method** and the **quality checks selected** for each respondent.
 
-The **minimum cost is 5 credits per respondent**, with additional credits required depending on the quality parameters you select. This flexible approach enables you to balance costs while ensuring your desired level of data quality.
+ReDem offers two credit calculation methods:
 
-## How Credit Calculation Works?
+<CardGroup cols={2}>
+  <Card title="All-inclusive" icon="infinity">
+    Apply all possible quality checks* to each interview for a **flat fee of 10 credits per interview**. This model offers predictable pricing and is best suited for teams seeking comprehensive quality assurance.
+  </Card>
+
+  <Card title="Modular Calculation" icon="sliders">
+    The **minimum cost is 5 credits per respondent**, with additional credits required depending on the quality checks you select. This flexible approach enables you to balance costs while ensuring your desired level of data quality.
+  </Card>
+</CardGroup>
+
+_*Maximum data request: 100 CHS, 5 OES, 5 BAS, 20 GQS, and 100 TS. If additional data is required, modular credits will be calculated accordingly._
+
+## How credit calculation works in the modular calculation?
 
 The following list provides a clear overview of how credits are calculated based on Quality Scores, with all calculations applied on a per-respondent basis:
 
@@ -69,15 +81,24 @@ The following list provides a clear overview of how credits are calculated based
 
 ### 💡Important Credit Rules
 
-* **Grid-Question Score (GQS):** The cost for each grid-question item is **0.05 credits**, but the total charge for GQS per respondent is capped at **2 credits**, regardless of the number of items they have.
+* **Grid-Question Score (GQS):** 
+  * Each grid item costs 0.05 credits.
+  * The total cost for GQS is capped at 2 credits per respondent, regardless of how many items are answered.
 
-* **Time Score (TS):** The maximum cost is **1 credit per respondent**, regardless of the number of time-related data points included.
+* **Time Score (TS):** 
+  * The maximum cost is 1 credit per respondent, regardless of the number of time-based data points analyzed.
 
-* **Coherence Score (CHS):** The base calculation includes a maximum of **100 questions**, costing **4 credits** per respondent. For each additional question beyond 100, an extra cost of **0.03 credits** applies.
+* **Coherence Score (CHS):** 
+  * Covers up to 100 questions at a base cost of 4 credits per respondent.
+  * For each additional question beyond 100, an extra 0.03 credits is charged.
 
-* **No Credits for Empty Answers or Missing Values:** Credits are applied only to valid, present data points. No credits are charged for empty responses or missing values.
+* **Credits are applied only to valid and available data points.**
 
-* **Total Credit Calculation for Surveys**: The total cost of a survey is calculated by summing the credit costs for all respondents. Each respondent's credit usage is based on their individual data points and the quality checks applied.
+* **No credits are charged for blank or missing responses.**
+
+* **Total Credit Calculation for Surveys**:
+  * The total credit cost for a survey is the sum of credits used across all respondents.
+  * Each respondent’s usage depends on their individual data and the quality checks applied.
 
 <br />
 
@@ -86,3 +107,8 @@ The following list provides a clear overview of how credits are calculated based
 Here’s an example of how credits are calculated for an individual respondent:
 
 <img classname="block dark:hidden" src="/images/Credit-Calculation-Example.png" />
+
+
+<Card title="Try our Credit Calculator" icon="calculator" href="https://app.beta.redem.io/playground/credit-roi-calculator" >
+To estimate credit usage for your own surveys, you can also use our interactive Credit Calculator.
+</Card>
