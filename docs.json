@@ -27,25 +27,25 @@
               {
                 "group": "Quality Checks",
                 "pages": [
-                  "quality-checks/redem-score",
-                  "quality-checks/open-ended-score",
-                  "quality-checks/coherence-score",
-                  "quality-checks/time-score",
-                  "quality-checks/grid-question-score",
-                  "quality-checks/behavior-analysis-score"
+                  "knowledge-base/quality-checks/redem-score",
+                  "knowledge-base/quality-checks/open-ended-score",
+                  "knowledge-base/quality-checks/coherence-score",
+                  "knowledge-base/quality-checks/time-score",
+                  "knowledge-base/quality-checks/grid-question-score",
+                  "knowledge-base/quality-checks/behavior-analysis-score"
                 ]
               },
               {
                 "group": "Core Features",
                 "pages": [
-                  "features/cleaning-and-review"
+                  "knowledge-base/features/cleaning-and-review"
                 ]
               },
               {
                 "group": "Miscellaneous",
                 "pages": [
-                  "miscellaneous/redem-credits",
-                  "miscellaneous/questionnaire-criteria"
+                  "knowledge-base/miscellaneous/redem-credits",
+                  "knowledge-base/miscellaneous/questionnaire-criteria"
                 ]
               }
             ]
