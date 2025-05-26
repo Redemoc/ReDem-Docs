@@ -1,0 +1,59 @@
+---
+title: "Behavioral Analytics Score"
+description: "Learn how the Behavioral Analytics Score evaluates various typing behaviors"
+icon: "keyboard"
+iconType: "regular"
+---
+
+![Grid-Question Score Example](/images/BAS-Demo.gif)
+
+## What is the Behavioral Analytics Score?
+
+The **Behavioral Analytics Score (BAS)** is a quality score designed to evaluate user typing patterns. It analyzes various aspects of typing behavior to distinguish between natural human typing and potentially automated or artificial inputs.
+
+With advancements in AI, respondents can generate answers using AI bots, computer-assisted inputs, automated scripts, or other artificial inputs. With this innovative approach, ReDem can identify more instances of survey fraud than ever before, enhancing data reliability and authenticity.
+
+## How does the Behavioral Analytics Score work?
+
+The Behavioral Analytics Score (BAS) evaluates typing behavior by **analyzing each keystroke, the text entered, and the time taken for each input.** It then compares these **timing patterns with the text structure and the standard deviation** of keystroke intervals to detect anomalies, potentially automated or artificial inputs. Along with this, BAS also detects **copy-and-paste** actions, identifying responses that bypass natural typing patterns.
+
+### Different typing patterns
+
+**Natural Human Typing** <br />
+Involves progressive character-by-character input with natural pauses between words and a varying yet consistent rhythm. For example, it reflects regular sentence formation with normal variations in typing speed.
+
+**Low-Effort Human Typing** <br />
+Still classified as natural typing but may exhibit less consistent patterns while maintaining human-like variability in timing.
+
+**Auto-Complete Enhanced Typing** <br />
+Combines manual input with auto-complete suggestions, resulting in distinct patterns of rapid text insertion. If it falls within acceptable human like typing patterns.
+
+**Copy-Paste Typing** <br />
+Involves directly inserting text without keystroke activity, bypassing natural typing patterns. This behavior is flagged as non-human input, as it lacks the expected variations in speed, rhythm, and pauses associated with manual typing.
+
+**Unnatural Typing** <br />
+Exhibits irregular keystroke patterns, such as highly inconsistent timing, repetitive sequences, or extremely fast inputs that deviate from human behavior. This may indicate automated responses, AI-assisted typing, or scripted entries, making it a strong indicator of non-human activity.
+
+## How does ReDem classify responses?
+
+The system uses **AI and custom algorithms** to classify typing behavior into different categories.
+
+### Categories
+
+* **Natural**: Indicates genuine human typing patterns
+
+* **Unnatural**: Indicates automated / scripted input from bots / AI systems etc.
+
+* **Copy-paste**: Detects when content is primarily copied and pasted.
+
+### Scoring system
+
+The **Behavioral Analytics Score (BAS)** uses a structured scoring system to evaluate the quality of typing behavior. The scoring system is defined as follows:
+
+* The **BAS score ranges from 0 to 100**
+
+* **Higher scores `(>50)`** indicate more **natural** typing patterns.
+
+* **Lower scores `(<50)`** suggest **unnatural** typing behavior, with lower scores increasing the likelihood of non-human input.
+
+* A **score of 0** is assigned when **copy-paste** behavior is detected.
