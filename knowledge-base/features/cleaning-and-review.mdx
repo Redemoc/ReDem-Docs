@@ -1,0 +1,193 @@
+---
+title: "Data Cleaning"
+description: "Discover how data cleaning works in ReDem"
+icon: "broom-wide"
+iconType: "regular"
+---
+
+## Why data cleaning matters?
+
+Data cleaning is a critical step in ensuring the quality of your analysis. It not only identifies inconsistencies and irrelevant data but also plays a vital role in detecting low-quality respondents and artificially generated responses.
+
+ReDem’s data cleaning feature automates and streamlines this process, providing a standardized and transparent approach grounded in ReDem’s comprehensive evaluation framework.
+
+## How does cleaning work?
+
+Every respondent evaluated by ReDem undergoes a series of rigorous quality checks. These checks assign a score and categorize each response, forming the foundation of ReDem’s data cleaning process.
+
+ReDem offers two primary methods for cleaning your data::
+
+### ReDem Recommended Cleaning Settings
+
+Built on ReDem’s expertise, our default cleaning settings effectively address the most common data quality issues.
+
+**Overview of Recommended Settings:**
+Predefined thresholds for R-Score, OES (including Open-Ended Response Categories), CHS, GQS, and TS are applied as recommend settings. An interview is flagged for exclusion if **any** of the following criteria are met:
+
+- **ReDem Score (R-Score)**: Respondents with an R-Score below 60 are excluded.
+- **Open-Ended Score (OES) & Response Categories:**
+  Respondents with an OES below 40 are excluded if they provide at least two open-ended responses.
+
+  Respondents flagged in at least two open-ended responses for wrong language, bad language, fake answer/copy paste, nonsense or wrong topic are excluded.
+- **Coherence Score (CHS)**: Respondents with a CHS below 30 are excluded.
+- **Grid-Question Score (GQS)**: Respondents with a GQS below 20 and at least two valid grid-question responses are excluded.
+- **Time Score (TS)**: Respondents with a TS below 20 are excluded.
+- **Behavioral Analytics Score (BAS)**: Respondents with a BAS below 20 and at least two valid BAS data points are excluded.
+
+### Using Custom Cleaning Settings
+
+To customize the cleaning process, you can define specific thresholds for each quality check, creating your own custom cleaning settings. This approach allows you to tailor the criteria to your unique requirements, ensuring more precise and relevant results.
+
+You can customize the following key quality checks by setting thresholds that determine when respondents should be flagged or excluded:
+
+- **ReDem Score**: 
+
+  
+  Set a threshold for the overall ReDem Score to filter out low-quality responses.
+- **Open-Ended Score (OES)**: 
+
+  
+  Define a threshold for the overall Open-Ended Score and set a minimum number of data points to filter out low-quality responses.
+- **Time Score (TS)**: 
+
+  
+  Set a threshold for the Time Score and number of data points to filter out low-quality responses
+- **Grid-Question Score (GQS)**:
+
+  
+  Define a threshold for the Grid-Question Score and set a minimum number of data points to filter out low-quality responses.
+- **Coherence Score (CHS)**:
+
+  
+  Set a threshold for the Coherence Score and set a minimum number of data points to filter out low-quality responses.
+- **Open-Ended Response Categories**:
+
+  
+  Respondents are flagged for exclusion if their open-ended responses meet specified criteria. Each category can require a minimum number of flagged data points for exclusion.
+  - **Generic Answer**
+  - **Bad Language**
+  - **No Information**
+  - **Duplicate Respondent**
+  - **Duplicate Answer**
+  - **Nonsense**
+  - **Wrong Language**
+  - **Wrong Topic**
+  - **AI Generated Answer**
+
+Here’s an example of a cleaning settings object that can be used to customize the cleaning process via the API:
+
+```javascript
+  "redemScore": 60,
+  "OES": {
+    "activate": true,
+    "score": 60,
+    "minDataPoints":2,
+    "categories": {
+      "GENERIC_ANSWER": {"activate": true, "minDataPoints":2},
+      "NO_INFORMATION": {"activate": true, "minDataPoints":3},
+      // ... other categories ...
+    }
+  },
+  "CHS": {"activate": true,"score": 50},
+  "GQS": {"activate": true,"score": 40, "minDataPoints":2},
+  "TS": {"activate": true,"score": 20},
+  "BAS": {
+    "activate": true,
+    "score": 60, 
+    "minDataPoints":2,
+    "categories": {
+      "UNNATURAL_TYPING": {"activate": true, "minDataPoints":2},
+      "COPY_AND_PASTE": {"activate": true, "minDataPoints":2},
+    }
+  }
+```
+
+## What is the outcome of the cleaning process?
+
+The cleaning process classifies each response as either **Included** or **Excluded**, with clear reasons provided for exclusions. This ensures transparency and highlights areas that may require further attention or adjustments.
+
+**Reasons for Exclusion** (only one needs to be true):
+
+- **ReDem Score Threshold**: Respondent’s ReDem Score is below the default (60) or a custom threshold.
+- **Open-Ended Score Threshold**: Respondent’s OES is below the default (40) or a custom threshold.
+- **Open Ended Category**: Respondet is having above define category threshold.
+- **Time Score Threshold**: Respondent’s TS is below the default (20) or a custom threshold.
+- **Grid-Question Score Threshold**: Respondent’s GQS is below the default (20) or a custom threshold.
+- **Coherence Score Threshold**: Respondent’s CHS is below the default (30) or a custom threshold.
+- **Behavioral Analytics Score Threshold**: Respondent’s BAS is below a custom threshold.
+- **Behavioral Analytics Category**: Respondet is having above define category threshold.
+
+This structured reasoning provides clear insights into exclusions, empowering users to refine their criteria based on the analysis.
+
+## Example of How the Cleaning Process Works
+
+As an example, let's consider the cleaning settings applied to a specific respondent:
+
+```javascript
+  "redemScore": 60,
+  "OES": {
+    "activate": true,
+    "score": 60,
+    "minDataPoints":2,
+    "categories": {
+      "GENERIC_ANSWER": {"activate": true, "minDataPoints":2},
+      "NO_INFORMATION": {"activate": true, "minDataPoints":2},
+      "BAD_LANGUAGE": {"activate": false, "minDataPoints":2},
+      "NONSENSE": {"activate": false, "minDataPoints":2},
+      "DUPLICATE_ANSWER": {"activate": false, "minDataPoints":2},
+      "DUPLICATE_RESPONDENT": {"activate": false, "minDataPoints":2},
+      "WRONG_TOPIC": {"activate": false, "minDataPoints":2},
+      "WRONG_LANGUAGE": {"activate": false, "minDataPoints":2},
+      "AI_GENERATED_ANSWER": {"activate": true, "minDataPoints":1}
+    }
+  }
+```
+
+To better understand how cleaning settings are applied, let's consider different cases of respondent data and determine whether they should be excluded and what should be the reason for exclusion.
+
+<AccordionGroup>
+  <Accordion title="Respondent with Low ReDem Score and Low OES Score">
+    **Input:** 
+
+    
+    The respondent has a **ReDem Score of 50** and an **OES Score of 60**. They have provided **4 valid answers for OES data points**, **`3 of which are categorized as GENERIC_ANSWER`**.
+
+    **Output:** 
+
+    
+    The respondent is **excluded** because their **ReDem Score falls below the threshold**. Additionally, their **OES Score is below the defined threshold**, and they have provided **more than 2 valid answers for OES data points**, with **`3 categorized as GENERIC_ANSWER`**, exceeding the threshold set in the cleaning settings.
+  </Accordion>
+  <Accordion title="Respondent with Low OES Score">
+    **Input:** 
+
+    
+    The respondent has a **ReDem Score of 70** and an **OES Score of 30**. They have provided **2 valid answers for OES data points**, with **`1 categorized as a GENERIC_ANSWER`**.
+
+    **Output:** 
+
+    
+    The respondent is **excluded** because their **Open-Ended Score is below the threshold** and they have provided **2 valid answers for OES data points**.
+  </Accordion>
+  <Accordion title="Respondent with more `GENERIC_ANSWERS` than the threshold">
+    **Input:** 
+
+    
+    The respondent has a **ReDem Score of 70** and an **OES Score of 50**. They have provided **4 valid answers for OES data points**, with **`3 categorized as GENERIC_ANSWER`**.
+
+    **Output:** 
+
+    
+    The respondent is **excluded** despite their **ReDem Score and Open-Ended Score being above the threshold**, because **`more than 2 of their answers are categorized as GENERIC_ANSWER`**, exceeding the threshold defined in the cleaning settings.
+  </Accordion>
+  <Accordion title="Respondent who should not be excluded">
+    **Input:** 
+
+    
+    The respondent has a **ReDem Score of 70** and an **OES Score of 30**. They have provided only **one valid OES data point**, which is categorized as a **`GENERIC_ANSWER`**.
+
+    **Output:** 
+
+    
+    The respondent should **not be excluded** because they **do not meet the minimum valid OES data points requirement for cleaning**, even though their **OES Score is below the threshold**.
+  </Accordion>
+</AccordionGroup>
