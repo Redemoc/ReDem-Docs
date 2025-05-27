@@ -7,24 +7,33 @@ iconType: "regular"
 
 The coherence score is an AI-driven metric that evaluates the plausibility and logical consistency of responses throughout an entire interview, from screening questions to socio-demographics. This highly robust quality check detects contradictions and inconsistencies, making manipulation nearly impossible. Unlike traditional trap questions—which fraudsters and AI bots can easily identify—the Coherence Score is a game-changer in fraud detection. It works seamlessly within regular questionnaires, identifying inconsistencies without relying on special questions. For example, it can flag contradictions, like a respondent claiming regular subway use while living in a city without one.
 
-Additionally, the Coherence Score minimizes false positives by avoiding the disqualification of respondents who may have misclicked or momentarily lost focus but otherwise performed acceptably. This innovative approach not only enhances fraud detection but also ensures more accurate and fair assessments.
+Additionally, the Coherence Score minimizes false positives by avoiding the disqualification of respondents who may have misclicked or momentarily lost focus but otherwise performed acceptably. This approach not only enhances fraud detection but also ensures more accurate and fair assessments.
 
 ## How is the Coherence-Score calculated?
 
-The Coherence Score evaluates the entire interview and assigns a score ranging from 0 to 100. Alongside the score, the system provides a detailed explanation of the rating and a list of incoherent questions. The explanation summarizes the overall quality of the interview, while the list highlights specific questions where the respondent's answers were inconsistent or contradictory, offering valuable insights into areas of potential concern.
+The Coherence Score evaluates the entire interview and assigns a score ranging from 0 to 100. It includes:
+
+- Explanation of the Rating: Provides a summary of the overall quality of the interview.
+- Describes how consistent or contradictory the respondent’s answers are across questions.
+- Highlights key factors that influenced the rating (e.g. logical flow, alignment of answers).
+- List of Incoherent Questions: Identifies specific questions where the respondent’s answers were inconsistent or contradictory.
+- Points out answers that conflict with earlier responses or are implausible in the context of the interview.
+- Offers valuable insights into areas of potential concern, helping to flag data reliability issues.
+
+<img classname="hidden dark:block" src="/images/CHS-Evaluation-Example.png" />
 
 ## Use of GPT for Coherence-Score
 
-For the Coherence Score, ReDem uses GPT hosted on Microsoft Azure, with a deployment in the EU region that is fully GDPR-compliant.
+ReDem uses GPT hosted on Microsoft Azure, deployed in the EU region to ensure full GDPR compliance when calculating the Coherence Score.
 
 ### Individual Responses & Anonymity
 
-Each interview is sent to the GPT deployment using a fully anonymized ID. Only the individual interview is shared per API query, ensuring that full survey datasets are never accessible to Microsoft Azure.
+Each interview is sent to Azure with a fully anonymized ID. Only the individual interview is transmitted per API request—entire survey datasets are never shared.
 
 ### Exclusive Interaction with Azure
 
-ReDem is the sole user interacting with Azure. Azure is never informed about the origin or source of the imported data.
+Only ReDem communicates with Azure. No information about the origin or source of the data is disclosed to Microsoft.
 
 ### Data Residency
 
-Data for the Coherence Score is only transmitted, stored and processed in the EU.&#x20;
+All data related to the Coherence Score is transmitted, stored, and processed exclusively within the EU.
