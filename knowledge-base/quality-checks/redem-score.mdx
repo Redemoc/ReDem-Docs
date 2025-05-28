@@ -11,6 +11,30 @@ The ReDem Total Quality Score (R-Score) provides a multidimensional evaluation o
 
 <img classname="hidden dark:block" src="/images/Quality-Checks.png" />
 
+The ReDem Score functions like a trust index, reflecting how reliable an interview is in terms of quality. It ranges from 0 to 100, where:
+
+- 0 indicates no trust in the interview quality.
+- 100 represents complete trust.
+
+To make interpretation easier, the scores are visualized using a traffic light system:
+
+- 🔴 Red (0–39)
+  - Very poor quality interviews.
+  - Often indicative of fraudulent responses.
+  - Must be removed from the dataset.
+- 🟡 Yellow (40–59)
+  - Doubtful quality.
+  - May include inattentive or low-engagement participants.
+  - Should also be removed to maintain data integrity.
+- 🟢 Light Green (60–79)
+  - Acceptable quality.
+  - Especially scores between 60 and 70 are not ideal, but still passable.
+  - These interviews mark the cut-off threshold:
+We recommend removing all interviews scoring below 60. 
+- 🟢 Dark Green (80–100)
+  - Good to very good quality.
+  - High confidence in the data's reliability.
+
 ## Objective and Transparent Scoring
 
 The R-Score consolidates a broad range of quality indicators into a single, interpretable metric. This includes automated checks for inconsistencies, duplications, unnatural response patterns, language compliance, and other behavioral markers indicative of low-quality or fraudulent input.
