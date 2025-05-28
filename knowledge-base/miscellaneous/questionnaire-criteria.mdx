@@ -1,54 +1,59 @@
 ---
-title: "Questionnaires to Unlock the Power of ReDem"
-description: "Enhance fraud detection in online surveys with strategic design "
+title: "Designing Questionnaires to Maximize ReDem’s Effectiveness"
+description: "Enhance fraud detection and data quality through smart survey design."
 icon: "clipboard-check"
 iconType: "regular"
 ---
 
-Improve fraud detection by strategically designing your questionnaires to maximize the effectiveness of ReDem’s advanced quality checks. If your questionnaire doesn’t meet these criteria, consider refining it for better results.
+ReDem’s advanced quality checks work best when your questionnaire is strategically structured. Below are best practices for designing surveys that unlock the full power of ReDem’s quality scores.
 
 ### Open-Ended Questions
 
-Open-ended questions are highly effective for ensuring data quality. As described in detail below **we recommend including at least two mandatory open-ended questions** in every survey. These questions can serve purely as quality control measures and don’t necessarily need evaluation.
+Open-ended questions are highly effective for quality assurance and fraud detection. We recommend including at least two mandatory open-ended questions in every survey.
 
-* **Mandatory:** Fraudsters often avoid answering open-ended questions if they can, and inattentive participants tend to skip them too. Therefore, making these questions mandatory is crucial. If designed appropriately (e.g., not too many or overly difficult questions), the dropouts caused by mandatory open-ended questions can actually improve data quality by filtering out disengaged participants.
+🤔 **Why they matter:**
 
-* **AI-Friendly:** Open-ended questions should be well suited for AI-assisted quality checks. They need to provide a frame of reference for the AI to assess the meaningfulness of responses. Questions like "Would you like to tell us anything else?" are less effective because they lack a content framework, making it difficult for AI to evaluate answer quality.
+- **Mandatory answers filter out fraudsters:** Fraudsters and disengaged respondents often skip or give meaningless answers to open-ended questions. Making them mandatory helps eliminate them early.
+- **AI-evaluable content:** Avoid generic questions like “Anything else you’d like to share?” Instead, ask questions that provide context, enabling ReDem’s AI to evaluate response quality.
+- **Detecting AI-generated content:** Emotional or opinion-based questions are especially helpful, as AI systems often struggle to convincingly express authentic emotion or personal views.
+- **Strategic placement:** Place one open-ended question at the beginning and one at the end. This helps evaluate attention and consistency across the interview.
+- **Duplication detection:** ReDem checks for identical or similar open-ended responses both within and across interviews to flag suspicious patterns.
 
-* **Detecting AI-Generated Responses:** To identify AI-generated responses, questions that are emotional or opinion-based are particularly useful, as chatbots struggle to authentically replicate personal opinions or emotional expressions.
-
-* **Strategic Placement:** For thorough quality assessment, it is recommended to include at least two open-ended questions in a questionnaire, strategically placed, such as one at the beginning and one at the end. In longer surveys, a respondent may momentarily lose focus and provide a nonsensical answer, but if this occurs more than once, it significantly increases the likelihood of poor data quality. This distribution also helps evaluate participant engagement throughout the survey. Additionally, analyzing duplicates or partial duplicates within a single interview, as well as across multiple interviews, can further aid in quality assessment.
-
-We’ve built a [ChatGPT OES Question Master](https://chatgpt.com/g/g-3YkEFGt1h-redem-oes-question-master) that generates open-ended survey questions based on a given topic, which can be used for ReDem's Open Ended Score (OES) quality check.
+<Note> Use our [ChatGPT-powered OES Question Master](https://chatgpt.com/g/g-3YkEFGt1h-redem-oes-question-master) to generate high-quality open-ended questions for your survey. </Note>
 
 ### Grid-Questions
 
-Grid questions provide a useful tool for in-survey quality checks by allowing the analysis of participant click behavior for signs of inattentiveness or fraud. As described in detail below **we recommend to include at least one grid question with at least seven items** (the more, the better) and in each case 4 or more attribute values (e.g., a Likert scale).
+Grid or matrix-style questions allow for pattern recognition in click behavior, helping detect inattentive or fraudulent respondents.
 
-* **Sufficient Number of Statements:** To accurately determine whether responses are genuine or arbitrary, a grid question should include a sufficient number of statements. Our experience suggests a minimum of seven statements for this purpose.
+👍🏼 **Design recommendations:**
 
-* **Appropriate Number of Options:** The number of response options should be inversely related to the number of statements in the grid. As the number of statements increases, fewer options are needed. We recommend at least three options to ensure reliable quality checks.
-
-* **Inverted Statements:** Statements should be phrased to create potential inconsistencies or contradictions if answered uniformly. This can be achieved by including both positive and negative statements about the subject being examined, ensuring that the responses require thoughtful consideration.
+- Include at least 1 grid question with a minimum of 7 items and 4 or more response options (e.g., a Likert scale).
+- Ensure enough variability: A higher number of statements helps differentiate meaningful from arbitrary responses.
+- Balance options and items: More items = fewer needed options, but never fewer than 3.
+- Add inverted statements: Mix positive and negative phrasing to reveal inconsistent or bot answer patterns (e.g., straightlining or zigzagging).
 
 ### Time Durations
 
-To ensure the accuracy and relevance of timing-based quality checks, we recommend capturing not only the total interview duration (LOI) but also detailed timing data for individual sections of the survey. Fraudsters and bots often manipulate total duration by quickly completing the questionnaire and then idling until the total time appears realistic before closing the survey. Section-specific timing helps detect such behavior, providing a more reliable measure of engagement and authenticity.&#x20;
+ReDem’s Time Score is more accurate when detailed timing data is available.
 
-* **Total Interview Duration**: Measure the overall survey completion time to flag unusually fast or slow responses, which may indicate inattentiveness or fraud.&#x20;
+🤨 **What to capture:**
 
-* **Section-Specific Timing**: Focus on timing longer sections, such as matrix or multiple choice questions with substantial text or open-ended responses, to gain deeper insights into engagement levels.
-
-* **Exclude Short Sections**: Avoid timing brief sections, like yes/no questions or demographic inquiries, as their duration offers little meaningful information.
-
-* **Account for Interruptions**: Ensure that potential interruptions during survey completion do not interfere with accurate time tracking.
+- **Total Interview Duration (LOI)**: Used to flag unusually fast or slow respondents.
+- **Section/Page-Specific Timing**: Helps identify suspicious timing behavior, especially in longer or complex sections or pages.
+- **Avoid brief sections**: Skip timing for yes/no or demographic questions.
+- **Account for interruptions**: Be aware of idle time manipulation by bots trying to simulate realistic durations.
 
 ### Trap Questions
 
-Adding trap questions to your survey is a powerful way to boost the effectiveness of ReDem's Coherence Score.  Trap questions can take various forms, such as differently worded repeat questions, prompts to select a specific answer option, or questions with nonsense or non-existing options. The latter, for example, can expose overclaiming, where respondents - often fraudsters - select as many options as possible to increase their chances of qualifying for the survey. The primary purpose of trap questions is to assess the quality of responses rather than to gather content for analysis. Careful implementation is essential. Consider the following:
+Trap questions support the Coherence Score by identifying respondents who overclaim, contradict themselves, or fail attention checks.
 
-* **Use Sparingly:** Incorporate only a maximum of two trap questions to avoid overwhelming or irritating participants.
+✅ **Best practices:**
 
-* **Design Subtly:** Ensure that trap questions are not easily recognized as such to maintain their effectiveness, as revealing their intent could lead participants to adjust their responses to match the study's criteria.
-
-* **Avoid Sole Reliance:** Use trap questions only as part of ReDem's broader quality assurance strategy, rather than as the sole measure of interview quality. Overreliance could unfairly penalize careful participants who make an isolated error, leading to unnecessary exclusions and loss of earned incentives.
+- **Use Sparingly:** Limit to a maximum of two trap questions per survey to avoid participant frustration.
+- **Design Subtly:** Don’t make trap questions obvious. If respondents detect them, they may adjust their answers unnaturally.
+- **Mix formats:** Use variations like:
+    - Repeat questions with rephrased wording
+    - Instructions to select a specific option
+    - Fake or nonsense options (e.g., fictional brands)
+- **Design for contradiction detection:** Structure your questionnaire in a way that allows contradictions to emerge. This helps ReDem’s Coherence Score detect dishonest or inattentive respondents more effectively.
+- **Don’t rely on traps alone:** Trap questions should complement, not replace, broader ReDem checks. An isolated error shouldn’t unfairly disqualify high-quality respondents.
