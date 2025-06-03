@@ -19,14 +19,11 @@ Each response is first classified into one of our quality categories. Each categ
 
 ### `  Wrong Topic  `
 
-Identifies responses that deviate from the question or topic by evaluating their context against relevant keywords and the question itself. The context check can be enabled or disabled when importing data.
+Identifies responses that deviate from the question or topic by evaluating their context against relevant keywords and the question itself. The context check is always enabled.
 
 Keywords are only necessary when the question lacks sufficient context. When adding them, ensure they broadly reflect the intended context to avoid false positives caused by overly narrow interpretations. Both the question and keywords must be in a supported language.
 
 Responses failing to align with the expected context are classified as "Wrong Topic" and assigned an OES (Overall Evaluation Score) of 30.
-
-Enable this option only if your questions are meaningful and contain relevant keywords.
-
 ### `  AI Generated Answer  `
 
 The model analyzes open-ended responses to assess whether they were artificially generated, evaluating patterns across a wide range of variables including grammar, structure, phrasing, syntax, word choice, sentence length, complexity, and predictability. Responses identified as AI-generated are assigned a score of 0.
