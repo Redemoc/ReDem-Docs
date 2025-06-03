@@ -5,6 +5,40 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2025-06-05" description="v2">
+  ## API v2 Released: Consistent CHS Question IDs Supported
+
+  ### 🔥 New Versioning Layer Introduced Across the ReDem API
+
+  We’re excited to introduce ReDem API v2 — a structured versioning layer that enables long-term enhancements while preserving backward compatibility with current integrations.
+
+  **All version 2 endpoints are now accessible via the <code>/v2</code> path (e.g., <code>/v2/addRespondent</code>), ensuring a clean separation from legacy endpoints.**
+
+  ### 🚀 What's new in v2?
+
+  In version 2, each CHS interview entry must explicitly include the associated <code>questionId</code>.
+
+  ```javascript
+  { 
+    "questionId": "Q1"
+    "question": "What type of accommodation did you stay in?", 
+    "answer": "Hotel",
+  }
+  ```
+
+  By making <code>questionId</code> a required field in <code>CHS</code> interviewData, you now have:
+  - Consistent identifiers across all respondents
+  - Clear mapping between survey questions and CHS results
+
+  ### 🔄 Backward Compatibility: How does v1 work?
+
+  In version 1, since <code>questionId</code> is not part of the schema:
+  - The system auto-generates <code>questionIds</code> like <code>Q1</code>, <code>Q2</code>, etc. uniquely for each respondent, making cross-respondent comparisons unreliable.
+  
+  <Warning>This means <code>Q1</code> for one respondent may refer to a completely different question than <code>Q1</code> for another.</Warning>
+  
+</Update>
+
 <Update label="2025-03-11" description="Unversioned changes">
   ## API endpoint updates
 
@@ -85,7 +119,7 @@ iconType: "regular"
   When a request fails due to invalid input or other errors, the all API returns a **400 Bad Request** status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.
 </Update>
 
-<Update label="2025-02-20" description="V1">
+<Update label="2025-02-20" description="v1">
   ## **ReDem 3.0 API - Initial Release**
 
   This initial release of the **ReDem API** empowers you to seamlessly integrate ReDem into your workflows and applications. As the backbone of our platform, the API provides direct access to all ReDem features, from real-time data insights to smooth integration with existing systems.
