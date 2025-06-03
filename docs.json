@@ -78,10 +78,10 @@
                 "group": "Endpoints",
                 "pages": [
                   "api-reference/endpoints/v2/addRespondent",
-                  "api-reference/endpoints/getRespondent",
-                  "api-reference/endpoints/getAllRespondents",
-                  "api-reference/endpoints/stopSurvey",
-                  "api-reference/endpoints/creditCalculation"
+                  "api-reference/endpoints/v2/getRespondent",
+                  "api-reference/endpoints/v2/getAllRespondents",
+                  "api-reference/endpoints/v2/stopSurvey",
+                  "api-reference/endpoints/v2/creditCalculation"
                 ]
               },
               {
