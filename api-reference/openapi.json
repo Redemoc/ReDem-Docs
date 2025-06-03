@@ -125,7 +125,7 @@
             "items": {
               "type": "string"
             },
-            "description": "**Keywords are used to perform `wrong topic` checks** and help evaluate whether responses are relevant to the topic. \n\nBy default, the `wrong topic` check is disabled. However, if keywords are provided, the system will automatically enable the `wrong topic` check, and respondents will be evaluated to ensure their answers align with the context defined by the provided keywords and title. \n\n For more details on how this works, refer to the [Wrong Topic Check](/quality-checks/open-ended-score#wrong-topic) section. \n\n 🧪 **Validations:**  \n - A **maximum of 10** keywords are allowed for each question.",
+            "description": "**Keywords are used to perform `wrong topic` checks** and help evaluate whether responses are relevant to the topic. \n\nThe wrong topic check is always enabled. If no keywords are provided, the system uses the question title for evaluation. When keywords are provided, they enhance the context and improve the accuracy of the check. \n\n For more details on how this works, refer to the [Wrong Topic Check](/quality-checks/open-ended-score#wrong-topic) section. \n\n 🧪 **Validations:**  \n - A **maximum of 10** keywords are allowed for each question.",
             "example": ["Beach", "Mountains", "Lake"]
           },
           "activateDuplicateDetection": {
