@@ -55,7 +55,7 @@
         }
       },
       "InteractionData": {
-        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io) \n\n 🧪 **Validations:**  \n - A **minimum of 3** interactions are needed to compute a score. \n", 
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)", 
         "type": "object",
         "required": ["value", "interactionType", "timestamp"],
         "properties": {
@@ -239,7 +239,7 @@
             "items": {
               "$ref": "#/components/schemas/InteractionData"
             },
-            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io) \n\n 🧪 **Validations:**  \n - A **minimum of 3** interactions are needed to compute a score. \n",
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)",
             "example": [{
               "interactionType": "KEYSTROKE",
               "value": "W",
@@ -829,7 +829,7 @@
             "TS": "#/components/schemas/TSDataPoint", 
             "GQS": "#/components/schemas/GQSDataPoint",
             "CHS": "#/components/schemas/CHSDataPoint_v2",
-            "BAS": "#/components/schemas/BASDataPoint"
+            "BAS": "#/components/schemas/BASDataPoint_V2"
           }
         },
         "oneOf": [
@@ -837,7 +837,7 @@
           { "$ref": "#/components/schemas/TSDataPoint" },
           { "$ref": "#/components/schemas/GQSDataPoint" },
           { "$ref": "#/components/schemas/CHSDataPoint_v2" },
-          { "$ref": "#/components/schemas/BASDataPoint" }
+          { "$ref": "#/components/schemas/BASDataPoint_V2" }
         ]
       },
       "CHSDataPoint_v2": {
@@ -898,6 +898,55 @@
             ],
             "description": "A variable that stores the **respondent’s answer to the question**.",
             "example": "Hotel"
+          }
+        }
+      },
+      "BASDataPoint_V2": {
+        "type": "object",
+        "title": "BAS",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+            "enum": ["BAS"]
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**A unique identifier assigned to each data point**, allowing users to pick a customized name. This name will be used to identify and reference the data point later within the system.",
+            "example": "Q1"
+          },
+          "interactionData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InteractionData_V2"
+            },
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io) \n\n 🧪 **Validations:**  \n - A **minimum of 3** interactions are needed to compute a score. \n",
+            "example": [{
+              "interactionType": "KEYSTROKE",
+              "value": "W",
+              "timestamp": "2024-12-01T06:22:59.833Z"
+            }]
+          }
+        },
+        "required": ["dataPointId", "qualityCheck", "interactionData"]
+      },
+      "InteractionData_V2": {
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)", 
+        "type": "object",
+        "required": ["value", "interactionType", "timestamp"],
+        "properties": {
+          "interactionType": { 
+            "type": "string",
+            "description": "The type of interaction the respondent had with the data point. \n\n ⭕ **Note:** Currently, the API supports `KEYSTROKE` and `COPY_AND_PASTE` interactions. Future updates will extend support to additional interactions, such as **mouse clicks, mouse movements**, and more.",
+            "enum": ["KEYSTROKE", "COPY_AND_PASTE"]
+          },
+          "value": { 
+            "type": "string",
+            "description": "The value of the interaction, which should include the final value once the interaction is complete."
+          },
+          "timestamp": { 
+            "type": "string",
+            "description": "The timestamp of the interaction. The timestamp is in the format `YYYY-MM-DDTHH:MM:SS.SSSZ`."
           }
         }
       }
