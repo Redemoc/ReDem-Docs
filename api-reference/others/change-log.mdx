@@ -5,7 +5,7 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
-<Update label="2025-06-05" description="v2">
+<Update label="2025-06-16" description="v2">
   ## API v2 Released: Consistent CHS Question IDs Supported
 
   ### 🔥 New Versioning Layer Introduced Across the ReDem API
@@ -36,6 +36,12 @@ iconType: "regular"
   - The system auto-generates <code>questionIds</code> like <code>Q1</code>, <code>Q2</code>, etc. uniquely for each respondent, making cross-respondent comparisons unreliable.
   
   <Warning>This means <code>Q1</code> for one respondent may refer to a completely different question than <code>Q1</code> for another.</Warning>
+
+  ### ⛔ Deprecation Notice: API v1
+
+  Version 1 of the ReDem API will be **deprecated starting 16th September 2025**.
+
+  We strongly encourage all teams and integrators to migrate to v2 endpoints before that date to avoid any disruption.
   
 </Update>
 
