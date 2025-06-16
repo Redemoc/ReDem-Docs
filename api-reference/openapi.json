@@ -55,7 +55,7 @@
         }
       },
       "InteractionData": {
-        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io) \n\n 🧪 **Validations:**  \n - A **minimum of 3** interactions are needed to compute a score. \n", 
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)", 
         "type": "object",
         "required": ["value", "interactionType", "timestamp"],
         "properties": {
@@ -239,7 +239,7 @@
             "items": {
               "$ref": "#/components/schemas/InteractionData"
             },
-            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io) \n\n 🧪 **Validations:**  \n - A **minimum of 3** interactions are needed to compute a score. \n",
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)",
             "example": [{
               "interactionType": "KEYSTROKE",
               "value": "W",
@@ -773,6 +773,180 @@
           "surveyName": {
             "type": "string",
             "description": "**The name of the survey**."
+          }
+        }
+      },
+      "AddRespondentRequest_v2": {
+        "description": "Request body for adding a new respondent",
+        "required": [
+          "respondentId",
+          "surveyName",
+          "dataPoints"
+        ],
+        "type": "object",
+        "properties": {
+          "respondentId": {
+            "type": "string",
+            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey. The respondent ID can be freely chosen for flexibility.\n\n**💡 Important:** The system utilizes this ID, combined with the survey name, to uniquely identify the respondent within a survey. This allows the same respondent ID to participate in multiple surveys without conflicts. \n\nIf the combination of survey name and respondent ID already exists, an error will be displayed. \n\n **🔦 Tip:** You can use the same respondent ID as in the survey tool to easily identify the respondent later.",
+            "example": "RESP497770"
+          },
+          "surveyName": {
+            "type": "string",
+            "description": "**The name of the survery**, which helps identify different surveys. The survey name can be assigned freely. \n\n**💡Important:** If the survey name already exists, the system will add the respondent under the appropriate survey. If the survey name is new, a new survey will be created, and the respondent will be added to the new survey. \n\n **⭕ Note:** Each survey identifier must be unique. \n\n **🔦 Tip:** you can simply make survey name unique by adding a timestamp. \n As Example: `Global Vacation Insights - 1709040600`"
+          },
+          "dataPoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataPoint_v2"
+            },
+            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 1000 question/answer pairs** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
+          },
+          "activateCleaning": {
+            "type": "boolean",
+            "description": "**Indicates whether cleaning should be applied to the respondent**. \n\n **💡Important:** To remove bad respondents automatically, ensure this variable is set to true. \n\n When cleaning is enabled, the response will include the variable isExcluded, which indicates whether the respondent has been excluded based on the applied criteria.",
+            "example": true,
+            "default": false
+          },
+          "cleaningSettings": {
+            "description": "Cleaning settings define the rules for determining whether a respondent should be excluded and marked as low quality. If a **respondent’s scores fall below the threshold, they will be excluded and flagged as low quality**.\n\n **💡Important:** If no custom cleaning settings are defined and cleaning is enabled, the system will apply ReDem’s recommended cleaning settings. You can view the recommended settings here: [ReDem Recommended Cleaning Settings](/features/cleaning-and-review#redem-recommended-cleaning-settings) \n \n For more details on how cleaning works, refer to the [Data Cleaning](/features/cleaning-and-review) section.",
+            "$ref": "#/components/schemas/CleaningSettings"
+          },
+          "synchronousResponse": {
+            "type": "boolean",
+            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don’t need to wait; you can later check the respondent’s status using the [Get Respondent Status endpoint](/api-reference/endpoint/getRespondentStatus).",
+            "example": true,
+            "default": true
+          }
+        }
+      },
+      "DataPoint_v2": {
+        "description": "An array of data points used to perform quality checks on each respondent.",
+        "type": "object",
+        "discriminator": {
+          "propertyName": "qualityCheck",
+          "mapping": {
+            "OES": "#/components/schemas/OESDataPoint",
+            "TS": "#/components/schemas/TSDataPoint", 
+            "GQS": "#/components/schemas/GQSDataPoint",
+            "CHS": "#/components/schemas/CHSDataPoint_v2",
+            "BAS": "#/components/schemas/BASDataPoint_V2"
+          }
+        },
+        "oneOf": [
+          { "$ref": "#/components/schemas/OESDataPoint" },
+          { "$ref": "#/components/schemas/TSDataPoint" },
+          { "$ref": "#/components/schemas/GQSDataPoint" },
+          { "$ref": "#/components/schemas/CHSDataPoint_v2" },
+          { "$ref": "#/components/schemas/BASDataPoint_V2" }
+        ]
+      },
+      "CHSDataPoint_v2": {
+        "type": "object",
+        "title": "CHS",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+            "enum": ["CHS"]
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**A unique identifier assigned to each data point**, allowing users to pick a customized name. This name will be used to identify and reference the data point later within the system. Note that there can be only one CHS datapoint per respondent. This datapoint should contain the entire interview.",
+            "example": "CHS_DataPoint"
+          },
+          "interviewData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InterviewData_v2"
+            },
+            "description": "This variable aggregates all relevant question-answer pairs used to evaluate the respondent’s coherence. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** question/answer pairs are allowed per respondent.",
+            "example": [{
+              "question": "What type of accommodation did you stay in?",
+              "answer": "Hotel"
+            }]
+          }
+        },
+        "required": ["dataPointId", "qualityCheck", "interviewData"]
+      },
+      "InterviewData_v2": {
+        "description": "Structure for interview-based questions",
+        "type": "object",
+        "required": [
+          "questionId",
+          "question",
+          "answer"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "description": "A unique identifier for the question",
+            "example": "Q1"
+          },
+          "question": {
+            "type": "string",
+            "description": "**Contains the title or text of the question**.",
+            "example": "What type of accommodation did you stay in?"
+          },
+          "answer": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "A variable that stores the **respondent’s answer to the question**.",
+            "example": "Hotel"
+          }
+        }
+      },
+      "BASDataPoint_V2": {
+        "type": "object",
+        "title": "BAS",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "description": "A variable that **specifies the type of quality check applied to the data point**, determining how it will be assessed and evaluated.",
+            "enum": ["BAS"]
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**A unique identifier assigned to each data point**, allowing users to pick a customized name. This name will be used to identify and reference the data point later within the system.",
+            "example": "Q1"
+          },
+          "interactionData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InteractionData_V2"
+            },
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io) \n\n 🧪 **Validations:**  \n - A **minimum of 3** interactions are needed to compute a score. \n",
+            "example": [{
+              "interactionType": "KEYSTROKE",
+              "value": "W",
+              "timestamp": "2024-12-01T06:22:59.833Z"
+            }]
+          }
+        },
+        "required": ["dataPointId", "qualityCheck", "interactionData"]
+      },
+      "InteractionData_V2": {
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)", 
+        "type": "object",
+        "required": ["value", "interactionType", "timestamp"],
+        "properties": {
+          "interactionType": { 
+            "type": "string",
+            "description": "The type of interaction the respondent had with the data point. \n\n ⭕ **Note:** Currently, the API supports `KEYSTROKE` and `COPY_AND_PASTE` interactions. Future updates will extend support to additional interactions, such as **mouse clicks, mouse movements**, and more.",
+            "enum": ["KEYSTROKE", "COPY_AND_PASTE"]
+          },
+          "value": { 
+            "type": "string",
+            "description": "The value of the interaction, which should include the final value once the interaction is complete."
+          },
+          "timestamp": { 
+            "type": "string",
+            "description": "The timestamp of the interaction. The timestamp is in the format `YYYY-MM-DDTHH:MM:SS.SSSZ`."
           }
         }
       }
@@ -1724,6 +1898,947 @@
       }
     },
     "/creditCalculation": {
+      "post": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Calculate the maximum number of credits needed for a respondent",
+        "operationId": "creditCalculation",
+        "description": "API endpoint for calculating the required number of credits for a respondent.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreditCalculationRequest"
+              },
+              "example": {
+                "OESDataPoints": 2,
+                "GQSAnswers": 35,
+                "TSDataPoints": 2,
+                "CHSAnswers": 25,
+                "BASDataPoints": 2
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "When a request is successfully processed, the API returns a 200 OK status code along with the expected data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable indicating whether the **operation was successful**.",
+                      "enum":[true,false]
+                    },
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                    },
+                    "results": {
+                      "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                      "properties": {
+                        "creditCalculation": {
+                          "description": "This variable **represents the detailed breakdown of the number of credits** calculated for a respondent.",
+                          "type": "object",
+                          "properties": {
+                            "totalCredits": {
+                              "type": "number",
+                              "description": "This variable **represents the total number of credits** calculated for a respondent."
+                            },
+                            "calculationBreakdown": {
+                              "description": "This variable **represents the detailed breakdown of the number of credits** calculated for a respondent.",
+                              "$ref": "#/components/schemas/CalculationBreakdown"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Credit calculation successfully retrieved",
+                  "results": {
+                    "creditCalculation": {
+                      "totalCredits": 12,
+                      "calculationBreakdown": {
+                        "OES": {"credits": 4, "dataPoints": 2},
+                        "GQS": {"credits": 3, "answers": 35},
+                        "TS": {"credits": 1, "dataPoints": 2},
+                        "CHS": {"credits": 4, "answers": 25},
+                        "BAS": {"credits": 4, "dataPoints": 2}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.", 
+                      "type": "object"
+                    },
+                    {
+                      "title": "Failed to calculate credits",
+                      "description": "This error occurs when the **system fails to calculate the credits**. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success":false,
+                      "message":"Validation Error",
+                      "errors":{
+                        "0": "\"OESDataPoints\" is required",
+                        "1": "\"GQSAnswers\" is required",
+                        "2": "\"TSDataPoints\" is required",
+                        "3": "\"CHSAnswers\" is required",
+                        "4": "\"BASDataPoints\" is required"
+                      }
+                    }
+                  },
+                  "Failed to calculate credits": {
+                    "value": {
+                      "success":false,
+                      "message":"Failed to calculate credits",
+                      "errors":{}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/addRespondent": {
+      "post": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Add a new respondent",
+        "description": "API endpoint for adding a new respondent with quality check data",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRespondentRequest_v2"
+              },
+              "example": {
+                "respondentId": "RESP497770",
+                "surveyName": "Global Vacation Insights 2024",
+                "dataPoints": [
+                  {
+                    "qualityCheck": "OES",
+                    "dataPointId": "Q1",
+                    "question": "Where did you spend your last vacation?",
+                    "answer": "We were at Lake Garda in Italy",
+                    "keywords": ["Beach", "Mountains", "Lake", "Museums", "Europe", "Asia", "Destination"],
+                    "activateDuplicateDetection": true,
+                    "allowedLanguages": ["en", "de", "it"]
+                  },
+                  {
+                    "qualityCheck": "TS",
+                    "dataPointId": "durationQ1", 
+                    "duration": 42670
+                  },
+                  {
+                    "qualityCheck": "GQS",
+                    "dataPointId": "Q2", 
+                    "gridAnswersPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6] 
+                  },
+                  {
+                    "qualityCheck": "OES",
+                    "dataPointId": "Q3", 
+                    "question": "What was the most memorable part of your last vacation?",
+                    "answer": "Italian cuisine, especially pizza and fine wine.",
+                    "keywords": ["Cuisine", "Food", "Art", "Adventure", "History", "Landscape", "Culture"],
+                    "activateDuplicateDetection": true,
+                    "allowedLanguages": ["en", "de", "it"]
+                  },
+                  {
+                    "qualityCheck": "TS",
+                    "dataPointId": "durationQ3", 
+                    "duration": 69720
+                  },
+                  {
+                    "qualityCheck": "CHS",
+                    "dataPointId": "CHS_Question",
+                    "interviewData": [
+                      { "questionId": "Q1", "question": "What mode of transport did you use?", "answer": "Car" },
+                      { "questionId": "Q2", "question": "How many days did you stay?", "answer": 5 }, 
+                      { "questionId": "Q3", "question": "Did you travel with family?", "answer": "yes" },
+                      { "questionId": "Q4", "question": "What was your approximate total budget for the trip (in EUR)?", "answer": 1500 },
+                      { "questionId": "Q5", "question": "What type of accommodation did you stay in?", "answer": "Hotel" }
+                    ]
+                  },
+                  {
+                    "qualityCheck": "GQS",
+                    "dataPointId": "Q4",
+                    "gridAnswersPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1] 
+                  },
+                  {
+                    "qualityCheck": "TS",
+                    "dataPointId": "totalDuration",
+                    "duration": 256843
+                  },
+                  {
+                    "qualityCheck": "BAS",
+                    "dataPointId": "interactionsQ1",
+                    "interactionData": [
+                      { "interactionType": "KEYSTROKE","value": "W",  "timestamp": "2024-12-01T06:22:59.809Z" },
+                      { "interactionType": "KEYSTROKE","value": "We", "timestamp": "2024-12-01T06:22:59.833Z" },
+                      { "interactionType": "KEYSTROKE","value": "We ", "timestamp": "2024-12-01T06:22:59.909Z" },
+                      { "interactionType": "KEYSTROKE","value": "We w", "timestamp": "2024-12-01T06:22:59.962Z" },
+                      { "interactionType": "KEYSTROKE","value": "We we", "timestamp": "2024-12-01T06:23:00.024Z" },
+                      { "interactionType": "KEYSTROKE","value": "We were", "timestamp": "2024-12-01T06:23:00.086Z" },
+                      { "interactionType": "KEYSTROKE","value": "We were ", "timestamp": "2024-12-01T06:23:00.148Z" },
+                      { "interactionType": "KEYSTROKE","value": "We were a", "timestamp": "2024-12-01T06:23:00.210Z" },
+                      { "interactionType": "KEYSTROKE","value": "We were at", "timestamp": "2024-12-01T06:23:00.272Z" }
+                    ]
+                  }
+                ],
+                "activateCleaning": true,
+                "cleaningSettings": {
+                  "redemScore": 60,
+                  "OES": {
+                    "activate": true,
+                    "score": 40,
+                    "minDataPoints": 2,
+                    "categories": {
+                      "GENERIC_ANSWER": {"activate": false, "minDataPoints": 2},
+                      "NO_INFORMATION": {"activate": false, "minDataPoints": 2},
+                      "BAD_LANGUAGE": {"activate": true, "minDataPoints": 2},
+                      "NONSENSE": {"activate": true, "minDataPoints": 2},
+                      "DUPLICATE_ANSWER": {"activate": false, "minDataPoints": 1},
+                      "DUPLICATE_RESPONDENT": {"activate": false, "minDataPoints": 1},
+                      "WRONG_TOPIC": {"activate": true, "minDataPoints": 2},
+                      "WRONG_LANGUAGE": {"activate": true, "minDataPoints": 2},
+                      "AI_GENERATED_ANSWER": {"activate": true, "minDataPoints": 2}
+                    }
+                  },
+                  "CHS": {
+                    "activate": true,
+                    "score": 20
+                  },
+                  "GQS": {
+                    "activate": true,
+                    "score": 10,
+                    "minDataPoints": 2
+                  },
+                  "TS": {
+                    "activate": true,
+                    "score": 20
+                  },
+                  "BAS": {
+                    "activate": true,
+                    "score": 10,
+                    "minDataPoints": 2,
+                    "categories": {
+                      "UNNATURAL_TYPING": {"activate": true, "minDataPoints": 2},
+                      "COPY_AND_PASTE": {"activate": true, "minDataPoints": 2}
+                    }
+                  }
+                },
+                "synchronousResponse": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "When a request is successfully processed, the API returns a 200 OK status code along with the expected data. The structure of the response depends on the synchronousResponse parameter provided in the request body, which determines whether the response is synchronous (results of the respondent evaluation are returned immediately) or asynchronous (a respondent is created and the results of the respondent evaluation are available later through a separate endpoint).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Synchronous Response",
+                      "description": "**Synchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `true`. \n\n In this mode, the system generates a detailed response containing all quality parameters of the respondent. The request will wait (`await`) until the full response is ready before proceeding.",
+                      "type": "object",
+                      "properties": {
+                        "success":{
+                          "type":"boolean",
+                          "description":"A variable indicating whether the **operation was successful**.",
+                          "enum":[true,false]
+                        },
+                        "message":{
+                          "type":"string",
+                          "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results":{
+                          "type":"object",
+                          "description": "This variable includes **all quality parameters associated with a respondent**.",
+                          "properties":{
+                            "respondentId": {
+                              "type": "string",
+                              "description": "A variable that **indicates the respondent**."
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that represents the current state of the respondent evaluation. For synchronous responses, this value will always be `COMPLETED`. ",
+                              "enum": [
+                                "COMPLETED"
+                              ]
+                            },
+                            "respondentQuality": {
+                              "$ref": "#/components/schemas/RespondentResults",
+                              "description": "This variable includes **all quality parameters associated with a respondent**. \n\n **💡Important:** Even if a respondent fails evaluation, the response will still be returned with results with an error code of `-999` instead of valid scores. \n\n **⭕ Note:** The value `-999` is a predefined code returned by **ReDem** whenever a respondent cannot be evaluated. This applies to all quality scores, **including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS**."
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "title": "Asynchronous Response",
+                      "description": "**Asynchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoint/getRespondentStatus) endpoint.",
+                      "type": "object",
+                      "properties": {
+                        "success":{
+                          "type":"boolean",
+                          "description":"A variable indicating whether the **operation was successful**.",
+                          "enum":[true,false]
+                        },
+                        "message":{
+                          "type":"string",
+                          "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results":{
+                          "type":"object",
+                          "description": "This variable includes **all quality parameters associated with a respondent**.",
+                          "properties":{
+                            "respondentId": {
+                              "type": "string",
+                              "description": "A variable that **indicates the respondent**."
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that represents the **current state of the respondent evaluation**.",
+                              "enum": [
+                                "QUEUED"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Synchronous Response": {
+                    "summary": "Synchronous Response Example",
+                    "value": {
+                      "success":true,
+                      "message":"Respondent Evaluated successfully",
+                      "results":{
+                        "respondentId": "RESP497770",
+                        "status": "COMPLETED",
+                        "respondentQuality": {
+                          "isExcluded": true,
+                          "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
+                          "redemScore": 85,
+                          "qualityScoreSummary": [
+                            {"qualityCheck": "OES", "score": 80},
+                            {"qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ...", "incoherentQuestions": ["Q1", "Q2"]},
+                            {"qualityCheck": "GQS", "score": 85},
+                            {"qualityCheck": "TS", "score": 70},
+                            {"qualityCheck": "BAS", "score": 75}
+                          ],
+                          "dataPointsSummary": [
+                            {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "VALID_ANSWER"},
+                            {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": 95},
+                            {"qualityCheck": "GQS", "dataPointId": "Q2", "score": 90},
+                            {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "VALID_ANSWER"},
+                            {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": 50},
+                            {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                            {"qualityCheck": "GQS", "dataPointId": "Q4", "score": 80},
+                            {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": 65},
+                            {"qualityCheck": "BAS", "dataPointId": "interactionsQ1", "score": 75, "category": "NATURAL_TYPING"}
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "Asynchronously Response": {
+                    "summary": "Asynchronous Response Example",
+                    "value": {
+                      "success":true,
+                      "message":"Respondent Queued for Evaluation",
+                      "results":{
+                        "respondentId": "RESP497770",
+                        "status": "QUEUED"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.", 
+                      "type": "object"
+                    },
+                    {
+                      "title": "ID already exists",
+                      "description": "If the system detects a duplicate `respondentId` within the same survey, it returns an error. The `respondentId` serves as a unique identifier for each respondent within a survey, ensuring they are distinguishable. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    },
+                    {
+                      "title": "Survey has been stopped",
+                      "description": "If a respondent addition request is made for a survey that is **stopped**, the system returns an error. A **stopped** survey no longer accepts new respondents, preventing further additions. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    },
+                    {
+                      "title": "Insufficient credit balance",
+                      "description": "If there are **not enough credits available to add a respondent**, the system returns an error. Adding respondents requires sufficient credits, and if the limit is reached, no further respondents can be added. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    },
+                    {
+                      "title": "Respondent processing timed out",
+                      "description": "If processing a respondent **exceeds 20 seconds**, the system returns an error. If the processing time surpasses this threshold, the request continues in the background, but an error response is returned. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success":false,
+                      "message":"Validation Error",
+                      "errors":{
+                        "0": "\"surveyName\" is required",
+                        "1": "\"dataPoints[0].dataPointId\" is required"
+                      }
+                    }
+                  },
+                  "ID already exists": {
+                    "value": {
+                      "success":false,
+                      "message":"ID already exists",
+                      "errors":{}
+                    }
+                  },
+                  "Survey has been stopped": {
+                    "value": {
+                      "success":false,
+                      "message":"Survey has been stopped",
+                      "errors":{}
+                    }
+                  },
+                  "Insufficient credit balance": {
+                    "value": {
+                      "success":false,
+                      "message":"Insufficient credit balance",
+                      "errors":{}
+                    }
+                  },
+                  "Respondent processing timed out": {
+                    "value": {
+                      "success": false,
+                      "message":"Respondent processing timed out",
+                      "errors":{}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/getRespondent": {
+      "post": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Get respondent results",
+        "description": "Retrieve the quality check results and status for a specific respondent.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetRespondentRequest"
+              },
+              "example": {
+                "surveyName": "Global Vacation Insights 2024",
+                "respondentId": "RESP497770"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "When a request is successfully processed, the API responds with a `200 OK` status code and the expected data. The structure of the response varies based on the respondent's status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Respondet Completed",
+                      "description": "This response mode available when respondent status is `COMPLETED`. \n\n In this case, the system generates a comprehensive, quality assessment of the respondent.",
+                      "type": "object",
+                      "properties": {
+                        "success":{
+                          "type":"boolean",
+                          "description":"A variable indicating whether the **operation was successful**.",
+                          "enum":[true,false]
+                        },
+                        "message":{
+                          "type":"string",
+                          "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results": {
+                          "type": "object",
+                          "description": "This variable includes **all quality parameters associated with a respondent**.",
+                          "properties": {
+                            "respondentId": {
+                              "type": "string",
+                              "description": "A variable that **indicates the respondent**."
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that represents the **current state of the respondent evaluation**. For respondents who have been successfully evaluated, this value will always be `COMPLETED`."
+                            },
+                            "respondentQuality": {
+                              "description": "This variable **represents respondent data that has been evaluated based on the quality checks specified in the /addRespondent request**. \n\n 💡Important: Even if a respondent fails evaluation, the response will still be returned with results with an error code of -999 instead of valid scores. \n\n **⭕ Note:** The value -999 is a predefined code returned by ReDem whenever a respondent cannot be evaluated. This applies to all quality scores, including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS.",
+                              "$ref": "#/components/schemas/RespondentResults"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "title": "Respondent Processing",
+                      "description": "This response mode available when respondent status is `QUEUED`. \n\n In this case, the system will only return the status of the respondent, without the quality assessment of the respondent.",
+                      "type": "object",
+                      "properties": {
+                        "success":{
+                          "type":"boolean",
+                          "description":"A variable that **indicates whether the operation was successful or not**.",
+                          "enum":[true,false]
+                        },
+                        "message":{
+                          "type":"string",
+                          "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results": {
+                          "type": "object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "properties": {
+                            "respondentId": {
+                              "type": "string",
+                              "description": "A variable that **indicates the respondent**."
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that represents the **current state of the respondent evaluation**. For respondents who are still being processed, this value will always be `QUEUED`."
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Respondent Completed": {
+                    "summary": "Respondent Completed Example",
+                    "value": {
+                      "success":true,
+                      "message":"Respondent quality successfully retrieved",
+                      "results": {
+                        "respondentId": "RESP497770",
+                        "status": "COMPLETED",
+                        "respondentQuality": {
+                          "isExcluded": true,
+                          "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
+                          "redemScore": 85,
+                          "qualityScoreSummary": [
+                            {"qualityCheck": "OES", "score": 80},
+                            {"qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                            {"qualityCheck": "GQS", "score": 85},
+                            {"qualityCheck": "TS", "score": 70},
+                            {"qualityCheck": "BAS", "score": 75}
+                          ],
+                          "dataPointsSummary": [
+                            {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "VALID_ANSWER"},
+                            {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": 95},
+                            {"qualityCheck": "GQS", "dataPointId": "Q2", "score": 90},
+                            {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "VALID_ANSWER"},
+                            {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": 50},
+                            {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                            {"qualityCheck": "GQS", "dataPointId": "Q4", "score": 80},
+                            {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": 65},
+                            {"qualityCheck": "BAS", "dataPointId": "interactionsQ1", "score": 75, "category": "NATURAL_TYPING"}
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "Respondent Processing": {
+                    "summary": "Respondent Processing Example",
+                    "value": {
+                      "success":true,
+                      "message":"Respondent quality successfully retrieved",
+                      "results":{
+                        "respondentId": "RESP497770",
+                        "status": "QUEUED"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.", 
+                      "type": "object"
+                    },
+                    {
+                      "title": "Survey not found",
+                      "description": "This error occurs when the **requested survey does not exist in the system**. It may happen if the survey name is incorrect, has been deleted, or was never created. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    },
+                    {
+                      "title": "Respondent not found",
+                      "description": "This error occurs when the **requested respondentId does not exist in the system**. It may happen if the respondent has not been added to the specified survey or if an incorrect ID was provided. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success":false,
+                      "message":"Validation Error",
+                      "errors":{
+                        "0": "\"surveyName\" is required",
+                        "1": "\"respondentId\" is required"
+                      }
+                    }
+                  },
+                  "Survey not found": {
+                    "value": {
+                      "success":false,
+                      "message":"Survey not found",
+                      "errors":{}
+                    }
+                  },
+                  "Respondent not found": {
+                    "value": {
+                      "success":false,
+                      "message":"Respondent not found",
+                      "errors":{}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/getAllRespondents": {
+      "post": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Get all respondents",
+        "description": "Retrieve the quality check results and status for all respondents in a specific survey.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAllRespondentsRequest"
+              },
+              "example": {
+                "surveyName": "Global Vacation Insights 2024"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "When a request is successfully processed, the API responds with a `200 OK` status code and the expected data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable indicating whether the **operation was successful**.",
+                      "enum":[true,false]
+                    },
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "This variable includes **all quality parameters associated with a respondent**.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "respondentId": {
+                            "type": "string",
+                            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.",
+                            "example": "RESP497770"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "A variable that **indicates the current state of the respondent**. \n\n **💡Important:** Even if a respondent fails evaluation, the response status will still be `COMPLETED`. \n\n **⭕ Note:** The value -999 is a predefined code returned by ReDem whenever a respondent cannot be evaluated. This applies to all quality scores, including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS.",
+                            "enum": ["COMPLETED", "QUEUED"]
+                          },
+                          "respondentQuality": {
+                            "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the /addRespondent request**. \n\n **⭕ Note:** this variable will only available if the respondent status is `COMPLETED`.",
+                            "$ref": "#/components/schemas/RespondentResults"
+                          }
+                        }
+                      }
+
+                    }
+                  }
+                },
+                "example": {
+                  "success":true,
+                  "message":"Respondents quality retrieved successfully",
+                  "results": [
+                    { 
+                      "respondentId": "RESP497770",
+                      "status": "COMPLETED",
+                      "respondentQuality": {
+                        "isExcluded": false,
+                        "reasonsForExclusion": ["Open Ended Score Threshold", "Coherence Score Threshold"],
+                        "redemScore": 85,
+                        "dataPointsSummary": [
+                          {"qualityCheck": "OES", "dataPointId": "Q1", "score": 85, "category": "VALID_ANSWER"},
+                          {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": 95},
+                          {"qualityCheck": "GQS", "dataPointId": "Q2", "score": 90},
+                          {"qualityCheck": "OES", "dataPointId": "Q3", "score": 75, "category": "VALID_ANSWER"},
+                          {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": 50},
+                          {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                          {"qualityCheck": "GQS", "dataPointId": "Q4", "score": 80},
+                          {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": 65}
+                        ],
+                        "qualityScoreSummary": [
+                          {"qualityCheck": "OES", "score": 80},
+                          {"qualityCheck": "CHS", "score": 75, "reason": "The user shows several inconsistencies and contradictions, such as different ..."},
+                          {"qualityCheck": "GQS", "score": 85},
+                          {"qualityCheck": "TS", "score": 70}
+                        ]
+                      }
+                    },
+                    { "respondentId": "RESP497771", "status": "PROCESSING" },
+                    { "respondentId": "RESP497772", "status": "PROCESSING" },
+                    { 
+                      "respondentId": "RESP497773",
+                      "status": "COMPLETED",
+                      "respondentQuality": {
+                        "isExcluded": false,
+                        "reasonsForExclusion": [],
+                        "redemScore": -999,
+                        "dataPointsSummary": [
+                          {"qualityCheck": "OES", "dataPointId": "Q1", "score": -999, "category": "N/A"},
+                          {"qualityCheck": "TS", "dataPointId": "durationQ1", "score": -999},
+                          {"qualityCheck": "GQS", "dataPointId": "Q2", "score": -999},
+                          {"qualityCheck": "OES", "dataPointId": "Q3", "score": -999, "category": "N/A"},
+                          {"qualityCheck": "TS", "dataPointId": "durationQ3", "score": -999},
+                          {"qualityCheck": "CHS", "dataPointId": "CHS_Question", "score": -999, "reason": "N/A"},
+                          {"qualityCheck": "GQS", "dataPointId": "Q4", "score": -999},
+                          {"qualityCheck": "TS", "dataPointId": "totalDuration", "score": -999}
+                        ],
+                        "qualityScoreSummary": [
+                          {"qualityCheck": "OES", "score": -999},
+                          {"qualityCheck": "CHS", "score": -999, "reason": "N/A"},
+                          {"qualityCheck": "GQS", "score": -999},
+                          {"qualityCheck": "TS", "score": -999}
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.", 
+                      "type": "object"
+                    },
+                    {
+                      "title": "Survey not found",
+                      "description": "This error occurs when the **requested survey does not exist in the system**. It may happen if the survey name is incorrect, has been deleted, or was never created. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success":false,
+                      "message":"Validation Error",
+                      "errors":{
+                        "0": "\"surveyName\" is required"
+                      }
+                    }
+                  },
+                  "Survey not found": {
+                    "value": {
+                      "success":false,
+                      "message":"Survey not found",
+                      "errors":{}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/stopSurvey": {
+      "post": {
+        "tags": [
+          "Survey"
+        ],
+        "summary": "Stop a survey",
+        "operationId": "stopSurvey",
+        "description": "API endpoint for stopping a survey. This can be triggered once the survey is completed.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAllRespondentsRequest"
+              },
+              "example": {
+                "surveyName": "Global Vacation Insights 2024"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Upon successful processing, the API returns a 200 OK status code along with the expected data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable indicating whether the **operation was successful**.",
+                      "enum":[true,false]
+                    },
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                    },
+                    "results": {
+                      "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                      "properties": {
+                        "surveyName": {
+                          "type": "string",
+                          "description": "A variable that **indicates the survey name**."
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "A variable that **indicates the status of the survey**. \n\n **⭕ Note:** ReDem surveys have two possible statuses: `RUNNING` and `STOPPED`. The survey status will be updated to `STOPPED` once the survey is stopped."
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Survey successfully stopped",
+                  "results": {
+                    "surveyName": "Global Vacation Insights 2024",
+                    "status": "STOPPED"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive `message` explaining the issue and an `error` object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.", 
+                      "type": "object"
+                    },
+                    {
+                      "title": "Survey not found",
+                      "description": "This error occurs when the **requested survey does not exist in the system**. It may happen if the survey name is incorrect, has been deleted, or was never created. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success":false,
+                      "message":"Validation Error",
+                      "errors":{
+                        "0": "\"surveyName\" is required"
+                      }
+                    }
+                  },
+                  "Survey not found": {
+                    "value": {
+                      "success":false,
+                      "message":"Survey not found",
+                      "errors":{}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/creditCalculation": {
       "post": {
         "tags": [
           "Respondent"

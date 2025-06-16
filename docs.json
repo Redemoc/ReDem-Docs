@@ -11,7 +11,7 @@
   "navigation": {
     "versions": [
       {
-        "version": "V1",
+        "version": "v2",
         "tabs": [
           {
             "tab": "User Guide",
@@ -78,11 +78,95 @@
               {
                 "group": "Endpoints",
                 "pages": [
-                  "api-reference/endpoint/addRespondent",
-                  "api-reference/endpoint/getRespondent",
-                  "api-reference/endpoint/getAllRespondents",
-                  "api-reference/endpoint/stopSurvey",
-                  "api-reference/endpoint/creditCalculation"
+                  "api-reference/endpoints/v2/addRespondent",
+                  "api-reference/endpoints/v2/getRespondent",
+                  "api-reference/endpoints/v2/getAllRespondents",
+                  "api-reference/endpoints/v2/stopSurvey",
+                  "api-reference/endpoints/v2/creditCalculation"
+                ]
+              },
+              {
+                "group": "Others",
+                "pages": [
+                  "api-reference/others/change-log"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "version": "v1",
+        "tabs": [
+          {
+            "tab": "User Guide",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "welcome",
+                  "account-setup",
+                  "how-it-works"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Knowledge Base",
+            "groups": [
+              {
+                "group": "Quality Checks",
+                "pages": [
+                  "knowledge-base/quality-checks/redem-score",
+                  "knowledge-base/quality-checks/open-ended-score",
+                  "knowledge-base/quality-checks/coherence-score",
+                  "knowledge-base/quality-checks/time-score",
+                  "knowledge-base/quality-checks/grid-question-score",
+                  "knowledge-base/quality-checks/behavior-analysis-score"
+                ]
+              },
+              {
+                "group": "Core Features",
+                "pages": [
+                  "knowledge-base/features/cleaning-and-review"
+                ]
+              },
+              {
+                "group": "Miscellaneous",
+                "pages": [
+                  "knowledge-base/miscellaneous/redem-credits",
+                  "knowledge-base/miscellaneous/questionnaire-criteria"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Documentation",
+            "groups": [
+              {
+                "group": "How to integrate",
+                "pages": [
+                  "api-reference/intro/introduction",
+                  "api-reference/intro/synchronous-response",
+                  "api-reference/intro/asynchronous-response"
+                ]
+              },
+              {
+                "group": "API Specifications",
+                "pages": [
+                  "api-reference/api-specifications/api-keys",
+                  "api-reference/api-specifications/response-structure",
+                  "api-reference/api-specifications/rate-limits"
+                ]
+              },
+              {
+                "group": "Endpoints",
+                "pages": [
+                  "api-reference/endpoints/v1/addRespondent",
+                  "api-reference/endpoints/v1/getRespondent",
+                  "api-reference/endpoints/v1/getAllRespondents",
+                  "api-reference/endpoints/v1/stopSurvey",
+                  "api-reference/endpoints/v1/creditCalculation"
                 ]
               },
               {
