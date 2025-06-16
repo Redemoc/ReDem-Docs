@@ -265,7 +265,7 @@
           },
           "surveyName": {
             "type": "string",
-            "description": "**The name of the survery**, which helps identify different surveys. The survey name can be assigned freely. \n\n**💡Important:** If the survey name already exists, the system will add the respondent under the appropriate survey. If the survey name is new, a new survey will be created, and the respondent will be added to the new survey. \n\n **⭕ Note:** Each survey identifier must be unique for a given user. \n\n **🔦 Tip:** you can simply make survey name unique by adding a timestamp. \n As Example: `Global Vacation Insights - 1709040600`"
+            "description": "**The name of the survery**, which helps identify different surveys. The survey name can be assigned freely. \n\n**💡Important:** If the survey name already exists, the system will add the respondent under the appropriate survey. If the survey name is new, a new survey will be created, and the respondent will be added to the new survey. \n\n **⭕ Note:** Each survey identifier must be unique. \n\n **🔦 Tip:** you can simply make survey name unique by adding a timestamp. \n As Example: `Global Vacation Insights - 1709040600`"
           },
           "dataPoints": {
             "type": "array",
