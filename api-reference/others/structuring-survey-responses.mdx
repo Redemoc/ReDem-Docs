@@ -1,0 +1,129 @@
+---
+title: 'Structuring Surveys Responses for ReDem Compatibility'
+description: 'A complete guide on how to transform survey responses into ReDem-compatible data points'
+icon: "lightbulb"
+iconType: "regular"
+---
+
+This guide explains how to format your survey data into structured data points suitable for submission to the <code>addRespondent</code> endpoint of the ReDem API.
+
+### Preparing survey responses for CHS (Coherence Score) data point
+For each CHS data point, all question–answer pairs must be included as separate objects within the <code>interviewData</code> array. Each object should contain both a <code>question</code> (as a string) and an <code>answer</code> (as a string or number) to ensure compatibility with the <code>addRespondent</code> endpoint.
+
+- **Single-select questions** <br />
+Single-select questions (radio buttons, dropdowns, yes/no, Likert scale, NPS, etc.) produce one answer value.
+
+    Transform the question and answer into a structured object with the following format:
+
+```javascript Example interviewData objects for a single-select question
+// Dropdown question
+{
+    "question": "Which of the following protein sources do you enjoy the most?",
+    "answer": "Beef"
+}
+
+// Radio button question
+{
+    "question": "In a typical week, how frequently do you eat red meat (e.g., beef, pork)?",
+    "answer": "3–5 times per week"
+}
+
+// Yes/No question
+{
+    "question": "Do you like Fish or seafood?",
+    "answer": "No"
+}
+
+// Likert scale question
+{
+    "question": "How much do you enjoy eating street food?",
+    "answer": "Not at all"
+}
+
+// NPS question
+{
+    "question": "How likely are you to recommend our food delivery service to a friend or colleague",
+    "answer": 8
+}
+```
+
+- **Multi-select questions** <br />
+Multi-select questions (checkboxes) produce a zero, one or many answer values.
+
+    Transform the question and answer into a structured object with the following format:
+
+    - Add every option label to the question so that downstream systems can reconstruct the full context.
+    - Concatenate all selected options in the answer field, separated by comma. 
+    - If no options are selected, set the answer to the literal string “None of those”.
+
+```javascript Example interviewData objects for a multi-select question
+// if the respondet selected one option
+{
+  "question": "Which of these dietary preferences or restrictions apply to you? (Select all that apply)",
+  "answer": "Vegetarian"
+}
+
+
+// if the respondet selected more than one option
+{
+    "question": "Which of the following foods do you eat regularly? (You may select more than one.) - Chicken, Cheese, Bacon or sausage, Eggs, Fish or seafood, Plant-based meat substitutes (e.g., tofu, tempeh), Milk or dairy products, Fruits, Leafy vegetables (e.g., spinach, kale)",
+    "answer": "Cheese, Eggs"
+}
+
+
+// if the respondet did not select any of the options
+{
+    "question": "Which of the following fast foods brands do you consume more? - McDonald's, KFC, Pizza Hut, Subway, Burger King, Taco Bell, Wendy's, Domino's, Papa John's",
+    "answer": "None of those"
+}
+```
+
+- **Open-ended questions** <br />
+Open-ended questions produce a free text or numeric answer value.
+
+```javascript Example interviewData object for an open-ended question
+{
+    "question": "Can you describe your typical eating habits during the week?",
+    "answer": "I usually eat home-cooked meals with lots of vegetables and lean meats. I occasionally eat out on weekends, mostly opting for Asian or Mediterranean dishes. I try to avoid sugary snacks and drink plenty of water throughout the day."
+}
+```
+
+- **Grid (matrix) questions** <br />
+Grid/matrix questions contain a stem plus multiple row items that share the same answer scale.
+
+    Transform the grid/matrix stem, row labels and answer scale into a structured object with the following format:
+
+    - Emit one object per row item so that each cell becomes its own data point
+    - Concatenate the stem and the row label, separated by -, to form the question.
+    - Keep the selected scale label as the answer.
+
+```javascript Example interviewData object for a grid/matrix question
+{
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Red meat (e.g., beef, pork)",
+    "answer": "3–5 times per week"
+},
+{
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Fish or seafood",
+    "answer": "Several times per day"
+},
+{
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Poultry (e.g., chicken, turkey)",
+    "answer": "1–2 times per week"
+},
+{
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Dairy products (e.g., milk, cheese, yogurt)",
+    "answer": "Daily"
+},
+{
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Eggs",
+    "answer": "3–5 times per week"
+},
+{
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Legumes (e.g., beans, lentils, chickpeas)",
+    "answer": "1–2 times per week"
+},
+{
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Grains (e.g., rice, pasta, bread)",
+    "answer": "Daily"
+}
+```
