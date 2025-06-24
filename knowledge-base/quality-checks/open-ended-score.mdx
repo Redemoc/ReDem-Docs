@@ -42,13 +42,17 @@ Responses provided in an unexpected language are flagged as “Wrong Language”
 
 The optional duplicate check detects potentially fraudulent responses, identifying both exact duplicates and partial matches.
 
-* This check detects repeated responses to the same question. If duplication is limited to a single question, a score of 50 is assigned. However, if duplicates are found across multiple questions, the score is reduced to 0.
+* This check detects repeated responses to the same question. Short or common responses are not penalized, but substantial duplications may lower the score. Scoring is continuous, so minor overlap results in moderate impact, while extensive duplication leads to stronger penalties.
 
 ![](</images/Duplicate Respondents in Single Question.png>)
 
-* **Duplicate Respondents Across Multiple Questions**: Our duplicate check also detects responses repeated across multiple questions. Such responses are classified as "**Duplicate Respondent**" and assigned a score of 10.
+* **Duplicate Respondents Across Multiple Questions**: When repetition occurs across several questions, the penalty increases. In severe cases, such as near-complete repetition across multiple responses, a score of 0 may be assigned.
 
 ![](</images/Duplicate Respondents in multiple questions.png>)
+
+* **Full Response Set Matches**: If a respondent’s full set of answers matches another’s, all responses are marked as duplicates and scored 0.
+
+* Whitelists exclude standard or commonly accepted responses from being flagged.
 
 ### `  Duplicate Answer  `
 
