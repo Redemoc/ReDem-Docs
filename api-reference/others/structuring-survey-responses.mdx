@@ -7,8 +7,12 @@ iconType: "regular"
 
 This guide explains how to format your survey data into structured data points suitable for submission to the <code>addRespondent</code> endpoint of the ReDem API.
 
-### Preparing survey responses for CHS (Coherence Score) data point
-For each CHS data point, all question–answer pairs must be included as separate objects within the <code>interviewData</code> array. Each object should contain both a <code>question</code> (as a string) and an <code>answer</code> (as a string or number) to ensure compatibility with the <code>addRespondent</code> endpoint.
+### Preparing survey responses for CHS (Coherence Score)
+For each CHS data point, all question–answer pairs must be included as separate objects within the <code>interviewData</code> array. Each object should contain a <code>questionId</code> (as a string), a <code>question</code> (as a string) and an <code>answer</code> (as a string or number) to ensure compatibility with the <code>addRespondent</code> endpoint.
+
+<Note>
+For the most accurate assessments, the AI performs best when it has full visibility into the context of the questionnaire. Therefore, it is recommended to include as much information as possible from the questionnaire.
+</Note>
 
 - **Single-select questions** <br />
 Single-select questions (radio buttons, dropdowns, yes/no, Likert scale, NPS, etc.) produce one answer value.
@@ -18,30 +22,35 @@ Single-select questions (radio buttons, dropdowns, yes/no, Likert scale, NPS, et
 ```javascript Example interviewData objects for a single-select question
 // Dropdown question
 {
-    "question": "Which of the following protein sources do you enjoy the most?",
-    "answer": "Beef"
+    "questionId": "Q1",
+    "question": "What is your favorite type of cuisine? Select one option that describes your preference.",
+    "answer": "Italian"
 }
 
 // Radio button question
 {
+    "questionId": "Q1",
     "question": "In a typical week, how frequently do you eat red meat (e.g., beef, pork)?",
     "answer": "3–5 times per week"
 }
 
 // Yes/No question
 {
+    "questionId": "Q1",
     "question": "Do you like Fish or seafood?",
     "answer": "No"
 }
 
 // Likert scale question
 {
+    "questionId": "Q1",
     "question": "How much do you enjoy eating street food? - Not at all, A little, Somewhat, Quite a bit, Very much",
     "answer": "Not at all"
 }
 
 // NPS question
 {
+    "questionId": "Q1",
     "question": "How likely are you to recommend our food delivery service to a friend or colleague",
     "answer": 8
 }
@@ -59,13 +68,15 @@ Multi-select questions (checkboxes) produce a zero, one or many answer values.
 ```javascript Example interviewData objects for a multi-select question
 // if the respondet selected one option
 {
-  "question": "Which of these dietary preferences or restrictions apply to you? (Select all that apply) - Vegetarian, Vegan, Gluten-free, Lactose-intolerant, Halal",
-  "answer": "Vegetarian"
+    "questionId": "Q1",
+    "question": "Which of these dietary preferences or restrictions apply to you? (Select all that apply) - Vegetarian, Vegan, Gluten-free, Lactose-intolerant, Halal",
+    "answer": "Vegetarian"
 }
 
 
 // if the respondet selected more than one option
 {
+    "questionId": "Q1",
     "question": "Which of the following foods do you eat regularly? (You may select more than one.) - Chicken, Cheese, Bacon or sausage, Eggs, Fish or seafood, Plant-based meat substitutes (e.g., tofu, tempeh), Milk or dairy products, Fruits, Leafy vegetables (e.g., spinach, kale)",
     "answer": "Cheese, Eggs"
 }
@@ -73,6 +84,7 @@ Multi-select questions (checkboxes) produce a zero, one or many answer values.
 
 // if the respondet did not select any of the options
 {
+    "questionId": "Q1",
     "question": "Which of the following fast foods brands do you consume more? - McDonald's, KFC, Pizza Hut, Subway, Burger King, Taco Bell, Wendy's, Domino's, Papa John's",
     "answer": "None of those"
 }
@@ -83,6 +95,7 @@ Open-ended questions produce a free text or numeric answer value.
 
 ```javascript Example interviewData object for an open-ended question
 {
+    "questionId": "Q1",
     "question": "Can you describe your typical eating habits during the week?",
     "answer": "I usually eat home-cooked meals with lots of vegetables and lean meats. I occasionally eat out on weekends, mostly opting for Asian or Mediterranean dishes. I try to avoid sugary snacks and drink plenty of water throughout the day."
 }
@@ -99,30 +112,37 @@ Grid/matrix questions contain a stem plus multiple row items that share the same
 
 ```javascript Example interviewData object for a grid/matrix question
 {
+    "questionId": "Q1",
     "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Red meat (e.g., beef, pork)",
     "answer": "3–5 times per week"
 },
 {
+    "questionId": "Q2",
     "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Fish or seafood",
     "answer": "Several times per day"
 },
 {
+    "questionId": "Q3",
     "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Poultry (e.g., chicken, turkey)",
     "answer": "1–2 times per week"
 },
 {
+    "questionId": "Q4",
     "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Dairy products (e.g., milk, cheese, yogurt)",
     "answer": "Daily"
 },
 {
+    "questionId": "Q5",
     "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Eggs",
     "answer": "3–5 times per week"
 },
 {
+    "questionId": "Q6",
     "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Legumes (e.g., beans, lentils, chickpeas)",
     "answer": "1–2 times per week"
 },
 {
+    "questionId": "Q7",
     "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Grains (e.g., rice, pasta, bread)",
     "answer": "Daily"
 }
