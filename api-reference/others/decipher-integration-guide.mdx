@@ -1,0 +1,213 @@
+---
+title: 'Decipher Integration Guide'
+description: 'Use this guide to integrate ReDem API into a Decipher survey.'
+icon: "decipher"
+iconType: "regular"
+---
+
+<Steps>
+  <Step title="Ask Forsta to Allow Outbound Calls">
+    Request Forsta/Decipher support to whitelist the ReDem API:
+
+    ```plaintext wrap
+    Please whitelist https://api.redem.io so that client-side JavaScript in my survey can POST to it.
+    ```
+
+    If JavaScript is not allowed, use a server-side call with the same structure.
+    
+  </Step>
+
+  <Step title="Create the ReDem Payload Container">
+    Add a hidden question at the top of your XML (before `<suspend/>`):
+
+    ```xml
+    <text label="ReDem_Payload" where="execute,survey" optional="0" size="25">
+        <title>__INVISIBLE__</title>
+        <row label="payload_json">{}</row>
+        <row label="response_json">{}</row>
+    </text>
+    ```
+
+    Add the initial `window.reDem` object:
+
+    ```javascript
+    <style name="survey.before" wrap="ready"><![CDATA[
+        window.reDem = {
+            respondentId : "${uuid}",
+            surveyName   : "${survey.alt}",
+            dataPoints   : [],
+            activateCleaning : true,
+            cleaningSettings  : {
+                redemScore : 60,
+                OES : { activate: true, score: 40, minDataPoints: 2 },
+                CHS : { activate: true, score: 30 },
+                GQS : { activate: true, score: 20, minDataPoints: 2 },
+                TS  : { activate: true, score: 20 },
+                BAS : { activate: true, score: 20, minDataPoints: 2 }
+            },
+            synchronousResponse : true
+        };
+    ]]></style>
+    ```
+
+  </Step>
+
+  <Step title="Set Up BAS Tracking (Behavioral Analysis)">
+    In order to use the BAS you must include a custom tracker based on this sample: [Behavior Tracking](https://docs.redem.io/api-reference/others/behavior-tracking).  Since it requires customization, this is **not available via CDN**, so copy the code from that sample and adapt it to each open-end: <br/>
+    - Replace `QUESTION_ID` with your Decipher label (`D2`, `OE1`, etc.)
+    - Ensure `textarea` has consistent IDs or selectors for the tracker to bind properly.
+
+    The tracker logs `KEYSTROKE` and `COPY_AND_PASTE` events into `sessionStorage`.
+
+  </Step>
+
+  <Step title="Add Helper Function for Datapoints">
+    Include the following helper once, preferably in `survey.before`:
+
+    ```javascript
+    <style name="survey.before" wrap="ready"><![CDATA[
+        window.pushDataPoint = function(dp){
+            window.reDem.dataPoints.push(dp);
+            $("#question_ReDem_Payload .row[label='payload_json'] input").val(
+            JSON.stringify(window.reDem)
+            );
+        };
+    ]]></style>
+    ```
+  </Step>
+
+  <Step title="Push Datapoints During Survey">
+    Use below list for where and how to add datapoints:
+
+    **Quality Checks**: `OES` <br/>
+    **Where**: `question.after` on open-ends <br/>
+    **Sample**: 
+    ```javascript wrap
+    pushDataPoint({
+        qualityCheck:"OES",
+        dataPointId:"D2",
+        question:q.title,
+        answer:document.querySelector('input,textarea').value,
+        activateDuplicateDetection:true,
+        allowedLanguages:["en","de"]
+    });
+    ```
+
+    **Quality Checks**: `BAS` <br/>
+    **Where**: Same page as OES open-end <br/>
+    **Sample**: 
+    ```javascript wrap
+    pushDataPoint({
+        qualityCheck:"BAS",
+        dataPointId:"D2_BAS",
+        interactionData:JSON.parse(sessionStorage.getItem("interaction_data"))
+    });
+    ```
+
+    **Quality Checks**: `TS` <br/>
+    **Where**: After any page to measure time <br/>
+    **Sample**: 
+    ```javascript wrap
+    pushDataPoint({
+        qualityCheck:"TS",
+        dataPointId:"duration_D2",
+        duration:Date.now()-pageStart
+    });
+    ```
+
+    **Quality Checks**: `GQS` <br/>
+    **Where**: After grid matrix questions <br/>
+    **Sample**: 
+    ```javascript wrap
+    pushDataPoint({
+        qualityCheck:"GQS",
+        dataPointId:"gridQ1",
+        gridAnswersPattern:[7,8,9,1,3,5,2,5,9,6]
+    });
+    ```
+
+    **Quality Checks**: `CHS` <br/>
+    **Where**: Final page <br/>
+    **Sample**: 
+    ```javascript wrap
+    pushDataPoint({
+        qualityCheck:"CHS",
+        dataPointId:"CHS_Question",
+        interviewData:[
+            {questionId:"D2",question:"Where did…",answer:"…"}
+        ]
+    });
+    ```
+
+  </Step>
+
+  <Step title="Call ReDem API on the Final Page">
+    Add a new page (e.g., `ReDem_Screen`) after the last `<suspend/>` with a “please wait…” message.
+
+    In `question.after`, add:
+
+    ```javascript
+    <style name="question.after" wrap="ready"><![CDATA[
+        fetch("https://api.redem.io/v2/addRespondent", {
+            method: "POST",
+            headers: {
+            "api-key": "<YOUR_API_KEY>",
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(window.reDem)
+        })
+        .then(r => r.json())
+        .then(json => {
+            $("#question_ReDem_Payload .row[label='response_json'] input").val(JSON.stringify(json));
+            if(json.results && json.results.respondentQuality.isExcluded){
+            // handle exclusion logic
+            } else {
+            $("#btn_continue").click();
+            }
+        })
+        .catch(e => {
+            console.error(e);
+            $("#btn_continue").click(); // fail open
+        });
+    ]]></style>
+    ```
+
+  </Step>
+
+  <Step title="(Optional) Parse ReDem Scores into Export">
+    Use the `response_json` row to extract and write additional scores to hidden questions:
+
+    ```javascript
+    {
+        "results": {
+            "respondentQuality": {
+            "redemScore": 78,
+            "isExcluded": false,
+            "reasonsForExclusion": [],
+            "dataPointsSummary": [],
+            "qualityScoreSummary": []
+            }
+        }
+    }
+    ```
+
+  </Step>
+
+  <Step title="Testing Checklist">
+    - Preview survey and provide multiple realistic answers.
+    - Open DevTools → Network and confirm a 200 response from /v2/addRespondent.
+    - Check that payload_json and response_json rows are populated.
+    - Use sessionStorage.clear() on survey entry to reset BAS tracker data.
+  </Step>
+</Steps>
+
+**Quick Reference: Required Fields**
+
+| Field                 | Type    | Description                 |
+| :-------------------- | :------ | :-------------------------- |
+| `respondentId`        | string  | e.g., `${uuid}`             |
+| `surveyName`          | string  | Human-readable name         |
+| `dataPoints`          | array   | Contains all datapoints     |
+| `activateCleaning`    | boolean | Default: true               |
+| `cleaningSettings`    | object  | Score thresholds per module |
+| `synchronousResponse` | boolean | Must be true in Decipher    |
