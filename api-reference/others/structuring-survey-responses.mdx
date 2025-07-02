@@ -7,19 +7,144 @@ iconType: "regular"
 
 This guide explains how to format your survey data into structured data points suitable for submission to the <code>addRespondent</code> endpoint of the ReDem API.
 
-### Preparing survey responses for CHS (Coherence Score)
-For each CHS data point, all question–answer pairs must be included as separate objects within the <code>interviewData</code> array. Each object should contain a <code>questionId</code> (as a string), a <code>question</code> (as a string) and an <code>answer</code> (as a string or number) to ensure compatibility with the <code>addRespondent</code> endpoint.
+## Preparing survey responses for CHS (Coherence Score)
+For each CHS data point, all question–answer pairs must be included as separate objects within the <code>interviewData</code> array. Each object should contain a 
+- <code>questionId</code> - A unique identifier for the question.
+- <code>question</code> - The full text of the question, When applicable, include all possible answer options that respondents can choose from to provide full context for the AI.
+- <code>answer</code> - The respondent's selected answer(s) or written response.
 
+### Recommended formats for different question types
 <Note>
 For the most accurate assessments, the AI performs best when it has full visibility into the context of the questionnaire. Therefore, it is recommended to include as much information as possible from the questionnaire.
-</Note>
+</Note> 
 
-- **Single-select questions** <br />
-Single-select questions (radio buttons, dropdowns, yes/no, Likert scale, NPS, etc.) produce one answer value.
+- **Single-Select Questions** <br/>
+Includes dropdowns, radio buttons, yes/no, and Likert scale questions.
+    - **Question Field**: Provide the question text. If relevant, include all key answer options to help contextualize the selected answer.
+    - **Answer Field**: Include the respondent’s selected choice as a string or number.
 
-    Transform the question and answer into a structured object with the following format:
+```javascript
+// Dropdown question
+{
+    "questionId": "Q1",
+    "question": "What is your favorite type of cuisine? Select one option that describes your preference. - Italian, French, Chinese, Indian, Japanese, Mexican, Thai, Greek",
+    "answer": "Italian"
+}
 
-```javascript Example interviewData objects for a single-select question
+// Radio button question
+{
+    "questionId": "Q1",
+    "question": "In a typical week, how frequently do you eat red meat (e.g., beef, pork)?",
+    "answer": "3–5 times per week"
+}
+
+// Yes/No question
+{
+    "questionId": "Q1",
+    "question": "Do you like Fish or seafood? - Yes, No",
+    "answer": "No"
+}
+
+// Likert scale question
+{
+    "questionId": "Q1",
+    "question": "How much do you enjoy eating street food? - Not at all, A little, Somewhat, Quite a bit, Very much",
+    "answer": "Not at all"
+}
+```
+
+- **NPS question (single select)**
+    - **Question Field**: Include the full question text and scale labels (e.g., "1: Not at all, 10: Very much").
+    - **Answer Field**: Include the respondent’s selected choice as a string or number.
+
+```javascript
+{
+    "questionId": "Q1",
+    "question": "How likely are you to recommend our food delivery service to a friend or colleague - 1: Not at all, 10: Very much",
+    "answer": 8
+}
+```
+
+- **Checkbox questions (multi select)** <br/>
+    - **Question Field**: Include the full question text and all possible answer options, separated by commas.
+    - **Answer Field**: List all selected options, separated by commas.
+
+```javascript
+{
+    "questionId": "Q1",
+    "question": "Which of the following foods do you eat regularly? (You may select more than one.) - Chicken, Cheese, Bacon or sausage, Eggs, Fish or seafood, Plant-based meat substitutes (e.g., tofu, tempeh), Milk or dairy products, Fruits, Leafy vegetables (e.g., spinach, kale)",
+    "answer": "Cheese, Eggs"
+}
+```
+
+- **Open-ended question** <br/>
+These collect free-text input from respondents.
+    - **Question Field**: Include only the question text.
+    - **Answer Field**: Record the answer provided by the respondent.
+
+```javascript
+{
+    "questionId": "Q1",
+    "question": "Can you describe your typical eating habits during the week?",
+    "answer": "I usually eat home-cooked meals with lots of vegetables and lean meats. I occasionally eat out on weekends, mostly opting for Asian or Mediterranean dishes. I try to avoid sugary snacks and drink plenty of water throughout the day."
+}
+```
+
+- **Grid (matrix) questions** <br />
+Grid/matrix questions contain a stem plus multiple row items that share the same answer scale.
+
+    Transform the grid/matrix stem, row labels and answer scale into a structured object with the following format:
+
+    - Emit one object per row item so that each cell becomes its own data point
+    - **Question Field**: Concatenate the stem and the row label, separated by a hyphen (-), to form the full question text. Additionally, include all answer scale labels, separated by commas.
+    - **Answer Field**: Keep the selected scale label as the answer.
+
+```javascript Example interviewData object for a grid/matrix question
+{
+    "questionId": "Q1",
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Red meat (e.g., beef, pork) - Not at all, 1–2 times per week, 3–5 times per week, Several times per day, Daily",
+    "answer": "3–5 times per week"
+},
+{
+    "questionId": "Q2",
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Fish or seafood - Not at all, 1–2 times per week, 3–5 times per week, Several times per day, Daily",
+    "answer": "Several times per day"
+},
+{
+    "questionId": "Q3",
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Poultry (e.g., chicken, turkey) - Not at all, 1–2 times per week, 3–5 times per week, Several times per day, Daily",
+    "answer": "1–2 times per week"
+},
+{
+    "questionId": "Q4",
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Dairy products (e.g., milk, cheese, yogurt) - Not at all, 1–2 times per week, 3–5 times per week, Several times per day, Daily",
+    "answer": "Daily"
+},
+{
+    "questionId": "Q5",
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Eggs - Not at all, 1–2 times per week, 3–5 times per week, Several times per day, Daily",
+    "answer": "3–5 times per week"
+},
+{
+    "questionId": "Q6",
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Legumes (e.g., beans, lentils, chickpeas) - Not at all, 1–2 times per week, 3–5 times per week, Several times per day, Daily",
+    "answer": "1–2 times per week"
+},
+{
+    "questionId": "Q7",
+    "question": "Please indicate how often you usually eat the following types of food. Think about a normal week. - Grains (e.g., rice, pasta, bread) - Not at all, 1–2 times per week, 3–5 times per week, Several times per day, Daily",
+    "answer": "Daily"
+}
+```
+
+### Minimum required formats for different question types
+
+- **Single-Select Questions** <br/>
+Includes dropdowns, radio buttons, yes/no, and Likert scale questions.
+    - **Question Field**: Provide the question text.
+    - **Answer Field**: Include the respondent’s selected choice as a string or number.
+
+```javascript
 // Dropdown question
 {
     "questionId": "Q1",
@@ -44,56 +169,41 @@ Single-select questions (radio buttons, dropdowns, yes/no, Likert scale, NPS, et
 // Likert scale question
 {
     "questionId": "Q1",
-    "question": "How much do you enjoy eating street food? - Not at all, A little, Somewhat, Quite a bit, Very much",
+    "question": "How much do you enjoy eating street food?",
     "answer": "Not at all"
 }
+```
 
-// NPS question
+- **NPS question (single select)**
+    - **Question Field**: Include the full question text and scale labels (e.g., "1: Not at all, 10: Very much").
+    - **Answer Field**: Include the respondent’s selected choice as a string or number.
+
+```javascript
 {
     "questionId": "Q1",
-    "question": "How likely are you to recommend our food delivery service to a friend or colleague",
+    "question": "How likely are you to recommend our food delivery service to a friend or colleague - 1: Not at all, 10: Very much",
     "answer": 8
 }
 ```
 
-- **Multi-select questions** <br />
-Multi-select questions (checkboxes) produce a zero, one or many answer values.
+- **Checkbox questions (multi select)** <br/>
+    - **Question Field**: Include the full question text.
+    - **Answer Field**: List all selected options, separated by commas.
 
-    Transform the question and answer into a structured object with the following format:
-
-    - Add every option label to the question so that downstream systems can reconstruct the full context.
-    - Concatenate all selected options in the answer field, separated by comma. 
-    - If no options are selected, set the answer to the literal string “None of those”.
-
-```javascript Example interviewData objects for a multi-select question
-// if the respondet selected one option
-{
-    "questionId": "Q1",
-    "question": "Which of these dietary preferences or restrictions apply to you? (Select all that apply) - Vegetarian, Vegan, Gluten-free, Lactose-intolerant, Halal",
-    "answer": "Vegetarian"
-}
-
-
-// if the respondet selected more than one option
+```javascript
 {
     "questionId": "Q1",
     "question": "Which of the following foods do you eat regularly? (You may select more than one.) - Chicken, Cheese, Bacon or sausage, Eggs, Fish or seafood, Plant-based meat substitutes (e.g., tofu, tempeh), Milk or dairy products, Fruits, Leafy vegetables (e.g., spinach, kale)",
     "answer": "Cheese, Eggs"
 }
-
-
-// if the respondet did not select any of the options
-{
-    "questionId": "Q1",
-    "question": "Which of the following fast foods brands do you consume more? - McDonald's, KFC, Pizza Hut, Subway, Burger King, Taco Bell, Wendy's, Domino's, Papa John's",
-    "answer": "None of those"
-}
 ```
 
-- **Open-ended questions** <br />
-Open-ended questions produce a free text or numeric answer value.
+- **Open-ended question** <br/>
+These collect free-text input from respondents.
+    - **Question Field**: Include only the question text.
+    - **Answer Field**: Record the answer provided by the respondent.
 
-```javascript Example interviewData object for an open-ended question
+```javascript
 {
     "questionId": "Q1",
     "question": "Can you describe your typical eating habits during the week?",
@@ -107,8 +217,8 @@ Grid/matrix questions contain a stem plus multiple row items that share the same
     Transform the grid/matrix stem, row labels and answer scale into a structured object with the following format:
 
     - Emit one object per row item so that each cell becomes its own data point
-    - Concatenate the stem and the row label, separated by -, to form the question.
-    - Keep the selected scale label as the answer.
+    - **Question Field**: Concatenate the stem and the row label, separated by a hyphen (-), to form the full question text.
+    - **Answer Field**: Keep the selected scale label as the answer.
 
 ```javascript Example interviewData object for a grid/matrix question
 {
