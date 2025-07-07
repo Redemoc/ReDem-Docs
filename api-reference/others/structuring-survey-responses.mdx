@@ -18,10 +18,12 @@ For each CHS data point, all question–answer pairs must be included as separat
 For the most accurate assessments, the AI performs best when it has full visibility into the context of the questionnaire. Therefore, it is recommended to include as much information as possible from the questionnaire.
 </Note> 
 
-- **Single-Select Questions** <br/>
+- **Single Choice Questions** <br/>
 Includes dropdowns, radio buttons, yes/no, and Likert scale questions.
-    - **Question Field**: Provide the question text. If relevant, include all key answer options to help contextualize the selected answer.
+    - **Question Field**: Provide the question text. If applicable, include all key answer options to give context to the selected response. For Likert scale questions, also include the scale labels in the Question field to ensure clarity.
     - **Answer Field**: Include the respondent’s selected choice as a string or number.
+
+
 
 ```javascript Example interviewData object for a single-select question
 // Dropdown question
@@ -45,27 +47,29 @@ Includes dropdowns, radio buttons, yes/no, and Likert scale questions.
     "answer": "No"
 }
 
-// Likert scale question
+// Likert scale question - with text answer
 {
     "questionId": "Q1",
     "question": "How much do you enjoy eating street food? - Not at all, A little, Somewhat, Quite a bit, Very much",
     "answer": "Not at all"
 }
-```
 
-- **NPS question (single select)**
-    - **Question Field**: Include the full question text and scale labels (e.g., "1: Not at all, 10: Very much").
-    - **Answer Field**: Include the respondent’s selected choice as a string or number.
-
-```javascript Example interviewData object for a NPS question
+// Likert scale question - with number answer
 {
     "questionId": "Q1",
-    "question": "How likely are you to recommend our food delivery service to a friend or colleague - 1: Not at all, 10: Very much",
+    "question": "To what extent do you agree with the following statement: Do you prefer home-cooked meals over eating out? - 1 = Strongly disagree, 2 = Disagree, 3 = Neutral, 4 = Agree, 5 = Strongly agree",
+    "answer": 4
+}
+
+// NPS question
+{
+    "questionId": "Q1",
+    "question": "How likely are you to recommend our food delivery service to a friend or colleague - 1 = Not at all, 10 = Very much",
     "answer": 8
 }
 ```
 
-- **Checkbox questions (multi select)** <br/>
+- **Multiple Choice Questions** <br/>
     - **Question Field**: Include the full question text and all possible answer options, separated by commas.
     - **Answer Field**: List all selected options, separated by commas.
 
@@ -139,7 +143,11 @@ Grid/matrix questions contain a stem plus multiple row items that share the same
 
 ### Minimum required formats for different question types
 
-- **Single-Select Questions** <br/>
+<Note>
+While we recommend the settings from the previous chapter to provide maximum context and achieve precise results, you can also use a simplified version, which does work but may not achieve the same level of accuracy.
+</Note> 
+
+- **Single Choice Questions** <br/>
 Includes dropdowns, radio buttons, yes/no, and Likert scale questions.
     - **Question Field**: Provide the question text.
     - **Answer Field**: Include the respondent’s selected choice as a string or number.
@@ -174,19 +182,7 @@ Includes dropdowns, radio buttons, yes/no, and Likert scale questions.
 }
 ```
 
-- **NPS question (single select)**
-    - **Question Field**: Include the full question text and scale labels (e.g., "1: Not at all, 10: Very much").
-    - **Answer Field**: Include the respondent’s selected choice as a string or number.
-
-```javascript Example interviewData object for a NPS question
-{
-    "questionId": "Q1",
-    "question": "How likely are you to recommend our food delivery service to a friend or colleague - 1: Not at all, 10: Very much",
-    "answer": 8
-}
-```
-
-- **Checkbox questions (multi select)** <br/>
+- **Multiple Choice Questions** <br/>
     - **Question Field**: Include the full question text.
     - **Answer Field**: List all selected options, separated by commas.
 
