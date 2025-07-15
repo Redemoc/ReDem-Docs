@@ -276,7 +276,7 @@
           },
           "activateCleaning": {
             "type": "boolean",
-            "description": "**Indicates whether cleaning should be applied to the respondent**. \n\n **💡Important:** To remove bad respondents automatically, ensure this variable is set to true. \n\n When cleaning is enabled, the response will include the variable isExcluded, which indicates whether the respondent has been excluded based on the applied criteria.",
+            "description": "**Indicates whether cleaning should be applied to the respondent**. \n\n **💡Important:** To get an indicator whether respondents should be removed from the sample, ensure this variable is set to true. \n\n When cleaning is enabled, the response will include the variable isExcluded, which indicates whether the respondent has been excluded based on the applied criteria.",
             "example": true,
             "default": false
           },
@@ -803,7 +803,7 @@
           },
           "activateCleaning": {
             "type": "boolean",
-            "description": "**Indicates whether cleaning should be applied to the respondent**. \n\n **💡Important:** To remove bad respondents automatically, ensure this variable is set to true. \n\n When cleaning is enabled, the response will include the variable isExcluded, which indicates whether the respondent has been excluded based on the applied criteria.",
+            "description": "**Indicates whether cleaning should be applied to the respondent**. \n\n **💡Important:** To get an indicator whether respondents should be removed from the sample, ensure this variable is set to true. \n\n When cleaning is enabled, the response will include the variable isExcluded, which indicates whether the respondent has been excluded based on the applied criteria.",
             "example": true,
             "default": false
           },
