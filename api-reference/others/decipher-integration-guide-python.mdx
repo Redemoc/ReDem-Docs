@@ -1,0 +1,218 @@
+---
+title: 'ReDem Integration Guide (Python)'
+description: 'Use this guide to integrate ReDem API into a Decipher survey using Python.'
+icon: "python"
+iconType: "regular"
+---
+
+<Steps>
+  <Step title="Requirements and Setup">
+    Ensure you have the following for your Decipher survey:
+
+    - Decipher programming access with Python `<exec>` support
+    - Labels for all questions you want to analyze (open-ends, grids, etc.)
+    - A valid **ReDem API key**
+
+  </Step>
+
+  <Step title="Define a Helper Function">
+    Place this helper function inside an `<exec>` block. It is essential for sanitizing user-provided text to prevent errors when building the JSON payload.
+
+    ```python
+    def esc(val):
+        if not val:
+            return ""
+        return (
+            val.replace("\\", "\\\\")
+               .replace('"', '\\"')
+               .replace("\r\n", "\n")
+               .replace("\r", "\n")
+               .replace("\n", "\\n")
+        )
+    ```
+
+  </Step>
+
+  <Step title="BAS Integration (Hybrid Approach)">
+    The Behavioral Analysis Score (BAS) requires a client-side JavaScript tracker to capture user interaction data. This data is then passed to your server-side Python script.
+
+    **Part A: Add a Hidden Question**
+    
+    First, add a hidden text question to your survey XML to store the BAS data collected from the browser.
+
+    ```xml
+    <text label="ReDem_BAS_Data" where="execute,survey" optional="0">
+        <title>__INVISIBLE__</title>
+        <row label="bas_json">{}</row>
+    </text>
+    ```
+
+    **Part B: Implement the JS Tracker**
+
+    Copy the JavaScript tracker from the [Behavior Tracking Guide](/api-reference/others/behavior-tracking) and add it to your open-ended question pages. You must adapt the tracker to save the interaction data into the hidden question you just created.
+
+    Modify the tracker's form submission logic to populate the hidden field:
+
+    ```javascript
+    // Example of how to modify the tracker's submission logic
+    function saveInteractionDataToHiddenField() {
+        const interactionData = sessionStorage.getItem("interaction_data") || "[]";
+        // The selector may vary based on your survey's structure
+        const hiddenInput = document.querySelector("#question_ReDem_BAS_Data .row[label='bas_json'] input");
+        if(hiddenInput) {
+            hiddenInput.value = interactionData;
+        }
+    }
+
+    // Call this function before the page submits
+    // e.g., submitButton.addEventListener("click", saveInteractionDataToHiddenField);
+    ```
+
+  </Step>
+
+  <Step title="Build the ReDem Payload">
+    In a Python `<exec>` block, construct the payload. Replace all placeholders (e.g., `<YOUR_SURVEY_NAME>`, `<YOUR_OE_LABEL>`) with your actual survey details and question labels.
+
+    ```python
+    # 1. Collect data for CHS (Coherence Score)
+    # Create a list of questions and answers for coherence analysis.
+    interview_data_list = []
+    interview_data_list.append(
+        f'''{{
+            "questionId": "<YOUR_FIRST_OE_LABEL>",
+            "question": "<Text of the first open-ended question>",
+            "answer": "{esc(<YOUR_FIRST_OE_LABEL>.val)}"
+        }}'''
+    )
+    interview_data_list.append(
+        f'''{{
+            "questionId": "<YOUR_SECOND_OE_LABEL>",
+            "question": "<Text of the second open-ended question>",
+            "answer": "{esc(<YOUR_SECOND_OE_LABEL>.val)}"
+        }}'''
+    )
+    # Convert list to a JSON array string
+    interview_data_json = f'[{",".join(interview_data_list)}]'
+
+
+    # 2. Get BAS data from the hidden question
+    # Default to an empty list if no data was captured
+    bas_interaction_data = ReDem_BAS_Data.r.bas_json.val or '[]'
+
+
+    # 3. Construct the final payload
+    p.payload = f"""
+    {{
+      "respondentId": "{{uuid}}",
+      "surveyName": "<YOUR_SURVEY_NAME>",
+      "synchronousResponse": true,
+      "activateCleaning": true,
+      "dataPoints": [
+        {{
+          "qualityCheck": "OES",
+          "dataPointId": "<YOUR_OE_LABEL>",
+          "question": "<Text of the open-ended question>",
+          "answer": "{{esc(<YOUR_OE_LABEL>.val)}}",
+          "activateDuplicateDetection": true,
+          "allowedLanguages": ["en"]
+        }},
+        {{
+          "qualityCheck": "GQS",
+          "dataPointId": "<YOUR_GRID_LABEL>",
+          "gridAnswersPattern": {<YOUR_GRID_LABEL>.val}
+        }},
+        {{
+          "qualityCheck": "TS",
+          "dataPointId": "totalDuration",
+          "duration": {timeSpent()}
+        }},
+        {{
+            "qualityCheck": "CHS",
+            "dataPointId": "CoherenceCheck",
+            "interviewData": {interview_data_json}
+        }},
+        {{
+            "qualityCheck": "BAS",
+            "dataPointId": "<YOUR_OE_LABEL_BAS>",
+            "interactionData": {bas_interaction_data}
+        }}
+      ],
+      "cleaningSettings": {{
+        "redemScore": 60,
+        "OES": {{"activate": true, "score": 40, "minDataPoints": 1}},
+        "GQS": {{"activate": true, "score": 10, "minDataPoints": 1}},
+        "TS": {{"activate": true, "score": 20}},
+        "CHS": {{"activate": true, "score": 20}},
+        "BAS": {{"activate": true, "score": 10, "minDataPoints": 1}}
+      }}
+    }}
+    """
+    ```
+
+  </Step>
+
+  <Step title="Set API Headers">
+    Configure the API headers with your ReDem API key.
+
+    ```python
+    p.headers = {
+        "api-key": "YOUR_REDEM_API_KEY",
+        "Content-Type": "application/json"
+    }
+    ```
+
+  </Step>
+
+  <Step title="Make the API Call">
+    Use Decipher's `<logic>` tag to execute the API call.
+
+    ```xml
+    <logic
+      label="redem"
+      api:data="p.payload"
+      api:headers="p.headers"
+      api:method="POST"
+      api:url="https://api.redem.io/v2/addRespondent"
+      uses="api.1"
+    />
+    ```
+
+  </Step>
+
+  <Step title="Store ReDem Results">
+    Parse the API response and store the scores in hidden questions for analysis and data export.
+
+    ```xml
+    <number label="redemScore" where="execute,survey">
+      <exec>
+        if redem.status == 200:
+          redemScore.val = redem.r["results"]["respondentQuality"]["redemScore"]
+      </exec>
+    </number>
+
+    <checkbox label="redemExclude" where="execute,survey">
+        <title>ReDem Exclusion Flag</title>
+        <row label="r1">Excluded</row>
+        <exec>
+            if redem.status == 200 and redem.r["results"]["respondentQuality"]["isExcluded"]:
+                redemExclude.r1.val = 1
+        </exec>
+    </checkbox>
+
+    <textarea label="redemReason" where="execute,survey">
+      <exec>
+        if redem.status == 200 and redem.r["results"]["respondentQuality"]["isExcluded"]:
+          redemReason.val = str(redem.r["results"]["respondentQuality"]["reasonsForExclusion"])
+      </exec>
+    </textarea>
+    ```
+
+  </Step>
+
+  <Step title="Testing and Validation">
+    - **Verify Placeholders**: Ensure all placeholders like `<YOUR_OE_LABEL>` are replaced.
+    - **Check BAS Data**: Use browser DevTools to confirm the JavaScript tracker is populating the `ReDem_BAS_Data` hidden field correctly.
+    - **Inspect Payload**: In a test environment, print `p.payload` to verify it is a well-formed JSON.
+    - **Review API Response**: Check `redem.status` and `redem.r` to ensure the call was successful.
+  </Step>
+</Steps> 
