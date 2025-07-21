@@ -861,6 +861,7 @@
             },
             "description": "This variable aggregates all relevant question-answer pairs used to evaluate the respondent’s coherence. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** question/answer pairs are allowed per respondent.",
             "example": [{
+              "questionId": "Q1",
               "question": "What type of accommodation did you stay in?",
               "answer": "Hotel"
             }]
