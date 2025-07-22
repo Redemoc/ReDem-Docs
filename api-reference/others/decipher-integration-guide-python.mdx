@@ -1,5 +1,5 @@
 ---
-title: 'ReDem Integration Guide (Python)'
+title: 'Decipher Integration Guide (Python)'
 description: 'Use this guide to integrate ReDem API into a Decipher survey using Python.'
 icon: "python"
 iconType: "regular"
@@ -214,5 +214,104 @@ iconType: "regular"
     - **Check BAS Data**: Use browser DevTools to confirm the JavaScript tracker is populating the `ReDem_BAS_Data` hidden field correctly.
     - **Inspect Payload**: In a test environment, print `p.payload` to verify it is a well-formed JSON.
     - **Review API Response**: Check `redem.status` and `redem.r` to ensure the call was successful.
+  </Step>
+
+  <Step title="End-to-End BAS Integration Example">
+    The following walk-through shows how all the pieces fit together when you want to add the **Behaviour Analysis Score (BAS)** to an open-ended question (`Q7_1` in this example).
+
+    **1. Add a hidden storage question to your XML**
+
+    ```xml
+    <text label="ReDem_BAS_Data" where="execute,survey" optional="0">
+      <title>__INVISIBLE__</title>
+      <row label="bas_json">{}</row>
+    </text>
+    ```
+
+    This question is never displayed to respondents. The JavaScript tracker (next step) writes its output here so that the Python back-end can read it later.
+
+    **2. Attach the JavaScript tracker to your open-ended question page**
+
+    Immediately after the `<textarea>` definition, insert a `style mode="after"` block that contains the tracker script. Using `style mode="after"` is a common Decipher pattern for page-specific JS.
+
+    ```xml
+    <textarea label="Q7_1" optional="0">
+      <title>What is the key takeaway from this statement?</title>
+    </textarea>
+
+    <style mode="after" name="behaviorTracker_Q7_1"><![CDATA[
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const textarea = document.querySelector('[name="Q7_1"] textarea') || document.querySelector('[name="Q7_1"]');
+          if (!textarea) return;
+
+          const TYPES = { KEYSTROKE: "KEYSTROKE", COPYPASTE: "COPY_AND_PASTE" };
+          let interactionData = JSON.parse(sessionStorage.getItem("interaction_data") || "[]");
+
+          function push(value, type) {
+            interactionData.push({ value, interactionType: type, timestamp: new Date().toISOString() });
+            sessionStorage.setItem("interaction_data", JSON.stringify(interactionData));
+          }
+
+          textarea.addEventListener("input", (e) => {
+            if (e.inputType === "insertFromPaste") return;
+            push(e.target.value, TYPES.KEYSTROKE);
+          });
+
+          textarea.addEventListener("paste", (e) => {
+            const cursor = e.target.selectionStart;
+            const text   = e.target.value;
+            const paste  = e.clipboardData?.getData("text") || "";
+            const newVal = text.slice(0, cursor) + paste + text.slice(cursor);
+            push(newVal, TYPES.COPYPASTE);
+          });
+
+          // On page unload, copy the JSON into the hidden field so Python can read it.
+          window.addEventListener("beforeunload", () => {
+            const hidden = document.querySelector("#question_ReDem_BAS_Data input");
+            if (hidden) hidden.value = JSON.stringify(interactionData);
+          });
+        });
+      </script>
+    ]]></style>
+    ```
+
+    **3. Read the interaction data in Python and extend the payload**
+
+    Inside your `<exec>` block:
+
+    ```python
+    # Grab the JSON string from the hidden question (empty list if nothing captured)
+    bas_interaction_data = ReDem_BAS_Data.r.bas_json.val or "[]"
+
+    # Build / extend the payload
+    p.payload = f"""{{
+      "respondentId": "{{uuid}}",
+      "surveyName": "YOUR_SURVEY_NAME",
+      "synchronousResponse": true,
+      "activateCleaning": true,
+      "dataPoints": [
+        {{
+          "qualityCheck": "OES",
+          "dataPointId": "Q7_1",
+          "question": "What is the key takeaway from this statement?",
+          "answer": "{{esc(Q7_1.val)}}"
+        }},
+        {{
+          "qualityCheck": "BAS",
+          "dataPointId": "Q7_1",
+          "interactionData": {bas_interaction_data}
+        }},
+        # ... other data points (TS, GQS, CHS, etc.)
+      ],
+      "cleaningSettings": {{
+        "BAS": {{"activate": true, "score": 10, "minDataPoints": 1}}
+      }}
+    }}"""
+    ```
+
+    The only new lines compared to a standard payload are `bas_interaction_data = …` (to fetch the tracker output) and the **BAS** object inside `dataPoints`.
+
+    After this, send the payload as usual with the `<logic>` tag and parse the response. BAS will now be evaluated alongside OES, GQS, TS, and CHS.
   </Step>
 </Steps> 
