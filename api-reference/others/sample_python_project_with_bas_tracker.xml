@@ -485,25 +485,7 @@ if redem.status == 200:
 }
 
 </style>
-]]></style>
-<note>#################  hideElements is used on a question to remove the radio,checkbox, or input box for one or more cells see Q33 for example  ###############</note>
-<style label="hideElements" name="question.element"><![CDATA[
-\@if ec.simpleList
-<div class="element $(rowStyle) $(levels) $(extraClasses) ${col.group.styles.ss.groupClassNames if col.group else (row.group.styles.ss.groupClassNames if row.group else "")} $(col.styles.ss.colClassNames) $(row.styles.ss.rowClassNames) ${"clickableCell" if isClickable else ""}"$(extra)>
-    ${v2_insertStyle('el.label.start')}
-    ${v2_insertStyle('el.label.end')}
-</div>
-\@else
-<$(tag) $(headers) class="cell nonempty element $(levels) ${"desktop" if this.grouping.cols else "mobile"} border-collapse $(extraClasses) ${col.group.styles.ss.groupClassNames if col.group else (row.group.styles.ss.groupClassNames if row.group else "")} $(col.styles.ss.colClassNames) $(row.styles.ss.rowClassNames) ${"clickableCell" if isClickable else ""}"$(extra)>
-    ${v2_insertStyle('el.label.start')}
-    ${v2_insertStyle('el.label.end')}
-</$(tag)>
-\@endif
-]]></style>
-<style cond="1" name="survey.respview.footer.support"><![CDATA[
-<div class="footer"><a href="/support?decLang=@(lang)" target="_blank">Help</a></div>
-]]></style>
-<style cond="1" mode="after" name="survey.respview.bas.tracker"><![CDATA[
+
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function () {
     const textarea = document.querySelector('[name="Q7_1"] textarea') || document.querySelector('[name="Q7_1"]');
@@ -543,6 +525,23 @@ if redem.status == 200:
     window.addEventListener('beforeunload', saveData);
   });
 </script>
+]]></style>
+<note>#################  hideElements is used on a question to remove the radio,checkbox, or input box for one or more cells see Q33 for example  ###############</note>
+<style label="hideElements" name="question.element"><![CDATA[
+\@if ec.simpleList
+<div class="element $(rowStyle) $(levels) $(extraClasses) ${col.group.styles.ss.groupClassNames if col.group else (row.group.styles.ss.groupClassNames if row.group else "")} $(col.styles.ss.colClassNames) $(row.styles.ss.rowClassNames) ${"clickableCell" if isClickable else ""}"$(extra)>
+    ${v2_insertStyle('el.label.start')}
+    ${v2_insertStyle('el.label.end')}
+</div>
+\@else
+<$(tag) $(headers) class="cell nonempty element $(levels) ${"desktop" if this.grouping.cols else "mobile"} border-collapse $(extraClasses) ${col.group.styles.ss.groupClassNames if col.group else (row.group.styles.ss.groupClassNames if row.group else "")} $(col.styles.ss.colClassNames) $(row.styles.ss.rowClassNames) ${"clickableCell" if isClickable else ""}"$(extra)>
+    ${v2_insertStyle('el.label.start')}
+    ${v2_insertStyle('el.label.end')}
+</$(tag)>
+\@endif
+]]></style>
+<style cond="1" name="survey.respview.footer.support"><![CDATA[
+<div class="footer"><a href="/support?decLang=@(lang)" target="_blank">Help</a></div>
 ]]></style>
 
 <suspend/>
