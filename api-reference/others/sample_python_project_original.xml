@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<survey 
+  alt="Redem Test Area PYTHON"
+  autoAddVariables="1"
+  autosaveKey="rdud"
+  browserDupes=""
+  builder:wizardCompleted="1"
+  builderCompatible="1"
+  compat="151"
+  delphi="1"
+  displayOnError="all"
+  extraVariables="ipAddress,source,record,decLang,list,userAgent,rdud,rd_proj_ud"
+  fir="on"
+  html:showNumber="0"
+  mobile="compat"
+  mobileDevices="smartphone,tablet,desktop"
+  name="Survey"
+  secure="1"
+  setup="term,decLang,quota,time"
+  ss:accordionDisplay="0"
+  ss:disableBackButton="0"
+  ss:enableNavigation="1"
+  ss:hideProgressBar="0"
+  ss:listDisplay="1"
+  ss:logoAlt="Logo"
+  ss:logoPosition="left"
+  state="testing"
+  theme="company/inserene">
+
+<res label="prev">Prev</res>
+<res label="after">Next</res>
+<res label="done">All Done!<br /><br /><i>Please click 'Continue'.</i></res>
+<stylevar name="cs:col1text"/>
+<stylevar name="cs:qc"/>
+<samplesources>
+  <samplesource list="0">
+    <title>Open Survey</title>
+    <invalid>You are missing information in the URL. Please verify the URL with the original invite.</invalid>
+    <completed>It seems you have already entered this survey.</completed>
+    <exit cond="terminated">This is only for testing purposes and will not be seen live.<br /><br /><em>To test a different path use the browser back button.</em></exit>
+    <exit cond="qualified"><em>Thank you for taking the time out of your busy schedule to complete this survey.  We truly appreciate your candid and thoughtful responses.</em></exit>
+    <exit cond="overquota">Thank you for taking our survey.</exit>
+  </samplesource>
+
+  <samplesource list="1">
+    <title>Rep Data</title>
+    <invalid>You are missing information in the URL. Please verify the URL with the original invite.</invalid>
+    <completed>It seems you have already entered this survey.</completed>
+    <var name="rdud" unique="1"/>
+    <exit cond="terminated and not(removalReason.any)" url="https://www.rdsecured.com/return?inbound_code=2000&amp;rdud=${rdud}"/>
+    <exit cond="terminated and removalReason.any" url="https://www.rdsecured.com/return?inbound_code=3000&amp;rdud=${rdud}"/>
+    <exit cond="overquota" url="https://www.rdsecured.com/return?inbound_code=4000&amp;rdud=${rdud}"/>
+    <exit cond="qualified" url="https://www.rdsecured.com/return?inbound_code=1000&amp;rdud=${rdud}"/>
+  </samplesource>
+
+  <samplesource list="99">
+    <title>Client sample</title>
+    <invalid>You are missing information in the URL. Please verify the URL with the original invite.</invalid>
+    <completed>It seems you have already entered this survey.</completed>
+    <exit cond="terminated">Thank you for taking our survey.</exit>
+    <exit cond="qualified"><em>Thank you for taking the time out of your busy schedule to complete this survey.  We truly appreciate your candid and thoughtful responses.</em></exit>
+    <exit cond="overquota">Thank you for taking our survey.</exit>
+  </samplesource>
+</samplesources>
+
+<suspend/>
+
+<exec when="started">
+if gv.survey.root.state.live:
+    gv.survey.root.styles.ss.enableNavigation = 0
+    gv.survey.root.styles.ss.disableBackButton = 1
+
+setExtra("rd_proj_ud", gv.survey.path.split("/")[-1])
+</exec>
+
+<radio 
+  label="hidTesting"
+  translateable="0"
+  where="execute,survey,report,notdp">
+  <title>Hidden question for testing</title>
+  <exec>
+if gv.survey.root.state.live:
+    hidTesting.val = hidTesting.r2.index
+else:
+    hidTesting.val = hidTesting.r1.index
+  </exec>
+
+  <row label="r1">TESTING MODE</row>
+  <row label="r2">LIVE MODE</row>
+</radio>
+
+<radio 
+  label="hidChange"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Hidden question for tracking any changes made during fielding</title>
+  <exec>
+hidChange.val = hidChange.r1.index
+  </exec>
+
+  <row label="r1">Original - No Changes</row>
+  <row label="r2">(date and time of change) - (QRE Version)</row>
+  <row label="r3">(date and time of change) - (QRE Version)</row>
+  <row label="r4">(date and time of change) - (QRE Version)</row>
+  <row label="r5">(date and time of change) - (QRE Version)</row>
+  <row label="r6">(date and time of change) - (QRE Version)</row>
+  <row label="r7">(date and time of change) - (QRE Version)</row>
+  <row label="r8">(date and time of change) - (QRE Version)</row>
+  <row label="r9">(date and time of change) - (QRE Version)</row>
+  <row label="r10">(date and time of change) - (QRE Version)</row>
+  <row label="r11">(date and time of change) - (QRE Version)</row>
+</radio>
+
+<suspend/>
+
+<note>#################   MAIN SURVEY   ###############</note>
+<suspend/>
+
+<radio 
+  label="Q2"
+  averages="cols"
+  shuffle="rows"
+  type="rating"
+  values="order">
+  <title>And for each of these hotel portfolios and other paid accommodations, when was the last time (if ever) you stayed with them?</title>
+  <comment>Select one in each row</comment>
+  <col label="c1" value="1">Past year</col>
+  <col label="c2" value="2">Between 1-2 years ago</col>
+  <col label="c3" value="3">3-5 years ago</col>
+  <col label="c4" value="4">6-10 years ago</col>
+  <col label="c5" value="5">More than 10 years ago</col>
+  <col label="c6" value="6">Never</col>
+  <row label="r1">WorldHotels</row>
+  <row label="r2">Accor</row>
+  <row label="r3">Airbnb</row>
+  <row label="r4">Hilton</row>
+  <row label="r5">Hyatt</row>
+  <row label="r6">IHG</row>
+  <row label="r7">Marriott</row>
+  <row label="r8">Wyndham</row>
+  <row label="r9">Choice Hotels</row>
+  <row label="r10">Vrbo</row>
+  <row label="r11">Premier Inn</row>
+  <row label="r12">Radisson Hotel Group</row>
+  <row label="r13">Rotana Hotels</row>
+  <row label="r14">Jumeirah Group</row>
+  <row label="r15">Centara Hotels &amp; Resorts</row>
+  <row label="r16">Dusit International</row>
+  <row label="r17">Atlantica Hotels</row>
+  <row label="r18">Blue Tree Hotels</row>
+</radio>
+
+<suspend/>
+
+<stylevar name="cs:type"/>
+<radio 
+  label="Q2a"
+  averages="cols"
+  shuffle="rows"
+  type="rating"
+  values="order">
+  <title>When is the last time you booked using any of these?</title>
+  <comment>Select one in each row</comment>
+  <col label="c1" value="1">Past year</col>
+  <col label="c2" value="2">Between 1-2 years ago</col>
+  <col label="c3" value="3">3-5 years ago</col>
+  <col label="c4" value="4">6-10 years ago</col>
+  <col label="c5" value="5">More than 10 years ago</col>
+  <col label="c6" value="6">Never</col>
+  <row label="r1">WorldHotels</row>
+  <row label="r2">Accor</row>
+  <row label="r3">Airbnb</row>
+  <row label="r4">Hilton</row>
+  <row label="r5">Hyatt</row>
+  <row label="r6">IHG</row>
+  <row label="r7">Marriott</row>
+  <row label="r8">Wyndham</row>
+  <row label="r9">Choice Hotels</row>
+  <row label="r10">Vrbo</row>
+  <row label="r11">Premier Inn</row>
+  <row label="r12">Radisson Hotel Group</row>
+  <row label="r13">Rotana Hotels</row>
+  <row label="r14">Jumeirah Group</row>
+  <row label="r15">Centara Hotels &amp; Resorts</row>
+  <row label="r16">Dusit International</row>
+  <row label="r17">Atlantica Hotels</row>
+  <row label="r18">Blue Tree Hotels</row>
+</radio>
+
+<suspend/>
+
+<textarea 
+  label="Q7_1"
+  optional="0">
+  <title>What is the key takeaway from this statement?</title>
+  <comment>Please be as specific as possible</comment>
+</textarea>
+
+<textarea 
+  label="Q7_2"
+  optional="0">
+  <title>What is the key takeaway from this statement?</title>
+  <comment>Please be as specific as possible</comment>
+</textarea>
+
+<suspend/>
+
+<textarea 
+  label="Q19a_1"
+  optional="0">
+  <title>What about this concept was confusing or unclear to you?</title>
+  <comment>Please be as specific as possible</comment>
+</textarea>
+
+<textarea 
+  label="Q19a_2"
+  optional="0">
+  <title>What about this concept was confusing or unclear to you?</title>
+  <comment>Please be as specific as possible</comment>
+</textarea>
+
+<suspend/>
+
+<textarea 
+  label="Q23a"
+  optional="0">
+  <title>Why do you prefer this concept?<br />[pipe: Q23]</title>
+  <comment>Please be as specific as possible</comment>
+</textarea>
+
+<note>#################   END OF SURVEY   ###############</note>
+<suspend/>
+
+<exec sst="0">
+def esc(val):
+    if not val:
+        return ""
+    return (
+        val.replace("\\", "\\\\")   # escape backslashes
+           .replace('"', '\\"')     # escape quotes
+           .replace("\r\n", "\n")   # normalize Windows line endings
+           .replace("\r", "\n")     # normalize old Mac line endings
+           .replace("\n", "\\n")    # escape newlines for JSON
+    )
+    
+p.payload = """
+{
+  "respondentId": "%s",
+  "surveyName": "REP-042527056 Hotel Brand Creative Test",
+  "synchronousResponse": true,
+  "activateCleaning": true,
+  "dataPoints": [
+    {
+      "qualityCheck": "OES",
+      "dataPointId": "Q7_1",
+      "question": "What is the key takeaway from this statement?",
+      "answer": "%s",
+      "activateDuplicateDetection": true,
+      "allowedLanguages": ["en"]
+    },
+    {
+      "qualityCheck": "OES",
+      "dataPointId": "Q7_2",
+      "question": "What is the key takeaway from this statement?",
+      "answer": "%s",
+      "activateDuplicateDetection": true,
+      "allowedLanguages": ["en"]
+    },
+    {
+      "qualityCheck": "GQS",
+      "dataPointId": "Q2",
+      "gridAnswersPattern": %s
+    },
+    {
+      "qualityCheck": "GQS",
+      "dataPointId": "Q2a",
+      "gridAnswersPattern": %s
+    },
+    {
+      "qualityCheck": "OES",
+      "dataPointId": "Q19a_1",
+      "question": "What about this concept was confusing or unclear to you?",
+      "answer": "%s",
+      "activateDuplicateDetection": true,
+      "allowedLanguages": ["en"]
+    },
+    {
+      "qualityCheck": "OES",
+      "dataPointId": "Q19a_2",
+      "question": "What about this concept was confusing or unclear to you?",
+      "answer": "%s",
+      "activateDuplicateDetection": true,
+      "allowedLanguages": ["en"]
+    },
+    {
+      "qualityCheck": "OES",
+      "dataPointId": "Q23a",
+      "question": "Why do you prefer this concept?",
+      "answer": "%s",
+      "activateDuplicateDetection": true,
+      "allowedLanguages": ["en"]
+    },
+    {
+      "qualityCheck": "TS",
+      "dataPointId": "totalDuration",
+      "duration": %s
+    }
+  ],
+  "cleaningSettings": {
+    "redemScore": 60,
+    "OES": {
+      "activate": true,
+      "score": 40,
+      "minDataPoints": 2,
+      "categories": {
+        "GENERIC_ANSWER": {"activate": false, "minDataPoints": 2},
+        "NO_INFORMATION": {"activate": false, "minDataPoints": 2},
+        "BAD_LANGUAGE": {"activate": true, "minDataPoints": 2},
+        "NONSENSE": {"activate": true, "minDataPoints": 2},
+        "DUPLICATE_ANSWER": {"activate": false, "minDataPoints": 1},
+        "DUPLICATE_RESPONDENT": {"activate": false, "minDataPoints": 1},
+        "WRONG_TOPIC": {"activate": true, "minDataPoints": 2},
+        "WRONG_LANGUAGE": {"activate": true, "minDataPoints": 2},
+        "AI_GENERATED_ANSWER": {"activate": true, "minDataPoints": 2}
+      }
+    },
+    "CHS": {"activate": true, "score": 20},
+    "GQS": {"activate": true, "score": 10, "minDataPoints": 2},
+    "TS": {"activate": true, "score": 20},
+    "BAS": {
+      "activate": true,
+      "score": 10,
+      "minDataPoints": 2,
+      "categories": {
+        "UNNATURAL_TYPING": {"activate": true, "minDataPoints": 2},
+        "COPY_AND_PASTE": {"activate": true, "minDataPoints": 2}
+      }
+    }
+  }
+}
+""" % (
+  uuid,
+  esc(Q7_1.val),
+  esc(Q7_2.val),
+  Q2.val,
+  Q2a.val,
+  esc(Q19a_1.val),
+  esc(Q19a_2.val),
+  esc(Q23a.val),
+  timeSpent()
+)
+
+
+p.headers = {
+  "api-key": "8244591a-8855-4e13-b1a5-eb167b8dd049",
+  "Content-Type": "application/json"
+}
+</exec>
+
+<suspend/>
+
+<logic label="redem" api:data="p.payload" api:headers="p.headers" api:method="POST" api:url="https://api.redem.io/addRespondent" sst="0" uses="api.1"/>
+<suspend/>
+
+<exec>
+print(repr(p.payload))
+print(redem.status)
+print(redem.r["message"])
+print(redem.r.get("errors"))
+</exec>
+
+<number 
+  label="redemScore"
+  size="3"
+  sst="0"
+  translateable="0"
+  where="execute,survey,notdp">
+  <title>Redem Score</title>
+  <exec>
+if redem.status == 200:
+  redemScore.val = redem.r["results"]["respondentQuality"]["redemScore"]
+  </exec>
+
+</number>
+
+<checkbox 
+  label="redemExclude"
+  sst="0"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Redem exclusion</title>
+  <exec>
+if redem.status == 200:
+  if redem.r["results"]["respondentQuality"]["isExcluded"]:
+    redemExclude.r1.val = 1
+  </exec>
+
+  <row label="r1">Excluded</row>
+</checkbox>
+
+<textarea 
+  label="redemReason"
+  sst="0"
+  translateable="0"
+  where="execute,survey,report">
+  <title>Redem Reasons for Exclusion</title>
+  <exec>
+if redem.status == 200:
+  if redem.r["results"]["respondentQuality"]["isExcluded"]:
+    redemReason.val = str(redem.r["results"]["respondentQuality"]["reasonsForExclusion"])
+  </exec>
+
+</textarea>
+
+<suspend/>
+
+<note>#################   PROGRAMMER:  this block will add in the question number on screen, which is for client testing without a decipher login</note>
+<style cond="gv.hasQA(True) or hidTesting.r1" mode="after" name="buttons"><![CDATA[
+<div class="savelink-dialog" style="display:none;">Please copy and save the link below to return to this question later.<br/><br/><textarea style="width:570px;" class="savelink-holder"></textarea></div>
+    <div style="text-align: center"><a href="#" onclick="$ ('.savelink-holder').val('${gv.request.baseURL+gv.request.path}'+'?state='+jQuery('input[name=&quot;state&quot;]').attr('value')).select();$ ('.savelink-dialog').dialog({width:620});">Progress link</a></div>
+]]></style>
+<note>################################</note>
+<style mode="after" name="respview.client.css"><![CDATA[
+<style>
+.sq-atm1d-tiled .sq-atm1d-button{margin:3px 3px !important}
+
+.sq-atm1d-tiled .sq-atm1d-open{height:auto !important;}
+.sq-atm1d-vertical .sq-atm1d-button.sq-atm1d-button.sq-atm1d-button{height: auto;}
+.sq-atm1d-vertical .sq-atm1d-open .sq-atm1d-openEnd {display: inline-block;}
+
+.sq-atm1d-small .sq-atm1d-tiled .sq-atm1d-button{height:auto !important;text-align:left !important;min-width:95% !important;}
+.sq-atm1d-small .sq-atm1d-tiled .sq-atm1d-button .sq-atm1d-content{text-align:left !important;}
+
+.left-blank-legend {text-align: left !important;border: 1px solid #ccc;background-color: #ededed;font-weight: bold;padding-left: 0.5em;}
+[data-viewsize=small] [data-viewmode=horizontal] .sq-cardrating-button{max-height:50px !important;padding:.2em !important}
+
+.sq-atm1d-buttons.sq-atm1d-vertical{width: fit-content; }
+.sq-atm1d-buttons.sq-atm1d-buttons.sq-atm1d-vertical .sq-atm1d-button{width: auto;}
+
+\@media (min-width: 300px){ .sq-atm1d-buttons.sq-atm1d-vertical{min-width: 250px;} }
+
+.nobr{${"" if gv.request.device.isMobileDevice() else "display:block"}}
+.sq-atm1d-fctl{width: 1.37em;display:inline-block;}
+
+.survey-page {
+    padding-top: 10px !important;
+}
+.sq-cardrating-card {
+  height: 150px !important;
+}
+[data-bind~=completion] {
+  font-size: 18px;
+}
+
+/*** usage: add ss:colClassNames="noBoldCols" to <col> tag or ss:questionClassNames="noBoldCols" to question tag***/
+.noBoldCols .col-legend, .noBoldCols.col-legend {
+    font-weight: normal;
+}
+
+.ticket {
+}
+
+.ticketcell1 {
+  border: solid thin #3a404a;
+  padding: 5px;
+  background-color: #dfe4ea;
+}
+
+.ticketcell2 {
+  border: solid thin #3a404a;
+  padding: 5px;
+}
+
+</style>
+]]></style>
+<note>#################  hideElements is used on a question to remove the radio,checkbox, or input box for one or more cells see Q33 for example  ###############</note>
+<style label="hideElements" name="question.element"><![CDATA[
+\@if ec.simpleList
+<div class="element $(rowStyle) $(levels) $(extraClasses) ${col.group.styles.ss.groupClassNames if col.group else (row.group.styles.ss.groupClassNames if row.group else "")} $(col.styles.ss.colClassNames) $(row.styles.ss.rowClassNames) ${"clickableCell" if isClickable else ""}"$(extra)>
+    ${v2_insertStyle('el.label.start')}
+    ${v2_insertStyle('el.label.end')}
+</div>
+\@else
+<$(tag) $(headers) class="cell nonempty element $(levels) ${"desktop" if this.grouping.cols else "mobile"} border-collapse $(extraClasses) ${col.group.styles.ss.groupClassNames if col.group else (row.group.styles.ss.groupClassNames if row.group else "")} $(col.styles.ss.colClassNames) $(row.styles.ss.rowClassNames) ${"clickableCell" if isClickable else ""}"$(extra)>
+    ${v2_insertStyle('el.label.start')}
+    ${v2_insertStyle('el.label.end')}
+</$(tag)>
+\@endif
+]]></style>
+<style cond="1" name="survey.respview.footer.support"><![CDATA[
+<div class="footer"><a href="/support?decLang=@(lang)" target="_blank">Help</a></div>
+]]></style>
+<exec when="init">
+###Example: call this within exec tag after question:
+###setZero(S7)
+def setZero(qid):
+    if qid.displayed:
+        for eachRow in [row for row in qid.rows if row.displayed]:
+            for eachCol in [col for col in qid.cols if col.displayed]:
+                if eachRow[eachCol.index].val in ['', None]:
+                    eachRow[eachCol.index].val = 0
+
+###Example: call this within validate tag at question:
+###OtherSpecify('r5')
+def OtherSpecify(code):
+    for eachRow in [this.attr(row) for row in [code]]:
+        if len([1 for eachCol in this.cols if this.rows[eachRow.index][eachCol.index].val not in [0, "", None]]) gt 0 and eachRow.open in ["", None]:
+            error(this.lget("extraInfo"), eachRow)
+        elif len([1 for eachCol in this.cols if this.rows[eachRow.index][eachCol.index].val not in [0, "", None]]) == 0 and eachRow.open not in ["", None]:
+            error(this.lget("extraSelect"), eachRow)
+
+
+def checkOthLen(code,chklen=2):  ## UPDATED APR 2022 ##
+    for eachRow in [eval("this.%s" % row) for row in [code]]:
+        if eachRow and eachRow.open not in ["", None]:
+            if len(eachRow.open.decode('utf-8').replace(' ','')) lt chklen:
+                error(res.otherErr3, row = eachRow)
+
+def group_rows( question, grouped_rows ):
+    first_item_index = None
+    shuffle_order = [row.index for row in question.rows.order]
+
+    for index, row in enumerate( shuffle_order ):
+        if question.rows[row].label in grouped_rows:
+            if first_item_index == None:
+                first_item_index = index
+            else:
+                first_item_index += 1
+                shuffle_order.insert( first_item_index, shuffle_order.pop(index) )
+
+    question.rows.order = shuffle_order
+
+def group_rows_with_order( question, grouped_rows ):
+    current_order = [row.index for row in question.rows.order]
+    new_order     = []
+
+    grouped_rows     = [question.attr(row).index for row in grouped_rows]
+    first_item_index = current_order.index(grouped_rows[0])
+
+    current_order.insert(first_item_index, grouped_rows)
+
+    for row in current_order:
+        if row == grouped_rows:
+            new_order = new_order + row
+        elif row not in grouped_rows:
+            new_order.append(row)
+
+    question.rows.order = new_order
+</exec>
+
+<suspend/>
+</survey>
