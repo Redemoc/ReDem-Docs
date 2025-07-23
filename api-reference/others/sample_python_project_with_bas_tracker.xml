@@ -309,7 +309,7 @@ p.payload = """
     },
     {
       "qualityCheck": "BAS",
-      "dataPointId": "Q7_1",
+      "dataPointId": "Q7_1_BAS",
       "interactionData": %s
     },
     {

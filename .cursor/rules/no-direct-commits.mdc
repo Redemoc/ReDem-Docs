@@ -1,0 +1,21 @@
+---
+alwaysApply: true
+---
+# Git Commit Policy
+
+**NEVER perform git commits directly using automated tools or commands.**
+
+All git commits must be done manually by the user. This includes:
+
+- Do not use `git commit` commands via terminal tools
+- Do not suggest or execute commit operations 
+- Do not create automated commit workflows
+- Do not use any tools that would result in changes being committed
+
+When changes are made to files, you may:
+- Stage files using `git add` if requested
+- Show git status and diff information
+- Suggest commit messages for the user to use manually
+- Explain what changes should be committed
+
+The user retains full control over when and how commits are made to maintain proper version control practices and review processes.
