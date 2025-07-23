@@ -248,7 +248,7 @@ def esc(val):
            .replace("\n", "\\n")    # escape newlines for JSON
     )
 
-bas_interaction_data = ReDem_BAS_Data.r.bas_json.val or '[]'
+bas_interaction_data = ReDem_BAS_Data.bas_json.val or '[]'
     
 p.payload = """
 {
