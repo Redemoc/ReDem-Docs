@@ -504,7 +504,7 @@ if redem.status == 200:
 <div class="footer"><a href="/support?decLang=@(lang)" target="_blank">Help</a></div>
 ]]></style>
 <exec when="init">
-p.script_behavior_tracker = """
+script_behavior_tracker = """
 &lt;script type="text/javascript"&gt;
   document.addEventListener("DOMContentLoaded", function () {
     const textarea = document.querySelector('[name="Q7_1"] textarea') || document.querySelector('[name="Q7_1"]');
@@ -545,7 +545,7 @@ p.script_behavior_tracker = """
   });
 &lt;/script&gt;
 """
-gv.survey.rawHeaders.append(p.script_behavior_tracker)
+gv.survey.rawHeaders.append(script_behavior_tracker)
 </exec>
 
 <suspend/>
