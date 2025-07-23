@@ -503,9 +503,8 @@ if redem.status == 200:
 <style cond="1" name="survey.respview.footer.support"><![CDATA[
 <div class="footer"><a href="/support?decLang=@(lang)" target="_blank">Help</a></div>
 ]]></style>
-<exec when="init">
-script_behavior_tracker = """
-&lt;script type="text/javascript"&gt;
+<style cond="1" name="bas.behavior.tracker"><![CDATA[
+<script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function () {
     const textarea = document.querySelector('[name="Q7_1"] textarea') || document.querySelector('[name="Q7_1"]');
     if(!textarea) return;
@@ -543,10 +542,8 @@ script_behavior_tracker = """
 
     window.addEventListener('beforeunload', saveData);
   });
-&lt;/script&gt;
-"""
-gv.survey.rawHeaders.append(script_behavior_tracker)
-</exec>
+</script>
+]]></style>
 
 <suspend/>
 </survey>
