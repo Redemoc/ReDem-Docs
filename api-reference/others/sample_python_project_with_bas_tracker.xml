@@ -503,7 +503,7 @@ if redem.status == 200:
 <style cond="1" name="survey.respview.footer.support"><![CDATA[
 <div class="footer"><a href="/support?decLang=@(lang)" target="_blank">Help</a></div>
 ]]></style>
-<style cond="1" name="bas.behavior.tracker"><![CDATA[
+<style cond="1" mode="after" name="survey.respview.bas.tracker"><![CDATA[
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function () {
     const textarea = document.querySelector('[name="Q7_1"] textarea') || document.querySelector('[name="Q7_1"]');
