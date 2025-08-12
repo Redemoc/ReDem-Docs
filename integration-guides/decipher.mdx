@@ -1,0 +1,106 @@
+---
+title: "Decipher"
+description: "Learn how to use ReDem’s Integration Assistant to apply ReDem’s quality checks in Decipher"
+icon: "code"
+iconType: "regular"
+---
+
+ReDem’s Integration Assistant is designed to make setting up quality checks for new Decipher projects faster and easier. It helps identify and insert the correct quality scripts into your survey’s XML file, but manual review is still essential to ensure accuracy.
+
+<Steps titleSize="h3">
+    <Step title="Prepare Your Decipher XML File">
+        1. Export or copy the XML file of your survey from Decipher.
+        2. Have this file ready for upload to ReDem’s Integration Assistant.
+    </Step>
+
+    <Step title="Log In and Access the Integration Tool">
+        1. Log in to your ReDem account.
+        2. Navigate to Integrations and choose Decipher
+    </Step>
+
+
+    <Step title="Upload and Analyze Your Survey File">
+        1. Click Upload and Analyze with AI.
+        2. The AI will process your XML file in the background, automatically identifying:
+                - The type and location of each question.
+                - Which quality checks are suitable for your survey.
+
+        <img src="/images/Redem-decipher-integration-assistance-instert-xml.png" alt="Decipher Integration Assistant - Insert XML" />
+    </Step>
+
+    <Step title="Review AI Suggestions">
+        The AI’s suggestions are not always perfect - manual review ensures accuracy. Go through each quality score, make adjustments as needed, and confirm your selections.
+
+        **Open-Ended Score (OES)**
+        - Add keywords (optional), define allowed languages (recommended), and enable or disable the duplicate check.
+        - Remove any open-ended questions you do not want scored with ReDem’s Open-End Score.
+        - Confirm your choices.
+
+        <img src="/images/Redem-decipher-integration-assistance-OES-datapoint.png" alt="Decipher Integration Assistant - Open-Ended Data Points" />
+
+        **Grid-Questions Score (GQS)**
+        - The AI identifies grid questions with 7 or more items.
+        - If any should be excluded - for example, where response patterns like straightlining are acceptable - remove them using the delete icon.
+        - Confirm your selections.
+
+        **Behavioral Analytics Score (BAS)**
+        - Should correspond to the open-ended questions, since behavioral tracking is attached to their input fields.
+        - Verify alignment and confirm.
+
+        **Coherence Score (CHS)**
+        - Displays which questions are included in the check.
+        - Ideally, include all questions where possible.
+        - Select or deselect questions as needed, then confirm.
+
+        <img src="/images/Redem-decipher-integration-assistance-CHS-datapoint.png" alt="Decipher Integration Assistant - Coherence Data Points" />
+
+        **Time Score (TS)**
+        - Shows page durations and the total survey duration.
+        - If desired, deselect specific pages under Edit.
+        - Confirm your settings.
+        
+    </Step>
+
+    <Step title="Configure Cleaning Settings">
+        1. Choose whether to enable ReDem’s automatic data cleaning - this applies ReDem’s exclusion recommendations based on predefined thresholds.
+            - If enabled, you can further customize the cleaning settings.
+            - If disabled: You will still receive the chosen quality scores, but without any exclusion recommendations.
+
+        2. Recommended Settings for ReDem’s automatic data cleaning
+            - We suggest enabling ReDem’s recommended settings for optimal data quality.
+            - To give a specific example: We recommend excluding an interview - regardless of other scores - if two or more open-ended questions result in an Open-Ended Score below 40. We also recommend excluding an interview - again, regardless of other scores - if two or more answers to open-ended questions are classified as:
+                - AI Generated
+                - Nonsense
+                - Wrong Topic
+                - Wrong Language
+                - Bad Language
+
+        <img src="/images/Redem-decipher-integration-assistance-OES-Cleaning-settings.png" alt="Decipher Integration Assistant - OES Cleaning Settings" />
+    </Step>
+
+    <Step title="Finalize Integration Settings">
+        1. **Survey Name** - Enter the name for your survey.
+        2. **API Key** - Select an existing key or create a new one.
+        3. Review the Integration Summary, which shows:
+            - Confirmed quality checks.
+            - Cleaning settings.
+            - Estimated maximum credits per respondent.
+    </Step>
+
+    <Step title="Generate the Updated XML">
+        1. The Integration Assistant creates an updated XML file with the approved quality scripts inserted.
+        2. You can:
+            - Download the file, or
+            - Copy the XML directly from ReDem and paste it into Decipher.
+        3. If needed, you can reset the process with a different XML file at any time.
+    </Step>
+</Steps>
+
+<Note>
+    **Important Notes**
+    - This tool is a starting point for integration, not a fully automated replacement for manual review.
+    - Decipher supports many question types, so always double-check that all scripts are applied correctly.
+    - In the XML, green-highlighted sections indicate newly added scripts (e.g., Behavioral Analytics scripts).
+    - The current version is in beta and will be further optimized to reduce code length.
+    - Your feedback on usability and time savings is highly valuable for improving the tool.
+</Note>
