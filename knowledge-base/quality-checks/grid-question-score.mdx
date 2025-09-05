@@ -11,11 +11,12 @@ The GQS helps assess data quality in grid questions (also known as matrix questi
 
 ## How is the Grid-Question Score calculated?
 
-Each grid question is scored individually based on the respondent’s answer pattern. The system compares these patterns to known low-quality behaviors, such as:
-- Straightlining (selecting the same option across all items)
-- Zigzagging (alternating responses in a mechanical or patterned way)
+Each grid question is scored individually based on the respondent’s answer sequence. We compare that sequence to known low-quality response patterns; the closer the match, the lower the grid’s score. Finally, all grid-level scores are combined into one overall GQS per respondent.
 
-The more closely a respondent’s answers match these behaviors, the lower their score. All individual grid scores are then aggregated into one overall GQS per respondent.
+**Low-quality patterns we detect:**
+- **Straightlining** <br/> Selecting the same option across all items. Labeled “Straightliner.”
+- **Partial Straightlining** <br/> Mostly the same option with only a few switches between adjacent items. If fewer than 35% of adjacent transitions are changes, we label it “Partial Straightliner.”
+- **Pattern clicking** <br/>Mechanical rhythms that ignore item content, e.g. alternating (1-2-1-2…), stair-stepping (1-2-3-4…), zig-zag/mirrored patterns (1-2-3-2-1…), or repeating cycles. The more regular and repeated the pattern, the lower the score.
 
 <Note>
   To detect response patterns beyond straightlining, grid question data must be submitted to the API in the original display order shown to the respondent.

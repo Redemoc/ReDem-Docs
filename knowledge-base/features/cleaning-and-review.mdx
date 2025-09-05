@@ -13,9 +13,22 @@ ReDem’s data cleaning feature automates and streamlines this process, providin
 
 ## How Cleaning Works
 
-Every respondent evaluated by ReDem goes through a series of quality checks. These checks produce scores and classification labels, which form the basis of the cleaning logic.
+Every respondent evaluated by ReDem undergoes a series of quality checks. These checks generate data points, classification labels and scores, which form the basis of the cleaning logic. When cleaning, you define what is acceptable or unacceptable by setting thresholds for these elements.
 
-ReDem offers two cleaning approaches:
+**OR Condition:**
+- All cleaning options operate as OR conditions.
+- You must select at least one score as a cleaning condition - usually the ReDem Score, since it is a comprehensive metric covering all selected quality checks.
+- You may also add other scores in an OR condition if needed.
+
+<Note> **Example:** <br/> If you set an R-Score threshold of 60, all respondents below 60 are flagged. If you also apply an OR condition for Time Score < 20, then even respondents with a valid R-Score (e.g., 70) are flagged if their Time Score is below 20 (speeding).</Note>
+
+**Data Points:** <br/>
+Data points indicate the number of measurements used to calculate a score.
+
+<Note> **Example:** <br/> If you set the Open-Ended Score threshold to 40 with two data points, then any interview with at least two open-ended responses and an overall Open-Ended Score below 40 is excluded. </Note>
+
+**Default Settings:** <br/>
+To simplify the process, ReDem provides recommended default settings that work well for many projects. You can, however, adjust them to match the specific needs of your study. The next two sections first describe the default settings and then explain how to select your own.
 
 ### 1. ReDem Recommended Cleaning Settings
 
