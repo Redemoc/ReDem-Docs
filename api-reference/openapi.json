@@ -186,7 +186,7 @@
             "items": {
               "type": "number"
             },
-            "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**. The grid pattern should be sent in the same order as the respondent saw it in the survey, especially for randomized grid questions, to ensure accurate analysis. \n\n 🧪 **Validations:**  \n - A **minimum of 7** and a **maximum of 50** answers are allowed for each grid question. \n - Each answer must be provided as a **numeric value**.",
+            "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**. \n\n The grid pattern should be sent in the same order as the respondent saw it in the survey, especially for randomized grid questions, to ensure accurate analysis. \n\n 🧪 **Validations:**  \n - A **minimum of 7** and a **maximum of 50** answers are allowed for each grid question. \n - Each answer must be provided as a **numeric value**.",
             "example": [5, 4, 3, 5, 4]
           }
         },
