@@ -217,5 +217,10 @@
       "label": "Login",
       "href": "https://app.redem.io/"
     }
+  },
+  "seo": {
+    "metatags": {
+      "robots": "noindex"
+    }
   }
 }
