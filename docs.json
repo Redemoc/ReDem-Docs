@@ -29,6 +29,12 @@
                 "pages": [
                   "integration-guides/decipher"
                 ]
+              },
+              {
+                "group": "Application Change Log",
+                "pages": [
+                  "changelogs/application-change-log"
+                ]
               }
             ]
           },
