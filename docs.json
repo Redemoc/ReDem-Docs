@@ -25,13 +25,19 @@
                 ]
               },
               {
+                "group": "Features",
+                "pages": [
+                  "features/manual-data-import"
+                ]
+              },
+              {
                 "group": "Integration Assistants",
                 "pages": [
                   "integration-guides/decipher"
                 ]
               },
               {
-                "group": "Application Change Log",
+                "group": "Others",
                 "pages": [
                   "changelogs/application-change-log"
                 ]

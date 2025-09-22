@@ -1,0 +1,150 @@
+---
+title: 'Manual Data Import'
+description: 'Learn how to upload your survey data in ReDem'
+icon: "file-import"
+iconType: "regular"
+---
+
+## Preparing Your Data
+
+To ensure smooth processing and the best possible results, please follow these guidelines before
+importing data:
+
+- **File Format**: Only CSV or Excel files are supported.
+- **Single Sheet::** The file must contain all information in a single sheet. All answers must be provided as plain text (not coded values).
+- **Header Row (Row 1):** The first row must contain unique column headings that identify each variable.
+- **Question Text Row (Row 2):** The second row must contain the full question text for each column.
+- **Respondent Data (Row 3 onward):** Starting from the third row, list the responses. Each row represents one respondent, and all responses should be in plain text.
+
+[Sample File Format](/assets/ReDem-Manual-Upload-Example.csv)
+
+Once your file is prepared, you can proceed with the import process either **manually** or with **AI assistance**.
+
+## Manual Upload
+
+Follow these steps for a manual upload:
+
+<Steps titleSize="h3">
+  <Step title="Upload File">
+    Navigate to **Import Data**, select the file from your computer, and choose **“Select Manually”** if you want to manually select which questions will be included in the quality check.
+  </Step>
+  <Step title="Provide Metadata">
+    - Assign a **survey name**.
+    - Confirm the correct **Header Row** (usually row 1), **Question Text Row** (usually row 2), and **Respondent Start Row** (usually row 3).
+    - If your dataset uses codes for missing values, enter them.
+    - Save your settings.
+  </Step>
+  <Step title="Choose the Identification Column">
+    Select the column that uniquely identifies each respondent (e.g., Respondent ID).
+  </Step>
+  <Step title="Select Quality Checks and Questions">
+    - **Add a New Quality Check:**  For example, choose *Open-Ended Score*.
+    - **Choose Data Points:** Select the relevant open-ended question.
+    - **Determine Settings:** Add the question text, enrich it with keywords if needed, specify the allowed languages (leave empty to allow all languages), and activate or deactivate the duplication check.
+      - **Recommendation:** Keep the duplication check enabled unless duplicates are intentional (e.g., repeated questions).
+    - **Add Additional Open-Ended Questions:** Repeat as necessary, then confirm.
+    - **Configure Other Quality Checks:**
+      - **Grid Questions Score:** Assign a name to the data point, then select the first and last columns of the grid (minimum of 7 columns required). If the grid is not randomized, enable the **Pattern Check** to identify fraudulent click patterns beyond simple straightlining.
+      - **Coherence Score:** Select all questions you want evaluated for coherence.
+      - **Time Score:** Select the variables that capture response time and/or interview length (in seconds or milliseconds).
+  </Step>
+  <Step title="Determine Cleaning Settings">
+    Decide whether to enable ReDem’s Automatic Data Cleaning. This feature applies exclusion recommendations based on predefined thresholds.
+    - **If Enabled:** You can further customize the cleaning settings to suit your project.
+    - **If Disabled:** You will still receive the selected quality scores, but **no exclusion recommendations** will be applied.
+
+    For a detailed explanation of ReDem’s cleaning process, refer to [How to Clean Data with ReDem](/features/cleaning-and-review)
+
+    **Recommended Settings**
+    We recommend using ReDem’s recommended cleaning settings for optimal data quality which means to exclude an interview if:
+
+    - ReDem Score is below 60 OR
+    - Two or more open-ended questions have an Open-Ended Score below 40 OR
+    - Two or more answers to open-ended questions are classified as:
+      - AI-Generated OR
+      - Nonsense OR
+      - Wrong Topic OR
+      - Wrong Language OR
+      - Bad Language OR
+    - Coherence Score is below 30 OR
+    - Two or more grid questions have a Grid-Question Score below 20 OR
+    - Time Score is below 20.
+  </Step>
+  <Step title="Review and Confirm">
+    After configuring your quality checks and cleaning settings, you will see a summary of the selected questions and checks.
+
+    - **Review** your selections carefully.
+    - **Adjust** any mistakes before proceeding.
+    - Check how many **credits** your chosen checks will consume.
+
+    Once everything is correct, **approve and upload your data** to complete the process.
+  </Step>
+</Steps>
+
+## AI Assisted Upload
+
+<Steps titleSize="h3">
+  <Step title="Upload File">
+    Navigate to **Import Data**, select the file from your computer, and choose **“Analyze with AI”**. Please note that this method may take additional time, as the system will analyze your file, identify the relevant questions for each quality check type, and extract the necessary metadata. Larger files will require more time to process. During this process, you can freely navigate to other pages or even close the application.
+  </Step>
+  <Step title="Check and confirm the metadata">
+    Check and confirm the extracted metadata for your survey. You can edit each item if needed.
+  </Step>
+  <Step title="Choose the Identification Column">
+    Select the column that uniquely identifies each respondent (e.g., Respondent ID).
+  </Step>
+  <Step title="Review AI-Recommended Quality Checks">
+    The AI’s suggestions can require refinement. Manually review each quality score, adjust as needed, and confirm your selections.
+
+    **Open-Ended Score (OES)**
+    - Add keywords (optional), define allowed languages (recommended), and enable or disable the duplicate check.
+    - Remove any open-ended questions you do not want scored with ReDem’s Open-End Score.
+    - Confirm your choices.
+
+    **Grid-Questions Score (GQS)**
+    - The AI identifies grid questions with 7 or more items.
+    - If any should be excluded - for example, where response patterns like straightlining are acceptable - remove them using the delete icon.
+    - Confirm your selections.
+
+    **Coherence Score (CHS)**
+    - Displays which questions are included in the check.
+    - Ideally, include all questions where possible.
+    - Select or deselect questions as needed, then confirm.
+
+    **Time Score (TS)**
+    - AI suggests the variables that capture response time and/or interview length.
+    - Select or deselect response times/interview length as needed, then confirm.
+  </Step>
+  <Step title="Determine Cleaning Settings">
+    Decide whether to enable ReDem’s Automatic Data Cleaning. This feature applies exclusion recommendations based on predefined thresholds.
+    - **If Enabled:** You can further customize the cleaning settings to suit your project.
+    - **If Disabled:** You will still receive the selected quality scores, but **no exclusion recommendations** will be applied.
+
+    For a detailed explanation of ReDem’s cleaning process, refer to [How to Clean Data with ReDem](/features/cleaning-and-review)
+
+    **Recommended Settings**
+    We recommend using ReDem’s recommended cleaning settings for optimal data quality which means to exclude an interview if:
+
+    - ReDem Score is below 60 OR
+    - Two or more open-ended questions have an Open-Ended Score below 40 OR
+    - Two or more answers to open-ended questions are classified as:
+      - AI-Generated OR
+      - Nonsense OR
+      - Wrong Topic OR
+      - Wrong Language OR
+      - Bad Language OR
+    - Coherence Score is below 30 OR
+    - Two or more grid questions have a Grid-Question Score below 20 OR
+    - Time Score is below 20.
+  </Step>
+
+  <Step title="Review and Confirm">
+    After configuring your quality checks and cleaning settings, you will see a summary of the selected questions and checks.
+
+    - **Review** your selections carefully.
+    - **Adjust** any mistakes before proceeding.
+    - Check how many **credits** your chosen checks will consume.
+
+    Once everything is correct, **approve and upload your data** to complete the process.
+  </Step>
+</Steps>
