@@ -25,9 +25,9 @@
                 ]
               },
               {
-                "group": "Features",
+                "group": "Core Features",
                 "pages": [
-                  "features/manual-data-import"
+                  "features/file-import"
                 ]
               },
               {
@@ -59,7 +59,7 @@
                 ]
               },
               {
-                "group": "Core Features",
+                "group": "Core Concepts",
                 "pages": [
                   "knowledge-base/features/cleaning-and-review"
                 ]
