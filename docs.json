@@ -197,7 +197,7 @@
               {
                 "group": "Others",
                 "pages": [
-                  "changelogs/api-changelogs",
+                  "changelogs/api-change-log",
                   "api-reference/others/structuring-survey-responses"
                 ]
               }
