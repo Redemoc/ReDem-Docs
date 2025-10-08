@@ -1,0 +1,21 @@
+---
+title: 'Restart Survey'
+openapi: 'POST /restartSurvey'
+--- 
+
+A **restarted survey resumes accepting new respondents**, allowing further additions after being previously stopped.
+
+```json Example response
+{
+    "success": true,
+    "message": "Survey successfully restarted",
+    "results": {
+        "surveyId": "68e4f174adc679a59fe16324",
+        "surveyName": "Test Import Redirect 12",
+        "status": "RUNNING",
+        "previousStatus": "STOPPED"
+    }
+}
+```
+
+

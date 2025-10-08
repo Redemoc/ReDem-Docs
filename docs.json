@@ -99,6 +99,7 @@
                   "api-reference/endpoints/v2/addRespondent",
                   "api-reference/endpoints/v2/getRespondent",
                   "api-reference/endpoints/v2/getAllRespondents",
+                  "api-reference/endpoints/v2/restartSurvey",
                   "api-reference/endpoints/v2/stopSurvey",
                   "api-reference/endpoints/v2/creditCalculation"
                 ]
@@ -190,6 +191,7 @@
                   "api-reference/endpoints/v1/addRespondent",
                   "api-reference/endpoints/v1/getRespondent",
                   "api-reference/endpoints/v1/getAllRespondents",
+                  "api-reference/endpoints/v1/restartSurvey",
                   "api-reference/endpoints/v1/stopSurvey",
                   "api-reference/endpoints/v1/creditCalculation"
                 ]
