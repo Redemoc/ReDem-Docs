@@ -112,6 +112,10 @@
                 ]
               }
             ]
+          },
+          {
+            "tab": "Status",
+            "href": "https://redem.instatus.com/"
           }
         ]
       },
