@@ -3073,6 +3073,215 @@
         }
       }
     },
+    "/v2/deleteRespondents": {
+      "post": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Delete respondents",
+        "operationId": "deleteRespondents",
+        "description": "Delete one or more respondents from a survey and remove all related data. If no respondents remain for the survey, the survey is deleted automatically.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "surveyName": { "type": "string", "description": "The survey name." },
+                  "respondentIds": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "minItems": 1,
+                    "description": "Array of respondent IDs to delete."
+                  }
+                },
+                "required": ["surveyName", "respondentIds"]
+              },
+              "example": {
+                "surveyName": "Customer-Satisfaction-2025",
+                "respondentIds": ["R123", "R124"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful deletion response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "results": {
+                      "type": "object",
+                      "properties": {
+                        "deleted": {
+                          "type": "object",
+                          "properties": {
+                            "respondent": { "type": "number" },
+                            "respondentMetadata": { "type": "number" },
+                            "respondentInteractionData": { "type": "number" },
+                            "flattenRespondents": { "type": "number" },
+                            "survey": { "type": "boolean" }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Respondents deleted successfully",
+                  "results": {
+                    "deleted": {
+                      "respondent": 2,
+                      "respondentMetadata": 2,
+                      "respondentInteractionData": 2,
+                      "flattenRespondents": 2,
+                      "survey": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation or access error.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success": false,
+                      "message": "Validation Error",
+                      "errors": { "0": "\"surveyName\" is required" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/deleteSurveys": {
+      "post": {
+        "tags": [
+          "Survey"
+        ],
+        "summary": "Delete surveys",
+        "operationId": "deleteSurveys",
+        "description": "Delete one or more surveys and all associated data that you own.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "surveyNames": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "minItems": 1,
+                    "description": "Array of survey names to delete."
+                  }
+                },
+                "required": ["surveyNames"]
+              },
+              "example": {
+                "surveyNames": ["Customer-Satisfaction-2025", "NPS-Q3-2025"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful deletion response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "results": {
+                      "type": "object",
+                      "description": "A map keyed by survey name with deletion results for each survey.",
+                      "x-additionalPropertiesName": "Survey Name",
+                      "properties": {
+                        "{Survey Name}": {
+                          "type": "object",
+                          "properties": {
+                            "success": { "type": "boolean", "description": "Whether deletion for this survey succeeded." },
+                            "message": { "type": "string", "description": "Optional message when deletion fails." },
+                            "deleted": {
+                              "type": "object",
+                              "description": "Counts of deleted records for this survey.",
+                              "properties": {
+                                "respondents": { "type": "number" },
+                                "respondentMetadata": { "type": "number" },
+                                "respondentInteractionData": { "type": "number" },
+                                "flattenRespondents": { "type": "number" },
+                                "flattenSurveys": { "type": "number" },
+                                "qualityCheckSettings": { "type": "number" },
+                                "surveys": { "type": "number" }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Surveys deleted successfully",
+                  "results": {
+                    "Customer-Satisfaction-2025": {
+                      "success": true,
+                      "deleted": {
+                        "respondents": 120,
+                        "respondentMetadata": 120,
+                        "respondentInteractionData": 118,
+                        "flattenRespondents": 120,
+                        "flattenSurveys": 1,
+                        "qualityCheckSettings": 1,
+                        "surveys": 1
+                      }
+                    },
+                    "NPS-Q3-2025": {
+                      "success": false,
+                      "message": "Survey not found or not owned by user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation or access error.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success": false,
+                      "message": "Validation Error",
+                      "errors": { "0": "\"surveyNames\" is required" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/creditCalculation": {
       "post": {
         "tags": [
