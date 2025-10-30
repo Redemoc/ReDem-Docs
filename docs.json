@@ -31,8 +31,9 @@
                 ]
               },
               {
-                "group": "Integration Assistants",
+                "group": "Integrations",
                 "pages": [
+                  "integration-guides/keyingress",
                   "integration-guides/decipher"
                 ]
               },
