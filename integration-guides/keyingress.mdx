@@ -1,0 +1,98 @@
+---
+title: "Keyingress"
+description: "Learn how to use ReDem with KeyIngress"
+icon: "code"
+iconType: "regular"
+---
+
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/c8mnW64oUfE?si=g6rw11Oz-Cx_m8HQ"
+  title="AI-Assisted Decipher Integration"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+This tutorial explains how to connect ReDem with Keyingress to run automated data quality checks on your surveys.
+
+<Steps titleSize="h3">
+    <Step title="Requirements">
+        Before getting started, make sure you have a ReDem® user account. <br/>
+        If you don’t have one yet, please contact us at [info@redem.io](mailto:info@redem.io))
+    </Step>
+
+    <Step title="Generate Your ReDem API Key">
+        1. Log in to your ReDem account.
+        2. Navigate to **Administration → API Key Management**.
+        3. Either **create a new API key** or **use an existing one**.
+        4. **Copy** the API key.
+    </Step>
+
+    <Step title="Connect ReDem with Keyingress">
+        1. Open your **Keyingress** platform.
+        2. Click the **gear icon** in the top-right corner.
+        3. Select **Features**.
+        4. Paste your copied **ReDem API Key** into the field labeled *ReDem API key*.
+        5. Click **Save**.
+    </Step>
+
+    <Step title="Activate ReDem Quality Check">
+        1. Set up your survey as usual in keyingress.
+        2. Once it’s ready, go to **Quality**.
+        3. Scroll down and **activate the ReDem Quality Check**.
+
+        You can choose whether you want ReDem to automatically clean data based on its quality scores.
+        - **Deactivate Cleaning (“Bereinigung”)** → You will receive ReDem Quality Scores, but no interviews will be screened out based on quality.
+        - **Activate “Cleaning” (“Bereinigung”)** → Low-quality interviews are automatically flagged and screened out according to the criteria listed below.
+    </Step>
+
+    <Step title="Recommended Cleaning Settings">
+        For optimal data quality, we recommend keeping ReDem’s default cleaning settings. Interviews will be flagged as bad quality if any of the following apply:
+        - **ReDem Score** < 60
+        - **Two or more grid questions** have a Grid-Question Score < 20
+        - **Two or more open-ended questions** have an Open-Ended Score < 40
+        - **Two or more open-ended answers** are classified as:
+            - AI-Generated
+            - Nonsense
+            - Wrong Topic
+            - Wrong Language
+            - Bad Language
+        - **Time Score** < 20
+        - **Two or more open-ended questions** have a Behavioral Analytics Score < 20
+        - **Coherence Score** < 30
+
+        You can adjust these thresholds if needed.
+    </Step>
+
+    <Step title="Assign Questions to Quality Checks">
+        Next, assign the relevant questions to each type of quality check. For every score type, click the “Add Questions” button and select and safe the appropriate items.:
+        - First, choose the questions for the **Click Pattern Check**, which analyzes grid questions.
+        - Then, select the questions for the **Open-Ended Check**, which reviews text responses.
+        - Next, define the questions used for the **Time Score**, which evaluates response times.
+        - After that, select the questions for the **Behavioral Analytics Score**, which assesses how participants enter their responses.
+        - Finally, choose the questions for the **Coherence Score**, which measures how consistent the answers are throughout the interview.
+
+        After selecting questions for all checks, click Save Settings.
+    </Step>
+
+    <Step title="Test Your Setup">
+        1. Run a few **test interviews** to confirm that everything works correctly.
+        2. In Keyingress, navigate to **Reporting & Export → Reporting Dataset → Show Data**.
+
+        In the dataset:
+        - **STC_ID = 5** → Good quality
+        - **STC_ID = 48** → Poor quality (screened out)
+    </Step>
+
+    <Step title="Review Results in ReDem">
+        For more detailed results, return to your **ReDem** dashboard.
+        There, you can review all incoming interviews and detailed quality evaluations.
+
+        Note: In ReDem, the **keyingress tan** corresponds to the digits **before the first hyphen** in the ReDem respondent ID.
+    </Step>
+
+    <Step title="Re-clean Your Data">
+        If needed, you can re-clean your data directly on the ReDem platform. This allows you to apply different cleaning settings after the survey has finished. To do this, open the relevant survey, click on “Cleaning Settings” at the top of the page, select a new configuration, and then reprocess the data using the updated settings. This flexibility ensures that you can refine your data quality thresholds even after data collection is complete.
+    </Step>
+</Steps>
