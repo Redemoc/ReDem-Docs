@@ -5,8 +5,6 @@ icon: "messages"
 iconType: "regular"
 ---
 
-![](</images/Open-Ended-Responses Evaluation Example.png>)
-
 ## What is the Open-Ended Score?
 
 ReDem enables precise analysis of open-ended responses by classifying them into eight distinct categories, each with a corresponding score. This process is powered by a GPT based AI model, delivering reliable and comprehensive results you can trust. 
@@ -23,18 +21,18 @@ Identifies responses that deviate from the question or topic by evaluating their
 
 Keywords are only necessary when the question lacks sufficient context. When adding them, ensure they broadly reflect the intended context to avoid false positives caused by overly narrow interpretations. Both the question and keywords must be in a supported language.
 
-Responses failing to align with the expected context are classified as "Wrong Topic" and assigned an OES (Overall Evaluation Score) of 30.
+Responses failing to align with the expected context are classified as "Wrong Topic".
 ### `  AI Generated Answer  `
 
-The model analyzes open-ended responses to assess whether they were artificially generated, evaluating patterns across a wide range of variables including grammar, structure, phrasing, syntax, word choice, sentence length, complexity, and predictability. Responses identified as AI-generated are assigned a score of 0.
+The model analyzes open-ended responses to assess whether they were artificially generated, evaluating patterns across a wide range of variables including grammar, structure, phrasing, syntax, word choice, sentence length, complexity, and predictability.
 
 ### `  Nonsense  `
 
-Enabling nonsense detection identifies gibberish, random numbers, and meaningless statements. Such responses are classified as "Nonsense" and assigned a score of 10.
+Enabling nonsense detection identifies gibberish, random numbers, and meaningless statements. Such responses are classified as "Nonsense".
 
 ### `  Wrong Language  `
 
-Responses provided in an unexpected language are flagged as “Wrong Language” and assigned a score of 20. You can specify the expected language(s); if none are defined, the language check remains inactive. Open-Ended Score supports over 100 languages, including English, German, French, Spanish, Chinese, Japanese, Swedish, and more. The check is performed per respondent, and it is recommended to use the questionnaire language as the reference.
+Responses provided in an unexpected language are flagged as “Wrong Language”. You can specify the expected language(s); if none are defined, the language check remains inactive. Open-Ended Score supports over 100 languages, including English, German, French, Spanish, Chinese, Japanese, Swedish, and more. The check is performed per respondent, and it is recommended to use the questionnaire language as the reference.
 
 <Note> Questions lacking linguistic content (e.g., brand awareness questions) are not suitable for the language check.</Note>
 
@@ -44,19 +42,18 @@ The optional duplicate check detects potentially fraudulent responses, identifyi
 
 * This check detects repeated responses to the same question. Short or common responses are not penalized, but substantial duplications may lower the score. Scoring is continuous, so minor overlap results in moderate impact, while extensive duplication leads to stronger penalties.
 
-![](</images/Duplicate Respondents in Single Question.png>)
 
-* **Duplicate Respondents Across Multiple Questions**: When repetition occurs across several questions, the penalty increases. In severe cases, such as near-complete repetition across multiple responses, a score of 0 may be assigned.
+* **Duplicate Respondents Across Multiple Questions**: When repetition occurs across several questions, the penalty increases.
 
 ![](</images/Duplicate Respondents in multiple questions.png>)
 
-* **Full Response Set Matches**: If a respondent’s full set of answers matches another’s, all responses are marked as duplicates and scored 0.
+* **Full Response Set Matches**: If a respondent’s full set of answers matches another’s, all responses are marked as duplicates.
 
 * Whitelists exclude standard or commonly accepted responses from being flagged.
 
 ### `  Duplicate Answer  `
 
-We check whether a respondent provides the same or similar answers across multiple questions. If duplication is limited to one question, a score of 50 is assigned; if duplicates are found in more than one question, the score is 0.
+We check whether a respondent provides the same or similar answers across multiple questions.
 
 <Note> If a response qualifies as both "Duplicate Respondent" and "Duplicate Answer," the "Duplicate Respondent" category takes precedence.</Note>
 
@@ -64,19 +61,19 @@ We check whether a respondent provides the same or similar answers across multip
 
 ### `  Bad Language  `
 
-Responses containing swear words or offensive language are classified as "**Bad Language**" and are assigned a score of 10.
+Responses containing swear words or offensive language are classified as "**Bad Language**".
 
 ### `  Generic Answers  `
 
-Responses containing vague or generic phrases like “good,” “ok,” “anything,” or “yes” are classified as **Generic Answers** and assigned a score of 50.
+Responses containing vague or generic phrases like “good,” “ok,” “anything,” or “yes” are classified as **Generic Answers**.
 
 ### `  No Information  `
 
-Responses that lack meaningful content—such as “no idea,” “nothing,” “no comment,” or “I don’t know”—are labeled as **No Information** and given a score of 60.
+Responses that lack meaningful content—such as “no idea,” “nothing,” “no comment,” or “I don’t know”—are labeled as **No Information**.
 
 ### `  Valid Answer  `
 
-Valid responses are those that do not fall into any other quality category. Each response is also evaluated for its level of detail. "Valid Answers" are assigned a score between 70 and 100, based on their detail quality.
+Valid responses are those that do not fall into any other quality category. Each response is also evaluated for its level of detail.
 
 <br />
 
