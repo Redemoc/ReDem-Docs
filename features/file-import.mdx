@@ -20,7 +20,7 @@ To ensure smooth processing and the best possible results, please follow these g
 importing data:
 
 - **File Format**: Only CSV or Excel files are supported.
-- **Single Sheet:** The file must contain all information in a single sheet. All answers must be provided as plain text (not coded values).
+- **Sheets:** Single-sheet files or multi-sheet Excel files are supported. If your file has multiple sheets, you'll select which sheet contains the data and which contains the data map in Step 1. When using a single sheet, all answers must be provided as plain text (not coded values).
 - **Header Row (Row 1):** The first row must contain unique column headings that identify each variable.
 - **Question Text Row (Row 2):** The second row must contain the full question text for each column.
 - **Respondent Data (Row 3 onward):** Starting from the third row, list the responses. Each row represents one respondent, and all responses should be in plain text.
@@ -35,7 +35,7 @@ Follow these steps for a manual upload:
 
 <Steps titleSize="h3">
   <Step title="Upload File">
-    Navigate to **Import Data**, select the file from your computer, and choose **“Select Manually”** if you want to manually select which questions will be included in the quality check.
+    Navigate to **Import Data**, select the file from your computer, and choose **“Select Manually”** if you want to manually select which questions will be included in the quality check. If your Excel file contains multiple sheets, select which sheet contains the **data** and which sheet contains the **data map**.
   </Step>
   <Step title="Provide Metadata">
     - Assign a **survey name**.
@@ -94,7 +94,7 @@ Follow these steps for a manual upload:
 
 <Steps titleSize="h3">
   <Step title="Upload File">
-    Navigate to **Import Data**, select the file from your computer, and choose **“Analyze with AI”**. Please note that this method may take additional time, as the system will analyze your file, identify the relevant questions for each quality check type, and extract the necessary metadata. Larger files will require more time to process. During this process, you can freely navigate to other pages or even close the application.
+    Navigate to **Import Data**, select the file from your computer, and choose **“Analyze with AI”**. If your Excel file contains multiple sheets, select which sheet contains the **data** and which sheet contains the **data map**. Please note that this method may take additional time, as the system will analyze your file, identify the relevant questions for each quality check type, and extract the necessary metadata. Larger files will require more time to process. During this process, you can freely navigate to other pages or even close the application.
   </Step>
   <Step title="Check and confirm the metadata">
     Check and confirm the extracted metadata for your survey. You can edit each item if needed.
