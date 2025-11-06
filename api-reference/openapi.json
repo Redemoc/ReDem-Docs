@@ -3462,13 +3462,45 @@
             "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive message explaining the issue and an error object containing additional details to aid in diagnosing and resolving the problem.",
             "content": {
               "application/json": {
-                "schema": { "type": "object" },
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.", 
+                      "type": "object"
+                    },
+                    {
+                      "title": "Survey not found",
+                      "description": "This error occurs when the **requested survey does not exist in the system**. It may happen if the survey name is incorrect, has been deleted, or was never created. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    },
+                    {
+                      "title": "Respondent not found",
+                      "description": "This error occurs when the **requested respondentId does not exist under the specified survey**. It may happen if the respondent has not been added to the specified survey or if an incorrect ID was provided. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
                 "examples": {
                   "Validation Error": {
                     "value": {
                       "success": false,
                       "message": "Validation Error",
                       "errors": { "0": "\"surveyName\" is required" }
+                    }
+                  },
+                  "Survey not found": {
+                    "value": {
+                      "success": false,
+                      "message": "Survey not found",
+                      "errors": {}
+                    }
+                  },
+                  "Respondents not found": {
+                    "value": {
+                      "success": false,
+                      "message": "The following respondents were not found in the survey 'Customer-Satisfaction-2025': 'R987', 'R986'",
+                      "errors": {}
                     }
                   }
                 }
