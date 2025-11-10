@@ -9,15 +9,15 @@ The coherence score is an AI-driven metric that evaluates the plausibility and l
 
 Additionally, the Coherence Score minimizes false positives by avoiding the disqualification of respondents who may have misclicked or momentarily lost focus but otherwise performed acceptably. This approach not only enhances fraud detection but also ensures more accurate and fair assessments.
 
-## How is the Coherence-Score calculated?
+## High-level checks performed 
 
-The Coherence Score evaluates the entire interview to assess its internal consistency:
-- Score 20 is assigned to interviews with multiple major contradictions, indicating very low quality and potential signs of fraudulent behavior.
-- Score 50 reflects interviews with several coherence issues, suggesting that participants may have been inattentive at times, leading to noticeable contradictions.
-- Score 80 is given to interviews with only minor inconsistencies, likely caused by brief lapses in attention.
-- Score 100 represents interviews that are fully consistent, logically sound, and free of contradictions.
+This check looks at, for example:
+- Whether answers that should logically align (e.g., travel mode, days stayed, budget) are consistent with one another.
+- Whether the pattern and combination of responses across different questions fit a plausible scenario.
+- Whether any answers appear contradictory (for example: “I never use the app” in one section and “I use it weekly” in another).
+- These checks are intended to flag inconsistent or implausible response sets.
 
-**What the Coherence Score Includes:**
+## What the Coherence Score Includes:
 - Explanation of the Rating: Provides a summary of the overall quality of the interview.
 - Describes how consistent or contradictory the respondent’s answers are across questions.
 - Highlights key factors that influenced the rating (e.g. logical flow, alignment of answers).
