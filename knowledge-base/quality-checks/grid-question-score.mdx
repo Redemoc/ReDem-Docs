@@ -9,23 +9,17 @@ iconType: "regular"
 
 The GQS helps assess data quality in grid questions (also known as matrix questions). It uses machine learning and a defined set of pattern-detection rules to evaluate how respondents interact with grid items.
 
-## How is the Grid-Question Score calculated?
-
-Each grid question is scored individually based on the respondent’s answer sequence. We compare that sequence to known low-quality response patterns; the closer the match, the lower the grid’s score. Finally, all grid-level scores are combined into one overall GQS per respondent.
-
-**Low-quality patterns we detect:**
-- **Straightlining** <br/> Selecting the same option across all items. Labeled “Straightliner.”
-- **Partial Straightlining** <br/> Mostly the same option with only a few switches between adjacent items. If fewer than 35% of adjacent transitions are changes, we label it “Partial Straightliner.”
-- **Pattern clicking** <br/>Mechanical rhythms that ignore item content, e.g. alternating (1-2-1-2…), stair-stepping (1-2-3-4…), zig-zag/mirrored patterns (1-2-3-2-1…), or repeating cycles. The more regular and repeated the pattern, the lower the score.
+## High-level checks performed 
+- Whether the sequence of responses across the grid items shows minimal variance, e.g., always choosing the same option across many rows (straight-lining).
+- Whether the ordering of responses is highly repetitive or patterned (e.g., always lowest → highest → lowest → highest) when that would not make sense for the item content.
+- Whether at least a minimum number of items are present in the grid (public recommendation: 7 items or more) so that pattern checks are meaningful.
 
 <Note>
   To detect response patterns beyond straightlining, grid question data must be submitted to the API in the original display order shown to the respondent.
 </Note>
 
-![Grid-Question Score Example](/images/GQS-Example.png)
-
 ## What Patterns Does the GQS Detect?
 
-ReDem currently analyzes the following behavioral patterns in grid responses:
+Here are some examples of behavioral patterns in grid responses that are analyzed by ReDem:
 
 ![Grid-Question Score patterns](/images/Pattern-for-GQS.png)
