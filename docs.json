@@ -11,6 +11,118 @@
   "navigation": {
     "versions": [
       {
+        "version": "v3",
+        "tabs": [
+          {
+            "tab": "User Guide",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "welcome",
+                  "account-setup",
+                  "how-it-works"
+                ]
+              },
+              {
+                "group": "Core Features",
+                "pages": [
+                  "features/file-import"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": [
+                  "integration-guides/keyingress",
+                  "integration-guides/decipher"
+                ]
+              },
+              {
+                "group": "Others",
+                "pages": [
+                  "changelogs/application-change-log"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Knowledge Base",
+            "groups": [
+              {
+                "group": "Quality Checks",
+                "pages": [
+                  "knowledge-base/quality-checks/redem-score",
+                  "knowledge-base/quality-checks/open-ended-score",
+                  "knowledge-base/quality-checks/coherence-score",
+                  "knowledge-base/quality-checks/time-score",
+                  "knowledge-base/quality-checks/grid-question-score",
+                  "knowledge-base/quality-checks/behavior-analysis-score"
+                ]
+              },
+              {
+                "group": "Core Concepts",
+                "pages": [
+                  "knowledge-base/features/cleaning-and-review"
+                ]
+              },
+              {
+                "group": "Miscellaneous",
+                "pages": [
+                  "knowledge-base/miscellaneous/redem-credits",
+                  "knowledge-base/miscellaneous/questionnaire-criteria",
+                  "knowledge-base/miscellaneous/language-support"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Documentation",
+            "groups": [
+              {
+                "group": "How to integrate",
+                "pages": [
+                  "api-reference/intro/introduction",
+                  "api-reference/intro/synchronous-response",
+                  "api-reference/intro/asynchronous-response"
+                ]
+              },
+              {
+                "group": "API Specifications",
+                "pages": [
+                  "api-reference/api-specifications/api-keys",
+                  "api-reference/api-specifications/response-structure",
+                  "api-reference/api-specifications/rate-limits"
+                ]
+              },
+              {
+                "group": "Endpoints",
+                "pages": [
+                  "api-reference/endpoints/v3/addRespondent",
+                  "api-reference/endpoints/v3/getRespondent",
+                  "api-reference/endpoints/v3/getAllRespondents",
+                  "api-reference/endpoints/v3/restartSurvey",
+                  "api-reference/endpoints/v3/stopSurvey",
+                  "api-reference/endpoints/v3/creditCalculation",
+                  "api-reference/endpoints/v3/deleteRespondents",
+                  "api-reference/endpoints/v3/deleteSurveys"
+                ]
+              },
+              {
+                "group": "Others",
+                "pages": [
+                  "changelogs/api-change-log",
+                  "api-reference/others/structuring-survey-responses"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Status",
+            "href": "https://redem.instatus.com/"
+          }
+        ]
+      },
+      {
         "version": "v2",
         "tabs": [
           {
