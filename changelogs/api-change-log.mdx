@@ -5,11 +5,19 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2025-11-14" description="v2.2.0">
+  ## New Endpoint: Update Respondents Excluded Status
+
+  - <code style={{ color: "green" }}> POST /v2/updateRespondentsExcludedStatus </code> - Update the exclusion status of one or more respondents within a specific survey.
+
+  See the [endpoint docs](/api-reference/endpoints/v2/updateRespondentsExcludedStatus) for request/response details.
+</Update>
+
 <Update label="2025-10-22" description="v2.1.0">
   ## New Endpoints: Delete Surveys and Delete Respondents
 
-  - `POST /v2/deleteRespondents`: Delete one or more respondents from a survey and clean up related data.
-  - `POST /v2/deleteSurveys`: Delete one or more surveys and all associated data.
+  - <code style={{ color: "green" }}> POST /v2/deleteRespondents </code> - Delete one or more respondents from a survey and clean up related data.
+  - <code style={{ color: "green" }}> POST /v2/deleteSurveys </code> - Delete one or more surveys and all associated data.
 
   See the endpoint docs for request/response details.
 </Update>
