@@ -9,24 +9,176 @@ iconType: "regular"
 
 Open-ended quality checks evaluate free-text responses for relevance, informativeness, language conformity, duplication, and potential synthetic (automated) generation. The goal is to ensure that collected open-ended answers are meaningful and usable for analysis.
 
-## High-level checks performed
+## How does ReDem classify responses?
 
-The following is a conceptual (non-exhaustive) list of the kinds of checks applied to open-ended responses:
+ReDem classifies each open-ended response into distinct quality categories, ensuring a clear and consistent assessment of respondent performance. These categories capture all essential dimensions of open-ended response quality, from high-effort, meaningful engagement to outright fraud.
 
-- Topicality / Relevance: Does the response generally address the question asked?
+### 1. Valid Answer - Meaningful Answer with Varying Effort (Low / Medium / High)
 
+**Definition:**
 
-- Informativeness: Does the response add substantive content (details, examples, clarifying facts) rather than being overly short or generic?
+The question was read and answered meaningfully. The response is relevant to the question and demonstrates a varying degree of elaboration or cognitive effort.
 
+Effort is categorized into low, medium, or high, depending on the level of detail, specificity, and engagement shown in the response.
 
-- Language conformity: Is the response in the expected language and free from abuse (as defined by your project’s policy)?
+**Effort Levels:**
 
+- **Low Effort**: Minimal response, short and factual, without elaboration.
 
-- Duplication / Redundancy: Does the response appear identical or highly similar to other responses from the same respondent or across recent data?
+  **Example:**
+  
+  *Question: Please describe your ideal summer vacation:*
+  
+  *Answer: In Italy.*
 
+- **Medium Effort**: Some elaboration with relevant details; the response provides some context or specificity.
 
-- Synthetic generation indicators: Automated methods evaluate linguistic and, when available, behavioral signals to detect patterns commonly associated with synthetic (machine-generated) text.
+  **Example:**
+  
+  *Question: Please describe your ideal summer vacation:*
+  
+  *Answer: At a vineyard in Tuscany.*
 
+- **High Effort**: Detailed and thoughtful response including context, reasoning, and multiple elements.
+
+  **Example:**
+  
+  *Question: Please describe your ideal summer vacation:*
+  
+  *Answer: Two weeks at a Tuscan vineyard near Siena with my best friends, good food, and a swimming pool.*
+
+### 2. No Answer ("Refusal or Inability to Answer")
+
+**Definition:**
+
+The question was read but not meaningfully answered. The respondent signals unwillingness or inability to answer the question.
+
+**Typical Indicators:**
+
+- Explicit refusal to provide an answer
+- Dismissive statements
+- Abbreviations indicating "no answer"
+- One or more question marks
+
+**Example Question:**
+
+*Please describe your ideal summer vacation:*
+
+**Example Answers:**
+
+- Don't know
+- I don't go on vacation
+- None of your business
+- I hate vacations
+- ???????????
+- n/a
+
+### 3. Off Topic ("Irrelevant" - Misunderstanding or Lack of Motivation)
+
+**Definition:**
+
+The question was not properly read or understood. The response may be meaningful in another context but is irrelevant to the actual question, indicating that the respondent did not engage with the question's topic or intent.
+
+**Typical Indicators:**
+
+- Response unrelated to the question
+- General or misplaced statements
+- One-word or minimal replies that don't address the question
+
+**Example Question:**
+
+*Please describe your ideal summer vacation:*
+
+**Example Answers:**
+
+- My hobbies are cycling, reading, and swimming.
+- My ideal vacation is at Christmas time in the mountains of Tyrol.
+- Thanksgiving
+- Everything
+- Nothing
+- No
+
+### 4. Gibberish ("Nonsense" - Clear Fraud)
+
+**Definition:**
+
+The question was not read. The response is completely meaningless or incoherent, consisting of random text fragments, repetitions of the question or its instructions, or nonsensical character combinations.
+
+**Typical Indicators:**
+
+- Jumbled or unrelated text fragments
+- Copying or repeating the question or parts of it ("parroting")
+- Random letters, symbols, or punctuation ("text soup")
+- Question marks combined with other random characters
+
+**Example Question:**
+
+*Please describe your ideal summer vacation:*
+
+**Example Answers:**
+
+- Hello! I call you because I am happy
+- Please describe your ideal summer vacation
+- your ideal summer vacation
+- It is something when I have but never one How do you do?
+- Gdhj2
+- ………
+- ?.
+- x?
+
+### 5. AI-Suspect (Probable Non-Human-Generated Response)
+
+**Definition:**
+
+The response shows characteristics of AI-generated text, indicating it was likely produced by a chatbot rather than a human respondent. Such answers often appear syntactically perfect, overly balanced, or emotionally neutral, lacking natural human imperfections, spontaneity, or personal perspective.
+
+**Typical Indicators:**
+
+- Unusually polished or "too perfect" language
+- Balanced, structured, and generic phrasing without individuality
+- Overly coherent style inconsistent with typical survey responses
+- Lack of typos, personal references, or informal language
+
+**Example Question:**
+
+*Please describe your ideal summer vacation:*
+
+**Example Answer:**
+
+*My ideal summer vacation would balance exploration, relaxation, and inspiration. It would start somewhere by the sea — perhaps a quiet coastal town in southern Italy or Greece — where mornings begin with espresso on a terrace overlooking the water, followed by swimming, reading, and writing in the shade.*
+
+### 6. Bad Language (Non-Content-Related Hate Speech or Inappropriate Wording)
+
+**Definition:**
+
+The response contains insults, profanity, or vulgar expressions that are unrelated to the context of the question. Such language indicates disrespectful or hostile behavior rather than a genuine attempt to answer.
+
+**Typical Indicators:**
+
+- Direct insults or offensive remarks toward others
+- Swearwords or vulgar language without contextual relevance
+- Aggressive tone or hostility unrelated to the question content
+
+**Example Question:**
+
+*Please describe your ideal summer vacation:*
+
+**Example Answers:**
+
+- **Bad Language Example**: This survey is shit.
+- **No Bad Language Example**: Similar to my last vacation in Ibiza. It kicked ass.
+
+### 7. Wrong Language
+
+The response is provided in a language that does not match the expected language(s) specified for the data point. This category helps identify responses that may have been misunderstood or provided by respondents who did not understand the question.
+
+### 8. Duplicate Respondent
+
+The response is identical or highly similar to responses provided by other respondents in the survey, indicating potential data quality issues or coordinated responses.
+
+### 9. Duplicate Answer
+
+The response is identical or highly similar to another response provided by the same respondent within the survey, indicating potential lack of engagement or copy-paste behavior.
 
 ## Use of GPT for Open-Ended Score
 
