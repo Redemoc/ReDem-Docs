@@ -5,6 +5,48 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2025-11-15" description="v3">
+  ## API v3 Released: OES v3 with Enhanced Category Detection and Effort Scale
+
+  ### 🔥 OES v3 Now Available in ReDem API v3
+
+  We're excited to announce the release of ReDem API v3, featuring a major upgrade to the OES (Open-Ended Scoring) quality check system. This release introduces improved category definitions, enhanced scoring accuracy, and a new effort scale metric.
+
+  **All version 3 endpoints are now accessible via the <code>/v3</code> path (e.g., <code>/v3/addRespondent</code>), ensuring a clean separation from previous versions.**
+
+  ### 🚀 What's new in OES v3?
+
+  OES v3 introduces refined category definitions with clearer boundaries to reduce false positives and false negatives. The new categories are:
+
+  - **VALID_ANSWER**: Responses that adequately address the question
+  - **NO_ANSWER**: Responses that provide no meaningful information
+  - **BAD_LANGUAGE**: Responses containing inappropriate or offensive language
+  - **GIBBERISH**: Responses that are nonsensical or incoherent
+  - **OFF_TOPIC**: Responses that do not address the question asked
+  - **AI_SUSPECT**: Responses that appear to be AI-generated
+  - **WRONG_LANGUAGE**: Responses in an unexpected language
+  - **DUPLICATE_ANSWER**: Responses that duplicate previous answers
+  - **DUPLICATE_RESPONDENT**: Responses that duplicate other respondents' answers
+
+  ### Key improvements in OES v3:
+
+  - **Clearer category boundaries**: Refined detection logic reduces false positives and false negatives across all categories, providing more accurate quality assessments.
+
+  - **Enhanced scoring system**: OES v3 introduces an effort scale (LOW, MEDIUM, HIGH) that factors into the final quality score. For VALID_ANSWER and NO_ANSWER categories, the effort level directly influences the score calculation, providing more nuanced quality metrics.
+
+  ### 🔄 Backward Compatibility: How do v1 and v2 work?
+
+  Version 1 and version 2 endpoints remain available but use the legacy OES v2 classification system, which has less precise category boundaries and does not include the effort scale metric.
+
+  ### ⛔ Deprecation Notice
+
+  - **API v1**: Will be deprecated within 7 days of this notice. Please migrate to v2 or v3 immediately.
+
+  - **API v2**: Will be deprecated on January 15th, 2026. We strongly encourage all teams and integrators to migrate to v3 endpoints before that date to take advantage of the improved OES accuracy and scoring system.
+
+  We recommend upgrading to API v3 at your earliest convenience to benefit from the enhanced OES v3 quality checks and improved scoring accuracy.
+</Update>
+
 <Update label="2025-10-22" description="v2.1.0">
   ## New Endpoints: Delete Surveys and Delete Respondents
 
