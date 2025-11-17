@@ -330,6 +330,54 @@
           }
         }
       },
+      "DataPointsQualityResponse_v3": {
+        "description": "Quality check results for a single datapoint (v3, includes effort level for applicable OES categories).",
+        "type": "object",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "enum": [
+              "OES",
+              "TS",
+              "GQS",
+              "CHS",
+              "BAS"
+            ],
+            "description": "**Type of quality check** performed for the data point",
+            "example": "OES"
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**A unique identifier of the data point**",
+            "example": "Q1"
+          },
+          "score": {
+            "type": "number",
+            "description": "**Quality score for the data point**, ranging from 0 to 100",
+            "example": 85
+          },
+          "category": {
+            "type": "string",
+            "description": "**Quality category** for the data point, this will be only available if the quality check type is set to `OES` or `BAS`",
+            "example": "VALID_ANSWER"
+          },
+          "effort": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ],
+            "description": "**Effort level detected for the response** (API v3 only). Available when `qualityCheck` is `OES` and the `category` is `VALID_ANSWER` or `NO_ANSWER`.",
+            "example": "HIGH"
+          },
+          "reason": {
+            "type": "string",
+            "description": "**Explanation** for the score, this will be only available if the quality check type is set to `GQS`",
+            "example": "Straightliner, Partial Straightliner"
+          }
+        }
+      },
       "QualityCheckResponse": {
         "description": "Aggregated results for a quality score type",
         "type": "object",
@@ -402,6 +450,25 @@
             "description": "Detailed results of quality checks performed at the individual data point level."
           }
         }
+      },
+      "RespondentResults_v3": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RespondentResults"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "dataPointsSummary": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DataPointsQualityResponse_v3"
+                },
+                "description": "Detailed results of quality checks performed at the individual data point level (includes `effort` for applicable OES categories)."
+              }
+            }
+          }
+        ]
       },
       "AddSurveyRequest": {
         "description": "Request body for creating or customizing a survey",
@@ -3809,8 +3876,8 @@
                               ]
                             },
                             "respondentQuality": {
-                              "$ref": "#/components/schemas/RespondentResults",
-                              "description": "This variable includes **all quality parameters associated with a respondent**. \n\n **💡Important:** Even if a respondent fails evaluation, the response will still be returned with results with an error code of `-999` instead of valid scores. \n\n **⭕ Note:** The value `-999` is a predefined code returned by **ReDem** whenever a respondent cannot be evaluated. This applies to all quality scores, **including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS**."
+                              "$ref": "#/components/schemas/RespondentResults_v3",
+                              "description": "This variable includes **all quality parameters associated with a respondent** (v3, including `effort` for applicable OES categories). \n\n **💡Important:** Even if a respondent fails evaluation, the response will still be returned with results with an error code of `-999` instead of valid scores. \n\n **⭕ Note:** The value `-999` is a predefined code returned by **ReDem** whenever a respondent cannot be evaluated. This applies to all quality scores, **including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS**."
                             }
                           }
                         }
@@ -3899,7 +3966,8 @@
                               "qualityCheck": "OES",
                               "dataPointId": "Q1",
                               "score": 85,
-                              "category": "VALID_ANSWER"
+                              "category": "VALID_ANSWER",
+                              "effort": "HIGH"
                             },
                             {
                               "qualityCheck": "TS",
@@ -4075,7 +4143,7 @@
                       "type": "string"
                     },
                     "results": {
-                      "$ref": "#/components/schemas/RespondentResults"
+                      "$ref": "#/components/schemas/RespondentResults_v3"
                     }
                   }
                 }
@@ -4125,7 +4193,7 @@
                     "results": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/RespondentResults"
+                        "$ref": "#/components/schemas/RespondentResults_v3"
                       }
                     }
                   }
