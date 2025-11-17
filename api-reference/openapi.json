@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://api.redem.io/"
+      "url": "https://api.redem.io"
     }
   ],
   "security": [
@@ -2024,7 +2024,7 @@
           "Survey"
         ],
         "summary": "Stop a survey",
-        "operationId": "stopSurvey",
+        "operationId": "stopSurveyV2",
         "description": "API endpoint for stopping a survey. This can be triggered once the survey is completed.",
         "requestBody": {
           "content": {
@@ -2131,7 +2131,7 @@
           "Survey"
         ],
         "summary": "Restart a survey",
-        "operationId": "restartSurvey",
+        "operationId": "restartSurveyV3",
         "description": "API endpoint for restarting a survey. This can be triggered to resume a previously stopped survey.",
         "requestBody": {
           "content": {
@@ -2247,7 +2247,7 @@
           "Respondent"
         ],
         "summary": "Calculate the maximum number of credits needed for a respondent",
-        "operationId": "creditCalculation",
+        "operationId": "creditCalculationV2",
         "description": "API endpoint for calculating the required number of credits for a respondent.",
         "requestBody": {
           "required": true,
@@ -3082,7 +3082,7 @@
           "Survey"
         ],
         "summary": "Stop a survey",
-        "operationId": "stopSurvey",
+        "operationId": "stopSurveyV3",
         "description": "API endpoint for stopping a survey. This can be triggered once the survey is completed.",
         "requestBody": {
           "content": {
@@ -3305,7 +3305,7 @@
           "Respondent"
         ],
         "summary": "Delete respondents",
-        "operationId": "deleteRespondents",
+        "operationId": "deleteRespondentsV2",
         "description": "Delete one or more respondents from a survey and remove all related data. If no respondents remain for the survey, the survey is deleted automatically.",
         "requestBody": {
           "required": true,
@@ -3400,7 +3400,7 @@
           "Survey"
         ],
         "summary": "Delete surveys",
-        "operationId": "deleteSurveys",
+        "operationId": "deleteSurveysV2",
         "description": "Delete one or more surveys and all associated data that you own.",
         "requestBody": {
           "required": true,
@@ -3514,7 +3514,7 @@
           "Respondent"
         ],
         "summary": "Calculate the maximum number of credits needed for a respondent",
-        "operationId": "creditCalculation",
+        "operationId": "creditCalculationV3",
         "description": "API endpoint for calculating the required number of credits for a respondent.",
         "requestBody": {
           "required": true,
@@ -3850,6 +3850,116 @@
                       }
                     }
                   ]
+                },
+                "examples": {
+                  "Synchronous Response": {
+                    "summary": "Synchronous Response Example",
+                    "value": {
+                      "success": true,
+                      "message": "Respondent evaluated successfully",
+                      "results": {
+                        "respondentId": "RESP497770",
+                        "status": "COMPLETED",
+                        "respondentQuality": {
+                          "isExcluded": true,
+                          "reasonsForExclusion": [
+                            "Open Ended Score Threshold",
+                            "Coherence Score Threshold"
+                          ],
+                          "redemScore": 85,
+                          "qualityScoreSummary": [
+                            {
+                              "qualityCheck": "OES",
+                              "score": 80
+                            },
+                            {
+                              "qualityCheck": "CHS",
+                              "score": 75,
+                              "reason": "The user shows several inconsistencies and contradictions, such as different ...",
+                              "incoherentQuestions": [
+                                "Q1",
+                                "Q2"
+                              ]
+                            },
+                            {
+                              "qualityCheck": "GQS",
+                              "score": 85
+                            },
+                            {
+                              "qualityCheck": "TS",
+                              "score": 70
+                            },
+                            {
+                              "qualityCheck": "BAS",
+                              "score": 75
+                            }
+                          ],
+                          "dataPointsSummary": [
+                            {
+                              "qualityCheck": "OES",
+                              "dataPointId": "Q1",
+                              "score": 85,
+                              "category": "VALID_ANSWER"
+                            },
+                            {
+                              "qualityCheck": "TS",
+                              "dataPointId": "durationQ1",
+                              "score": 95
+                            },
+                            {
+                              "qualityCheck": "GQS",
+                              "dataPointId": "Q2",
+                              "score": 90
+                            },
+                            {
+                              "qualityCheck": "OES",
+                              "dataPointId": "Q3",
+                              "score": 75,
+                              "category": "AI_SUSPECT"
+                            },
+                            {
+                              "qualityCheck": "TS",
+                              "dataPointId": "durationQ3",
+                              "score": 50
+                            },
+                            {
+                              "qualityCheck": "CHS",
+                              "dataPointId": "CHS_Question",
+                              "score": 75,
+                              "reason": "The user shows several inconsistencies and contradictions, such as different ..."
+                            },
+                            {
+                              "qualityCheck": "GQS",
+                              "dataPointId": "Q4",
+                              "score": 80
+                            },
+                            {
+                              "qualityCheck": "TS",
+                              "dataPointId": "totalDuration",
+                              "score": 65
+                            },
+                            {
+                              "qualityCheck": "BAS",
+                              "dataPointId": "interactionsQ1",
+                              "score": 75,
+                              "category": "NATURAL_TYPING"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "Asynchronous Response": {
+                    "summary": "Asynchronous Response Example",
+                    "value": {
+                      "success": true,
+                      "message": "Respondent queued for evaluation",
+                      "results": {
+                        "respondentId": "RESP497770",
+                        "status": "QUEUED"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -3886,6 +3996,46 @@
                       "type": "object"
                     }
                   ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success": false,
+                      "message": "Validation Error",
+                      "errors": {
+                        "0": "\"surveyName\" is required",
+                        "1": "\"dataPoints[0].dataPointId\" is required"
+                      }
+                    }
+                  },
+                  "ID already exists": {
+                    "value": {
+                      "success": false,
+                      "message": "ID already exists",
+                      "errors": {}
+                    }
+                  },
+                  "Survey has been stopped": {
+                    "value": {
+                      "success": false,
+                      "message": "Survey has been stopped",
+                      "errors": {}
+                    }
+                  },
+                  "Insufficient credit balance": {
+                    "value": {
+                      "success": false,
+                      "message": "Insufficient credit balance",
+                      "errors": {}
+                    }
+                  },
+                  "Respondent processing timed out": {
+                    "value": {
+                      "success": false,
+                      "message": "Respondent processing timed out",
+                      "errors": {}
+                    }
+                  }
                 }
               }
             }
@@ -4123,7 +4273,7 @@
           "Respondent"
         ],
         "summary": "Delete respondents",
-        "operationId": "deleteRespondents",
+        "operationId": "deleteRespondentsV3",
         "description": "Delete one or more respondents from a survey and clean up related data.",
         "requestBody": {
           "required": true,
@@ -4182,7 +4332,7 @@
           "Survey"
         ],
         "summary": "Delete surveys",
-        "operationId": "deleteSurveys",
+        "operationId": "deleteSurveysV3",
         "description": "Delete one or more surveys and all associated data that you own.",
         "requestBody": {
           "required": true,
