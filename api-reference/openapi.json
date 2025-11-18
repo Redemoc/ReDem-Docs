@@ -4348,20 +4348,181 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully retrieved respondent data",
+            "description": "When a request is successfully processed, the API responds with a `200 OK` status code and the expected data. The structure of the response varies based on the respondent's status.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
+                  "oneOf": [
+                    {
+                      "title": "Respondent Completed",
+                      "description": "This response mode is available when the respondent status is `COMPLETED`. In this case, the system returns the full quality assessment of the respondent.",
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "description": "A variable indicating whether the **operation was successful**.",
+                          "enum": [true, false]
+                        },
+                        "message": {
+                          "type": "string",
+                          "description": "A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results": {
+                          "type": "object",
+                          "description": "This variable includes **all quality parameters associated with a respondent**.",
+                          "properties": {
+                            "respondentId": {
+                              "type": "string",
+                              "description": "A variable that **indicates the respondent**."
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that represents the **current state of the respondent evaluation**. For respondents who have been successfully evaluated, this value will always be `COMPLETED`."
+                            },
+                            "respondentQuality": {
+                              "description": "This variable **represents respondent data that has been evaluated based on the quality checks specified in the /addRespondent request**. \n\n 💡Important: Even if a respondent fails evaluation, the response will still be returned with results and an error code of -999 instead of valid scores. \n\n **⭕ Note:** The value -999 is a predefined code returned by ReDem whenever a respondent cannot be evaluated. This applies to all quality scores, including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS.",
+                              "$ref": "#/components/schemas/RespondentResults_v3"
+                            }
+                          }
+                        }
+                      }
                     },
-                    "message": {
-                      "type": "string"
-                    },
-                    "results": {
-                      "$ref": "#/components/schemas/RespondentResults_v3"
+                    {
+                      "title": "Respondent Processing",
+                      "description": "This response mode is available when the respondent status is `QUEUED`. In this case, the system returns only the respondent status, without the quality assessment.",
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "description": "A variable that **indicates whether the operation was successful or not**.",
+                          "enum": [true, false]
+                        },
+                        "message": {
+                          "type": "string",
+                          "description": "A variable that **human-readable message** providing additional context or confirmation of the requested action."
+                        },
+                        "results": {
+                          "type": "object",
+                          "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                          "properties": {
+                            "respondentId": {
+                              "type": "string",
+                              "description": "A variable that **indicates the respondent**."
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A variable that represents the **current state of the respondent evaluation**. For respondents who are still being processed, this value will always be `QUEUED`."
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Respondent Completed": {
+                    "summary": "Respondent Completed Example (v3, includes OES effort)",
+                    "value": {
+                      "success": true,
+                      "message": "Respondent quality successfully retrieved",
+                      "results": {
+                        "respondentId": "RESP497770",
+                        "status": "COMPLETED",
+                        "respondentQuality": {
+                          "isExcluded": true,
+                          "reasonsForExclusion": [
+                            "Open Ended Score Threshold",
+                            "Coherence Score Threshold"
+                          ],
+                          "redemScore": 85,
+                          "qualityScoreSummary": [
+                            {
+                              "qualityCheck": "OES",
+                              "score": 80
+                            },
+                            {
+                              "qualityCheck": "CHS",
+                              "score": 75,
+                              "reason": "The user shows several inconsistencies and contradictions, such as different ..."
+                            },
+                            {
+                              "qualityCheck": "GQS",
+                              "score": 85
+                            },
+                            {
+                              "qualityCheck": "TS",
+                              "score": 70
+                            },
+                            {
+                              "qualityCheck": "BAS",
+                              "score": 75
+                            }
+                          ],
+                          "dataPointsSummary": [
+                            {
+                              "qualityCheck": "OES",
+                              "dataPointId": "Q1",
+                              "score": 85,
+                              "category": "VALID_ANSWER",
+                              "effort": "HIGH"
+                            },
+                            {
+                              "qualityCheck": "TS",
+                              "dataPointId": "durationQ1",
+                              "score": 95
+                            },
+                            {
+                              "qualityCheck": "GQS",
+                              "dataPointId": "Q2",
+                              "score": 90
+                            },
+                            {
+                              "qualityCheck": "OES",
+                              "dataPointId": "Q3",
+                              "score": 75,
+                              "category": "VALID_ANSWER"
+                            },
+                            {
+                              "qualityCheck": "TS",
+                              "dataPointId": "durationQ3",
+                              "score": 50
+                            },
+                            {
+                              "qualityCheck": "CHS",
+                              "dataPointId": "CHS_Question",
+                              "score": 75,
+                              "reason": "The user shows several inconsistencies and contradictions, such as different ..."
+                            },
+                            {
+                              "qualityCheck": "GQS",
+                              "dataPointId": "Q4",
+                              "score": 80
+                            },
+                            {
+                              "qualityCheck": "TS",
+                              "dataPointId": "totalDuration",
+                              "score": 65
+                            },
+                            {
+                              "qualityCheck": "BAS",
+                              "dataPointId": "interactionsQ1",
+                              "score": 75,
+                              "category": "NATURAL_TYPING"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "Respondent Processing": {
+                    "summary": "Respondent Processing Example",
+                    "value": {
+                      "success": true,
+                      "message": "Respondent quality successfully retrieved",
+                      "results": {
+                        "respondentId": "RESP497770",
+                        "status": "QUEUED"
+                      }
                     }
                   }
                 }
@@ -4396,25 +4557,209 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully retrieved all respondents",
+            "description": "When a request is successfully processed, the API responds with a `200 OK` status code and the expected data.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "success": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "A variable indicating whether the **operation was successful**.",
+                      "enum": [true, false]
                     },
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "A variable that **human-readable message** providing additional context or confirmation of the requested action."
                     },
                     "results": {
                       "type": "array",
+                      "description": "This variable includes **all quality parameters associated with a respondent**.",
                       "items": {
-                        "$ref": "#/components/schemas/RespondentResults_v3"
+                        "type": "object",
+                        "properties": {
+                          "respondentId": {
+                            "type": "string",
+                            "description": "**The unique identifier for a respondent**, making it easy to distinguish them from others in the survey.",
+                            "example": "RESP497770"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "A variable that **indicates the current state of the respondent**. \n\n **💡Important:** Even if a respondent fails evaluation, the response status will still be `COMPLETED`. \n\n **⭕ Note:** The value -999 is a predefined code returned by ReDem whenever a respondent cannot be evaluated. This applies to all quality scores, including ReDem Score (R-Score), OES, GQS, CHS, TS, and BAS.",
+                            "enum": ["COMPLETED", "QUEUED"]
+                          },
+                          "respondentQuality": {
+                            "description": "This variable **represents respondent data that has been evaluated according to the quality checks specified in the /addRespondent request**. \n\n **⭕ Note:** this variable will only be available if the respondent status is `COMPLETED`.",
+                            "$ref": "#/components/schemas/RespondentResults_v3"
+                          }
+                        }
                       }
                     }
                   }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Respondents quality retrieved successfully",
+                  "results": [
+                    {
+                      "respondentId": "RESP497770",
+                      "status": "COMPLETED",
+                      "respondentQuality": {
+                        "isExcluded": false,
+                        "reasonsForExclusion": [
+                          "Open Ended Score Threshold",
+                          "Coherence Score Threshold"
+                        ],
+                        "redemScore": 85,
+                        "dataPointsSummary": [
+                          {
+                            "qualityCheck": "OES",
+                            "dataPointId": "Q1",
+                            "score": 85,
+                            "category": "VALID_ANSWER",
+                            "effort": "HIGH"
+                          },
+                          {
+                            "qualityCheck": "TS",
+                            "dataPointId": "durationQ1",
+                            "score": 95
+                          },
+                          {
+                            "qualityCheck": "GQS",
+                            "dataPointId": "Q2",
+                            "score": 90
+                          },
+                          {
+                            "qualityCheck": "OES",
+                            "dataPointId": "Q3",
+                            "score": 75,
+                            "category": "VALID_ANSWER"
+                          },
+                          {
+                            "qualityCheck": "TS",
+                            "dataPointId": "durationQ3",
+                            "score": 50
+                          },
+                          {
+                            "qualityCheck": "CHS",
+                            "dataPointId": "CHS_Question",
+                            "score": 75,
+                            "reason": "The user shows several inconsistencies and contradictions, such as different ..."
+                          },
+                          {
+                            "qualityCheck": "GQS",
+                            "dataPointId": "Q4",
+                            "score": 80
+                          },
+                          {
+                            "qualityCheck": "TS",
+                            "dataPointId": "totalDuration",
+                            "score": 65
+                          }
+                        ],
+                        "qualityScoreSummary": [
+                          {
+                            "qualityCheck": "OES",
+                            "score": 80
+                          },
+                          {
+                            "qualityCheck": "CHS",
+                            "score": 75,
+                            "reason": "The user shows several inconsistencies and contradictions, such as different ..."
+                          },
+                          {
+                            "qualityCheck": "GQS",
+                            "score": 85
+                          },
+                          {
+                            "qualityCheck": "TS",
+                            "score": 70
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "respondentId": "RESP497771",
+                      "status": "PROCESSING"
+                    },
+                    {
+                      "respondentId": "RESP497772",
+                      "status": "PROCESSING"
+                    },
+                    {
+                      "respondentId": "RESP497773",
+                      "status": "COMPLETED",
+                      "respondentQuality": {
+                        "isExcluded": false,
+                        "reasonsForExclusion": [],
+                        "redemScore": -999,
+                        "dataPointsSummary": [
+                          {
+                            "qualityCheck": "OES",
+                            "dataPointId": "Q1",
+                            "score": -999,
+                            "category": "N/A"
+                          },
+                          {
+                            "qualityCheck": "TS",
+                            "dataPointId": "durationQ1",
+                            "score": -999
+                          },
+                          {
+                            "qualityCheck": "GQS",
+                            "dataPointId": "Q2",
+                            "score": -999
+                          },
+                          {
+                            "qualityCheck": "OES",
+                            "dataPointId": "Q3",
+                            "score": -999,
+                            "category": "N/A"
+                          },
+                          {
+                            "qualityCheck": "TS",
+                            "dataPointId": "durationQ3",
+                            "score": -999
+                          },
+                          {
+                            "qualityCheck": "CHS",
+                            "dataPointId": "CHS_Question",
+                            "score": -999,
+                            "reason": "N/A"
+                          },
+                          {
+                            "qualityCheck": "GQS",
+                            "dataPointId": "Q4",
+                            "score": -999
+                          },
+                          {
+                            "qualityCheck": "TS",
+                            "dataPointId": "totalDuration",
+                            "score": -999
+                          }
+                        ],
+                        "qualityScoreSummary": [
+                          {
+                            "qualityCheck": "OES",
+                            "score": -999
+                          },
+                          {
+                            "qualityCheck": "CHS",
+                            "score": -999,
+                            "reason": "N/A"
+                          },
+                          {
+                            "qualityCheck": "GQS",
+                            "score": -999
+                          },
+                          {
+                            "qualityCheck": "TS",
+                            "score": -999
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -4452,32 +4797,44 @@
         },
         "responses": {
           "200": {
-            "description": "Survey stopped successfully",
+            "description": "Upon successful processing, the API returns a 200 OK status code along with the expected data.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean"
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable indicating whether the **operation was successful**.",
+                      "enum":[true,false]
                     },
-                    "message": {
-                      "type": "string"
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
                     },
                     "results": {
                       "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                       "properties": {
-                        "surveyId": {
-                          "type": "string"
-                        },
                         "surveyName": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "A variable that **indicates the survey name**."
                         },
                         "status": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "A variable that **indicates the status of the survey**. \n\n **⭕ Note:** ReDem surveys have two possible statuses: `RUNNING` and `STOPPED`. The survey status will be updated to `STOPPED` once the survey is stopped."
                         }
                       }
                     }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Survey successfully stopped",
+                  "results": {
+                    "surveyId": "68e4f174adc679a59fe16324",
+                    "surveyName": "Global Vacation Insights 2024",
+                    "status": "STOPPED"
                   }
                 }
               }
@@ -4516,32 +4873,53 @@
         },
         "responses": {
           "200": {
-            "description": "Survey restarted successfully",
+            "description": "Upon successful processing, the API returns a 200 OK status code along with the expected data.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean"
+                    "success":{
+                      "type":"boolean",
+                      "description":"A variable indicating whether the **operation was successful**.",
+                      "enum":[true,false]
                     },
-                    "message": {
-                      "type": "string"
+                    "message":{
+                      "type":"string",
+                      "description":"A variable that **human-readable message** providing additional context or confirmation of the requested action."
                     },
                     "results": {
                       "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
                       "properties": {
                         "surveyId": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "A variable that **indicates the unique survey identifier**."
                         },
                         "surveyName": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "A variable that **indicates the survey name**."
                         },
                         "status": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "A variable that **indicates the status of the survey**. \n\n **⭕ Note:** ReDem surveys have two possible statuses: `RUNNING` and `STOPPED`. The survey status will be updated to `RUNNING` once the survey is restarted."
+                        },
+                        "previousStatus": {
+                          "type": "string",
+                          "description": "A variable that **indicates the previous status of the survey** before the restart."
                         }
                       }
                     }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Survey successfully restarted",
+                  "results": {
+                    "surveyId": "68e4f174adc679a59fe16324",
+                    "surveyName": "Global Vacation Insights 2024",
+                    "status": "RUNNING",
+                    "previousStatus": "STOPPED"
                   }
                 }
               }
@@ -4586,20 +4964,34 @@
         },
         "responses": {
           "200": {
-            "description": "Respondents deleted successfully",
+            "description": "When a request is successfully processed, the API returns a 200 OK status code along with the expected data.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
+                    "success": { "type": "boolean", "description": "A variable indicating whether the **operation was successful**." },
+                    "message": { "type": "string", "description": "A variable that **human-readable message** providing additional context or confirmation of the requested action." },
                     "results": {
-                      "type": "object"
+                      "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                      "properties": {
+                        "deleted": {
+                          "type": "object",
+                          "properties": {
+                            "respondent": { "type": "number" }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Respondents deleted successfully",
+                  "results": {
+                    "deleted": {
+                      "respondent": 2
                     }
                   }
                 }
@@ -4641,20 +5033,49 @@
         },
         "responses": {
           "200": {
-            "description": "Surveys deleted successfully",
+            "description": "Successful deletion response.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
+                    "success": { "type": "boolean", "description": "A variable indicating whether the **operation was successful**." },
+                    "message": { "type": "string", "description": "A variable that **human-readable message** providing additional context or confirmation of the requested action." },
                     "results": {
-                      "type": "object"
+                      "type": "object",
+                      "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                      "x-additionalPropertiesName": "Survey Name",
+                      "properties": {
+                        "{Survey Name}": {
+                          "type": "object",
+                          "properties": {
+                            "success": { "type": "boolean", "description": "A variable indicating whether the **operation was successful**." },
+                            "deleted": {
+                              "type": "object",
+                              "description": "This object serves as a **container to hold the results for the requested data**, encapsulating all relevant information and outputs in a structured format.",
+                              "properties": {
+                                "respondents": { "type": "number" }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Surveys deleted successfully",
+                  "results": {
+                    "Customer-Satisfaction-2025": {
+                      "success": true,
+                      "deleted": {
+                        "respondents": 120
+                      }
+                    },
+                    "NPS-Q3-2025": {
+                      "success": false,
+                      "message": "Survey not found or not owned by user"
                     }
                   }
                 }
@@ -4662,7 +5083,21 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/ValidationError"
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive message explaining the issue and an error object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success": false,
+                      "message": "Validation Error",
+                      "errors": { "0": "\"surveyNames\" is required" }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4716,6 +5151,22 @@
                         "creditCalculation": {
                           "$ref": "#/components/schemas/CalculationBreakdown"
                         }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Credit calculation successfully retrieved",
+                  "results": {
+                    "creditCalculation": {
+                      "totalCredits": 12,
+                      "calculationBreakdown": {
+                        "OES": {"credits": 4, "dataPoints": 2},
+                        "GQS": {"credits": 3, "answers": 35},
+                        "TS": {"credits": 1, "dataPoints": 2},
+                        "CHS": {"credits": 4, "answers": 25},
+                        "BAS": {"credits": 4, "dataPoints": 2}
                       }
                     }
                   }
