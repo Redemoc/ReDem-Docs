@@ -4765,13 +4765,27 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/ValidationError"
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive message explaining the issue and an error object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success": false,
+                      "message": "Validation Error",
+                      "errors": { "0": "\"surveyName\" is required" }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
     "/v3/stopSurvey": {
-      "post": {
+      "post": {recalculateRespondents
         "tags": [
           "Survey"
         ],
@@ -4841,7 +4855,21 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/ValidationError"
+            "description": "When a request fails due to invalid input or other errors, the API returns a 400 Bad Request status code. The response includes a descriptive message explaining the issue and an error object containing additional details to aid in diagnosing and resolving the problem.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success": false,
+                      "message": "Validation Error",
+                      "errors": { "0": "\"surveyName\" is required" }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -5191,6 +5219,28 @@
                       "type": "object"
                     }
                   ]
+                },
+                "examples": {
+                  "Validation Error": {
+                    "value": {
+                      "success": false,
+                      "message": "Validation Error",
+                      "errors": {
+                        "0": "\"OESDataPoints\" is required",
+                        "1": "\"GQSAnswers\" is required",
+                        "2": "\"TSDataPoints\" is required",
+                        "3": "\"CHSAnswers\" is required",
+                        "4": "\"BASDataPoints\" is required"
+                      }
+                    }
+                  },
+                  "Failed to calculate credits": {
+                    "value": {
+                      "success": false,
+                      "message": "Failed to calculate credits",
+                      "errors": {}
+                    }
+                  }
                 }
               }
             }
