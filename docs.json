@@ -104,7 +104,8 @@
                   "api-reference/endpoints/v3/stopSurvey",
                   "api-reference/endpoints/v3/creditCalculation",
                   "api-reference/endpoints/v3/deleteRespondents",
-                  "api-reference/endpoints/v3/deleteSurveys"
+                  "api-reference/endpoints/v3/deleteSurveys",
+                  "api-reference/endpoints/v3/updateRespondentsExcludedStatus"
                 ]
               },
               {
@@ -214,9 +215,10 @@
                   "api-reference/endpoints/v2/getAllRespondents",
                   "api-reference/endpoints/v2/restartSurvey",
                   "api-reference/endpoints/v2/stopSurvey",
-              "api-reference/endpoints/v2/creditCalculation",
-              "api-reference/endpoints/v2/deleteRespondents",
-              "api-reference/endpoints/v2/deleteSurveys"
+                  "api-reference/endpoints/v2/creditCalculation",
+                  "api-reference/endpoints/v2/deleteRespondents",
+                  "api-reference/endpoints/v2/deleteSurveys",
+                  "api-reference/endpoints/v2/updateRespondentsExcludedStatus"
                 ]
               },
               {

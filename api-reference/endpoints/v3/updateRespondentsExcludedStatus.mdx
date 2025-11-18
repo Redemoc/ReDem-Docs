@@ -1,0 +1,6 @@
+---
+title: 'Update Respondents Excluded Status'
+openapi: 'POST /v3/updateRespondentsExcludedStatus'
+---
+
+This endpoint allows you to manually update the exclusion status of one or more respondents within a survey. It acts as a toggle — if a respondent is currently excluded, they will be included after the update, and vice versa. The endpoint also automatically updates the `reasonsForExclusion` field to reflect the respondent’s new status.
