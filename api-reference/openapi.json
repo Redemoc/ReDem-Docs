@@ -4785,7 +4785,7 @@
       }
     },
     "/v3/stopSurvey": {
-      "post": {recalculateRespondents
+      "post": {
         "tags": [
           "Survey"
         ],
