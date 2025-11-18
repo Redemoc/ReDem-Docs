@@ -104,7 +104,8 @@
                   "api-reference/endpoints/v3/stopSurvey",
                   "api-reference/endpoints/v3/creditCalculation",
                   "api-reference/endpoints/v3/deleteRespondents",
-                  "api-reference/endpoints/v3/deleteSurveys"
+                  "api-reference/endpoints/v3/deleteSurveys",
+                  "api-reference/endpoints/v3/updateRespondentsExcludedStatus"
                 ]
               },
               {
