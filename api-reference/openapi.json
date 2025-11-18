@@ -1253,14 +1253,31 @@
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
-                  "type": "number",
-                  "example": 400
+                "success": {
+                  "type": "boolean",
+                  "example": false
                 },
                 "message": {
                   "type": "string",
-                  "example": "VALIDATION_ERROR"
+                  "example": "Validation Error"
+                },
+                "errors": {
+                  "type": "object",
+                  "description": "Keyed by error index or field name; each value is a human-readable description of the validation issue.",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "example": {
+                    "0": "\"surveyName\" is required"
+                  }
                 }
+              }
+            },
+            "example": {
+              "success": false,
+              "message": "Validation Error",
+              "errors": {
+                "0": "\"surveyName\" is required"
               }
             }
           }
@@ -4785,7 +4802,7 @@
       }
     },
     "/v3/stopSurvey": {
-      "post": {recalculateRespondents
+      "post": {
         "tags": [
           "Survey"
         ],
