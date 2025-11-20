@@ -1092,7 +1092,7 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint_v2"
             },
-            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 1000 question/answer pairs** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
+            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 30** `OES` data points are allowed per respondent. \n - A **maximum of 500** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 1000 question/answer pairs** `CHS` data point is allowed per respondent. \n - A **maximum of 30** `BAS` data points are allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
           },
           "activateCleaning": {
             "type": "boolean",
