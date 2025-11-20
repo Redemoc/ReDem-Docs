@@ -112,7 +112,7 @@
           },
           "question": {
             "type": "string",
-            "description": "**Contains the title or text of the open-ended question**, which is used directly to evaluate respondent quality.  \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided. \n\n 🧪 **Validations:**  \n - The question must not exceed **250 characters**.",
+            "description": "**Contains the title or text of the open-ended question**, which is used directly to evaluate respondent quality.  \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided. \n\n 🧪 **Validations:**  \n - The question must not exceed **500 characters**.",
             "example": "Where did you spend your last vacation?"
           },
           "answer": {
@@ -125,7 +125,7 @@
             "items": {
               "type": "string"
             },
-            "description": "**Keywords are used to perform `wrong topic` checks** and help evaluate whether responses are relevant to the topic. \n\nThe wrong topic check is always enabled. If no keywords are provided, the system uses the question title for evaluation. When keywords are provided, they enhance the context and improve the accuracy of the check. \n\n For more details on how this works, refer to the [Wrong Topic Check](/quality-checks/open-ended-score#wrong-topic) section. \n\n 🧪 **Validations:**  \n - A **maximum of 10** keywords are allowed for each question.",
+            "description": "**Keywords are used to perform `wrong topic` checks** and help evaluate whether responses are relevant to the topic. \n\nThe wrong topic check is always enabled. If no keywords are provided, the system uses the question title for evaluation. When keywords are provided, they enhance the context and improve the accuracy of the check. \n\n For more details on how this works, refer to the [Wrong Topic Check](/quality-checks/open-ended-score#wrong-topic) section. \n\n 🧪 **Validations:**  \n - A **maximum of 20** keywords are allowed for each question.",
             "example": ["Beach", "Mountains", "Lake"]
           },
           "activateDuplicateDetection": {
@@ -1092,7 +1092,7 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint_v2"
             },
-            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 1000 question/answer pairs** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
+            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 30** `OES` data points are allowed per respondent. \n - A **maximum of 500** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 1000 question/answer pairs** `CHS` data point is allowed per respondent. \n - A **maximum of 30** `BAS` data points are allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
           },
           "activateCleaning": {
             "type": "boolean",
