@@ -112,7 +112,7 @@
           },
           "question": {
             "type": "string",
-            "description": "**Contains the title or text of the open-ended question**, which is used directly to evaluate respondent quality.  \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided. \n\n 🧪 **Validations:**  \n - The question must not exceed **250 characters**.",
+            "description": "**Contains the title or text of the open-ended question**, which is used directly to evaluate respondent quality.  \n\n This variable is required only when the quality check type is set to `OES`. For all other quality check types, it will be ignored, even if provided. \n\n 🧪 **Validations:**  \n - The question must not exceed **500 characters**.",
             "example": "Where did you spend your last vacation?"
           },
           "answer": {
