@@ -16,14 +16,49 @@ iconType: "regular"
 
 ## Preparing Your Data
 
-To ensure smooth processing and the best possible results, please follow these guidelines before
-importing data:
+To ensure smooth processing and the best possible results, please follow these guidelines before importing data.
 
-- **File Format**: Only CSV or Excel files are supported.
-- **Labels & Sheets:** Single-sheet files or multi-sheet Excel files are supported. If your file has multiple sheets, you'll select which sheet contains the data and which contains the labels in Step 1. When using a single sheet, all data on that sheet must be fully labelled. All answers must be provided as plain text (not coded values).
-- **Header Row (Row 1):** The first row must contain unique column headings that identify each variable.
-- **Question Text Row (Row 2):** The second row must contain the full question text for each column.
-- **Respondent Data (Row 3 onward):** Starting from the third row, list the responses. Each row represents one respondent, and all responses should be in plain text.
+### Supported Formats
+
+Only **CSV** or **Excel** files are supported.
+
+### Required Formatting for Quality Checks
+
+If you want to use content-based Quality Checks (**Coherence Score** or **Open-Ended Score**), your uploaded file must include both questions and answers in a clearly labeled format. You can structure your file in two ways:
+
+#### a) Single-Sheet Files
+
+If all data is stored in one sheet, ensure that each column contains:
+- A unique variable identifier (e.g., `Q1A1_1`)
+- The full question text (e.g., "Please indicate how often you usually eat the following types of food. Think about a normal week. / Red meat (e.g., beef, pork)")
+- The labeled answer (e.g., "rarely")
+
+**Recommended structure:**
+- **Row 1 - Header row:** Unique variable identifiers
+- **Row 2 - Question text row:** Full question text for each variable
+- **Row 3 onward - Respondent data:** One row per respondent, with responses in plain text
+
+<Note>
+It is also acceptable if the question text is embedded directly in the header row after the unique variable identifier (e.g., `Q1A1_1: Please indicate how often you usually eat the following types of food. Think about a normal week. / Red meat (e.g., beef, pork)`).
+</Note>
+
+#### b) Two-Sheet Files
+
+If you use separate sheets:
+
+**Sheet 1 (Data):**
+- **Row 1:** Unique variable identifiers
+- **Row 2 onward:** Coded answers of the interview
+
+**Sheet 2 (Codebook):**
+
+Must include:
+- The mapping between variable identifiers and their full question text
+- The labeled answer options for each question and its variable identifier
+
+<Warning>
+Do not include additional information in the codebook (e.g., filter paths, metadata descriptions), as this may interfere with processing.
+</Warning>
 
 [Sample File Format](/assets/ReDem-Manual-Upload-Example.csv)
 
