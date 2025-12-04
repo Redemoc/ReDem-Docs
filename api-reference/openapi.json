@@ -5272,7 +5272,7 @@
         ],
         "summary": "Retry Respondents",
         "operationId": "retryRespondentsV3",
-        "description": "This endpoint allows you to retry specific quality checks for a list of respondents within a given survey. It is useful for re-running checks with updated parameters or if they were skipped previously. Note that this operation requires the survey to be created with API version v3 and after the feature release date (2025-12-02).",
+        "description": "Retry specific quality checks for a list of respondents within a survey.",
         "requestBody": {
           "required": true,
           "content": {
