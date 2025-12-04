@@ -5264,6 +5264,260 @@
           }
         }
       }
+    },
+    "/v3/retryRespondents": {
+      "post": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Retry Respondents",
+        "operationId": "retryRespondentsV3",
+        "description": "Retry specific quality checks for a list of respondents within a survey.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "surveyName": {
+                    "type": "string",
+                    "description": "The name of the survey."
+                  },
+                  "respondentIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100,
+                    "description": "Array of respondent IDs to retry (max 100)."
+                  },
+                  "selectedChecks": {
+                    "type": "object",
+                    "properties": {
+                      "CHS": {
+                        "type": "boolean",
+                        "description": "Check for Human Score"
+                      },
+                      "OES": {
+                        "type": "boolean",
+                        "description": "Open Ended Score"
+                      },
+                      "TS": {
+                        "type": "boolean",
+                        "description": "Time Score"
+                      },
+                      "GQS": {
+                        "type": "boolean",
+                        "description": "Grid Question Score"
+                      },
+                      "BAS": {
+                        "type": "boolean",
+                        "description": "Behavior Analysis Score"
+                      }
+                    },
+                    "required": [
+                      "CHS",
+                      "OES",
+                      "TS",
+                      "GQS",
+                      "BAS"
+                    ],
+                    "description": "Object specifying which quality checks to perform."
+                  },
+                  "oesAllowedLanguages": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Optional list of allowed languages for Open Ended Score check. This will only be processed if 'OES' is set to true in selectedChecks."
+                  },
+                  "activateDuplicateDetection": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether to activate duplicate detection during retry. This will only be processed if 'OES' is set to true in selectedChecks."
+                  },
+                  "activateGQSPatternCheck": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether to activate Grid Question Score pattern checking. This will only be processed if 'GQS' is set to true in selectedChecks."
+                  }
+                },
+                "required": [
+                  "surveyName",
+                  "respondentIds",
+                  "selectedChecks"
+                ]
+              },
+              "example": {
+                "surveyName": "Customer-Satisfaction-2025",
+                "respondentIds": [
+                  "R123",
+                  "R124"
+                ],
+                "selectedChecks": {
+                  "CHS": true,
+                  "OES": true,
+                  "TS": true,
+                  "GQS": false,
+                  "BAS": false
+                },
+                "oesAllowedLanguages": [
+                  "en",
+                  "de"
+                ],
+                "activateDuplicateDetection": true,
+                "activateGQSPatternCheck": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "When a request is successfully processed, the API returns a 200 OK status code along with the result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the operation was successful."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human-readable message."
+                    },
+                    "results": {
+                      "type": "object",
+                      "properties": {
+                        "surveyName": {
+                          "type": "string",
+                          "description": "The name of the survey."
+                        },
+                        "totalRespondents": {
+                          "type": "number",
+                          "description": "Total number of respondents processed."
+                        },
+                        "estimatedCredits": {
+                          "type": "number",
+                          "description": "Estimated credits required for the retry."
+                        },
+                        "jobIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of job IDs created for the retry."
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Recalculation queued",
+                  "results": {
+                    "surveyName": "Customer-Satisfaction-2025",
+                    "totalRespondents": 2,
+                    "estimatedCredits": 10,
+                    "jobIds": [
+                      "job-123",
+                      "job-124"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "When a request fails due to issues with the referenced resources (e.g., survey or respondent not found), the API returns a 400 Bad Request status code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Survey not found",
+                      "description": "The requested survey does not exist.",
+                      "type": "object"
+                    },
+                    {
+                      "title": "Respondent not found",
+                      "description": "No respondents found for provided IDs",
+                      "type": "object"
+                    },
+                    {
+                      "title": "Some Respondents not found",
+                      "description": "Some respondents were not found in the survey for the provided IDs",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Survey not found": {
+                    "value": {
+                      "success": false,
+                      "message": "Survey not found",
+                      "errors": {}
+                    }
+                  },
+                  "Respondent not found": {
+                    "value": {
+                      "success": false,
+                      "message": "No respondents found for provided IDs",
+                      "errors": {}
+                    }
+                  },
+                  "Some Respondents not found": {
+                    "value": {
+                      "success": false,
+                      "message": "Some respondents not found: 'R123', 'R124'",
+                      "errors": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "When a request fails due to validation errors, the API returns a 422 Unprocessable Entity status code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Validation Error",
+                      "description": "Indicating a validation failure, the response includes a `message` field specifying the issue and an `errors` object listing the missing or incorrect fields to help clients resolve them. \n\n **⭕ Note:** Refer to the [response structure](/api-reference/api-specifications/response-structure) for the format of the error response.",
+                      "type": "object"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Validation Failed": {
+                    "value": {
+                      "success": false,
+                      "message": "Validation Failed",
+                      "errors": {
+                        "0": "\"surveyName\" is required",
+                        "1": "\"respondentIds\" is required",
+                        "2": "\"respondentIds\" must contain at least 1 items",
+                        "3": "\"respondentIds\" must contain at most 100 items",
+                        "4": "\"selectedChecks\" is required",
+                        "5": "\"selectedChecks.CHS\" is required",
+                        "6": "\"selectedChecks.OES\" is required",
+                        "7": "\"selectedChecks.TS\" is required",
+                        "8": "\"selectedChecks.GQS\" is required",
+                        "9": "\"selectedChecks.BAS\" is required"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
