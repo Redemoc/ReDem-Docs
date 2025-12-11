@@ -286,7 +286,7 @@
           },
           "synchronousResponse": {
             "type": "boolean",
-            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don’t need to wait; you can later check the respondent’s status using the [Get Respondent Status endpoint](/api-reference/endpoint/getRespondentStatus).",
+            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don’t need to wait; you can later check the respondent’s status using the [Get Respondent Status endpoint](/api-reference/endpoints/v3/getRespondentStatus).",
             "example": true,
             "default": true
           }
