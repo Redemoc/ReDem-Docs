@@ -286,7 +286,7 @@
           },
           "synchronousResponse": {
             "type": "boolean",
-            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don’t need to wait; you can later check the respondent’s status using the [Get Respondent Status endpoint](/api-reference/endpoint/getRespondentStatus).",
+            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don’t need to wait; you can later check the respondent’s status using the [Get Respondent Status endpoint](/api-reference/endpoints/v1/getRespondent).",
             "example": true,
             "default": true
           }
@@ -1063,7 +1063,7 @@
           },
           "synchronousResponse": {
             "type": "boolean",
-            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don’t need to wait; you can later check the respondent’s status using the [Get Respondent Status endpoint](/api-reference/endpoint/getRespondentStatus).",
+            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don’t need to wait; you can later check the respondent’s status using the [Get Respondent Status endpoint](/api-reference/endpoints/v2/getRespondent).",
             "example": true,
             "default": true
           }
@@ -1106,7 +1106,7 @@
           },
           "synchronousResponse": {
             "type": "boolean",
-            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don't need to wait; you can later check the respondent's status using the [Get Respondent Status endpoint](/api-reference/endpoint/getRespondentStatus).",
+            "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don't need to wait; you can later check the respondent's status using the [Get Respondent Status endpoint](/api-reference/endpoints/v3/getRespondent).",
             "example": true,
             "default": true
           }
@@ -1577,7 +1577,7 @@
                     },
                     {
                       "title": "Asynchronous Response",
-                      "description": "**Asynchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoint/getRespondentStatus) endpoint.",
+                      "description": "**Asynchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoints/v1/getRespondent) endpoint.",
                       "type": "object",
                       "properties": {
                         "success":{
@@ -2635,7 +2635,7 @@
                     },
                     {
                       "title": "Asynchronous Response",
-                      "description": "**Asynchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoint/getRespondentStatus) endpoint.",
+                      "description": "**Asynchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoints/v2/getRespondent) endpoint.",
                       "type": "object",
                       "properties": {
                         "success":{
@@ -4120,7 +4120,7 @@
                     },
                     {
                       "title": "Asynchronous Response",
-                      "description": "**Asynchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoint/getRespondentStatus) endpoint.",
+                      "description": "**Asynchronous Response** \n\nThis response mode is triggered when `synchronousResponse` is set to `false`. \n\n In this case, the system generates a detailed response and processes it asynchronously, meaning the request will not wait (`await`) for the evaluation to complete. Instead, the evaluation is performed in the background, and the status of the respondent can be retrieved later using the [Get Respondent Status](/api-reference/endpoints/v3/getRespondent) endpoint.",
                       "type": "object",
                       "properties": {
                         "success":{
