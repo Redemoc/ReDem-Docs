@@ -106,7 +106,7 @@
                   "api-reference/endpoints/v3/deleteRespondents",
                   "api-reference/endpoints/v3/deleteSurveys",
                   "api-reference/endpoints/v3/updateRespondentsExcludedStatus",
-                  "api-reference/endpoints/v3/retryRespondents"
+                  "api-reference/endpoints/v3/recalculateRespondents"
                 ]
               },
               {

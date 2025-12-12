@@ -5265,14 +5265,14 @@
         }
       }
     },
-    "/v3/retryRespondents": {
+    "/v3/recalculateRespondents": {
       "post": {
         "tags": [
           "Respondent"
         ],
-        "summary": "Retry Respondents",
-        "operationId": "retryRespondentsV3",
-        "description": "This endpoint allows you to retry specific quality checks for a list of respondents within a given survey. It is useful for re-running checks with updated parameters or if they were skipped previously. Note that this operation requires the survey to be created with API version v3 and after the feature release date (2025-12-02).",
+        "summary": "Recalculate Respondents",
+        "operationId": "recalculateRespondentsV3",
+        "description": "This endpoint allows you to recalculate specific quality checks for a list of respondents within a given survey. It is useful for re-running checks with updated parameters or if they were skipped previously. Note that this operation requires the survey to be created with API version v3 and after the feature release date (2025-12-02).",
         "requestBody": {
           "required": true,
           "content": {
@@ -5291,40 +5291,33 @@
                     },
                     "minItems": 1,
                     "maxItems": 100,
-                    "description": "Array of respondent IDs to retry (max 100)."
+                    "description": "Array of respondent IDs to recalculate (max 100)."
                   },
                   "selectedChecks": {
                     "type": "object",
                     "properties": {
                       "CHS": {
                         "type": "boolean",
-                        "description": "Check for Human Score"
+                        "description": "Coherence Score. Set to true to recalculate. Omit or set to false to skip."
                       },
                       "OES": {
                         "type": "boolean",
-                        "description": "Open Ended Score"
+                        "description": "Open Ended Score. Set to true to recalculate. Omit or set to false to skip."
                       },
                       "TS": {
                         "type": "boolean",
-                        "description": "Time Score"
+                        "description": "Time Score. Set to true to recalculate. Omit or set to false to skip."
                       },
                       "GQS": {
                         "type": "boolean",
-                        "description": "Grid Question Score"
+                        "description": "Grid Question Score. Set to true to recalculate. Omit or set to false to skip."
                       },
                       "BAS": {
                         "type": "boolean",
-                        "description": "Behavior Analysis Score"
+                        "description": "Behavior Analysis Score. Set to true to recalculate. Omit or set to false to skip."
                       }
                     },
-                    "required": [
-                      "CHS",
-                      "OES",
-                      "TS",
-                      "GQS",
-                      "BAS"
-                    ],
-                    "description": "Object specifying which quality checks to perform."
+                    "description": "Object specifying which quality checks to recalculate. At least one check must be set to true. Omitted checks are treated as false."
                   },
                   "oesAllowedLanguages": {
                     "type": "array",
@@ -5336,7 +5329,7 @@
                   "activateDuplicateDetection": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Whether to activate duplicate detection during retry. This will only be processed if 'OES' is set to true in selectedChecks."
+                    "description": "Whether to activate duplicate detection during recalculation. This will only be processed if 'OES' is set to true in selectedChecks."
                   },
                   "activateGQSPatternCheck": {
                     "type": "boolean",
@@ -5358,17 +5351,13 @@
                 ],
                 "selectedChecks": {
                   "CHS": true,
-                  "OES": true,
-                  "TS": true,
-                  "GQS": false,
-                  "BAS": false
+                  "OES": true
                 },
                 "oesAllowedLanguages": [
                   "en",
                   "de"
                 ],
-                "activateDuplicateDetection": true,
-                "activateGQSPatternCheck": false
+                "activateDuplicateDetection": true
               }
             }
           }
@@ -5402,14 +5391,7 @@
                         },
                         "estimatedCredits": {
                           "type": "number",
-                          "description": "Estimated credits required for the retry."
-                        },
-                        "jobIds": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          },
-                          "description": "List of job IDs created for the retry."
+                          "description": "Estimated credits required for the recalculation."
                         }
                       }
                     }
@@ -5421,11 +5403,7 @@
                   "results": {
                     "surveyName": "Customer-Satisfaction-2025",
                     "totalRespondents": 2,
-                    "estimatedCredits": 10,
-                    "jobIds": [
-                      "job-123",
-                      "job-124"
-                    ]
+                    "estimatedCredits": 10
                   }
                 }
               }
