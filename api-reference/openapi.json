@@ -203,7 +203,7 @@
           },
           "dataPointId": {
             "type": "string",
-            "description": "**A unique identifier assigned to each data point**, allowing users to pick a customized name. This name will be used to identify and reference the data point later within the system. Note that there can be only one CHS datapoint per respondent. This datapoint should contain the entire interview.",
+            "description": "**A unique identifier assigned to each data point**, allowing users to pick a customized name. This name will be used to identify and reference the data point later within the system. Note that there can be only one CHS datapoint per respondent. This datapoint should contain the entire interview. \n\n **Note:** We strongly recommend to send the same `dataPointId` for all respondents in the survey.",
             "example": "CHS_DataPoint"
           },
           "interviewData": {
@@ -1144,7 +1144,7 @@
           },
           "dataPointId": {
             "type": "string",
-            "description": "**A unique identifier assigned to each data point**, allowing users to pick a customized name. This name will be used to identify and reference the data point later within the system. Note that there can be only one CHS datapoint per respondent. This datapoint should contain the entire interview.",
+            "description": "**A unique identifier assigned to each data point**, allowing users to pick a customized name. This name will be used to identify and reference the data point later within the system. Note that there can be only one CHS datapoint per respondent. This datapoint should contain the entire interview. \n\n **Note:** We strongly recommend to send the same `dataPointId` for all respondents in the survey.",
             "example": "CHS_DataPoint"
           },
           "interviewData": {
