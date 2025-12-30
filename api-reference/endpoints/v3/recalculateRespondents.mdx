@@ -1,0 +1,13 @@
+---
+title: 'Recalculate Respondents'
+openapi: 'POST /v3/recalculateRespondents'
+---
+
+This endpoint allows you to recalculate specific quality checks for a list of respondents within a survey. It is useful when you need to re-evaluate respondents with updated check configurations (e.g., enabling OES or Duplicate Detection) or if previous checks were skipped.
+
+**Prerequisites:**
+- The survey must have been created with API version `v3`.
+- The feature must be enabled and the survey created after the feature release date (2025-12-02).
+- You must provide valid `respondentIds` belonging to the specified `surveyName`.
+- The number of `respondentIds` per request is limited to 100.
+
