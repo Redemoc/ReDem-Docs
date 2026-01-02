@@ -5,6 +5,38 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-01-02" description="v1.4.2">
+  ## Respondent Attributes: Support for your own custom attributes
+  - You can now add any custom attributes to the respondent during the import process. These values will be available in the ReDem App and in the result export and can be used for further analysis of your data.
+  ## Minor improvements
+  - **Survey Overview**: The survey overview page is loading considerably faster now.
+  - **Respondent Table**:The table pagination used to be buggy when switching between pages and page sizes. This issue is now resolved.
+</Update>
+
+<Update label="2025-12-22" description="v1.4.1">
+  ## Improved Respondent Table
+  - **Column filtering**: You can now select which columns are displayed in the Respondent Table. This allows for a more focused view of the data.
+  - **Header grouping**: The headers in the Respondent Table used to be hard to read as grouping of columns was not clear. Now columns that belong together have their own header group.
+  - **Accessibility**: the readibility of several buttons in the Respondent Table is improved.
+
+  ## Refined Excel and CSV Export
+  - **Column filtering**: The Excel and CSV export mimic the column filtering in the Respondent Table. Only columns visible in the Respondent Table will be exported.
+  - **Additional Excel sheets**: The Excel export now includes additional sheets for the OES, GQS, TS and CHS results. This makes post processesing the data easier.
+
+  ## Time Score
+  - Respondents that take a very long time to complete a survey are now scored lower. Previously the lowest Time Score for a respondent that took longer than the median was 50. The lowest Score is now 30.
+  
+  ## New BAS keystroke visualization
+  - The BAS keystroke visualization has been completely revamped. You can skip the visualization during long pauses from respondents, see the total time spent typing and more.
+
+  ## Survey Import
+  - There are several minor improvements to the survey import process that make it feel smoother and more user-friendly.
+
+  ## Transaction Overview
+  - **Overview**: The Transaction Overview for Account Admins now shows a summary of the transactions for the account, as well as the total credits used and available. 
+  - **Export**: It's now possible to export all transactions of your account. This is useful if you want to review transactions and get a better overview of your usage.
+  </Update>
+
 <Update label="2025-12-11" description="v1.4.0">
   ## Export: Excel Format Support
 
