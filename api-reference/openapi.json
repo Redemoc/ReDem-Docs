@@ -1109,6 +1109,14 @@
             "description": "**Indicates whether the response should be processed synchronously**. \n\n - Set to `true` if you need an immediate response. \n - Set to false if you don't need to wait; you can later check the respondent's status using the [Get Respondent Status endpoint](/api-reference/endpoints/v3/getRespondent).",
             "example": true,
             "default": true
+          },
+          "respondentAttributes": {
+            "type": "object",
+            "description": "**Additional attributes** for the respondent. Contains a list of key-value pairs that can be used to add additional metadata to the respondent, such as the panel the respondent belongs to and the country the respondent is from. \n\n These values will be available in the ReDem App and in the result export. They can be used for further analysis of your data.",
+            "example": {
+              "panel": "Panel Name",
+              "country": "United States"
+            }
           }
         }
       },
@@ -4069,7 +4077,11 @@
                     }
                   }
                 },
-                "synchronousResponse": true
+                "synchronousResponse": true,
+                "respondentAttributes": {
+                  "panel": "Panel Name",
+                  "country": "United States"
+                }
               }
             }
           }
