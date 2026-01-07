@@ -1540,6 +1540,26 @@
           }
         },
         "responses": {
+          "429": {
+            "description": "Too Many Requests. This API key exceeded the configured per-minute rate limit. Standard keys are limited to 600 requests per minute for addRespondent; premium keys may be configured for higher limits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string", "example": "rate_limit_exceeded" },
+                    "message": { "type": "string", "example": "This API key exceeded 600 requests per minute." },
+                    "statusCode": { "type": "number", "example": 429 }
+                  }
+                },
+                "example": {
+                  "error": "rate_limit_exceeded",
+                  "message": "This API key exceeded 600 requests per minute.",
+                  "statusCode": 429
+                }
+              }
+            }
+          },
           "200": {
             "description": "When a request is successfully processed, the API returns a 200 OK status code along with the expected data. The structure of the response depends on the synchronousResponse parameter provided in the request body, which determines whether the response is synchronous (results of the respondent evaluation are returned immediately) or asynchronous (a respondent is created and the results of the respondent evaluation are available later through a separate endpoint).",
             "content": {
@@ -2598,6 +2618,26 @@
           }
         },
         "responses": {
+          "429": {
+            "description": "Too Many Requests. This API key exceeded the configured per-minute rate limit. Standard keys are limited to 600 requests per minute for addRespondent; premium keys may be configured for higher limits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string", "example": "rate_limit_exceeded" },
+                    "message": { "type": "string", "example": "This API key exceeded 600 requests per minute." },
+                    "statusCode": { "type": "number", "example": 429 }
+                  }
+                },
+                "example": {
+                  "error": "rate_limit_exceeded",
+                  "message": "This API key exceeded 600 requests per minute.",
+                  "statusCode": 429
+                }
+              }
+            }
+          },
           "200": {
             "description": "When a request is successfully processed, the API returns a 200 OK status code along with the expected data. The structure of the response depends on the synchronousResponse parameter provided in the request body, which determines whether the response is synchronous (results of the respondent evaluation are returned immediately) or asynchronous (a respondent is created and the results of the respondent evaluation are available later through a separate endpoint).",
             "content": {
@@ -4087,6 +4127,26 @@
           }
         },
         "responses": {
+          "429": {
+            "description": "Too Many Requests. This API key exceeded the configured per-minute rate limit. Standard keys are limited to 600 requests per minute for addRespondent; premium keys may be configured for higher limits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string", "example": "rate_limit_exceeded" },
+                    "message": { "type": "string", "example": "This API key exceeded 600 requests per minute." },
+                    "statusCode": { "type": "number", "example": 429 }
+                  }
+                },
+                "example": {
+                  "error": "rate_limit_exceeded",
+                  "message": "This API key exceeded 600 requests per minute.",
+                  "statusCode": 429
+                }
+              }
+            }
+          },
           "200": {
             "description": "When a request is successfully processed, the API returns a 200 OK status code along with the expected data. The structure of the response depends on the synchronousResponse parameter provided in the request body, which determines whether the response is synchronous (results of the respondent evaluation are returned immediately) or asynchronous (a respondent is created and the results of the respondent evaluation are available later through a separate endpoint).",
             "content": {

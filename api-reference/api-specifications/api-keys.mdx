@@ -38,3 +38,23 @@ You can create an API key by following these steps:
 - Use separate keys for different environments (development, staging, production).
 - Regularly rotate your keys to maintain security. We recommend every 90 days.
 - If a key is compromised, delete it immediately and generate a new one.
+
+## Rate limits
+
+All API requests authenticated with `api-key` are subject to per-key rate limiting.
+
+- `addRespondent`:
+  - Standard API keys: 600 requests per minute
+  - Premium API keys (configured per client): up to 1200 requests per minute
+- Other endpoints:
+  - 1200 requests per minute
+
+If you exceed the limit, you will receive a `429` response:
+
+```json
+{
+  "error": "rate_limit_exceeded",
+  "message": "This API key exceeded 600 requests per minute.",
+  "statusCode": 429
+}
+```

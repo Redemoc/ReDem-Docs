@@ -66,6 +66,12 @@
                 ]
               },
               {
+                "group": "Best Practices",
+                "pages": [
+                  "knowledge-base/best-practices/best-practice-setup"
+                ]
+              },
+              {
                 "group": "Miscellaneous",
                 "pages": [
                   "knowledge-base/miscellaneous/redem-credits",
@@ -180,6 +186,12 @@
                 ]
               },
               {
+                "group": "Best Practices",
+                "pages": [
+                  "knowledge-base/best-practices/best-practice-setup"
+                ]
+              },
+              {
                 "group": "Miscellaneous",
                 "pages": [
                   "knowledge-base/miscellaneous/redem-credits",
@@ -277,6 +289,12 @@
                 "group": "Core Features",
                 "pages": [
                   "knowledge-base/features/cleaning-and-review"
+                ]
+              },
+              {
+                "group": "Best Practices",
+                "pages": [
+                  "knowledge-base/best-practices/best-practice-setup"
                 ]
               },
               {
