@@ -5,12 +5,20 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-01-02" description="v3.1.1">
+  ## New Attribute: Respondent Attributes
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> - You can now add additional attributes to the respondent, such as the panel source or the market of a respondent. These values will be available in the ReDem App and in the result export and can be used for further analysis of your data.
+
+  See the [endpoint docs](/api-reference/endpoints/v3/addRespondent#body-respondent-attributes) for further details.
+</Update>
+
 <Update label="2025-12-02" description="v3.1.0">
-  ## New Endpoint: Retry Respondents
+  ## New Endpoint: Recalculate Respondents
 
-  - <code style={{ color: "green" }}> POST /v3/retryRespondents </code> - Retry specific quality checks for a list of respondents within a survey.
+  - <code style={{ color: "green" }}> POST /v3/recalculateRespondents </code> - Recalculate specific quality checks for a list of respondents within a survey.
 
-  See the [endpoint docs](/api-reference/endpoints/v3/retryRespondents) for request/response details.
+  See the [endpoint docs](/api-reference/endpoints/v3/recalculateRespondents) for request/response details.
 </Update>
 
 <Update label="2025-11-17" description="v3">
