@@ -6,10 +6,18 @@ iconType: "regular"
 ---
 
 ## Rate Limits & Performance Considerations
-The API is currently optimized for best performance, with a **response time of 3–5 seconds at a maximum rate of 1 request per second**, and up to **5 concurrent requests allowed within any rolling 5-second window**. These limits apply collectively to all clients on the ReDem Shared Tier. This reflects the current performance state, which is continuously being improved. We will keep this section updated as further optimizations are made.
+Rate limits are enforced **per API key** to protect platform stability and ensure fair usage across clients.
 
-⭕ **Please note:** The API can also handle increased request volumes; however, response times may be longer due to shared resource usage, following a first-come, first-served model.
+### Endpoint-specific limits
 
+#### `addRespondent`
+- **Standard API keys**: **600 requests / minute**
+- **Premium API keys**: **1200 requests / minute**
+
+#### All other endpoints (excluding `addRespondent`)
+- **1200 requests / minute** per API key
+
+⭕ **Please note:** If you exceed the configured limits, requests may be temporarily rejected (HTTP `429`).
 
 **🔦 Tip:** <br/>
-For clients with specific performance requirements or higher scalability needs, we recommend contacting info@redem.io to explore the **Dedicated Tier**. This tier offers greater flexibility and allows you to scale the infrastructure to meet your critical workload demands with ReDem.
+For clients with specific performance requirements or higher scalability needs, contact `info@redem.io` to explore the **Dedicated Tier**.

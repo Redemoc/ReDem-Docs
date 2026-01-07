@@ -44,17 +44,17 @@ You can create an API key by following these steps:
 All API requests authenticated with `api-key` are subject to per-key rate limiting.
 
 - `addRespondent`:
-  - Standard API keys: 300 requests per minute
-  - Premium API keys (configured per client): up to 600 requests per minute
+  - Standard API keys: 600 requests per minute
+  - Premium API keys (configured per client): up to 1200 requests per minute
 - Other endpoints:
-  - 600 requests per minute
+  - 1200 requests per minute
 
 If you exceed the limit, you will receive a `429` response:
 
 ```json
 {
   "error": "rate_limit_exceeded",
-  "message": "This API key exceeded 300 requests per minute.",
+  "message": "This API key exceeded 600 requests per minute.",
   "statusCode": 429
 }
 ```
