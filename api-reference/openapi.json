@@ -1089,7 +1089,7 @@
           },
           "surveyDescription": {
             "type": "string",
-            "description": "**The description of the survey**, which helps get the context of the survey. The survey description can be assigned freely. \n\n**🔦 Tip:** The survey description provides essential context about the purpose and subject of the survey. This context will be helpful to improve the assessment of respondents by evaluating their answers in relation to the overall survey intent. \n\n 🧪 **Validations:**  The survey description is optional. If provided, it must contain a minimum of **20 characters** and a maximum of **500 characters**."
+            "description": "**The description of the survey**, which helps get the context of the survey. The survey description can be assigned freely. \n\n**🔦 Tip:** The survey description provides essential context about the purpose and subject of the survey. This context will be helpful to improve the quality assessment of respondents by evaluating their answers in relation to the overall survey intent. \n\n 🧪 **Validations:**  The survey description is optional. If provided, it must contain a minimum of **20 characters** and a maximum of **500 characters**."
           },
           "dataPoints": {
             "type": "array",
