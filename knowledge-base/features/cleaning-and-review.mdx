@@ -39,7 +39,7 @@ Our default settings apply best-practice thresholds to the following metrics:
 - **Open-Ended Score (OES) & Response Categories:**
   Respondents with an OES below 40 are excluded if they provide at least two open-ended responses.
 
-  Respondents flagged in at least two open-ended responses for wrong language, bad language, AI generated Answer, nonsense or wrong topic are excluded.
+  Respondents flagged in at least two open-ended responses for wrong language, bad language, AI suspect, gibberish or off topic are excluded.
 - **Coherence Score (CHS)**: Respondents with a CHS below 30 are excluded.
 - **Grid-Question Score (GQS)**: Respondents with a GQS below 20 and at least two valid grid-question responses are excluded.
 - **Time Score (TS)**: Respondents with a TS below 20 are excluded.
@@ -54,15 +54,15 @@ Customizable elements include:
 - **ReDem Score (R-Score):** Threshold
 - **Open-Ended Score (OES):** Threshold + min. number of open-ended responses + category-based exclusion logic
   - **Open-Ended Response Categories:**
-    - **Generic Answer:**
+    - **Valid Answer:**
     - **Bad Language:**
-    - **No Information:**
+    - **No Answer:**
     - **Duplicate Respondent:**
     - **Duplicate Answer:**
-    - **Nonsense:**
+    - **Gibberish:**
     - **Wrong Language:**
-    - **Wrong Topic:**
-    - **AI Generated Answer:**
+    - **Off Topic:**
+    - **AI Suspect:**
 - **Time Score (TS):** Threshold + min. number of time data points
 - **Grid-Question Score (GQS):** Threshold + min. valid grid questions
 - **Coherence Score (CHS):** Threshold + min. number of coherence data points
@@ -81,8 +81,8 @@ Here’s an example of a cleaning settings object that can be used to customize 
     "score": 60,
     "minDataPoints":2,
     "categories": {
-      "GENERIC_ANSWER": {"activate": true, "minDataPoints":2},
-      "NO_INFORMATION": {"activate": true, "minDataPoints":3},
+      "VALID_ANSWER": {"activate": true, "minDataPoints":2},
+      "NO_ANSWER": {"activate": true, "minDataPoints":3},
       // ... other categories ...
     }
   },
@@ -130,21 +130,21 @@ Here’s a sample configuration and its impact on a respondent:
     "score": 60,
     "minDataPoints":2,
     "categories": {
-      "GENERIC_ANSWER": {"activate": true, "minDataPoints":2},
-      "NO_INFORMATION": {"activate": true, "minDataPoints":2},
+      "VALID_ANSWER": {"activate": true, "minDataPoints":2},
+      "NO_ANSWER": {"activate": true, "minDataPoints":2},
       "BAD_LANGUAGE": {"activate": false, "minDataPoints":2},
-      "NONSENSE": {"activate": false, "minDataPoints":2},
+      "GIBBERISH": {"activate": false, "minDataPoints":2},
       "DUPLICATE_ANSWER": {"activate": false, "minDataPoints":2},
       "DUPLICATE_RESPONDENT": {"activate": false, "minDataPoints":2},
-      "WRONG_TOPIC": {"activate": false, "minDataPoints":2},
+      "OFF_TOPIC": {"activate": false, "minDataPoints":2},
       "WRONG_LANGUAGE": {"activate": false, "minDataPoints":2},
-      "AI_GENERATED_ANSWER": {"activate": true, "minDataPoints":1}
+      "AI_SUSPECT": {"activate": true, "minDataPoints":1}
     }
   }
 ```
 
 This configuration will exclude a respondent who:
 - Scores < 60 on the ReDem Score
-- Has 2+ generic answers
-- Has 2+ “No Information” responses
-- Or even just 1 flagged AI-generated response (due to its lower tolerance threshold)
+- Has 2+ valid answers
+- Has 2+ “No Answer” responses
+- Or even just 1 flagged AI-suspect response (due to its lower tolerance threshold)
