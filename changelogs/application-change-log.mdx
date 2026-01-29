@@ -5,6 +5,18 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-01-29" description="v1.4.5">
+  ## New Attribute: Survey Description for CHS
+  - You can now add a `surveyDescription` when submitting CHS data points to provide context about the survey’s purpose and intent. This increases the precision of the CHS. Find more information see the [Coherence Score docs](/knowledge-base/quality-checks/coherence-score) and the [API docs](/api-reference/endpoints/v3/addRespondent).
+  ## Import Assistant
+  - Selecting Grid Scores with more than 50 items is now prevented. Previously this led to errors in the upload.
+  - Fixed an issue where ZIP codes lost leading zeros.
+  ## Respondent Table
+  - It is easier to change the cleaning status of a respondent.
+  - Changing the cleaning status, deleting or recalculating respondents, does no longer reset your filter and sorting settings.
+  - Improved loading indicator when loading or sorting larger tables.
+</Update>
+
 <Update label="2026-01-19" description="v1.4.4">
   ## Filtering Respondents by Attributes
   - In the Respondent Table, you can now filter the respondents by their attributes to e.g. view all respondents from a specific panel.

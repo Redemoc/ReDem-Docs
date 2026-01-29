@@ -27,6 +27,27 @@ This check looks at, for example:
 
 <img classname="hidden dark:block" src="/images/CHS-Evaluation-Example.png" />
 
+## Survey Description
+
+The Coherence Score can be enhanced by providing a **survey description** that gives additional context about the purpose and intent of the survey. This optional field helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives.
+
+When submitting CHS data points via the API, you can include a `surveyDescription` field that provides supplementary information about what the survey aims to measure or understand.
+
+### When Survey Description is Especially Useful
+
+The survey description is particularly valuable when your survey asks about **current events that occurred after the training cutoff date of the large language models**. Examples include:
+
+- **Recent openings or events**: Newly opened facilities (e.g., a shopping mall that opened two months ago)
+- **Current political events**: Recent political developments, elections, or policy changes
+- **Product launches**: Newly released products (e.g., a new smartphone model)
+- **Recent market changes**: Current economic conditions or industry developments
+
+In these cases, provide as much detail as possible in the survey description to help the AI model understand the context and make more accurate coherence assessments.
+
+### Example: Survey About a Recently Opened Mall
+
+> This survey evaluates shopping experiences at the Grand Central Mall, a new shopping center that opened in downtown Springfield opened in November 2025. The mall features over 150 stores including major retailers, restaurants, a cinema complex, and an entertainment area. The survey aims to understand visitor experiences, shopping patterns, and satisfaction with the new facility.
+
 ## Use of GPT for Coherence-Score
 
 ReDem uses GPT hosted on Microsoft Azure, deployed in the EU region to ensure full GDPR compliance when calculating the Coherence Score.

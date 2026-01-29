@@ -211,11 +211,16 @@
             "items": {
               "$ref": "#/components/schemas/InterviewData"
             },
-            "description": "This variable aggregates all relevant question-answer pairs used to evaluate the respondent’s coherence. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** question/answer pairs are allowed per respondent.",
+            "description": "This variable aggregates all relevant question-answer pairs used to evaluate the respondent's coherence. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** question/answer pairs are allowed per respondent.",
             "example": [{
               "question": "What type of accommodation did you stay in?",
               "answer": "Hotel"
             }]
+          },
+          "surveyDescription": {
+            "type": "string",
+            "description": "**Additional context about the purpose and intent of the survey.** This field provides supplementary information that helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives.",
+            "example": "This survey aims to understand travel preferences and vacation experiences of European travelers, focusing on accommodation choices, transportation methods, and budget allocation."
           }
         },
         "required": ["dataPointId", "qualityCheck", "interviewData"]
@@ -1160,12 +1165,17 @@
             "items": {
               "$ref": "#/components/schemas/InterviewData_v2"
             },
-            "description": "This variable aggregates all relevant question-answer pairs used to evaluate the respondent’s coherence. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** question/answer pairs are allowed per respondent.",
+            "description": "This variable aggregates all relevant question-answer pairs used to evaluate the respondent's coherence. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** question/answer pairs are allowed per respondent.",
             "example": [{
               "questionId": "Q1",
               "question": "What type of accommodation did you stay in?",
               "answer": "Hotel"
             }]
+          },
+          "surveyDescription": {
+            "type": "string",
+            "description": "**Additional context about the purpose and intent of the survey.** This field provides supplementary information that helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives.",
+            "example": "This survey aims to understand travel preferences and vacation experiences of European travelers, focusing on accommodation choices, transportation methods, and budget allocation."
           }
         },
         "required": ["dataPointId", "qualityCheck", "interviewData"]
@@ -1458,6 +1468,7 @@
                   {
                     "qualityCheck": "CHS",
                     "dataPointId": "CHS_Question",
+                    "surveyDescription": "This survey aims to understand travel preferences and vacation experiences of European travelers, focusing on accommodation choices, transportation methods, and budget allocation.",
                     "interviewData": [
                       { "question": "What mode of transport did you use?", "answer": "Car" },
                       { "question": "How many days did you stay?", "answer": 5 }, 
@@ -2536,6 +2547,7 @@
                   {
                     "qualityCheck": "CHS",
                     "dataPointId": "CHS_Question",
+                    "surveyDescription": "This survey aims to understand travel preferences and vacation experiences of European travelers, focusing on accommodation choices, transportation methods, and budget allocation.",
                     "interviewData": [
                       { "questionId": "Q1", "question": "What mode of transport did you use?", "answer": "Car" },
                       { "questionId": "Q2", "question": "How many days did you stay?", "answer": 5 }, 
@@ -4041,6 +4053,7 @@
                   {
                     "qualityCheck": "CHS",
                     "dataPointId": "CHS_Question",
+                    "surveyDescription": "This survey aims to understand travel preferences and vacation experiences of European travelers, focusing on accommodation choices, transportation methods, and budget allocation.",
                     "interviewData": [
                       { "questionId": "Q1", "question": "What mode of transport did you use?", "answer": "Car" },
                       { "questionId": "Q2", "question": "How many days did you stay?", "answer": 5 }, 

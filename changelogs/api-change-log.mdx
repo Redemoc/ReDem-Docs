@@ -5,6 +5,16 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-01-15" description="v3.1.2">
+  ## New Attribute: Survey Description for CHS
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> - You can now provide a `surveyDescription` field when submitting CHS (Coherence Score) data points. This optional field provides additional context about the survey's purpose and intent, helping improve the quality and accuracy of the Coherence Score evaluation.
+
+  The survey description is especially useful when your survey asks about current events that occurred after the training cutoff date of the large language models, such as recently opened facilities, current political events, product launches, or recent market changes.
+
+  See the [Coherence Score documentation](/knowledge-base/quality-checks/coherence-score#survey-description) for more details and examples.
+</Update>
+
 <Update label="2026-01-02" description="v3.1.1">
   ## New Attribute: Respondent Attributes
 
