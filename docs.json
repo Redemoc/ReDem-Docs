@@ -34,7 +34,8 @@
                 "group": "Integrations",
                 "pages": [
                   "integration-guides/keyingress",
-                  "integration-guides/decipher"
+                  "integration-guides/decipher",
+                  "integration-guides/partners"
                 ]
               },
               {
@@ -155,7 +156,8 @@
                 "group": "Integrations",
                 "pages": [
                   "integration-guides/keyingress",
-                  "integration-guides/decipher"
+                  "integration-guides/decipher",
+                  "integration-guides/partners"
                 ]
               },
               {
@@ -268,7 +270,8 @@
               {
                 "group": "Integration Assistants",
                 "pages": [
-                  "integration-guides/decipher"
+                  "integration-guides/decipher",
+                  "integration-guides/partners"
                 ]
               }
             ]
