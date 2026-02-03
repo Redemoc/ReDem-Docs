@@ -1,0 +1,260 @@
+---
+title: 'API Version Migration Guide'
+description: 'Step-by-step guide to migrate between ReDem API versions.'
+icon: "arrow-right-arrow-left"
+iconType: "regular"
+---
+
+This guide will help you migrate your integration from one API version to another. Before starting, it's important to understand a key limitation:
+
+<Warning>
+**You cannot upgrade the API version for a survey that is currently running.** Each survey is permanently tied to the API version it was created with. To use a newer API version, you must create a new survey with the updated endpoints.
+</Warning>
+
+## Migration Overview
+
+The ReDem API uses versioned endpoints to ensure backward compatibility while introducing new features:
+
+- **v1**: Legacy endpoints
+- **v2**: Introduced consistent CHS question IDs
+- **v3**: Enhanced OES with improved categories and effort scale
+
+## Migration from v1 to v2
+
+### Key Changes
+
+1. **Endpoint paths**: All endpoints now use the `/v2` prefix
+   - `POST /addRespondent` → `POST /v2/addRespondent`
+   - `POST /getRespondent` → `POST /v2/getRespondent`
+   - `POST /getAllRespondents` → `POST /v2/getAllRespondents`
+   - `POST /stopSurvey` → `POST /v2/stopSurvey`
+   - `POST /restartSurvey` → `POST /v2/restartSurvey`
+   - `POST /creditCalculation` → `POST /v2/creditCalculation`
+
+2. **CHS questionId requirement**: Each CHS interview entry must include a `questionId` field
+
+### Step-by-Step Migration
+
+#### Step 1: Update Endpoint URLs
+
+Update your base URL construction to include the `/v2` prefix:
+
+```javascript
+// Before (v1)
+const baseUrl = 'https://api.redem.io/addRespondent';
+
+// After (v2)
+const baseUrl = 'https://api.redem.io/v2/addRespondent';
+```
+
+#### Step 2: Add questionId to CHS Data Points
+
+For each CHS data point, add the `questionId` field to the `interviewData` array:
+
+```javascript
+// Before (v1)
+{
+  "qualityCheck": "CHS",
+  "dataPointId": "CHS_Q1",
+  "interviewData": [
+    {
+      "question": "What type of accommodation did you stay in?",
+      "answer": "Hotel"
+    }
+  ]
+}
+
+// After (v2)
+{
+  "qualityCheck": "CHS",
+  "dataPointId": "CHS_Q1",
+  "interviewData": [
+    {
+      "questionId": "Q1",  // Required in v2
+      "question": "What type of accommodation did you stay in?",
+      "answer": "Hotel"
+    }
+  ]
+}
+```
+
+<Note>
+The `questionId` should be consistent across all respondents for the same question. Use meaningful identifiers like "Q1", "Q2", or custom IDs that match your survey structure.
+</Note>
+
+#### Step 3: Important: Create New Survey
+
+<Warning>
+**Important:** You cannot update a running survey to a new API version. You must create a new survey using v2 endpoints.
+</Warning>
+
+```javascript
+// Use v2 endpoint to create new survey
+POST https://api.redem.io/v2/addRespondent
+```
+
+#### Step 4: Test Your Integration
+
+1. Test adding a single respondent with the new v2 endpoint
+2. Verify CHS results include consistent question IDs
+3. Confirm all other endpoints work correctly with v2 paths
+
+## Migration from v2 to v3
+
+### Key Changes
+
+1. **Endpoint paths**: All endpoints now use the `/v3` prefix
+   - `POST /v2/addRespondent` → `POST /v3/addRespondent`
+   - `POST /v2/getRespondent` → `POST /v3/getRespondent`
+   - `POST /v2/getAllRespondents` → `POST /v3/getAllRespondents`
+   - `POST /v2/stopSurvey` → `POST /v3/stopSurvey`
+   - `POST /v2/restartSurvey` → `POST /v3/restartSurvey`
+   - `POST /v2/creditCalculation` → `POST /v3/creditCalculation`
+   - `POST /v2/deleteRespondents` → `POST /v3/deleteRespondents`
+   - `POST /v2/deleteSurveys` → `POST /v3/deleteSurveys`
+   - `POST /v2/updateRespondentsExcludedStatus` → `POST /v3/updateRespondentsExcludedStatus`
+
+2. **OES categories**: Updated category names in cleaning settings
+   - `GENERIC_ANSWER` → `VALID_ANSWER`
+   - `NO_INFORMATION` → `NO_ANSWER`
+   - `FAKE_ANSWER` → `AI_SUSPECT`
+   - New categories: `OFF_TOPIC`, `GIBBERISH`
+
+3. **New optional fields**:
+   - `surveyDescription` for CHS data points
+   - `respondentAttributes` for additional respondent metadata
+
+### Step-by-Step Migration
+
+#### Step 1: Update Endpoint URLs
+
+Update your base URL construction to include the `/v3` prefix:
+
+```javascript
+// Before (v2)
+const baseUrl = 'https://api.redem.io/v2/addRespondent';
+
+// After (v3)
+const baseUrl = 'https://api.redem.io/v3/addRespondent';
+```
+
+#### Step 2: Update OES Categories in Cleaning Settings
+
+Update the OES category names in your cleaning settings request:
+
+```javascript
+// Before (v2)
+{
+  "cleaningSettings": {
+    "redemScore": 60,
+    "OES": {
+      "activate": true,
+      "score": 60,
+      "minDataPoints": 2,
+      "categories": {
+        "GENERIC_ANSWER": {"activate": true, "minDataPoints": 2},
+        "NO_INFORMATION": {"activate": true, "minDataPoints": 3},
+        "FAKE_ANSWER": {"activate": true, "minDataPoints": 2}
+      }
+    }
+  }
+}
+
+// After (v3)
+{
+  "cleaningSettings": {
+    "redemScore": 60,
+    "OES": {
+      "activate": true,
+      "score": 40,
+      "minDataPoints": 2,
+      "categories": {
+        "AI_SUSPECT": {"activate": true, "minDataPoints": 2},
+        "VALID_ANSWER": {"activate": false, "minDataPoints": 2},
+        "BAD_LANGUAGE": {"activate": true, "minDataPoints": 2},
+        "OFF_TOPIC": {"activate": true, "minDataPoints": 2},
+        "NO_ANSWER": {"activate": false, "minDataPoints": 2},
+        "WRONG_LANGUAGE": {"activate": true, "minDataPoints": 2},
+        "GIBBERISH": {"activate": true, "minDataPoints": 2},
+        "DUPLICATE_ANSWER": {"activate": false, "minDataPoints": 1},
+        "DUPLICATE_RESPONDENT": {"activate": false, "minDataPoints": 1}
+      }
+    }
+  }
+}
+```
+
+<Info>
+These cleaning settings are examples and can be customized for each survey. Review and adjust the activation status and minimum data points thresholds according to your specific survey requirements and quality standards.
+</Info>
+
+#### Step 3: Optional: Add Survey Description for CHS
+
+You can now provide a `surveyDescription` when submitting CHS data points to improve accuracy:
+
+```javascript
+{
+  "qualityCheck": "CHS",
+  "dataPointId": "CHS_Q1",
+  "surveyDescription": "Survey about vacation experiences in 2024",  // Optional
+  "interviewData": [
+    {
+      "questionId": "Q1",
+      "question": "What type of accommodation did you stay in?",
+      "answer": "Hotel"
+    }
+  ]
+}
+```
+
+#### Step 4: Optional: Add Respondent Attributes
+
+You can add metadata about respondents:
+
+```javascript
+{
+  "surveyName": "Vacation Survey 2024",
+  "respondentId": "RESP001",
+  "respondentAttributes": {  // Optional
+    "panel": "PanelA",
+    "market": "US",
+    "source": "email"
+  },
+  "dataPoints": [
+    // ... data points
+  ]
+}
+```
+
+#### Step 5: Important: Create New Survey
+
+<Warning>
+**Important:** You cannot update a running survey to a new API version. You must create a new survey using v3 endpoints.
+</Warning>
+
+#### Step 6: Test Your Integration
+
+1. Test adding respondents with the new v3 endpoint
+2. Verify responses use the new category names
+3. Confirm all category names in cleaning settings are updated correctly
+
+## Migration from v1 to v3
+
+If you're migrating directly from v1 to v3, follow both migration paths:
+
+1. First, apply all changes from v1 → v2 (especially adding `questionId` to CHS)
+2. Then, apply all changes from v2 → v3 (OES categories, etc.)
+
+## Best Practices
+
+1. **Test with a sample survey** before migrating production surveys. Do not test with production surveys.
+2. **Important:** You cannot update a running survey to a new API version. Create new surveys with the updated endpoints.
+3. **Check responses in your tests** to ensure category mappings work correctly
+
+## Need Help?
+
+If you encounter issues during migration or have questions:
+
+- Review the [API Change Log](/changelogs/api-change-log) for detailed version history
+- Check the [endpoint documentation](/api-reference/endpoints/v3/addRespondent) for v3 specifics
+- Contact support at [support@redem.io](mailto:support@redem.io)

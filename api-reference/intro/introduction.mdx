@@ -1,6 +1,6 @@
 ---
 title: 'Introduction'
-description: 'Fundamental concepts of ReDem’s API.'
+description: "Fundamental concepts of ReDem's API."
 icon: "book-open"
 iconType: "regular"
 ---
@@ -19,7 +19,7 @@ The ReDem API supports two main integration use cases, allowing you to choose th
 
 <CardGroup cols={2}>
   <Card title="Synchronous Response" icon="arrow-up-arrow-down" href="/api-reference/intro/synchronous-response">
-    Receive an instant evaluation of the respondent’s quality and seamlessly integrate this data into your workflow.
+    Receive an instant evaluation of the respondent's quality and seamlessly integrate this data into your workflow.
   </Card>
 
   <Card title="Asynchronous Response" icon="arrows-rotate" href="/api-reference/intro/asynchronous-response">
@@ -27,9 +27,23 @@ The ReDem API supports two main integration use cases, allowing you to choose th
   </Card>
 </CardGroup>
 
+## API Versioning
+
+ReDem's API uses versioned endpoints to ensure backward compatibility while introducing new features. Currently, three API versions are available:
+
+- **v1**: Legacy endpoints (deprecated)
+- **v2**: Introduced consistent CHS question IDs
+- **v3**: Enhanced OES with improved categories and effort scale (recommended)
+
+<Warning>
+**Important:** You cannot upgrade the API version for a survey that is currently running. Each survey is permanently tied to the API version it was created with. To use a newer API version, you must create a new survey with the updated endpoints.
+</Warning>
+
+For detailed migration instructions, see the [API Version Migration Guide](/api-reference/others/migration-guide).
+
 ## Base URL
 
-ReDem’s API is built on REST principles following the [OpenAPI](https://www.openapis.org/) standard as much as possible.  To ensure data security, it operates exclusively over HTTPS, encrypting all interactions. Unencrypted HTTP connections are not supported, safeguarding your data by default.
+ReDem's API is built on REST principles following the [OpenAPI](https://www.openapis.org/) standard as much as possible.  To ensure data security, it operates exclusively over HTTPS, encrypting all interactions. Unencrypted HTTP connections are not supported, safeguarding your data by default.
 
 The Base URL for all API endpoints is:
 
@@ -37,6 +51,8 @@ The Base URL for all API endpoints is:
 https://api.redem.io/
 ```
 
-<Note>ReDem’s API is currently in public beta and is subject to change. However, we will do our best to keep breaking changes to a minimum. </Note>
+Versioned endpoints use the format: `https://api.redem.io/v3/addRespondent`.
 
-Need help or have questions? Contact our support team at [support@redem.io](mailto:support@redem.io). we’re here to help you make the most of ReDem!
+<Note>ReDem's API is currently in public beta and is subject to change. However, we will do our best to keep breaking changes to a minimum. </Note>
+
+Need help or have questions? Contact our support team at [support@redem.io](mailto:support@redem.io). we're here to help you make the most of ReDem!

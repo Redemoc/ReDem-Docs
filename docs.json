@@ -89,7 +89,8 @@
                 "pages": [
                   "api-reference/intro/introduction",
                   "api-reference/intro/synchronous-response",
-                  "api-reference/intro/asynchronous-response"
+                  "api-reference/intro/asynchronous-response",
+                  "api-reference/others/migration-guide"
                 ]
               },
               {
@@ -209,7 +210,8 @@
                 "pages": [
                   "api-reference/intro/introduction",
                   "api-reference/intro/synchronous-response",
-                  "api-reference/intro/asynchronous-response"
+                  "api-reference/intro/asynchronous-response",
+                  "api-reference/others/migration-guide"
                 ]
               },
               {
@@ -314,7 +316,8 @@
                 "pages": [
                   "api-reference/intro/introduction",
                   "api-reference/intro/synchronous-response",
-                  "api-reference/intro/asynchronous-response"
+                  "api-reference/intro/asynchronous-response",
+                  "api-reference/others/migration-guide"
                 ]
               },
               {
