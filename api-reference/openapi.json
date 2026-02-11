@@ -1092,6 +1092,10 @@
             "type": "string",
             "description": "**The name of the survery**, which helps identify different surveys. The survey name can be assigned freely. \n\n**💡Important:** If the survey name already exists, the system will add the respondent under the appropriate survey. If the survey name is new, a new survey will be created, and the respondent will be added to the new survey. \n\n **⭕ Note:** Each survey identifier must be unique. \n\n **🔦 Tip:** you can simply make survey name unique by adding a timestamp. \n As Example: `Global Vacation Insights - 1709040600`"
           },
+          "surveyDescription": {
+            "type": "string",
+            "description": "**The description of the survey**, which helps get the context of the survey. The survey description can be assigned freely. \n\n**🔦 Tip:** The survey description provides essential context about the purpose and subject of the survey. This context will be helpful to improve the quality assessment of respondents by evaluating their answers in relation to the overall survey intent. \n\n 🧪 **Validations:**  The survey description is optional. If provided, it must contain a minimum of **20 characters** and a maximum of **500 characters**."
+          },
           "dataPoints": {
             "type": "array",
             "items": {
@@ -4016,6 +4020,7 @@
               "example": {
                 "respondentId": "RESP497770",
                 "surveyName": "Global Vacation Insights 2024",
+                "surveyDescription": "This survey explores global travel trends in 2024, including vacation preferences, destinations, budgets, and planning behaviors. Your responses will help uncover insights into how people around the world travel today.",
                 "dataPoints": [
                   {
                     "qualityCheck": "OES",
