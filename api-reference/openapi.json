@@ -5416,7 +5416,7 @@
                     "default": false,
                     "description": "Whether to activate duplicate detection during recalculation. This will only be processed if 'OES' is set to true in selectedChecks."
                   },
-                  "activateGQSPatternCheck": {
+                  "patternCheckEnabled": {
                     "type": "boolean",
                     "default": false,
                     "description": "Whether to activate Grid Question Score pattern checking. This will only be processed if 'GQS' is set to true in selectedChecks."
