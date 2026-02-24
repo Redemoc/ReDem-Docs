@@ -130,7 +130,7 @@
           },
           "activateDuplicateDetection": {
             "type": "boolean",
-            "description": "A variable that indicates **whether duplicate checks are performed on the respondent's answers**. \n\n This checks if an answer is identical to another respondent's answer or if a respondent provided the same answer to multiple questions. \n\n By default, duplicate checks are active, but you can deactivate them by setting this variable to `false`. \n\n For more details on how this works, refer to the [Duplicate Check](/quality-checks/open-ended-score#duplicate-respondent) section.",
+            "description": "A variable that indicates **whether duplicate checks are performed on the respondent's answers**. \n\n This checks if an answer is identical to another respondent's answer or if a respondent provided the same answer to multiple questions. \n\n By default, duplicate checks are active, but you can deactivate them by setting this variable to `false`.",
             "example": true,
             "default": true
           },
