@@ -5,6 +5,27 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-02-26" description="v3.1.3">
+  ## CHS Limit Update
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> - The maximum number of CHS question/answer pairs has been reduced from `1000` to `300`.
+
+  Recommendation for integrators:
+  - Send only the most relevant `interviewData` entries (up to 300) in a deterministic order.
+  - If your source survey has more than 300 CHS pairs, trim before sending to keep payloads predictable.
+
+  ## New Attribute: surveyPlatform
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> - You can now provide `surveyPlatform` as an optional top-level field in the request body. This value is stored with the respondent and can be used to identify survey-platform-origin traffic in downstream workflows.
+
+  Recommended integration approach:
+  - Send a stable platform identifier (for example, `qualtrics`, `decipher`, `keyingress`) for every respondent created through a survey tool integration.
+  - Keep naming consistent across environments to avoid fragmented reporting (for example, use `qualtrics` instead of mixing `Qualtrics`, `QUALTRICS`, and `qtrx`).
+  - If an internal connector is used, send a deterministic connector name (for example, `my-company-ingress`) instead of dynamic values.
+
+  See the [v3 addRespondent endpoint documentation](/api-reference/endpoints/v3/addRespondent) for request details.
+</Update>
+
 <Update label="2026-01-15" description="v3.1.2">
   ## New Attribute: Survey Description for CHS
 
@@ -13,6 +34,7 @@ iconType: "regular"
   The survey description is especially useful when your survey asks about current events that occurred after the training cutoff date of the large language models, such as recently opened facilities, current political events, product launches, or recent market changes.
 
   See the [Coherence Score documentation](/knowledge-base/quality-checks/coherence-score#survey-description) for more details and examples.
+
 </Update>
 
 <Update label="2026-01-02" description="v3.1.1">

@@ -211,7 +211,7 @@
             "items": {
               "$ref": "#/components/schemas/InterviewData"
             },
-            "description": "This variable aggregates all relevant question-answer pairs used to evaluate the respondent's coherence. \n\n 🧪 **Validations:**  \n - A **maximum of 1000** question/answer pairs are allowed per respondent.",
+            "description": "This variable aggregates all relevant question-answer pairs used to evaluate the respondent's coherence. \n\n 🧪 **Validations:**  \n - A **maximum of 300** question/answer pairs are allowed per respondent.",
             "example": [{
               "question": "What type of accommodation did you stay in?",
               "answer": "Hotel"
@@ -277,7 +277,7 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint"
             },
-            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 1000 question/answer pairs** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
+            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 300 question/answer pairs** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
           },
           "activateCleaning": {
             "type": "boolean",
@@ -1054,7 +1054,7 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint_v2"
             },
-            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 1000 question/answer pairs** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
+            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 10** `OES` data points are allowed per respondent. \n - A **maximum of 100** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 300 question/answer pairs** `CHS` data point is allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
           },
           "activateCleaning": {
             "type": "boolean",
@@ -1096,12 +1096,17 @@
             "type": "string",
             "description": "**The description of the survey**, which helps get the context of the survey. The survey description can be assigned freely. \n\n**🔦 Tip:** The survey description provides essential context about the purpose and subject of the survey. This context will be helpful to improve the quality assessment of respondents by evaluating their answers in relation to the overall survey intent. \n\n 🧪 **Validations:**  The survey description is optional. If provided, it must contain a minimum of **20 characters** and a maximum of **500 characters**."
           },
+          "surveyPlatform": {
+            "type": "string",
+            "description": "**Optional platform identifier** for the source system where the respondent was collected (for example, Qualtrics, Decipher, or custom panel tooling). This helps identify integration-origin respondents and supports downstream access rules and analysis segmentation. \n\n **Recommendation for integrators:** Always populate this field with a stable platform name for API-based survey tool integrations.",
+            "example": "qualtrics"
+          },
           "dataPoints": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DataPoint_v2"
             },
-            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 30** `OES` data points are allowed per respondent. \n - A **maximum of 500** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 1000 question/answer pairs** `CHS` data point is allowed per respondent. \n - A **maximum of 30** `BAS` data points are allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
+            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 30** `OES` data points are allowed per respondent. \n - A **maximum of 500** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 300 question/answer pairs** `CHS` data point is allowed per respondent. \n - A **maximum of 30** `BAS` data points are allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
           },
           "activateCleaning": {
             "type": "boolean",
@@ -4021,6 +4026,7 @@
                 "respondentId": "RESP497770",
                 "surveyName": "Global Vacation Insights 2024",
                 "surveyDescription": "This survey explores global travel trends in 2024, including vacation preferences, destinations, budgets, and planning behaviors. Your responses will help uncover insights into how people around the world travel today.",
+                "surveyPlatform": "qualtrics",
                 "dataPoints": [
                   {
                     "qualityCheck": "OES",
