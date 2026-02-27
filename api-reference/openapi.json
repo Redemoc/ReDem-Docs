@@ -1098,7 +1098,7 @@
           },
           "surveyPlatform": {
             "type": "string",
-            "description": "**Optional platform identifier** for the source system where the respondent was collected (for example, Qualtrics, Decipher, or custom panel tooling). This helps identify integration-origin respondents and supports downstream access rules and analysis segmentation. \n\n **Recommendation for integrators:** Always populate this field with a stable platform name for API-based survey tool integrations.",
+            "description": "**Optional platform identifier** for the source system where the respondent was collected (for example, Qualtrics, Decipher, or custom panel tooling). This helps identify the origin of respondents created through API integrations. \n\n **Recommendation for integrators:** Always populate this field with a stable platform name for API-based survey tool integrations.",
             "example": "qualtrics"
           },
           "dataPoints": {
