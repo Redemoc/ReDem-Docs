@@ -5,6 +5,28 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-02-26" description="v1.4.8">
+  ## File Import
+  - The upload of respondents is noticeably faster, such that results are available much earlier.
+  - We improved the import process for Decipher files. The import is now more reliable and configuring the survey is way faster than before.
+  - In case a file contains duplicate respondent IDs, the import will now point to the exact IDs that are duplicates.
+  ## Support for tracking surveys
+  - When uploading a new survey, you can now choose to use the quality checks and cleaning settings from a previous one. This makes the import of recurring surveys much smoother and less error prone.
+</Update>
+
+<Update label="2026-02-24" description="v1.4.7">
+  ## Admin Permissions
+  - Company Admins can now exclude, recalculate and delete respondents for other employess in the company. They also can add additional respondents and delete surveys.
+  ## CHS
+  - The CHS now accepts only up to 300 questions per respondent. We observed decreased accuracy of the CHS when using too many questions.
+  - Selecting single questions for the CHS during the import is now more intuitive.
+  ## System Stability
+  - Recent issues with missing OES and CHS scores are now resolved.
+  ## Minor improvements
+  - The UI now indicates if a respondent has been manually included when it was previously excluded.
+  - Pay-as-you-go customers can now see their used credits in the Credit Overview.
+</Update>
+
 <Update label="2026-02-09" description="v1.4.6">
   ## CHS Import Assistant
   - Configuring the CHS for the manual import is now easier than ever before. Instead of selecting individual questions, you can now select full groups of questions that belong together.
@@ -13,7 +35,6 @@ iconType: "regular"
   ## Minor improvements
   - The manual import loading indicator is now more intuitive.
   - Solved an issue where an error screen appeared after not using the app for a while.
-
 </Update>
 
 <Update label="2026-01-29" description="v1.4.5">
