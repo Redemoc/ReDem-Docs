@@ -5,6 +5,18 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+
+<Update label="2026-03-05" description="v1.4.9">
+  ## Default Cleaning Settings
+  - The TS excludes respondents at a Threshold of 30 by default.
+  - The BAS excludes respondents at a Threshold of 20 by default and excludes respondents starting with the first Unnatural Typing data point.
+
+  ## UX Improvements
+  - The respondent table shows the question text for all OES questions in the header.
+  - Pressing Enter on the keyboard in a confirm dialog now triggers the action, e.g. deleting respondents.
+  - Deleting and recalculating respondents fetches the updated data immediately. Previously there was a brief delay which led to confusion.
+</Update>
+
 <Update label="2026-02-26" description="v1.4.8">
   ## File Import
   - The upload of respondents is noticeably faster, such that results are available much earlier.
