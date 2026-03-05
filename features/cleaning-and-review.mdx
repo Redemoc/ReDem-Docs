@@ -31,7 +31,7 @@ Predefined thresholds for R-Score, OES (including Open-Ended Response Categories
   Respondents flagged in at least two open-ended responses for wrong language, bad language, AI suspect, gibberish or off topic are excluded.
 - **Coherence Score (CHS)**: Respondents with a CHS below 30 are excluded.
 - **Grid-Question Score (GQS)**: Respondents with a GQS below 20 and at least two valid grid-question responses are excluded.
-- **Time Score (TS)**: Respondents with a TS below 20 are excluded.
+- **Time Score (TS)**: Respondents with a TS below 30 are excluded.
 - **Behavioral Analytics Score (BAS)**: Respondents with a BAS below 20 and at least two valid BAS data points are excluded.
 
 ### Using Custom Cleaning Settings
@@ -90,7 +90,7 @@ Here’s an example of a cleaning settings object that can be used to customize 
   },
   "CHS": {"activate": true,"score": 50},
   "GQS": {"activate": true,"score": 40, "minDataPoints":2},
-  "TS": {"activate": true,"score": 20},
+  "TS": {"activate": true,"score": 30},
   "BAS": {
     "activate": true,
     "score": 60, 
@@ -111,7 +111,7 @@ The cleaning process classifies each response as either **Included** or **Exclud
 - **ReDem Score Threshold**: Respondent’s ReDem Score is below the default (60) or a custom threshold.
 - **Open-Ended Score Threshold**: Respondent’s OES is below the default (40) or a custom threshold.
 - **Open Ended Category**: Respondet is having above define category threshold.
-- **Time Score Threshold**: Respondent’s TS is below the default (20) or a custom threshold.
+- **Time Score Threshold**: Respondent’s TS is below the default (30) or a custom threshold.
 - **Grid-Question Score Threshold**: Respondent’s GQS is below the default (20) or a custom threshold.
 - **Coherence Score Threshold**: Respondent’s CHS is below the default (30) or a custom threshold.
 - **Behavioral Analytics Score Threshold**: Respondent’s BAS is below a custom threshold.

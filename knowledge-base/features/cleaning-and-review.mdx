@@ -20,7 +20,7 @@ Every respondent evaluated by ReDem undergoes a series of quality checks. These 
 - You must select at least one score as a cleaning condition - usually the ReDem Score, since it is a comprehensive metric covering all selected quality checks.
 - You may also add other scores in an OR condition if needed.
 
-<Note> **Example:** <br/> If you set an R-Score threshold of 60, all respondents below 60 are flagged. If you also apply an OR condition for Time Score < 20, then even respondents with a valid R-Score (e.g., 70) are flagged if their Time Score is below 20 (speeding).</Note>
+<Note> **Example:** <br/> If you set an R-Score threshold of 60, all respondents below 60 are flagged. If you also apply an OR condition for Time Score < 30, then even respondents with a valid R-Score (e.g., 70) are flagged if their Time Score is below 30 (speeding).</Note>
 
 **Data Points:** <br/>
 Data points indicate the number of measurements used to calculate a score.
@@ -42,7 +42,7 @@ Our default settings apply best-practice thresholds to the following metrics:
   Respondents flagged in at least two open-ended responses for wrong language, bad language, AI suspect, gibberish or off topic are excluded.
 - **Coherence Score (CHS)**: Respondents with a CHS below 30 are excluded.
 - **Grid-Question Score (GQS)**: Respondents with a GQS below 20 and at least two valid grid-question responses are excluded.
-- **Time Score (TS)**: Respondents with a TS below 20 are excluded.
+- **Time Score (TS)**: Respondents with a TS below 30 are excluded.
 - **Behavioral Analytics Score (BAS)**: Respondents with a BAS below 20 and at least two valid BAS data points are excluded.
 
 ### 2. Custom Cleaning Settings
@@ -88,7 +88,7 @@ Here’s an example of a cleaning settings object that can be used to customize 
   },
   "CHS": {"activate": true,"score": 50},
   "GQS": {"activate": true,"score": 40, "minDataPoints":2},
-  "TS": {"activate": true,"score": 20},
+  "TS": {"activate": true,"score": 30},
   "BAS": {
     "activate": true,
     "score": 60, 
