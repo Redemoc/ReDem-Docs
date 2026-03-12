@@ -188,6 +188,12 @@
             },
             "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**. \n\n The grid pattern should be sent in the same order as the respondent saw it in the survey, especially for randomized grid questions, to ensure accurate analysis. \n\n 🧪 **Validations:**  \n - A **minimum of 7** and a **maximum of 50** answers are allowed for each grid question. \n - Each answer must be provided as a **numeric value**.",
             "example": [5, 4, 3, 5, 4]
+          },
+          "patternCheckEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to activate Grid Question Score pattern checking for this data point. This field is only processed when `qualityCheck` is `GQS`.",
+            "example": false
           }
         },
         "required": ["dataPointId", "qualityCheck", "gridAnswersPattern"]
@@ -1458,7 +1464,8 @@
                   {
                     "qualityCheck": "GQS",
                     "dataPointId": "Q2", 
-                    "gridAnswersPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6] 
+                    "gridAnswersPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6],
+                    "patternCheckEnabled": true
                   },
                   {
                     "qualityCheck": "OES",
@@ -1489,7 +1496,8 @@
                   {
                     "qualityCheck": "GQS",
                     "dataPointId": "Q4",
-                    "gridAnswersPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1] 
+                    "gridAnswersPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1],
+                    "patternCheckEnabled": false
                   },
                   {
                     "qualityCheck": "TS",
@@ -2537,7 +2545,8 @@
                   {
                     "qualityCheck": "GQS",
                     "dataPointId": "Q2", 
-                    "gridAnswersPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6] 
+                    "gridAnswersPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6],
+                    "patternCheckEnabled": true
                   },
                   {
                     "qualityCheck": "OES",
@@ -2568,7 +2577,8 @@
                   {
                     "qualityCheck": "GQS",
                     "dataPointId": "Q4",
-                    "gridAnswersPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1] 
+                    "gridAnswersPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1],
+                    "patternCheckEnabled": false
                   },
                   {
                     "qualityCheck": "TS",
@@ -4045,7 +4055,8 @@
                   {
                     "qualityCheck": "GQS",
                     "dataPointId": "Q2", 
-                    "gridAnswersPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6] 
+                    "gridAnswersPattern": [7, 8, 9, 1, 3, 5, 2, 5, 9, 6],
+                    "patternCheckEnabled": true
                   },
                   {
                     "qualityCheck": "OES",
@@ -4076,7 +4087,8 @@
                   {
                     "qualityCheck": "GQS",
                     "dataPointId": "Q4",
-                    "gridAnswersPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1] 
+                    "gridAnswersPattern": [2, 1, 4, 3, 5, 2, 3, 1, 1, 1],
+                    "patternCheckEnabled": false
                   },
                   {
                     "qualityCheck": "TS",
