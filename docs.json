@@ -27,7 +27,8 @@
               {
                 "group": "Core Features",
                 "pages": [
-                  "features/file-import"
+                  "features/file-import",
+                  "features/delete-respondents"
                 ]
               },
               {
@@ -148,7 +149,8 @@
               {
                 "group": "Core Features",
                 "pages": [
-                  "features/file-import"
+                  "features/file-import",
+                  "features/delete-respondents"
                 ]
               },
               {
