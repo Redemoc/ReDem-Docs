@@ -5,11 +5,29 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-03-20" description="v1.5.1">
+  ## Respondents
+  - In the survey view you can **filter respondents by included or excluded** status. The filter applies to **downloads** and **data visualizations**, so exports and charts match the subset you are looking at.
+
+  ## Other improvements
+  - **CHS & OES**: Blocked AI (content filter) requests are no longer retried and are classified consistently; CHS scoring is adjusted so common, realistic answer patterns are not penalized as inconsistent.
+  - **Import Assistant**: Hard limits on row and column counts (defaults configurable via environment); clear errors when a file exceeds them.
+</Update>
+
+<Update label="2026-03-13" description="v1.5.0">
+  ## Surveys
+  - You can now rename a survey after it has been created. It's important to highlight that the survey name used to add respondents via the API must not be changed, even after renaming the survey in the app. 
+  This is the only safe way to ensure that respondents are tracked in the correct survey.
+
+  ## Timescore
+  - The lowest score a respondent can get if they're above the median time is now 20. Previously it was 30. 
+  - In case their score is below 30, they will be excluded when using the default cleaning settings for the Timescore.
+</Update>
 
 <Update label="2026-03-05" description="v1.4.9">
   ## Default Cleaning Settings
-  - The TS excludes respondents at a Threshold of 30 by default.
-  - The BAS excludes respondents at a Threshold of 20 by default and excludes respondents starting with the first Unnatural Typing data point.
+  - The TS excludes respondents at a threshold of 30 by default.
+  - The BAS excludes respondents at a threshold of 20 by default and excludes respondents starting with the first Unnatural Typing data point.
 
   ## UX Improvements
   - The respondent table shows the question text for all OES questions in the header.
