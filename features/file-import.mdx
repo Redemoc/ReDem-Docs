@@ -25,6 +25,14 @@ Supported upload files:
 - **CSV**
 - **Excel**
 
+### Row and column limits
+
+Each upload file may contain **at most 5,000 rows** and **at most 5,000 columns**. If your file exceeds either limit, you need to split or trim the data before you can import it.
+
+If the file has **too many columns**, ReDem will ask you to reduce the file to **5,000 columns maximum** (for example by removing variables you do not need for the import) before you can continue.
+
+The row limit applies to the full sheet you import (including header rows, question-text rows, and respondent rows). If you need more than 5,000 respondents in one survey, **upload a file that fits within the limit first**, then add further respondents afterward. See [Updating Imported Data](#updating-imported-data) for how to append new interviews after the initial upload.
+
 ### Required Formatting for Quality Checks
 
 If you want to use content-based Quality Checks (**Coherence Score** or **Open-Ended Score**), your uploaded file must include both questions and answers in a clearly labeled format. You can structure your file in two ways:
