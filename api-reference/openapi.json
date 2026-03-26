@@ -261,7 +261,7 @@
         "required": ["dataPointId", "qualityCheck", "interactionData"]
       },
       "AddRespondentRequest": {
-        "description": "Request body for adding a new respondent",
+        "description": "Request body for adding a new respondent \n\n **🔒 Authentication:** This endpoint can be accessed using both `PRIVATE` and `PUBLIC` API key types",
         "required": [
           "respondentId",
           "surveyName",
@@ -896,7 +896,7 @@
         }
       },
       "CreditCalculationRequest": {
-        "description": "Request body for calculating the maximum number of credits needed for a respondent",
+        "description": "Request body for calculating the maximum number of credits needed for a respondent \n\n **🔒 Authentication:** This endpoint can be accessed using both `PRIVATE` and `PUBLIC` API key types",
         "required": [
           "OESDataPoints",
           "GQSAnswers",
@@ -1005,7 +1005,7 @@
         }
       },
       "GetRespondentRequest": {
-        "description": "Request body for getting a respondent",
+        "description": "Request body for getting a respondent \n\n **🔒 Authentication:** This endpoint can be accessed using both `PRIVATE` and `PUBLIC` API key types",
         "required": [
           "surveyName",
           "respondentId"
@@ -1025,7 +1025,20 @@
         }
       },
       "GetAllRespondentsRequest": {
-        "description": "Request body for getting all respondents",
+        "description": "Request body for getting all respondents \n\n **🔒 Authentication:** This endpoint can be accessed using both `PRIVATE` and `PUBLIC` API key types",
+        "required": [
+          "surveyName"
+        ],
+        "type": "object",
+        "properties": {
+          "surveyName": {
+            "type": "string",
+            "description": "**The name of the survey**."
+          }
+        }
+      },
+      "StopSurveyRequest": {
+        "description": "Request body for stopping a survey \n\n **🔒 Authentication:** This endpoint is only accessible via a `PRIVATE` API key type",
         "required": [
           "surveyName"
         ],
@@ -1038,7 +1051,7 @@
         }
       },
       "AddRespondentRequest_v2": {
-        "description": "Request body for adding a new respondent",
+        "description": "Request body for adding a new respondent \n\n **🔒 Authentication:** This endpoint can be accessed using both `PRIVATE` and `PUBLIC` API key types",
         "required": [
           "respondentId",
           "surveyName",
@@ -1081,7 +1094,7 @@
         }
       },
       "AddRespondentRequest_v3": {
-        "description": "Request body for adding a new respondent (v3 with OES v3 categories)",
+        "description": "Request body for adding a new respondent (v3 with OES v3 categories) \n\n **🔒 Authentication:** This endpoint can be accessed using both `PRIVATE` and `PUBLIC` API key types",
         "required": [
           "respondentId",
           "surveyName",
@@ -2170,7 +2183,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetAllRespondentsRequest"
+                "$ref": "#/components/schemas/StopSurveyRequest"
               },
               "example": {
                 "surveyName": "Global Vacation Insights 2024"
@@ -3251,7 +3264,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetAllRespondentsRequest"
+                "$ref": "#/components/schemas/StopSurveyRequest"
               },
               "example": {
                 "surveyName": "Global Vacation Insights 2024"
@@ -4922,14 +4935,10 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "surveyName": {
-                    "type": "string",
-                    "description": "The name of the survey to stop."
-                  }
-                },
-                "required": ["surveyName"]
+                "$ref": "#/components/schemas/StopSurveyRequest"
+              },
+              "example": {
+                "surveyName": "Global Vacation Insights 2024"
               }
             }
           }
