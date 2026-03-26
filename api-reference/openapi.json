@@ -3822,6 +3822,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "description": "Request body for updating respondents excluded status \n\n **🔒 Authentication:** This endpoint is only accessible via a `PRIVATE` API key type",
                 "properties": {
                   "surveyName": { "type": "string", "description": "The survey name." },
                   "respondentIds": {
@@ -3941,6 +3942,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "description": "Request body for updating respondents excluded status \n\n **🔒 Authentication:** This endpoint is only accessible via a `PRIVATE` API key type",
                 "properties": {
                   "surveyName": { "type": "string", "description": "The survey name." },
                   "respondentIds": {
@@ -5409,6 +5411,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "description": "Request body for recalculating respondents \n\n **🔒 Authentication:** This endpoint is only accessible via a `PRIVATE` API key type",
                 "properties": {
                   "surveyName": {
                     "type": "string",
