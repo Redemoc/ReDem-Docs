@@ -1037,6 +1037,19 @@
           }
         }
       },
+      "RestartSurveyRequest": {
+        "description": "Request body for restarting a survey \n\n **🔒 Authentication:** This endpoint is only accessible via a `PRIVATE` API key type",
+        "required": [
+          "surveyName"
+        ],
+        "type": "object",
+        "properties": {
+          "surveyName": {
+            "type": "string",
+            "description": "**The name of the survey**."
+          }
+        }
+      },
       "StopSurveyRequest": {
         "description": "Request body for stopping a survey \n\n **🔒 Authentication:** This endpoint is only accessible via a `PRIVATE` API key type",
         "required": [
@@ -2290,7 +2303,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetAllRespondentsRequest"
+                "$ref": "#/components/schemas/RestartSurveyRequest"
               },
               "example": {
                 "surveyName": "Global Vacation Insights 2024"
@@ -3371,7 +3384,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetAllRespondentsRequest"
+                "$ref": "#/components/schemas/RestartSurveyRequest"
               },
               "example": {
                 "surveyName": "Global Vacation Insights 2024"
@@ -5021,14 +5034,10 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "surveyName": {
-                    "type": "string",
-                    "description": "The name of the survey to restart."
-                  }
-                },
-                "required": ["surveyName"]
+                "$ref": "#/components/schemas/RestartSurveyRequest"
+              },
+              "example": {
+                "surveyName": "Global Vacation Insights 2024"
               }
             }
           }
