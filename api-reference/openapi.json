@@ -3591,6 +3591,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "description": "Request body for deleting surveys \n\n **🔒 Authentication:** This endpoint is only accessible via a `PRIVATE` API key type",
                 "properties": {
                   "surveyNames": {
                     "type": "array",
@@ -5191,6 +5192,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "description": "Request body for deleting surveys \n\n **🔒 Authentication:** This endpoint is only accessible via a `PRIVATE` API key type",
                 "properties": {
                   "surveyNames": {
                     "type": "array",
