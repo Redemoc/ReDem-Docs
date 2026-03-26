@@ -9,10 +9,21 @@ API Keys in ReDem allow you to programmatically send and retrieve data, making i
 
 Users can create multiple API keys, each with specific permissions to control access, making integrations secure and flexible.
 
-<Info>To create an API Key, you'll need a ReDem account. Don’t have an account yet? <br/>Get started by [setting up your account](/account-setup).</Info>
+## API key types
+
+ReDem supports two API key types based on where your integration runs:
+
+- **Private (Server-Side)**: Use this key in your backend or secure server. It has full access to all APIs and must never be exposed in frontend code.
+- **Public (Browser)**: Use this key in browser-based or frontend integrations. It is safe to expose but has limited access. For the following endpoints, you can use a Public key:
+    - `POST /addRespondent`
+    - `POST /getRespondent`
+    - `POST /getAllRespondents`
+    - `POST /creditCalculation`
 
 ## Create API Key
 You can create an API key by following these steps:
+
+<Info>To create an API Key, you'll need a ReDem account. Don’t have an account yet? <br/>Get started by [setting up your account](/account-setup).</Info>
 
 <Steps titleSize="h3">
   <Step title="Navigate to manage API Keys">
@@ -21,7 +32,7 @@ You can create an API key by following these steps:
   <Step title="Create an API Key">
     Click on the "Create API Key" button to generate a new key.
     
-    Give your API key a meaningful name to help you identify its use later.
+    Give your API key a clear, descriptive name so you can easily identify its purpose later, and choose the appropriate API key type for your use case.
     
     Once you’ve made an API key you should copy it and put it somewhere safe, as you will not be able to see it again once you navigate away.
   </Step>
