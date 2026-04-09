@@ -7,8 +7,6 @@ iconType: "regular"
 
 API keys let you call the ReDem API from your own systems. When you create a key, you choose a **permission level** that defines which endpoints it may call.
 
-<Info>To create an API Key, you'll need a ReDem account. Don’t have an account yet? <br/>Get started by [setting up your account](/account-setup).</Info>
-
 ## Permission levels
 
 You create keys with one of two permission levels:
@@ -28,9 +26,13 @@ Use a **private** key whenever the request originates from infrastructure you co
 
 Public keys are designed to be visible on the client; they still authenticate your company and are subject to rate limits, but they **cannot** call endpoints other than `addRespondent`. Any other route requires a private key.
 
+In the [API reference](/api-reference/introduction), each operation’s request body schema includes an **Authentication** note stating whether a **private** or **public** key is allowed.
+
 ## Create API Key
 
 You can create an API key by following these steps:
+
+<Info>To create an API Key, you'll need a ReDem account. Don’t have an account yet? <br/>Get started by [setting up your account](/account-setup).</Info>
 
 <Steps titleSize="h3">
   <Step title="Navigate to manage API Keys">
@@ -39,9 +41,7 @@ You can create an API key by following these steps:
   <Step title="Create an API Key">
     Click on the "Create API Key" button to generate a new key.
 
-    Give your API key a meaningful name to help you identify its use later.
-
-    Choose **Private (server-side)** or **Public (browser / client)** according to [permission levels](#permission-levels) above.
+    Give your API key a clear, descriptive name so you can identify its purpose later, and choose **Private (server-side)** or **Public (browser / client)** according to [permission levels](#permission-levels) above.
 
     Once you’ve created an API key, copy it and store it somewhere safe. You will not be able to see it again after you leave the screen.
   </Step>
@@ -54,10 +54,11 @@ You can create an API key by following these steps:
   </Step>
 </Steps>
 
-**General practices:**
+**Best practices for API key management:**
 
 - Use separate keys for different environments (development, staging, production).
 - Prefer a **private** key for server-side integrations; use a **public** key only when the key must live on the client.
+- Rotate keys regularly to maintain security. We recommend every 90 days.
 - If any key is compromised or exposed inappropriately, delete it immediately and generate a new one.
 
 ## Rate limits
