@@ -5,14 +5,34 @@ icon: "key"
 iconType: "regular"
 ---
 
-API Keys in ReDem allow you to programmatically send and retrieve data, making it easy to integrate ReDem into your application or connect with other tools and services.
+API keys let you call the ReDem API from your own systems. When you create a key, you choose a **permission level** that defines which endpoints it may call.
 
-Users can create multiple API keys, each with specific permissions to control access, making integrations secure and flexible.
+## Permission levels
 
-<Info>To create an API Key, you'll need a ReDem account. Don’t have an account yet? <br/>Get started by [setting up your account](/account-setup).</Info>
+You create keys with one of two permission levels:
+
+| Level | Where to use it | What it can call |
+| ----- | --------------- | ---------------- |
+| **Private** | Backend servers, secure automation, and integrations where the key never reaches a browser or end-user device | **All** ReDem API endpoints |
+| **Public** | Browser, mobile app, or any client-side integration where the key **must** be present on the device | **`addRespondent` only** |
+
+Use a **public** key when your integration cannot keep the key on a server—for example, a script or app that runs directly in the respondent’s browser or on their phone and submits data via `addRespondent`.
+
+Use a **private** key whenever the request originates from infrastructure you control (your backend, server-side survey tools, ETL jobs, etc.). Private keys unlock the full API (surveys, configuration, retrieval, and `addRespondent`).
+
+<Warning>
+  **Private API keys must never** be embedded in frontend code, shipped in mobile apps, checked into repositories, or shared with third parties. If a private key is exposed—whether in logs, client bundles, or elsewhere—**delete that key immediately** in ReDem and **create a new private key**. Treat a leaked private key as compromised.
+</Warning>
+
+Public keys are designed to be visible on the client; they still authenticate your company and are subject to rate limits, but they **cannot** call endpoints other than `addRespondent`. Any other route requires a private key.
+
+In the [API reference](/api-reference/intro/introduction), each operation’s request body schema includes an **Authentication** note stating whether a **private** or **public** key is allowed.
 
 ## Create API Key
+
 You can create an API key by following these steps:
+
+<Info>To create an API Key, you'll need a ReDem account. Don’t have an account yet? <br/>Get started by [setting up your account](/account-setup).</Info>
 
 <Steps titleSize="h3">
   <Step title="Navigate to manage API Keys">
@@ -20,32 +40,33 @@ You can create an API key by following these steps:
   </Step>
   <Step title="Create an API Key">
     Click on the "Create API Key" button to generate a new key.
-    
-    Give your API key a meaningful name to help you identify its use later.
-    
-    Once you’ve made an API key you should copy it and put it somewhere safe, as you will not be able to see it again once you navigate away.
+
+    Give your API key a clear, descriptive name so you can identify its purpose later, and choose **Private (server-side)** or **Public (browser / client)** according to [permission levels](#permission-levels) above.
+
+    Once you’ve created an API key, copy it and store it somewhere safe. You will not be able to see it again after you leave the screen.
   </Step>
   <Step title="Go and connect with ReDem 🚀">
-    <p>Great! Now that you have your API key, you can use it to securely send or retrieve data from ReDem in any API request.</p>
-    ```plainApiKey_xxx
-        api-key: your_api_key_xxx
+    <p>Send the key in the <code>api-key</code> header on requests your integration is allowed to make (see your key’s permission level).</p>
+    ```http
+    api-key: your_api_key_xxx
     ```
+    <p>For submitting respondents from the client, use a public key with the <a href="/api-reference/endpoints/v3/addRespondent">addRespondent</a> endpoint. For all other API calls, use a private key from your backend.</p>
   </Step>
 </Steps>
 
 **Best practices for API key management:**
 
-- Use separate keys for different environments (development, staging, production).
-- Regularly rotate your keys to maintain security. We recommend every 90 days.
-- If a key is compromised, delete it immediately and generate a new one.
+- Use separate keys for testing and live surveys
+- Prefer a **private** key for server-side integrations; use a **public** key only when the key must live on the client.
+- If any key is compromised or exposed inappropriately, delete it immediately and generate a new one.
 
 ## Rate limits
 
 All API requests authenticated with `api-key` are subject to per-key rate limiting.
 
 - `addRespondent`:
-  - Standard API keys: 600 requests per minute
-  - Premium API keys (configured per client): up to 1200 requests per minute
+  - Standard API keys: 1200 requests per minute
+  - Premium API keys (configured per client): up to 1600 requests per minute
 - Other endpoints:
   - 1200 requests per minute
 
@@ -54,7 +75,7 @@ If you exceed the limit, you will receive a `429` response:
 ```json
 {
   "error": "rate_limit_exceeded",
-  "message": "This API key exceeded 600 requests per minute.",
+  "message": "This API key exceeded 1200 requests per minute.",
   "statusCode": 429
 }
 ```
