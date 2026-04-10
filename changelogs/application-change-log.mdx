@@ -5,6 +5,28 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-04-10" description="v1.5.4">
+  ## API Keys
+  - There are now two different types of API keys: Private and Public.
+  - Private API keys are used for server-side integrations and can be used to access all endpoints.
+  - Public API keys are used for client-side integrations and can only be used to access the `addRespondent` endpoint.
+  - You can create and manage API keys in the API keys section of your profile as you're already used to.
+  - You can find more information about API keys in the [API Keys documentation](/api-reference/api-specifications/api-keys).
+  <Warning>For API integrations in Decipher surveys you must use a Public API key. Otherwise you expose yourself to the risk of unauthorized access to your survey data.</Warning>
+
+  ## GQS Grid Length
+  - You can now send grids with a minimum length of 5 items. Previously the lower limit was 7 items in a grid. The upper limit remains at 50 items.
+  - The pattern check is not available to grids with length 5 or 6. The pattern check is only available for grids with length 7 or more. Reason being that 5 or 6 items is not sufficient to detect patterns beyond (partial-)straightlining confidently.
+
+  ## BAS accuracy
+  - The BAS accuracy has been improved to detect more unnatural typing behaviors while simultaneously reducing false positives.
+
+  ## Supported file formats
+  - We now support AYTM and Confirmit files for the quick import. The files must be pre-processed in our Integrations section and then imported into ReDem.
+  - [Confirmit Integration Assistance](https://app.redem.io/integrationAssistance/confirmit)
+  - [AYTM Integration Assistance](https://app.redem.io/integrationAssistance/aytm)
+</Update>
+
 <Update label="2026-04-03" description="v1.5.3">
   ## Respondents
   - You can now search for multiple respondents at once by typing their IDs into the search bar, or copy pasting a list of IDs into it.

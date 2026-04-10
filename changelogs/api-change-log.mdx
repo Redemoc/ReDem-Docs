@@ -5,6 +5,12 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-04-10" description="v3.1.4">
+  ## GQS Grid Length Update
+  You can now send grids with a minimum length of 5 items. Previously the lower limit was 7 items in a grid. The upper limit remains at 50 items.
+  The pattern check is not available to grids with length 5 or 6. You can send the `patternCheckEnabled` flag for these grids, but it will be silently ignored. Reason being that 5 or 6 items is not sufficient to detect patterns beyond (partial-)straightlining confidently.
+</Update>
+
 <Update label="2026-02-27" description="v3.1.3">
   ## CHS Limit Update
 
