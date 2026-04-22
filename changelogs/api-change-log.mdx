@@ -5,6 +5,14 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-04-22" description="v3.1.5">
+  ## New Attribute: referenceSurveyId
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> - You can now send an optional `referenceSurveyId` in the request body. It is your **external survey identifier** (for example, the id or key of the project in your survey tool). When ReDem **creates** a new survey for the given `surveyName`, that value is stored on the survey for correlation with your own systems. If a survey with that `surveyName` already exists, the stored `referenceSurveyId` is **not** changed by later requests.
+
+  See the [v3 addRespondent](/api-reference/endpoints/v3/addRespondent) endpoint documentation for the request body.
+</Update>
+
 <Update label="2026-04-10" description="v3.1.4">
   ## GQS Grid Length Update
   You can now send grids with a minimum length of 5 items. Previously the lower limit was 7 items in a grid. The upper limit remains at 50 items.

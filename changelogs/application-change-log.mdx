@@ -5,6 +5,26 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-04-22" description="v1.5.5">
+  ## Quick Import
+  - There's a utility for the quick import that removes all columns from the survey export with a response rate lower than 10%. This improves the results you get from the CHS. You can find it here: [Column Cleaner](https://app.redem.io/integrationAssistance/clean-excel).
+  - In step 2 of the quick import you can now enter your own survey ID instead of just using a survey name. That allows for easier traceability between your survey platfom and ReDem.
+
+  ## Respondent Table
+  - When you open the detail view of a respondent, you can let the AI generate a summary of the respondent's quality to understand the respondents score at a glance.
+  - You can now recalculate up to 500 respondents at once and see a progress bar while the recalculation is running.
+
+  ## CHS
+  - The CHS has been improved to reduce the false positive rate for any type of survey and any type of question.
+  
+  ## Timescore
+  - We fixed a bug where the Timescore wasn't calculated for surveys with more than 100 TS datapoints.
+  
+  ## Decipher Integration Agent
+  - We updated the Decipher Integration Agent such that it generates higher quality code and works out of the box for more surveys. 
+  <Warning>It's still required to test the integration of your Survey with ReDem before going Live. The integration Agent has no guarantee that the integration will work out of the box.</Warning>
+</Update>
+
 <Update label="2026-04-10" description="v1.5.4">
   ## API Keys
   - There are now two different types of API keys: Private and Public.

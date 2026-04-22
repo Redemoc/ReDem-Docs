@@ -1133,6 +1133,10 @@
             "description": "**Optional platform identifier** for the source system where the respondent was collected (for example, Qualtrics, Decipher, or custom panel tooling). This helps identify the origin of respondents created through API integrations. \n\n **Recommendation for integrators:** Always populate this field with a stable platform name for API-based survey tool integrations.",
             "example": "qualtrics"
           },
+          "referenceSurveyId": {
+            "type": "string",
+            "description": "**Optional external survey identifier** from your own system (for example, the project or survey id in your survey tool). When ReDem **creates** a new survey for the given `surveyName`, this value is stored on the survey. If the survey already exists, the existing stored value is **not** overwritten by a different `referenceSurveyId` in a later request."
+          },
           "dataPoints": {
             "type": "array",
             "items": {
@@ -4067,6 +4071,7 @@
                 "surveyName": "Global Vacation Insights 2024",
                 "surveyDescription": "This survey explores global travel trends in 2024, including vacation preferences, destinations, budgets, and planning behaviors. Your responses will help uncover insights into how people around the world travel today.",
                 "surveyPlatform": "qualtrics",
+                "referenceSurveyId": "SV_ext_7f2a1c9e",
                 "dataPoints": [
                   {
                     "qualityCheck": "OES",
