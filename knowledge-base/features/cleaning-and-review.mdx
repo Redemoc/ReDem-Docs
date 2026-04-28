@@ -100,6 +100,12 @@ Here’s an example of a cleaning settings object that can be used to customize 
   }
 ```
 
+## Changing cleaning settings (import, live, and API)
+
+For **imported** and **live** (API-connected) projects, changing cleaning settings in the ReDem app works the same way: open the survey **results** page, use **Cleaning Settings**, update the thresholds, then **Apply Cleaning** to reprocess and update exclusions for respondents already in the project.
+
+For **live surveys** that are still in the field, you should also update the **programming in your survey platform** (or your API integration) so it stays aligned with your chosen rules. Integrations send **cleaning settings per respondent** with each submission (for example in the `cleaningSettings` field of the add-respondent request). ReDem applies the settings included in **each** request to that respondent. **New respondents** therefore follow whatever you send on each call—if you only change settings inside the ReDem app but not in your fieldwork script, new completes may still be sent with the old `cleaningSettings` until you update the integration.
+
 ## What Is the Outcome of the Cleaning Process?
 
 Each respondent is classified as either:
