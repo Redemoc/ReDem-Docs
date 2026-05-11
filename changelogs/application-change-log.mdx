@@ -5,6 +5,15 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-05-11" description="v1.5.7">
+  ## Respondent Table
+  - When sorting by any scores the unavailable scores, e.g. because some didn't respondent to an open ended question, will always be sorted to the end of the table. This means you get to always see the relevant results on the first page of the table.
+  - The table and the respondent details were sometimes not showing the incoherrent questions for the CHS. This issue is now resolved.
+
+  ## Duplicate Answer Check
+  - The duplicate answer check had a high false positive rate on very short answers. We will only check for duplicate answers if at minimum 10 characters are provided. For CJK languages the threshold is 3 characters.
+</Update>
+
 <Update label="2026-05-04" description="v1.5.6">
   ## Company Settings
   - You can configure defaults for respondent attributes and missing values. These defaults are applied automatically for every import.
