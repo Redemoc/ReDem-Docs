@@ -1167,6 +1167,11 @@
               "panel": "Panel Name",
               "country": "United States"
             }
+          },
+          "retentionDays":{
+            "type": "number",
+            "description": "**The number of days to retain the respondent's data**. \n\n **💡Important:** If no retention days are specified, the respondent's data will be retained indefinitely. \n\n **🔦 Tip:** You can use this field to specify the number of days to retain the respondent's data. For example, if you want to retain the respondent's data for 30 days, you can set this field to 30.",
+            "example": 30
           }
         }
       },
@@ -4192,7 +4197,8 @@
                 "respondentAttributes": {
                   "panel": "Panel Name",
                   "country": "United States"
-                }
+                },
+                "retentionDays": 30
               }
             }
           }
