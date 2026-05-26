@@ -5,6 +5,15 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-05-22" description="v3.1.6">
+  ## New Attribute: retentionDays
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> - You can now send an optional `retentionDays` in the request body. It is the number of days to retain the respondent's data. After the retention period is over the respondent will be deleted from ReDem. The data will be no longer available in our platform. The minimum value is 30 days.
+
+  See the [v3 addRespondent](/api-reference/endpoints/v3/addRespondent#body-retention-days) endpoint documentation for the request body.
+</Update>
+
+
 <Update label="2026-04-22" description="v3.1.5">
   ## New Attribute: referenceSurveyId
 

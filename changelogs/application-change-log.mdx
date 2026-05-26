@@ -5,6 +5,27 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-05-22" description="v1.5.8">
+  ## Respondent Retention period
+  - Via the API you can now set a retention period for the respondents. This means that respondents will be deleted after the retention period has passed. This is only available for API v3 surveys. Check out the [API docs](/api-reference/endpoints/v3/addRespondent#body-retention-days) for more information.
+
+  ## BAS
+  - We tuned the BAS to reduce the number of false positives for respondents that had a long chain of uninterrupted keystrokes.
+
+  ## CHS
+  - The CHS will not flag false inconsistencies regarding the respondents age range and birth year anymore.
+  - For quick imports the CHS is using an additional verification step to reduce any false positives.
+
+  ## Minor improvements
+  - The credit overview now shows the remaining and total credits from the current contract period by default.
+  - The resopndent explanations are much more precise and on point.
+  - The filters for the respondent table are visible by default.
+  - The sorting of the columns in the respondent table has been fixed. Previously the order was e.g. Q1, Q10, Q2. Now it's Q1, Q2, Q10.
+  - Copy & Paste of keywords for the OES is much smoother.
+  - Fixed a bug where larger surveys in the quick import did not finish the post-processing step.
+  
+</Update>
+
 <Update label="2026-05-11" description="v1.5.7">
   ## Respondent Table
   - When sorting by any scores the unavailable scores, e.g. because some didn't respondent to an open ended question, will always be sorted to the end of the table. This means you get to always see the relevant results on the first page of the table.
