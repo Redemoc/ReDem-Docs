@@ -1167,6 +1167,11 @@
               "panel": "Panel Name",
               "country": "United States"
             }
+          },
+          "retentionDays":{
+            "type": "number",
+            "description": "**The number of days to retain the respondent's data**. \n\n Use this in case you have specific requirements for data retention. After the retention period is over the respondent will be deleted from ReDem. The data will be no longer available in our platform.",
+            "example": 30
           }
         }
       },
@@ -4192,7 +4197,8 @@
                 "respondentAttributes": {
                   "panel": "Panel Name",
                   "country": "United States"
-                }
+                },
+                "retentionDays": 30
               }
             }
           }
