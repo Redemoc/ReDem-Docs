@@ -218,6 +218,8 @@ Use this flow to add new interviews to an existing import without reprocessing p
   <Step title="Upload the updated file">
     Choose the file that contains additional interviews from the same survey and click "Proceed to Review".
     You may upload all interviews (previous + new) or only the new interviews. Existing interviews are automatically detected and skipped; only new interviews are uploaded.
+
+    If you upload **only** the new interviews, you will not be able to use [Change Quality Check Settings](#change-quality-check-settings) on that survey later, because ReDem no longer has a single file with the full respondent set. Uploading **previous + new** interviews keeps that option available.
   </Step>
   <Step title="Check key settings">
     - Verify the Survey Metadata is correct.
@@ -266,6 +268,65 @@ After you have cleaned a file, you can adjust and reapply your cleaning settings
     Click "Apply Cleaning" to recalculate your results using the updated settings.
   </Step>
 </Steps>
+
+## Change Quality Check Settings
+
+After a Quick Import survey has finished processing, you can change which questions are included in your quality checks and update check-specific settings (for example, keywords, languages, or duplicate detection for Open-Ended Score). ReDem recalculates **all existing respondents** using the updated configuration.
+
+This is separate from [Edit and Reapply Cleaning Settings](#edit-and-reapply-cleaning-settings): quality check settings control **which data is scored and how**; cleaning settings control **exclusion thresholds** on scores you already have.
+
+<Note>
+**Change Quality Checks** is available only for **Quick Import** surveys (file upload), not for live API-connected surveys. The button appears on the survey results page when your project is eligible. It is hidden for older surveys created before this feature was available, while the survey is still processing, and when the import file no longer contains the **full respondent set** (see below).
+</Note>
+
+### What you can change
+
+You can add, remove, or edit settings for the same quality checks available during import:
+
+- **Open-Ended Score (OES)**
+- **Coherence Score (CHS)**
+- **Grid-Question Score (GQS)**
+- **Time Score (TS)**
+
+The editor uses the same question-selection workflow as the import flow. For details on configuring each check, see [Select Quality Checks and Questions](#manual-upload) in the manual upload steps above.
+
+<Warning>
+Appending interviews with **Add New Data Records** does not disable **Change Quality Checks** by itself. The feature is disabled only if the file used for that update does **not** include every respondent already in the survey (for example, when you upload **only** the new interviews). If you upload a file that contains **all** previous and new interviews, you can still change quality check settings afterward. To change quality checks after a partial append, create a new import or re-upload using the full respondent set.
+</Warning>
+
+### Credits
+
+Changing quality checks may consume additional credits. On the **Summary** step, ReDem shows a **maximum** credit estimate for the settings you changed across all respondents. You are charged only for **added or edited** datapoints on respondents that are recalculated successfully; **removing** datapoints does not refund credits. Turning duplicate detection on or off for an existing open-ended question without other processing changes does not add credits.
+
+If your account does not have enough credits for the estimated maximum, you cannot apply the changes until you add credits. See [ReDem Credits](/knowledge-base/miscellaneous/redem-credits) for how credits are calculated.
+
+<Steps titleSize="h3">
+  <Step title="Open Quality Checks">
+    On your survey **results** page, click **Quality Checks** at the top (next to **Cleaning Settings**).
+
+    If the survey is still processing, ReDem shows a message and blocks editing until processing finishes.
+  </Step>
+  <Step title="Edit quality checks">
+    On the **Quality Check** step, adjust your checks the same way as during import: add or remove checks, change which columns or questions are included, and update check-specific options. Confirm each quality check panel before continuing.
+
+    Use **Back to Survey** if you want to cancel without saving.
+  </Step>
+  <Step title="Review the summary">
+    On the **Summary** step, review how many datapoints changed per quality check (added, removed, or net change) and the maximum credit requirement for all respondents. Click **Apply Changes** when you are ready.
+  </Step>
+  <Step title="Confirm and apply">
+    ReDem verifies your credit balance, then asks you to confirm. Click **Confirm & Apply** to save the new settings and start recalculation for every respondent in the survey.
+  </Step>
+  <Step title="Wait for recalculation">
+    You return to the survey results page while ReDem processes respondents. A progress view shows how many respondents remain. You can leave the page and come back; processing continues in the background.
+
+    When recalculation finishes, scores, charts, and the respondent table reflect the updated quality check settings.
+  </Step>
+</Steps>
+
+### Failed respondent updates
+
+If ReDem cannot update a respondent after several automatic retries, that row is highlighted **yellow** in the respondent table. Those interviews still reflect the **previous** quality check settings and scores. Contact [support@redem.io](mailto:support@redem.io) if you need help with failed rows.
 
 ## Supported Survey Tools
 
