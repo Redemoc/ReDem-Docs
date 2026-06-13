@@ -1,0 +1,44 @@
+---
+title: "Teams and Survey Access"
+description: "How ReDem decides which surveys an employee can open."
+icon: "shield-check"
+iconType: "regular"
+---
+
+Teams are optional groups within your company. They control which **employee**-owned surveys are visible to other employees, without replacing survey ownership.
+
+For step-by-step setup, see the [Teams user guide](/features/teams).
+
+## Core ideas
+
+- **Survey owner** — the employee who created the survey. Ownership does not change when teams change.
+- **Team access** — employees on the same team as the survey owner can open that survey.
+- **Invited access** — explicit per-survey invites for employees who are not on the owner's team.
+
+ReDem resolves team access from the owner's **current** team at the time someone opens or lists surveys. Access is not frozen when the survey was created.
+
+## Access summary
+
+| Access path | Read and write survey | Manage invited users |
+| --- | --- | --- |
+| Company admin | Yes — all company surveys | Yes |
+| Survey owner | Yes | Yes |
+| Same team as owner | Yes | Yes |
+| Invited employee | Yes | No |
+| Other team, not invited | No | No |
+| No team, not owner, not invited | No | No |
+
+## Why dynamic team access
+
+When the survey owner switches teams, teammates on the new team gain access and teammates on the previous team lose it. That keeps survey visibility aligned with who the owner works with today, without admins re-sharing every survey manually.
+
+Explicit invites stay in place when team membership changes. An invited user keeps access until someone removes the invite.
+
+## Teams vs user management
+
+**Administration → Users** is where you invite employees and assign **admin** rights. Teams are managed from the same page via **Create Team** / **Manage Teams** and the per-user **Team** column.
+
+User management and teams serve different purposes:
+
+- **Users** — who belongs to your company and whether they are an admin or employee.
+- **Teams** — which employees share survey visibility with each other.

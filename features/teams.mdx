@@ -1,0 +1,102 @@
+---
+title: "Teams"
+description: "Organize employees into teams and control who can access which surveys."
+icon: "users"
+iconType: "regular"
+---
+
+Teams let company **admins** group employees and control survey visibility within your organization. When employees work on the same projects, teams make it easy to collaborate without giving everyone access to every survey in the company.
+
+## What teams are good for
+
+- **Collaborate within a project group** — teammates can open and work on each other's surveys without extra setup for every new survey.
+- **Keep teams isolated** — employees on Team A do not see Team B's surveys unless someone is explicitly invited.
+- **Share across teams when needed** — use survey invites for one-off access across team boundaries (for example, a specialist on another team).
+- **Stay in control as an admin** — admins always see all company surveys and manage team membership centrally.
+
+<Note>
+Teams apply to **employees** only. Company admins are not team members and always have access to all surveys in the company.
+</Note>
+
+## How survey access works
+
+Every survey has an **owner** (the employee who created it). The owner always keeps access to their survey.
+
+**Team access** is based on the owner's **current team**:
+
+| Who | What they can access |
+| --- | --- |
+| **Company admin** | All surveys in the company |
+| **Survey owner** | Their own surveys |
+| **Employee on the same team as the owner** | Surveys owned by anyone on that team |
+| **Employee invited to a survey** | That survey, even if they are on another team |
+| **Employee with no team** | Only surveys they own, plus surveys they are invited to |
+
+### When team membership changes
+
+Access updates automatically — you do not need to re-share surveys.
+
+- **Owner moves to another team** — their former teammates lose access; their new teammates gain access.
+- **Employee joins a team** — they immediately see surveys owned by teammates on that team.
+- **Employee leaves a team** — they keep surveys they own and surveys they were invited to, but lose team-based access to teammates' surveys.
+
+<Warning>
+If an employee creates surveys before joining a team, those surveys are still owned by that employee. Teammates only gain access after the owner is on the same team.
+</Warning>
+
+## Set up teams (admins)
+
+<Steps>
+  <Step title="Open user management">
+    Go to **Administration → Users**.
+  </Step>
+  <Step title="Create a team">
+    Click **Create Team** (or **Manage Teams** if teams already exist). Enter a team name and select at least one employee. Team names must be unique within your company.
+  </Step>
+  <Step title="Assign employees">
+    Use the **Team** column in the user table to assign or change team membership. Each employee can belong to **one team at a time**. Assigning someone to a new team removes them from their previous team.
+  </Step>
+</Steps>
+
+You can rename or delete teams from **Manage Teams**. Deleting a team removes team membership from its members. Surveys are not deleted; access changes because those users no longer share a team with the survey owners.
+
+## Share a survey with specific people
+
+Team membership covers most day-to-day collaboration. Use **Share** on a survey when someone outside the owner's team needs access.
+
+1. Open the survey and click **Share**.
+2. Review **Team access** to see which teammates already have access through the owner's team.
+3. Under **Invited users**, select employees to invite and click **Invite**.
+
+Invited employees can view and work on the survey even if they are on a different team. They cannot manage invites unless they are also on the owner's team (or are the owner or an admin).
+
+<Tip>
+Employees who are both invited and on the owner's team appear once under **Team access**, not twice.
+</Tip>
+
+## Who can manage invites
+
+These users can add or remove invited users on a survey:
+
+- Company **admins**
+- The survey **owner**
+- Employees on the **same team as the owner**
+
+Invited-only users can use the survey but cannot change who is invited.
+
+## Common scenarios
+
+<AccordionGroup>
+  <Accordion title="Two colleagues should see each other's surveys">
+    Put both employees on the same team. Each person's surveys become visible to the other through team access.
+  </Accordion>
+  <Accordion title="A manager on another team needs access to one survey">
+    Keep teams as they are and **invite** the manager on that survey. They do not need to join the owner's team.
+  </Accordion>
+  <Accordion title="A project ends and people move to a new team">
+    Reassign employees in **Administration → Users**. Survey access follows the owner's current team, so old project surveys stay with the old team unless owners move too.
+  </Accordion>
+  <Accordion title="An employee is not on any team">
+    They only see surveys they created and surveys they were explicitly invited to. Admins still see everything.
+  </Accordion>
+</AccordionGroup>

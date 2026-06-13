@@ -27,7 +27,8 @@
               {
                 "group": "Core Features",
                 "pages": [
-                  "features/file-import"
+                  "features/file-import",
+                  "features/teams"
                 ]
               },
               {
@@ -62,7 +63,8 @@
               {
                 "group": "Core Concepts",
                 "pages": [
-                  "knowledge-base/features/cleaning-and-review"
+                  "knowledge-base/features/cleaning-and-review",
+                  "knowledge-base/features/teams-and-survey-access"
                 ]
               },
               {
@@ -148,7 +150,8 @@
               {
                 "group": "Core Features",
                 "pages": [
-                  "features/file-import"
+                  "features/file-import",
+                  "features/teams"
                 ]
               },
               {
@@ -183,7 +186,8 @@
               {
                 "group": "Core Concepts",
                 "pages": [
-                  "knowledge-base/features/cleaning-and-review"
+                  "knowledge-base/features/cleaning-and-review",
+                  "knowledge-base/features/teams-and-survey-access"
                 ]
               },
               {
