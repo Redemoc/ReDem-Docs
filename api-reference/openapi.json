@@ -279,7 +279,7 @@
           },
           "surveyDescription": {
             "type": "string",
-            "description": "**Additional context about the purpose and intent of the survey.** This field provides supplementary information that helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives.",
+            "description": "**Additional context about the purpose and intent of the survey.** This optional field provides supplementary information that helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives. \n\n 🧪 **Validations:** If provided, it must contain a minimum of **20 characters** and a maximum of **500 characters**.",
             "example": "This survey aims to understand travel preferences and vacation experiences of European travelers, focusing on accommodation choices, transportation methods, and budget allocation."
           }
         },
@@ -1281,10 +1281,6 @@
             "type": "string",
             "description": "**The name of the survery**, which helps identify different surveys. The survey name can be assigned freely. \n\n**💡Important:** If the survey name already exists, the system will add the respondent under the appropriate survey. If the survey name is new, a new survey will be created, and the respondent will be added to the new survey. \n\n **⭕ Note:** Each survey identifier must be unique. \n\n **🔦 Tip:** you can simply make survey name unique by adding a timestamp. \n As Example: `Global Vacation Insights - 1709040600`"
           },
-          "surveyDescription": {
-            "type": "string",
-            "description": "**The description of the survey**, which helps get the context of the survey. The survey description can be assigned freely. \n\n**🔦 Tip:** The survey description provides essential context about the purpose and subject of the survey. This context will be helpful to improve the quality assessment of respondents by evaluating their answers in relation to the overall survey intent. \n\n 🧪 **Validations:**  The survey description is optional. If provided, it must contain a minimum of **20 characters** and a maximum of **500 characters**."
-          },
           "surveyPlatform": {
             "type": "string",
             "description": "**Optional platform identifier** for the source system where the respondent was collected (for example, Qualtrics, Decipher, or custom panel tooling). This helps identify the origin of respondents created through API integrations. \n\n **Recommendation for integrators:** Always populate this field with a stable platform name for API-based survey tool integrations.",
@@ -1395,7 +1391,7 @@
           },
           "surveyDescription": {
             "type": "string",
-            "description": "**Additional context about the purpose and intent of the survey.** This field provides supplementary information that helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives.",
+            "description": "**Additional context about the purpose and intent of the survey.** This optional field provides supplementary information that helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives. \n\n 🧪 **Validations:** If provided, it must contain a minimum of **20 characters** and a maximum of **500 characters**.",
             "example": "This survey aims to understand travel preferences and vacation experiences of European travelers, focusing on accommodation choices, transportation methods, and budget allocation."
           }
         },
@@ -5182,7 +5178,6 @@
               "example": {
                 "respondentId": "RESP497770",
                 "surveyName": "Global Vacation Insights 2024",
-                "surveyDescription": "This survey explores global travel trends in 2024, including vacation preferences, destinations, budgets, and planning behaviors. Your responses will help uncover insights into how people around the world travel today.",
                 "surveyPlatform": "qualtrics",
                 "referenceSurveyId": "SV_ext_7f2a1c9e",
                 "dataPoints": [
