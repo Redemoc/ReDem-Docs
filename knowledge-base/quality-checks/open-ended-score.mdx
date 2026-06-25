@@ -133,6 +133,12 @@ The question was not read. The response is completely meaningless or incoherent,
 
 The response shows characteristics of AI-generated text, indicating it was likely produced by a chatbot rather than a human respondent. Such answers often appear syntactically perfect, overly balanced, or emotionally neutral, lacking natural human imperfections, spontaneity, or personal perspective.
 
+**How ReDem detects AI-Suspect answers:**
+
+ReDem evaluates **all open-ended answers from the same respondent together** in a single analysis. Each answer still receives its own AI-Suspect classification, but the model uses the full set of responses for context. That improves detection when individual answers are short on their own but the combined text is enough to assess writing style.
+
+The check runs when the respondent's open-ended answers contain enough text in total. If the combined length is too low, ReDem skips AI-Suspect for that respondent and applies the other open-ended categories instead.
+
 **Typical Indicators:**
 
 - Unusually polished or "too perfect" language
@@ -193,7 +199,7 @@ To ensure data privacy and compliance, GPT is integrated into the ReDem OES with
 
 ### Individual Responses & Anonymity
 
-Each response is sent to OpenAI individually, using a fully anonymized ID. Only the single response is transmitted per API request—complete survey datasets are never shared.
+Most open-ended categories are evaluated per answer, using a fully anonymized ID. Only the data needed for each check is transmitted — complete survey datasets are never shared. For **AI-Suspect**, ReDem sends all of a respondent's open-ended answers from that evaluation in one request so the model can compare writing style across answers; each answer still gets its own result.
 
 ### Exclusive Use by ReDem
 
