@@ -54,7 +54,6 @@ Customizable elements include:
 - **ReDem Score (R-Score):** Threshold
 - **Open-Ended Score (OES):** Threshold + min. number of open-ended responses + category-based exclusion logic
   - **Open-Ended Response Categories:**
-    - **Valid Answer:**
     - **Bad Language:**
     - **No Answer:**
     - **Duplicate Respondent:**
@@ -81,7 +80,6 @@ Here’s an example of a cleaning settings object that can be used to customize 
     "score": 60,
     "minDataPoints":2,
     "categories": {
-      "VALID_ANSWER": {"activate": true, "minDataPoints":2},
       "NO_ANSWER": {"activate": true, "minDataPoints":3},
       // ... other categories ...
     }
@@ -136,7 +134,6 @@ Here’s a sample configuration and its impact on a respondent:
     "score": 60,
     "minDataPoints":2,
     "categories": {
-      "VALID_ANSWER": {"activate": true, "minDataPoints":2},
       "NO_ANSWER": {"activate": true, "minDataPoints":2},
       "BAD_LANGUAGE": {"activate": false, "minDataPoints":2},
       "GIBBERISH": {"activate": false, "minDataPoints":2},

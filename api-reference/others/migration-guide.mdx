@@ -115,10 +115,10 @@ POST https://api.redem.io/v2/addRespondent
    - `POST /v2/updateRespondentsExcludedStatus` → `POST /v3/updateRespondentsExcludedStatus`
 
 2. **OES categories**: Updated category names in cleaning settings
-   - `GENERIC_ANSWER` → `VALID_ANSWER`
    - `NO_INFORMATION` → `NO_ANSWER`
    - `FAKE_ANSWER` → `AI_SUSPECT`
    - New categories: `OFF_TOPIC`, `GIBBERISH`
+   - `GENERIC_ANSWER` was removed; `VALID_ANSWER` is a response classification only and is not configurable in cleaning settings
 
 3. **New optional fields**:
    - `surveyDescription` for CHS data points
@@ -170,7 +170,6 @@ Update the OES category names in your cleaning settings request:
       "minDataPoints": 2,
       "categories": {
         "AI_SUSPECT": {"activate": true, "minDataPoints": 2},
-        "VALID_ANSWER": {"activate": false, "minDataPoints": 2},
         "BAD_LANGUAGE": {"activate": true, "minDataPoints": 2},
         "OFF_TOPIC": {"activate": true, "minDataPoints": 2},
         "NO_ANSWER": {"activate": false, "minDataPoints": 2},
