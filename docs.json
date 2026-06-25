@@ -28,6 +28,7 @@
                 "group": "Core Features",
                 "pages": [
                   "features/file-import",
+                  "features/respondent-insights",
                   "features/teams"
                 ]
               },
@@ -151,6 +152,7 @@
                 "group": "Core Features",
                 "pages": [
                   "features/file-import",
+                  "features/respondent-insights",
                   "features/teams"
                 ]
               },

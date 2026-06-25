@@ -25,6 +25,15 @@ Supported upload files:
 - **CSV**
 - **Excel**
 
+ReDem also recognizes exports from common survey platforms and prepares them automatically during upload:
+
+- **Decipher**
+- **AYTM**
+- **Confirmit**
+- **Quantilope**
+
+Upload the original export file from your platform — no separate conversion step is required. ReDem detects the format, maps sheets and metadata, and continues with the normal Quick Import flow. See [Supported Survey Tools](#supported-survey-tools) below for platform-specific export steps.
+
 ### Row and column limits
 
 Each upload file may contain **at most 5,000 rows** and **at most 5,000 columns**. If your file exceeds either limit, you need to split or trim the data before you can import it.
@@ -330,9 +339,11 @@ If ReDem cannot update a respondent after several automatic retries, that row is
 
 ## Supported Survey Tools
 
+ReDem recognizes exports from the platforms below. Upload the original file from your survey tool; ReDem detects the format and prepares it for import.
+
 ### Decipher
 
-If your source file comes from Decipher, export the survey in Decipher first. Decipher downloads a ZIP file that contains the Excel export. Upload that Excel file to ReDem.
+Export your survey from Decipher as Excel, then upload that file to Quick Import.
 
 <Steps titleSize="h4">
   <Step title="Open the export menu">
@@ -345,9 +356,19 @@ If your source file comes from Decipher, export the survey in Decipher first. De
 
     <img src="/images/decipher-export-processing.webp" alt="Decipher export processing screen" />
   </Step>
-  <Step title="Upload the file and configure the import">
-    Open the downloaded ZIP file and upload the Excel file inside it to ReDem. After the file has been uploaded, set **Select label sheet** to **Datamap** and **Select data sheet** to **A1**. Make sure to check **Is Decipher Export** and continue with the import process as usual.
-
-    <img src="/images/decipher-upload.png" alt="Upload File step: Datamap for label sheet, A1 for data sheet, Is Decipher Export enabled" />
+  <Step title="Upload the file">
+    Open the downloaded ZIP file and upload the Excel file inside it to ReDem. ReDem detects the Decipher format automatically and selects the correct data and label sheets when possible.
   </Step>
 </Steps>
+
+### AYTM
+
+Export your survey data from AYTM and upload the Excel file directly to Quick Import. ReDem detects the AYTM format and prepares the file for the import steps that follow.
+
+### Confirmit
+
+Export your survey from Confirmit and upload the Excel file directly to Quick Import. ReDem detects the Confirmit format, maps the data and datamap sheets, and continues with the normal import flow.
+
+### Quantilope
+
+Export your survey from Quantilope and upload the Excel file directly to Quick Import. ReDem detects the Quantilope format and prepares the codebook and data sheets automatically.

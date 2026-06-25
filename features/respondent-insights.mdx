@@ -1,0 +1,55 @@
+---
+title: "Respondent Insights"
+description: "Review individual respondents and use AI-generated insights to understand their quality scores."
+icon: "sparkles"
+iconType: "regular"
+---
+
+After ReDem evaluates your survey, the **Respondent Table** on the survey results page lists every interview with quality scores, cleaning status, and question-level results. Use it to filter, sort, download, and open detailed views for individual respondents.
+
+## Respondent detail view
+
+Click any row in the Respondent Table to open the **respondent detail view**. From there you can review:
+
+- **Overview**: ReDem Score, individual quality check scores, quality check weights on the overall score, and AI-generated respondent insights
+- **Quality check tabs**: Drill into OES, CHS, GQS, TS, and BAS results for that respondent, including flagged answers, patterns, and visualizations where available
+- **Cleaning**: Included or excluded status and the reasons for exclusion
+
+## AI-generated respondent insights
+
+ReDem can generate a plain-language summary that explains a respondent's quality profile: what the scores indicate and, when applicable, why the respondent is recommended for exclusion.
+
+Each insight has two parts:
+
+- **Summary**: A concise overview of the respondent's ReDem Score level and how each active quality check reads (for example, open-ended answer quality, grid patterns, or coherence issues)
+- **Conclusion**: A focused takeaway on whether the respondent looks fine or why they were excluded
+
+Insights are based on that respondent's scores, flags, and cleaning status.
+
+### Generate insights for one respondent
+
+1. Open the respondent detail view from the Respondent Table.
+2. Go to the **Overview** tab.
+3. Click **Generate Insights**.
+
+Generation usually takes a few seconds. Once complete, the summary and conclusion stay saved on that respondent until you regenerate them.
+
+### Explain all respondents
+
+For larger reviews, use **Explain All** in the Respondent Table toolbar to generate insights in bulk.
+
+1. Open the survey results page.
+2. Click **Explain All** above the Respondent Table.
+3. Confirm the operation.
+
+ReDem queues insights for respondents that are **excluded** or have a **Coherence Score below 80**. Included respondents with a CHS of 80 or above are skipped, because they typically need less manual review.
+
+Bulk generation runs in the background. You can stay on the page or navigate elsewhere; a progress indicator shows while jobs are still running. When a respondent's insight is ready, open their detail view on the **Overview** tab to read it.
+
+<Note>
+If a respondent could not be evaluated (for example, when the ReDem Score is unavailable), ReDem does not generate an insight for them.
+</Note>
+
+## Exports
+
+When at least one respondent in the export has a generated insight, Excel and CSV downloads include an **Explanation** column with the summary and conclusion combined.
