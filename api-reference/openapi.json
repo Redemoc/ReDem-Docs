@@ -866,17 +866,6 @@
                       }
                     }
                   },
-                  "VALID_ANSWER": {
-                    "type": "object",
-                    "properties": {
-                      "activate": {
-                        "type": "boolean"
-                      },
-                      "minDataPoints": {
-                        "type": "number"
-                      }
-                    }
-                  },
                   "BAD_LANGUAGE": {
                     "type": "object",
                     "properties": {
@@ -5366,10 +5355,6 @@
                     "categories": {
                       "AI_SUSPECT": {
                         "activate": true,
-                        "minDataPoints": 2
-                      },
-                      "VALID_ANSWER": {
-                        "activate": false,
                         "minDataPoints": 2
                       },
                       "BAD_LANGUAGE": {
