@@ -16,7 +16,8 @@ The **Behavioral Analytics Score (BAS)** measures the quality of typing behavior
 - Checks for copy-&-paste patterns (e.g., large blocks inserted with minimal keystroke events).
 - Checks for highly uniform or repetitive keystroke rhythms that differ from typical human variation.
 - Where instrumented, checks for behaviour metadata (e.g., pause durations between keystrokes, editing patterns) that deviate from expected human behaviour.
-
+- Swipe Typing (Glide Typing): Detects swipe/glide typing on Android and iPhone. Assigns a BAS score of 60 and classifies the interaction as `NATURAL_TYPING`. In some scenarios, this may result in false negatives.
+- Voice Dictation (Speech-to-Text): Detects speech-to-text input on Android and iPhone. Assigns a BAS score of 60 and classifies the interaction as `NATURAL_TYPING`. In some scenarios, this may result in false negatives.
 
 ## How to use BAS?
 
