@@ -5,6 +5,23 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-07-06" description="v1.6.3">
+  ## BAS
+  - Voice dictation and swipe typing are now classified as natural typing with a BAS score of 60.
+  - See the [Behavioral Analytics Score docs](/knowledge-base/quality-checks/behavior-analysis-score) for details.
+
+  ## Exclusion Reason Breakdown
+  - You can now view a breakdown of exclusion reasons at the survey level, showing how many excluded respondents were removed for each cleaning criterion.
+  - See the [Data Cleaning guide](/features/cleaning-and-review#view-exclusion-reason-breakdown) for how to find this information.
+
+  ## Change Quality Check Settings
+  - Quality check settings can now be changed for API projects after the initial upload, including **BAS**. Use the same **Quality Checks** workflow as for manual imports.
+  - See the [File Import guide](/features/file-import#change-quality-check-settings) for details.
+
+  ## Performance
+  - Opening larger surveys feels much faster now, especially when loading many respondents at once (for example, 1,000 respondents).
+</Update>
+
 <Update label="2026-06-25" description="v1.6.2">
   ## File Import
   - AYTM, Confirmit, and Quantilope exports can now be uploaded directly in Quick Import. We automatically detect the format and prepare the file. No separate conversion step is required.
