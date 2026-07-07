@@ -1444,7 +1444,7 @@
             "items": {
               "$ref": "#/components/schemas/InteractionData_V2"
             },
-            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io) \n\n ⭕ **Note:** - A **minimum of 3** interactions are needed to compute a score. \n",
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? See the [example implementation](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - A **minimum of 3** interactions are needed to compute a score. \n - ReDem only uses the **last 300** `MOUSE_MOVEMENT` and **last 300** `MOUSE_CLICK` events per data point. We recommend capping client-side tracking at the same limits to keep stored data small. \n",
             "example": [
               {
                 "interactionType": "KEYSTROKE",
@@ -1461,7 +1461,7 @@
         ]
       },
       "InteractionData_V2": {
-        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)",
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? See the [example implementation](/api-reference/others/behavior-tracking).",
         "type": "object",
         "required": [
           "value",
@@ -1471,15 +1471,88 @@
         "properties": {
           "interactionType": {
             "type": "string",
-            "description": "The type of interaction the respondent had with the data point. \n\n ⭕ **Note:** Currently, the API supports `KEYSTROKE` and `COPY_AND_PASTE` interactions. Future updates will extend support to additional interactions, such as **mouse clicks, mouse movements**, and more.",
+            "description": "The type of interaction the respondent had with the data point. The shape of `value` depends on this field.",
             "enum": [
               "KEYSTROKE",
-              "COPY_AND_PASTE"
+              "COPY_AND_PASTE",
+              "MOUSE_MOVEMENT",
+              "MOUSE_CLICK"
             ]
           },
           "value": {
-            "type": "string",
-            "description": "The value of the interaction, which should include the final value once the interaction is complete."
+            "description": "The value of the interaction. Its shape depends on `interactionType`: a string for `KEYSTROKE` and `COPY_AND_PASTE`, coordinates for `MOUSE_MOVEMENT`, and click metadata for `MOUSE_CLICK`. \n\n",
+            "oneOf": [
+              {
+                "title": "KEYSTROKE",
+                "type": "string",
+                "description": "Used when `interactionType` is `KEYSTROKE`. Should include the final value once the interaction is complete.",
+                "example": "W"
+              },
+              {
+                "title": "COPY_AND_PASTE",
+                "type": "string",
+                "description": "Used when `interactionType` is `COPY_AND_PASTE`. Should include the final value once the interaction is complete.",
+                "example": "W"
+              },
+              {
+                "title": "MOUSE_MOVEMENT",
+                "type": "object",
+                "description": "Used when `interactionType` is `MOUSE_MOVEMENT`.",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "description": "The horizontal pointer position in pixels."
+                  },
+                  "y": {
+                    "type": "number",
+                    "description": "The vertical pointer position in pixels."
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "example": {
+                  "x": 512,
+                  "y": 384
+                }
+              },
+              {
+                "title": "MOUSE_CLICK",
+                "type": "object",
+                "description": "Used when `interactionType` is `MOUSE_CLICK`.",
+                "properties": {
+                  "width": {
+                    "type": "number",
+                    "description": "The width of the clicked element in pixels."
+                  },
+                  "height": {
+                    "type": "number",
+                    "description": "The height of the clicked element in pixels."
+                  },
+                  "offsetX": {
+                    "type": "number",
+                    "description": "The horizontal click position relative to the clicked element."
+                  },
+                  "offsetY": {
+                    "type": "number",
+                    "description": "The vertical click position relative to the clicked element."
+                  }
+                },
+                "required": [
+                  "width",
+                  "height",
+                  "offsetX",
+                  "offsetY"
+                ],
+                "example": {
+                  "width": 320,
+                  "height": 48,
+                  "offsetX": 120,
+                  "offsetY": 24
+                }
+              }
+            ]
           },
           "timestamp": {
             "type": "string",
