@@ -5,6 +5,10 @@ icon: "eye"
 iconType: "regular"
 ---
 
+<Note>
+ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events per BAS data point. Cap client-side tracking at the same limits — storing more only inflates browser session data without improving scoring.
+</Note>
+
 <Steps titleSize="h3">
   <Step title="Implementing a JavaScript Tracker for User Behavior Data">
     <p> Copy the simple **JavaScript tracker code** (attached) into your survey platform’s frontend codebase or UI. This ensures that, whenever respondent complete surveys, it tracks input behavior data for open-ended questions directly from their individual browsers. </p>

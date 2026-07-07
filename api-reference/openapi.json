@@ -1444,7 +1444,7 @@
             "items": {
               "$ref": "#/components/schemas/InteractionData_V2"
             },
-            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io) \n\n ⭕ **Note:** - A **minimum of 3** interactions are needed to compute a score. \n",
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? See the [example implementation](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - A **minimum of 3** interactions are needed to compute a score. \n - ReDem only uses the **last 300** `MOUSE_MOVEMENT` and **last 300** `MOUSE_CLICK` events per data point. We recommend capping client-side tracking at the same limits to keep stored data small. \n",
             "example": [
               {
                 "interactionType": "KEYSTROKE",
@@ -1461,7 +1461,7 @@
         ]
       },
       "InteractionData_V2": {
-        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? Contact us at [support@redem.io](mailto:support@redem.io)",
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? See the [example implementation](/api-reference/others/behavior-tracking).",
         "type": "object",
         "required": [
           "value",
