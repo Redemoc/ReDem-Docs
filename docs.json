@@ -123,7 +123,8 @@
                 "group": "Others",
                 "pages": [
                   "changelogs/api-change-log",
-                  "api-reference/others/structuring-survey-responses"
+                  "api-reference/others/structuring-survey-responses",
+                  "api-reference/others/behavior-tracking"
                 ]
               }
             ]
@@ -246,7 +247,8 @@
                 "group": "Others",
                 "pages": [
                   "changelogs/api-change-log",
-                  "api-reference/others/structuring-survey-responses"
+                  "api-reference/others/structuring-survey-responses",
+                  "api-reference/others/behavior-tracking"
                 ]
               }
             ]
