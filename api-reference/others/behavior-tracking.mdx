@@ -21,98 +21,135 @@ iconType: "regular"
         // Constants
         const INTERACTION_TYPES = {
             KEYSTROKE: 'KEYSTROKE',
-            COPYPASTE: 'COPY_AND_PASTE'
+            COPYPASTE: 'COPY_AND_PASTE',
+            MOUSE_MOVEMENT: "MOUSE_MOVEMENT",
+            MOUSE_CLICK: "MOUSE_CLICK",
         };
       
         // Question ID - This would typically come from your survey tool, you need to edit this
         const QUESTION_ID = "<BAS_QuestionID>";
-        
-        // State variables
-        let startTime = null;
-        let oldText = "";
-      
-        // Initialize or retrieve interaction data from sessionStorage
-        const getInteractionData = () => {
-            const storedData = sessionStorage.getItem("interaction_data");
-            return storedData ? JSON.parse(storedData) : [];
-        };
-      
-        let interactionData = getInteractionData();
-      
-        // Function to push interaction data and save to sessionStorage
-        const pushInteraction = (value, interactionType) => {
-            interactionData.push({
-                value: value,
-                interactionType: interactionType,
-                timestamp: new Date().toISOString()
-            });
-          
-            // Save to sessionStorage
-            sessionStorage.setItem("interaction_data", JSON.stringify(interactionData));
-        };
-      
-        // Initialize or retrieve startTime from sessionStorage
-        const storedStartTime = sessionStorage.getItem("start_time");
-        if (storedStartTime) {
-            startTime = parseInt(storedStartTime);
-        }
-      
-        // Handle input changes
-        textarea.addEventListener('input', (e) => {
-            // Ignore paste events as they're handled separately
-            if (e.inputType === 'insertFromPaste') return;
-          
-            if (!startTime) {
-                startTime = Date.now();
-                sessionStorage.setItem("start_time", startTime.toString());
+        const MAX_MOUSE_MOVEMENT_EVENTS = 300;
+        const MAX_MOUSE_CLICK_EVENTS = 300;
+        const INTERACTION_STORAGE_KEY = QUESTION_ID + "_interaction_data";
+
+        const movementEvents = [];
+        const clickEvents = [];
+        const keystrokeEvents = [];
+
+        const createInteractionRecord = (value, interactionType) => ({
+            value,
+            interactionType,
+            timestamp: new Date().toISOString()
+        });
+
+        const applyCap = (buffer, maxEvents) => {
+            while (buffer.length > maxEvents) {
+                buffer.shift();
             }
+        };
+
+        const pushToCappedBuffer = (buffer, record, maxEvents) => {
+            buffer.push(record);
+            applyCap(buffer, maxEvents);
+        };
+
+        const splitIntoInteractionBuffers = (interactionData) => {
+            interactionData.forEach((event) => {
+                if (event.interactionType === INTERACTION_TYPES.MOUSE_MOVEMENT) {
+                    movementEvents.push(event);
+                    return;
+                }
+                if (event.interactionType === INTERACTION_TYPES.MOUSE_CLICK) {
+                    clickEvents.push(event);
+                    return;
+                }
+                keystrokeEvents.push(event);
+            });
+            applyCap(movementEvents, MAX_MOUSE_MOVEMENT_EVENTS);
+            applyCap(clickEvents, MAX_MOUSE_CLICK_EVENTS);
+        };
+
+        const loadInteractionBuffers = () => {
+            const stored = sessionStorage.getItem(INTERACTION_STORAGE_KEY);
+            if (!stored) {
+                return;
+            }
+            splitIntoInteractionBuffers(JSON.parse(stored));
+        };
+
+        const mergeInteractionDataChronologically = () =>
+        [...movementEvents, ...clickEvents, ...keystrokeEvents].sort((a, b) =>
+            a.timestamp.localeCompare(b.timestamp)
+        );
+
+        const saveInteractionDataToSession = () => {
+            sessionStorage.setItem(
+                INTERACTION_STORAGE_KEY,
+                JSON.stringify(mergeInteractionDataChronologically())
+            );
+        };
+
+        loadInteractionBuffers();
+
+        // Handle mouse movement events
+        document.addEventListener("pointermove", (e) => {
+            pushToCappedBuffer(
+                movementEvents,
+                createInteractionRecord(
+                    { x: e.clientX, y: e.clientY },
+                    INTERACTION_TYPES.MOUSE_MOVEMENT
+                ),
+                MAX_MOUSE_MOVEMENT_EVENTS
+            );
+        });
+
+        // Handle mouse click events
+        document.addEventListener("click", (e) => {
+            const target = e.target instanceof Element ? e.target : null;
+            if (!target) return;
+
+            const rect = target.getBoundingClientRect();
+            pushToCappedBuffer(
+                clickEvents,
+                createInteractionRecord(
+                    { width: rect.width, height: rect.height, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top },
+                    INTERACTION_TYPES.MOUSE_CLICK
+                ),
+                MAX_MOUSE_CLICK_EVENTS
+            );
+        });
+        
+      
+        // Handle Keystroke events
+        textarea.addEventListener("input", (e) => {
+            // Ignore paste events as they're handled separately
+            if (e.inputType === "insertFromPaste") return;
           
-            const newInteraction = {
-                value: e.target.value,
-                interactionType: INTERACTION_TYPES.KEYSTROKE
-            };
-          
-            pushInteraction(newInteraction.value, newInteraction.interactionType);
-            oldText = e.target.value;
+            keystrokeEvents.push(createInteractionRecord(e.target.value, INTERACTION_TYPES.KEYSTROKE));
         });
       
         // Handle paste events
-        textarea.addEventListener('paste', (e) => {
-            if (!startTime) {
-                startTime = Date.now();
-                sessionStorage.setItem("start_time", startTime.toString());
-            }
-            
-            const cursorPosition = e.target.selectionStart;
+        textarea.addEventListener("paste", (e) => {
+            const selectionStart = e.target.selectionStart;
+            const selectionEnd = e.target.selectionEnd;
             const currentValue = e.target.value;
-            const pastedText = e.clipboardData?.getData('text') || '';
-            
-            // Construct the new complete text by combining existing and pasted content
-            const newText = currentValue.slice(0, cursorPosition) + pastedText + currentValue.slice(cursorPosition);
-            
-            const newInteraction = {
-                value: newText,
-                interactionType: INTERACTION_TYPES.COPYPASTE
-            };
-            
-            pushInteraction(newInteraction.value, newInteraction.interactionType);
+            const pastedText = e.clipboardData?.getData("text") || "";
+            const newText = currentValue.slice(0, selectionStart) + pastedText + currentValue.slice(selectionEnd);
+
+            keystrokeEvents.push(createInteractionRecord(newText, INTERACTION_TYPES.COPYPASTE));
         });
       
         // Handle form submission
         submitButton.addEventListener("click", function () {
-            // Get the latest interaction data from sessionStorage
-            interactionData = getInteractionData();
-          
-            // Calculate total time spent
-            const totalTimeMs = startTime ? Date.now() - startTime : 0;
-          
-            // Save final BAS data per each question
             saveBASDataPerQuestion();
         });
+
+        window.addEventListener("pagehide", saveInteractionDataToSession);
 
 
         // Function to save data in BAS format
         const saveBASDataPerQuestion = () => {
+            const interactionData = mergeInteractionDataChronologically();
             const basData = {
                 "qualityCheck": "BAS",
                 "dataPointId": QUESTION_ID,
@@ -120,6 +157,7 @@ iconType: "regular"
             };
           
             sessionStorage.setItem(QUESTION_ID, JSON.stringify(basData));
+            saveInteractionDataToSession();
         };
       });
     </script>
