@@ -1474,7 +1474,9 @@
             "description": "The type of interaction the respondent had with the data point. \n\n ⭕ **Note:** Currently, the API supports `KEYSTROKE` and `COPY_AND_PASTE` interactions. Future updates will extend support to additional interactions, such as **mouse clicks, mouse movements**, and more.",
             "enum": [
               "KEYSTROKE",
-              "COPY_AND_PASTE"
+              "COPY_AND_PASTE",
+              "MOUSE_MOVEMENT",
+              "MOUSE_CLICK"
             ]
           },
           "value": {
