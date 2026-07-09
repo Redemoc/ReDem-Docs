@@ -30,7 +30,7 @@ Data points indicate the number of measurements used to calculate a score.
 **Default Settings:** <br/>
 To simplify the process, ReDem provides recommended default settings that work well for many projects. You can, however, adjust them to match the specific needs of your study. The next two sections first describe the default settings and then explain how to select your own.
 
-### 1. ReDem Recommended Cleaning Settings
+### ReDem Recommended Cleaning Settings
 
 Our default settings apply best-practice thresholds to the following metrics:
 
@@ -45,7 +45,7 @@ Our default settings apply best-practice thresholds to the following metrics:
 - **Time Score (TS)**: Respondents with a TS below 30 are excluded.
 - **Behavioral Analytics Score (BAS)**: Respondents with a BAS below 20 and at least two valid BAS data points are excluded.
 
-### 2. Custom Cleaning Settings
+### Custom Cleaning Settings
 
 You can define your own thresholds for each quality metric. This enables fine-tuned control over what qualifies as low-quality data based on your specific needs.
 
@@ -106,26 +106,54 @@ For **live surveys** that are still in the field, you should also update the **p
 
 ## What Is the Outcome of the Cleaning Process?
 
-Each respondent is classified as either:
-- **Included**
-- **Excluded**
+The cleaning process classifies each response as either **Included** or **Excluded**, with clear reasons provided for exclusions. Only one exclusion condition needs to be met for a respondent to be removed.
 
-Reasons for exclusion are clearly documented and based on whether any of the active criteria are triggered. Only one exclusion condition needs to be met for a respondent to be removed.
+**Reasons for Exclusion** (only one needs to be true):
 
-- ReDem Score below threshold
-- Open-Ended Score below threshold
-- Open-Ended categories exceed allowed count
-- Time Score below threshold
-- Grid-Question Score below threshold
-- Coherence Score below threshold
-- Behavioral Analytics Score below threshold
-- BAS categories (e.g. Copy-Paste, Unnatural Typing) exceed allowed count
+- **ReDem Score Threshold**: Respondent’s ReDem Score is below the default (60) or a custom threshold.
+- **Open-Ended Score Threshold**: Respondent’s OES is below the default (40) or a custom threshold.
+- **Open Ended Category**: Respondent exceeds the defined category threshold.
+- **Time Score Threshold**: Respondent’s TS is below the default (30) or a custom threshold.
+- **Grid-Question Score Threshold**: Respondent’s GQS is below the default (20) or a custom threshold.
+- **Coherence Score Threshold**: Respondent’s CHS is below the default (30) or a custom threshold.
+- **Behavioral Analytics Score Threshold**: Respondent’s BAS is below a custom threshold.
+- **Behavioral Analytics Category**: Respondent exceeds the defined BAS category threshold.
 
-This transparent system ensures your data cleaning is auditable, adjustable, and aligned with your quality requirements.
+This structured reasoning provides clear insights into exclusions, empowering users to refine their criteria based on the analysis.
 
-## Example Case: Cleaning in Practice
+## View Exclusion Reason Breakdown
 
-Here’s a sample configuration and its impact on a respondent:
+The exclusion reason breakdown shows how many excluded respondents were removed for each cleaning criterion. It is available at two levels:
+
+- **Company level** on the **Surveys** page: in the metrics row, click the **info icon** next to **Excluded Respondents** when at least one respondent is excluded. **Employees** see a breakdown across all surveys they have access to; **Admins** see a breakdown for the whole company.
+- **Survey level** on the survey **results** page: in the **ReDem Score** card, click the **info icon** next to **Excluded Respondents** when at least one respondent in that survey is excluded.
+
+The breakdown includes:
+
+- A chart showing the share of exclusions per main category (for example, ReDem Score threshold, Open-Ended Score threshold, Coherence Score threshold)
+- A table with the count and percentage for each category
+- Expandable rows for **Open-Ended** and **BAS** category breakdowns (for example, AI Suspect, Copy and Paste, Unnatural Typing)
+
+<Steps titleSize="h3">
+  <Step title="Open the Surveys page (company level)">
+    Go to **Surveys**. In the metrics row at the top, find **Excluded Respondents**. If any respondents are excluded, click the **info icon** next to that label.
+  </Step>
+  <Step title="Open the survey results page (survey level)">
+    Go to **Surveys** and open the survey you want to review.
+  </Step>
+  <Step title="Open the exclusion breakdown">
+    In the **ReDem Score** card, find **Excluded Respondents**. If any respondents are excluded, click the **info icon** next to that label.
+  </Step>
+  <Step title="Review the breakdown">
+    In the dialog, review the chart and table. Expand a category row to see sub-categories where available.
+  </Step>
+</Steps>
+
+Per-respondent exclusion reasons are still available in the respondent table (**Reasons for Exclusion** column) and in each respondent's **Cleaning** tab. See [Respondent Insights](/features/respondent-insights) for details.
+
+## Example of How the Cleaning Process Works
+
+As an example, let's consider the cleaning settings applied to a specific respondent:
 
 ```javascript
   "redemScore": 60,
@@ -141,13 +169,56 @@ Here’s a sample configuration and its impact on a respondent:
       "DUPLICATE_RESPONDENT": {"activate": false, "minDataPoints":2},
       "OFF_TOPIC": {"activate": false, "minDataPoints":2},
       "WRONG_LANGUAGE": {"activate": false, "minDataPoints":2},
-      "AI_SUSPECT": {"activate": true, "minDataPoints":1}
+      "AI_SUSPECT": {"activate": true, "minDataPoints":2}
     }
   }
 ```
 
-This configuration will exclude a respondent who:
-- Scores < 60 on the ReDem Score
-- Has 2+ valid answers
-- Has 2+ “No Answer” responses
-- Or even just 1 flagged AI-suspect response (due to its lower tolerance threshold)
+To better understand how cleaning settings are applied, let's consider different cases of respondent data and determine whether they should be excluded and what should be the reason for exclusion.
+
+<AccordionGroup>
+  <Accordion title="Respondent with Low ReDem Score and Low OES Score">
+    **Input:** 
+
+    
+    The respondent has a **ReDem Score of 50** and an **OES Score of 60**. They have provided **4 valid answers for OES data points**, **`3 of which are categorized as AI_SUSPECT`**.
+
+    **Output:** 
+
+    
+    The respondent is **excluded** because their **ReDem Score falls below the threshold**. Additionally, their **OES Score is below the defined threshold**, and they have provided **more than 2 valid answers for OES data points**, with **`3 categorized as AI_SUSPECT`**, exceeding the threshold set in the cleaning settings.
+  </Accordion>
+  <Accordion title="Respondent with Low OES Score">
+    **Input:** 
+
+    
+    The respondent has a **ReDem Score of 70** and an **OES Score of 30**. They have provided **2 valid answers for OES data points**.
+
+    **Output:** 
+
+    
+    The respondent is **excluded** because their **Open-Ended Score is below the threshold** and they have provided **2 valid answers for OES data points**.
+  </Accordion>
+  <Accordion title="Respondent with more `AI_SUSPECT` responses than the threshold">
+    **Input:** 
+
+    
+    The respondent has a **ReDem Score of 70** and an **OES Score of 50**. They have provided **4 valid answers for OES data points**, with **`3 categorized as AI_SUSPECT`**.
+
+    **Output:** 
+
+    
+    The respondent is **excluded** despite their **ReDem Score and Open-Ended Score being above the threshold**, because **`more than 2 of their answers are categorized as AI_SUSPECT`**, exceeding the threshold defined in the cleaning settings.
+  </Accordion>
+  <Accordion title="Respondent who should not be excluded">
+    **Input:** 
+
+    
+    The respondent has a **ReDem Score of 70** and an **OES Score of 30**. They have provided only **one valid OES data point**.
+
+    **Output:** 
+
+    
+    The respondent should **not be excluded** because they **do not meet the minimum valid OES data points requirement for cleaning**, even though their **OES Score is below the threshold**.
+  </Accordion>
+</AccordionGroup>

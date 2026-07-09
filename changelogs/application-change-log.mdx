@@ -5,6 +5,25 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-07-09" description="v1.6.4">
+  ## Exclusion Reason Breakdown
+  - The exclusion reason breakdown is now available at the company level on the **Surveys** page. Click the **info icon** next to **Excluded Respondents** in the metrics row to open it.
+  - **Employees** see a breakdown across all surveys they uploaded. **Admins** see a breakdown for the whole company.
+  - Per-survey breakdowns on the survey **results** page are unchanged. See the [Data Cleaning guide](/knowledge-base/features/cleaning-and-review#view-exclusion-reason-breakdown) for details.
+
+  ## File Import
+  - Post-processing after the last respondent is scored now finishes much faster. Results are available almost immediately instead of keeping the progress bar visible for up to three minutes.
+
+  ## Confirmit Import
+  - Confirmit exports do not include a length-of-interview column, only `interview_start` and `interview_end`. During Quick Import, ReDem now adds an artifical **`Length of Interview`** column so you can use the Time Score without creating that column yourself.
+
+  ## Timescore
+  - The Timescore carries less weight in the ReDem Score when a survey has many time-score data points but few other quality checks. This prevents the Timescore from dominating the overall score in those cases.
+
+  ## Performance
+  - The app loads noticeably faster again, especially when viewing 100 or 1,000 respondents at once.
+</Update>
+
 <Update label="2026-07-06" description="v1.6.3">
   ## BAS
   - Voice dictation and swipe typing are now classified as natural typing with a BAS score of 60.
@@ -12,7 +31,7 @@ iconType: "regular"
 
   ## Exclusion Reason Breakdown
   - You can now view a breakdown of exclusion reasons at the survey level, showing how many excluded respondents were removed for each cleaning criterion.
-  - See the [Data Cleaning guide](/features/cleaning-and-review#view-exclusion-reason-breakdown) for how to find this information.
+  - See the [Data Cleaning guide](/knowledge-base/features/cleaning-and-review#view-exclusion-reason-breakdown) for how to find this information.
 
   ## Change Quality Check Settings
   - Quality check settings can now be changed for API projects after the initial upload, including **BAS**. Use the same **Quality Checks** workflow as for manual imports.

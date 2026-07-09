@@ -117,7 +117,7 @@ Follow these steps for a quick import:
     - **If Enabled:** You can further customize the cleaning settings to suit your project.
     - **If Disabled:** You will still receive the selected quality scores, but **no exclusion recommendations** will be applied.
 
-    For a detailed explanation of ReDem’s cleaning process, refer to [How to Clean Data with ReDem](/features/cleaning-and-review)
+    For a detailed explanation of ReDem’s cleaning process, refer to [How to Clean Data with ReDem](/knowledge-base/features/cleaning-and-review)
 
     **Recommended Settings**
     We recommend using ReDem’s recommended cleaning settings for optimal data quality which means to exclude an interview if:
@@ -184,7 +184,7 @@ Follow these steps for a quick import:
     - **If Enabled:** You can further customize the cleaning settings to suit your project.
     - **If Disabled:** You will still receive the selected quality scores, but **no exclusion recommendations** will be applied.
 
-    For a detailed explanation of ReDem’s cleaning process, refer to [How to Clean Data with ReDem](/features/cleaning-and-review)
+    For a detailed explanation of ReDem’s cleaning process, refer to [How to Clean Data with ReDem](/knowledge-base/features/cleaning-and-review)
 
     **Recommended Settings**
     We recommend using ReDem’s recommended cleaning settings for optimal data quality which means to exclude an interview if:
@@ -361,6 +361,8 @@ Export your survey data from AYTM and upload the Excel file directly to the Quic
 ### Confirmit
 
 Export your survey from Confirmit and upload the Excel file directly to the Quick Import. ReDem detects the Confirmit format, maps the data and datamap sheets, and continues with the normal import flow.
+
+Confirmit exports include `interview_start` and `interview_end` timestamps but no length-of-interview column. ReDem adds a **`LengthOfInterview`** column during the import process so you can enable the Time Score without preparing that column yourself.
 
 ### Quantilope
 

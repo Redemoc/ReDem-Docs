@@ -358,7 +358,7 @@
             "default": false
           },
           "cleaningSettings": {
-            "description": "Cleaning settings define the rules for determining whether a respondent should be excluded and marked as low quality. If a **respondent’s scores fall below the threshold, they will be excluded and flagged as low quality**.\n\n **💡Important:** If no custom cleaning settings are defined and cleaning is enabled, the system will apply ReDem’s recommended cleaning settings. You can view the recommended settings here: [ReDem Recommended Cleaning Settings](/features/cleaning-and-review#redem-recommended-cleaning-settings) \n \n For more details on how cleaning works, refer to the [Data Cleaning](/features/cleaning-and-review) section.",
+            "description": "Cleaning settings define the rules for determining whether a respondent should be excluded and marked as low quality. If a **respondent’s scores fall below the threshold, they will be excluded and flagged as low quality**.\n\n **💡Important:** If no custom cleaning settings are defined and cleaning is enabled, the system will apply ReDem’s recommended cleaning settings. You can view the recommended settings here: [ReDem Recommended Cleaning Settings](/knowledge-base/features/cleaning-and-review#redem-recommended-cleaning-settings) \n \n For more details on how cleaning works, refer to the [Data Cleaning](/knowledge-base/features/cleaning-and-review) section.",
             "$ref": "#/components/schemas/CleaningSettings"
           },
           "synchronousResponse": {
@@ -1241,7 +1241,7 @@
             "default": false
           },
           "cleaningSettings": {
-            "description": "Cleaning settings define the rules for determining whether a respondent should be excluded and marked as low quality. If a **respondent’s scores fall below the threshold, they will be excluded and flagged as low quality**.\n\n **💡Important:** If no custom cleaning settings are defined and cleaning is enabled, the system will apply ReDem’s recommended cleaning settings. You can view the recommended settings here: [ReDem Recommended Cleaning Settings](/features/cleaning-and-review#redem-recommended-cleaning-settings) \n \n For more details on how cleaning works, refer to the [Data Cleaning](/features/cleaning-and-review) section.",
+            "description": "Cleaning settings define the rules for determining whether a respondent should be excluded and marked as low quality. If a **respondent’s scores fall below the threshold, they will be excluded and flagged as low quality**.\n\n **💡Important:** If no custom cleaning settings are defined and cleaning is enabled, the system will apply ReDem’s recommended cleaning settings. You can view the recommended settings here: [ReDem Recommended Cleaning Settings](/knowledge-base/features/cleaning-and-review#redem-recommended-cleaning-settings) \n \n For more details on how cleaning works, refer to the [Data Cleaning](/knowledge-base/features/cleaning-and-review) section.",
             "$ref": "#/components/schemas/CleaningSettings"
           },
           "synchronousResponse": {
@@ -1293,7 +1293,7 @@
             "default": false
           },
           "cleaningSettings": {
-            "description": "Cleaning settings define the rules for determining whether a respondent should be excluded and marked as low quality. If a **respondent's scores fall below the threshold, they will be excluded and flagged as low quality**.\n\n **💡Important:** If no custom cleaning settings are defined and cleaning is enabled, the system will apply ReDem's recommended cleaning settings. You can view the recommended settings here: [ReDem Recommended Cleaning Settings](/features/cleaning-and-review#redem-recommended-cleaning-settings) \n \n For more details on how cleaning works, refer to the [Data Cleaning](/features/cleaning-and-review) section.",
+            "description": "Cleaning settings define the rules for determining whether a respondent should be excluded and marked as low quality. If a **respondent's scores fall below the threshold, they will be excluded and flagged as low quality**.\n\n **💡Important:** If no custom cleaning settings are defined and cleaning is enabled, the system will apply ReDem's recommended cleaning settings. You can view the recommended settings here: [ReDem Recommended Cleaning Settings](/knowledge-base/features/cleaning-and-review#redem-recommended-cleaning-settings) \n \n For more details on how cleaning works, refer to the [Data Cleaning](/knowledge-base/features/cleaning-and-review) section.",
             "$ref": "#/components/schemas/CleaningSettings_v3"
           },
           "synchronousResponse": {
