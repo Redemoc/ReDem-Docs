@@ -19,6 +19,32 @@ The **Behavioral Analytics Score (BAS)** measures the quality of typing behavior
 - Swipe Typing (Glide Typing): Detects swipe/glide typing on Android and iPhone. Classified as `NATURAL_TYPING` with a BAS score of 60. The score is intentionally conservative to reduce the impact of potential false negatives on the overall BAS score.
 - Voice Dictation (Speech-to-Text): Detects speech-to-text input on Android and iPhone. Classified as `NATURAL_TYPING` with a BAS score of 60. The score is intentionally conservative to reduce the impact of potential false negatives on the overall BAS score.
 
-## How to use BAS?
+## Mouse Movement and Clicks
 
-BAS is designed to be used in real-time, via our API, or through survey software with integrated ReDem functionalities.
+When your integration tracks pointer behaviour, BAS evaluates mouse movement and clicks alongside typing. Send `MOUSE_MOVEMENT` and `MOUSE_CLICK` events in the same `interactionData` array as keystrokes. See the [Behavior Tracking guide](/api-reference/others/behavior-tracking) for a sample implementation.
+
+**How scoring works**
+
+- ReDem scores typing and mouse behaviour separately.
+- The **lower** score is used for the BAS data point. If both scores are equal, the typing category is used.
+- Typing still requires at least **3** keystroke or copy-paste events. Mouse behaviour can be scored on its own when movement or click events are present.
+- ReDem only uses the **last 300** `MOUSE_MOVEMENT` and **last 300** `MOUSE_CLICK` events per data point.
+
+**What mouse behaviour is checked**
+
+- Unusually large or instant pointer jumps
+- Repeated high-speed teleport-style movement
+- Perfectly straight horizontal or vertical movement over longer distances
+- Clicks placed at the exact centre of the target element
+- Bursts of very rapid clicks
+
+**Categories**
+
+- `NATURAL_MOVEMENT` — mouse behaviour looks human-like (score ≥ 50)
+- `UNNATURAL_MOVEMENT` — mouse behaviour looks automated or scripted (score &lt; 50)
+
+`UNNATURAL_MOVEMENT` is treated like other unnatural BAS categories for cleaning and exclusion.
+
+## How to use the BAS?
+
+The BAS is designed to be used in real-time, via our API, or through survey software with integrated ReDem functionalities. This quality check is not available via the Quick Import.

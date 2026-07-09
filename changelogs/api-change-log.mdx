@@ -5,6 +5,19 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-07-09" description="v3.1.7">
+  ## BAS: Mouse Movement and Click Tracking
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> — BAS `interactionData` now accepts two additional interaction types alongside keystrokes and copy-paste:
+    - `MOUSE_MOVEMENT` — pointer position as `{ x, y }` in pixels
+    - `MOUSE_CLICK` — click position on the target element as `{ width, height, offsetX, offsetY }`
+  - ReDem scores **typing** and **mouse** behaviour separately and uses the **lower** score for the BAS data point. If both scores are equal, the typing category is used.
+  - Two new BAS categories can be returned: `NATURAL_MOVEMENT` and `UNNATURAL_MOVEMENT`.
+  - ReDem only uses the **last 300** `MOUSE_MOVEMENT` and **last 300** `MOUSE_CLICK` events per data point. Cap client-side tracking at the same limits.
+
+  See the [Behavior Tracking guide](/api-reference/others/behavior-tracking) for a sample tracker and the [Behavioral Analytics Score docs](/knowledge-base/quality-checks/behavior-analysis-score#mouse-movement-and-clicks) for how mouse behaviour is evaluated.
+</Update>
+
 <Update label="2026-05-22" description="v3.1.6">
   ## New Attribute: retentionDays
 
