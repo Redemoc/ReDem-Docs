@@ -554,8 +554,7 @@
         "description": "Request body for creating or customizing a survey",
         "required": [
           "surveyName",
-          "cleaningSettings",
-          "reviewSettings"
+          "cleaningSettings"
         ],
         "type": "object",
         "properties": {
@@ -584,17 +583,7 @@
                 ]
               }
             }
-          },
-          "reviewSettings": {
-            "$ref": "#/components/schemas/CleaningSettings",
-            "example": {
-              "ReDemSettings": false,
-              "OESCategories": {
-                "validAnswers": true,
-                "genericAnswers": true,
-                "noInformation": true
-              }
-            }
+          }}
           }
         }
       },
