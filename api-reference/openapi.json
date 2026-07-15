@@ -725,6 +725,10 @@
           },
           "CHS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -764,6 +768,10 @@
           },
           "TS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -779,6 +787,10 @@
           },
           "BAS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -789,6 +801,11 @@
                 "type": "number",
                 "description": "Minimum score threshold for BAS checks",
                 "example": 20
+              },
+              "minDataPoints": {
+                "type": "number",
+                "description": "Optional. Minimum number of valid BAS data points required before the score threshold is applied. When provided, a respondent is excluded only if their BAS falls below the threshold **and** they have at least this many valid BAS data points. When omitted, a respondent is excluded whenever their BAS falls below the threshold, regardless of how many BAS data points they have.",
+                "example": 2
               },
               "categories": {
                 "type": "object",
@@ -949,6 +966,10 @@
           },
           "CHS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -988,6 +1009,10 @@
           },
           "TS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -1003,6 +1028,10 @@
           },
           "BAS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -1013,6 +1042,11 @@
                 "type": "number",
                 "description": "Minimum score threshold for BAS checks",
                 "example": 20
+              },
+              "minDataPoints": {
+                "type": "number",
+                "description": "Optional. Minimum number of valid BAS data points required before the score threshold is applied. When provided, a respondent is excluded only if their BAS falls below the threshold **and** they have at least this many valid BAS data points. When omitted, a respondent is excluded whenever their BAS falls below the threshold, regardless of how many BAS data points they have.",
+                "example": 2
               },
               "categories": {
                 "type": "object",
