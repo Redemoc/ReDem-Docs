@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VALID_ANSWER Cleaning Incident — Timeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0b1c1a;
+      --ink-soft: #14302c;
+      --mist: #d7ebe6;
+      --fog: #a8cfc6;
+      --paper: #f3faf7;
+      --teal: #0f7a68;
+      --teal-bright: #12a08a;
+      --ember: #c45c26;
+      --ember-soft: #f3d9c8;
+      --line: rgba(15, 122, 104, 0.28);
+      --muted: #4d6b65;
+      --shadow: 0 24px 60px rgba(11, 28, 26, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Figtree", sans-serif;
+      background:
+        radial-gradient(1200px 700px at 10% -10%, rgba(18, 160, 138, 0.22), transparent 55%),
+        radial-gradient(900px 600px at 100% 0%, rgba(196, 92, 38, 0.12), transparent 50%),
+        linear-gradient(165deg, #e8f5f1 0%, #f7fbf9 42%, #eef6f3 100%);
+      line-height: 1.55;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(15, 122, 104, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 122, 104, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+    }
+
+    .page {
+      position: relative;
+      width: min(860px, calc(100% - 2.5rem));
+      margin: 0 auto;
+      padding: 4.5rem 0 5rem;
+    }
+
+    .hero {
+      margin-bottom: 2.75rem;
+      animation: rise 0.8s ease both;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 1rem;
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 0.85rem;
+      max-width: 14ch;
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 52ch;
+      color: var(--muted);
+      font-size: 1.125rem;
+    }
+
+    .assumption {
+      position: relative;
+      margin: 0 0 3rem;
+      padding: 1.35rem 1.5rem 1.45rem;
+      border-left: 4px solid var(--ember);
+      background:
+        linear-gradient(135deg, rgba(243, 217, 200, 0.75), rgba(255, 255, 255, 0.7));
+      box-shadow: var(--shadow);
+      animation: rise 0.8s ease 0.12s both;
+    }
+
+    .assumption h2 {
+      margin: 0 0 0.45rem;
+      font-family: "Fraunces", serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ember);
+    }
+
+    .assumption p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 1.02rem;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 0;
+      padding-left: 1.25rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0.4rem;
+      bottom: 0.4rem;
+      left: 0.35rem;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--teal-bright), rgba(15, 122, 104, 0.15));
+      transform-origin: top;
+      animation: draw-line 1.4s ease 0.25s both;
+    }
+
+    .event {
+      position: relative;
+      padding: 0 0 2rem 1.75rem;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: rise 0.7s ease both;
+    }
+
+    .event:nth-child(1) { animation-delay: 0.25s; }
+    .event:nth-child(2) { animation-delay: 0.38s; }
+    .event:nth-child(3) { animation-delay: 0.51s; }
+    .event:nth-child(4) { animation-delay: 0.64s; }
+    .event:nth-child(5) { animation-delay: 0.77s; }
+
+    .event::before {
+      content: "";
+      position: absolute;
+      top: 0.45rem;
+      left: -0.05rem;
+      width: 0.85rem;
+      height: 0.85rem;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 2.5px solid var(--teal);
+      box-shadow: 0 0 0 4px rgba(18, 160, 138, 0.12);
+    }
+
+    .event.critical::before {
+      border-color: var(--ember);
+      box-shadow: 0 0 0 4px rgba(196, 92, 38, 0.15);
+    }
+
+    .event.resolved::before {
+      background: var(--teal-bright);
+      border-color: var(--teal-bright);
+    }
+
+    .when {
+      margin: 0 0 0.35rem;
+      color: var(--teal);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .event h3 {
+      margin: 0 0 0.55rem;
+      font-family: "Fraunces", serif;
+      font-size: 1.28rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .event p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .event p + p {
+      margin-top: 0.65rem;
+    }
+
+    .code {
+      display: inline;
+      padding: 0.08em 0.35em;
+      border-radius: 0.3em;
+      background: rgba(15, 122, 104, 0.1);
+      color: var(--teal);
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.92em;
+      font-weight: 600;
+    }
+
+    .actions {
+      margin-top: 0.5rem;
+      padding: 1.6rem 1.7rem 1.7rem;
+      background: linear-gradient(160deg, var(--ink) 0%, var(--ink-soft) 100%);
+      color: var(--mist);
+      box-shadow: var(--shadow);
+      animation: rise 0.75s ease 0.9s both;
+    }
+
+    .actions h2 {
+      margin: 0 0 0.9rem;
+      font-family: "Fraunces", serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .actions ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .actions li {
+      position: relative;
+      padding-left: 1.15rem;
+      color: var(--fog);
+      font-size: 1.02rem;
+    }
+
+    .actions li::before {
+      content: "";
+      position: absolute;
+      top: 0.55rem;
+      left: 0;
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 50%;
+      background: var(--teal-bright);
+    }
+
+    .actions strong {
+      color: white;
+      font-weight: 600;
+    }
+
+    .footnote {
+      margin: 1.5rem 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes draw-line {
+      from {
+        transform: scaleY(0);
+      }
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 1.5rem, 860px);
+        padding-top: 2.75rem;
+      }
+
+      h1 {
+        max-width: none;
+      }
+
+      .timeline {
+        padding-left: 0.85rem;
+      }
+
+      .event {
+        padding-left: 1.4rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .timeline::before {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Incident timeline · July 2026</p>
+      <h1>VALID_ANSWER cleaning settings</h1>
+      <p class="lede">
+        How removing an OES cleaning category from public docs and the API led to declined respondent requests — and what we fixed afterward.
+      </p>
+    </header>
+
+    <aside class="assumption" aria-label="Key conclusion">
+      <h2>Conclusion — wrong assumption</h2>
+      <p>
+        We believed nobody ever sent <span class="code">VALID_ANSWER</span> because it never appeared in the database.
+        That was wrong: clients did send it. We just silently ignored that category when storing data.
+      </p>
+    </aside>
+
+    <section class="timeline" aria-label="Chain of events">
+      <article class="event">
+        <p class="when">T − 4 weeks · ~19 Jun</p>
+        <h3>SightX questions the docs</h3>
+        <p>
+          SightX asked about the <span class="code">VALID_ANSWER</span> OES category in cleaning settings.
+          We removed it from the public docs because the category was nonsensical.
+        </p>
+      </article>
+
+      <article class="event">
+        <p class="when">T − 2 weeks · ~3 Jul</p>
+        <h3>Simplify cleaning logic</h3>
+        <p>
+          Cleaning logic lived separately in backend and jobs-handler and had drifted slightly.
+          We decided to remove <span class="code">VALID_ANSWER</span> as an allowed cleaning category.
+        </p>
+        <p>
+          We verified that no respondent had this value stored in the database, and concluded nobody ever sent the param — so removal looked safe.
+        </p>
+      </article>
+
+      <article class="event critical">
+        <p class="when">T − 7 days · ~10 Jul</p>
+        <h3>New cleaning settings launch</h3>
+        <p>
+          After launch, the API started declining requests that still used that cleaning setting.
+          Those respondents were not processed, and we stored no information about them.
+        </p>
+      </article>
+
+      <article class="event resolved">
+        <p class="when">T · 17 Jul</p>
+        <h3>Caught in sprint review — fixed in 15 minutes</h3>
+        <p>
+          The error was detected during sprint review and fixed within 15 minutes of discovery.
+          A regression test is now in place so the <span class="code">VALID_ANSWER</span> category is always accepted by the API.
+        </p>
+      </article>
+
+      <article class="event">
+        <p class="when">Today · 20 Jul</p>
+        <h3>Replay capability ticketed</h3>
+        <p>
+          Ticket prepared to store invalid API requests so we can replay them when something like this happens again.
+        </p>
+      </article>
+    </section>
+
+    <section class="actions" aria-label="Further actions">
+      <h2>Further actions</h2>
+      <ul>
+        <li>
+          <strong>Automate New Relic monitoring</strong> with a daily agent run.
+        </li>
+        <li>
+          <strong>Figure out API error-rate monitoring</strong> — difficult, because some noise always exists.
+        </li>
+      </ul>
+    </section>
+
+    <p class="footnote">Internal retrospective · T = 17 Jul 2026 (error discovery)</p>
+  </main>
+</body>
+</html>
