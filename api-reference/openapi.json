@@ -168,6 +168,12 @@
               "de",
               "it"
             ]
+          },
+          "shouldTranslate": {
+            "type": "boolean",
+            "default": false,
+            "example": true,
+            "description": "When `true`, ReDem translates non-English OES answers to English during quality evaluation (API **v3** only). Defaults to `false`. English answers are not translated. Pricing for translations will be documented separately."
           }
         },
         "required": [
@@ -452,6 +458,16 @@
             "type": "string",
             "description": "**Explanation** for the score, this will be only available if the quality check type is set to `GQS`",
             "example": "Straightliner, Partial Straightliner"
+          },
+          "translatedAnswer": {
+            "type": "string",
+            "description": "English translation of the open-end answer when `shouldTranslate` was `true` and translation succeeded.",
+            "example": "We were at Lake Garda in Italy"
+          },
+          "translationFailed": {
+            "type": "boolean",
+            "description": "True when translation was requested but failed. Present only when `shouldTranslate` was `true`.",
+            "example": false
           }
         }
       },
@@ -5235,7 +5251,7 @@
                     "qualityCheck": "OES",
                     "dataPointId": "Q1",
                     "question": "Where did you spend your last vacation?",
-                    "answer": "We were at Lake Garda in Italy",
+                    "answer": "Wir waren am Gardasee in Italien",
                     "keywords": [
                       "Beach",
                       "Mountains",
@@ -5250,7 +5266,8 @@
                       "en",
                       "de",
                       "it"
-                    ]
+                    ],
+                    "shouldTranslate": true
                   },
                   {
                     "qualityCheck": "TS",
