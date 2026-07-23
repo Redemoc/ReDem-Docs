@@ -5,6 +5,24 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-07-23" description="v1.6.6">
+  ## File Import
+  - Intellisurvey exports are now supported in Quick Import, just like Decipher and Confirmit. ReDem automatically detects the format and prepares the file.
+  - When a file has duplicate values in the header row, the import now shows exactly which values are duplicated.
+
+  ## Respondent Insights
+  - AI explanations are now visible in the respondents table (**Explanation** column), the respondent details, and in downloads — alongside the structured **Reasons for Exclusion**.
+  - Explanations are removed after excluding or including a respondent, applying cleaning settings, recalculating scores, or changing quality checks. You can re-generate them afterward.
+  - See the [Respondent Insights guide](/features/respondent-insights) for details.
+
+  ## Open-Ended Score
+  - Short answers are no longer marked as `AI_SUSPECT`, even when most of a respondent's other answers are. There is not enough evidence to classify very short answers as AI-written.
+  - See the [Open-Ended Score docs](/knowledge-base/quality-checks/open-ended-score#5-ai-suspect-probable-non-human-generated-response) for details.
+
+  ## Duplicate Respondent Check
+  - Previously, a new respondent was only checked against the last 500 respondents in the survey. Many duplicates arrive days apart, so that window missed them. The check is now smarter and catches duplicates regardless of when they entered the survey.
+</Update>
+
 <Update label="2026-07-16" description="v1.6.5">
   ## Small Fixes
   - We fixed a handful of minor usability quirks and bugs — the kind most of you would never notice, but that make things feel a little smoother once they're gone.

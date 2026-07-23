@@ -1,6 +1,6 @@
 ---
 title: "Respondent Insights"
-description: "Review individual respondents and use AI-generated insights to understand their quality scores."
+description: "Review individual respondents and use AI-generated explanations to understand their quality scores."
 icon: "sparkles"
 iconType: "regular"
 ---
@@ -13,18 +13,28 @@ Click any row in the Respondent Table to open the **respondent detail view**. Fr
 
 - **Overview**: ReDem Score, individual quality check scores, quality check weights on the overall score, and AI-generated respondent insights
 - **Quality check tabs**: Drill into OES, CHS, GQS, TS, and BAS results for that respondent, including flagged answers, patterns, and visualizations where available
-- **Cleaning**: Included or excluded status and the reasons for exclusion
+- **Cleaning**: Included or excluded status and the structured **Reasons for Exclusion**
 
 ## AI-generated respondent insights
 
-ReDem can generate a plain-language summary that explains a respondent's quality profile: what the scores indicate and, when applicable, why the respondent is recommended for exclusion.
+ReDem can generate a plain-language **explanation** of a respondent's quality profile: why they were excluded, or that they look fine to include. The text is based on that respondent's cleaning status, exclusion reasons, and flagged quality-check results.
 
-Each insight has two parts:
+Each explanation is a **single short paragraph** (not separate summary and conclusion sections).
 
-- **Summary**: A concise overview of the respondent's ReDem Score level and how each active quality check reads (for example, open-ended answer quality, grid patterns, or coherence issues)
-- **Conclusion**: A focused takeaway on whether the respondent looks fine or why they were excluded
+- **Excluded respondents**: The text usually opens with the exclusion reasons (for example, `Exclusion because of the Coherence Score Threshold…`), then briefly describes the substantive issues on the affected checks — such as OES categories and flagged question IDs, GQS straightlining, CHS contradictions, unusual completion time, or BAS patterns. Checks with no issues are omitted.
+- **Included respondents**: The text is typically one short sentence stating that the respondent is included and not sufficiently suspicious across the checks.
 
-Insights are based on that respondent's scores, flags, and cleaning status.
+These AI explanations are separate from the structured **Reasons for Exclusion** list (for example, `ReDem Score Threshold` or `Manually Excluded`). That list always comes from cleaning rules; the explanation is the readable narrative on top of it.
+
+### Where explanations appear
+
+Once generated, explanations show in three places:
+
+- **Respondent Table**: An **Explanation** column appears when at least one respondent in the survey has an explanation. Long text is truncated in the cell; hover to read the full paragraph.
+- **Respondent detail view**: On the **Overview** tab, under **Respondent Insights**.
+- **Downloads**: Excel and CSV exports include an **Explanation** column when at least one respondent in the export has an explanation.
+
+The table and downloads still include a separate **Reasons for Exclusion** column for the structured cleaning reasons.
 
 ### Generate insights for one respondent
 
@@ -32,24 +42,33 @@ Insights are based on that respondent's scores, flags, and cleaning status.
 2. Go to the **Overview** tab.
 3. Click **Generate Insights**.
 
-Generation usually takes a few seconds. Once complete, the summary and conclusion stay saved on that respondent until you regenerate them.
+Generation usually takes a few seconds. You can generate an explanation for any respondent from the detail view, including included respondents with a high Coherence Score.
+
+If an explanation already exists, ReDem keeps it and does not overwrite it from this button. After an explanation is [cleared](#when-explanations-are-removed), click **Generate Insights** again to create a new one.
 
 ### Explain all respondents
 
-For larger reviews, use **Explain All** in the Respondent Table toolbar to generate insights in bulk.
+For larger reviews, use **Explain All** in the Respondent Table toolbar to generate explanations in bulk.
 
 1. Open the survey results page.
 2. Click **Explain All** above the Respondent Table.
 3. Confirm the operation.
 
-ReDem queues insights for respondents that are **excluded** or have a **Coherence Score below 80**. Included respondents with a CHS of 80 or above are skipped, because they typically need less manual review.
+ReDem queues explanations for respondents that are **excluded** or have a **Coherence Score below 80**. Included respondents with a CHS of 80 or above are skipped, because they typically need less manual review.
 
-Bulk generation runs in the background. You can stay on the page or navigate elsewhere; a progress indicator shows while jobs are still running. When a respondent's insight is ready, open their detail view on the **Overview** tab to read it.
+Bulk generation runs in the background. You can stay on the page or navigate elsewhere; a progress indicator shows while jobs are still running. When an explanation is ready, it appears in the **Explanation** column and in the respondent's **Overview** tab.
 
 <Note>
-If a respondent could not be evaluated (for example, when the ReDem Score is unavailable), ReDem does not generate an insight for them.
+If a respondent could not be evaluated (for example, when the ReDem Score is unavailable), ReDem does not generate an explanation for them.
 </Note>
 
-## Exports
+### When explanations are removed
 
-When at least one respondent in the export has a generated insight, Excel and CSV downloads include an **Explanation** column with the summary and conclusion combined.
+Explanations are cleared automatically when respondent quality data changes, so the text does not stay out of date. ReDem removes the explanation when you:
+
+- Exclude or include a respondent
+- Apply new cleaning settings
+- Recalculate the respondent's scores
+- Change the respondent's quality check settings
+
+After an explanation is removed, generate it again with **Generate Insights** or **Explain All**.
