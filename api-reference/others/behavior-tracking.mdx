@@ -116,7 +116,7 @@ ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events 
             pushToCappedBuffer(
                 clickEvents,
                 createInteractionRecord(
-                    { width: rect.width, height: rect.height, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top },
+                    { width: rect.width, height: rect.height, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, x: e.clientX, y: e.clientY },
                     INTERACTION_TYPES.MOUSE_CLICK
                 ),
                 MAX_MOUSE_CLICK_EVENTS

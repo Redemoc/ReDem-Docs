@@ -1565,19 +1565,31 @@
                   "offsetY": {
                     "type": "number",
                     "description": "The vertical click position relative to the clicked element."
+                  },
+                  "x": {
+                    "type": "number",
+                    "description": "The horizontal click position in viewport pixels."
+                  },
+                  "y": {
+                    "type": "number",
+                    "description": "The vertical click position in viewport pixels."
                   }
                 },
                 "required": [
                   "width",
                   "height",
                   "offsetX",
-                  "offsetY"
+                  "offsetY",
+                  "x",
+                  "y"
                 ],
                 "example": {
                   "width": 320,
                   "height": 48,
                   "offsetX": 120,
-                  "offsetY": 24
+                  "offsetY": 24,
+                  "x": 512,
+                  "y": 384
                 }
               }
             ]
