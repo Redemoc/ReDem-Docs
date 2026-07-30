@@ -169,6 +169,18 @@
               "it"
             ]
           },
+          "ignoreAllowedLanguageError": {
+            "type": "boolean",
+            "default": false,
+            "example": false,
+            "description": "When `true`, invalid `allowedLanguages` codes (wrong format or non-ISO 639-1) are dropped instead of rejecting the request. Valid codes are kept. If every code is invalid, `allowedLanguages` is removed. Defaults to `false`. This does not change wrong-language scoring when valid codes remain."
+          },
+          "ignoreEmptyAnswer": {
+            "type": "boolean",
+            "default": false,
+            "example": false,
+            "description": "When `true`, this OES datapoint is removed from the respondent if `answer` is empty (including whitespace-only). If every OES datapoint is removed, OES is skipped. Defaults to `false`."
+          },
           "shouldTranslate": {
             "type": "boolean",
             "default": false,
@@ -287,6 +299,12 @@
             "type": "string",
             "description": "**Additional context about the purpose and intent of the survey.** This optional field provides supplementary information that helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives. \n\n 🧪 **Validations:** If provided, it must contain a minimum of **20 characters** and a maximum of **500 characters**.",
             "example": "This survey aims to understand travel preferences and vacation experiences of European travelers, focusing on accommodation choices, transportation methods, and budget allocation."
+          },
+          "ignoreEmptyAnswers": {
+            "type": "boolean",
+            "default": false,
+            "example": false,
+            "description": "When `true`, questions with no answer (empty or whitespace-only) are removed from `interviewData` before validation and storage. If no questions remain, the CHS datapoint is dropped and CHS is skipped. Defaults to `false`."
           }
         },
         "required": [
@@ -1386,6 +1404,12 @@
             "type": "string",
             "description": "**Additional context about the purpose and intent of the survey.** This optional field provides supplementary information that helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives. \n\n 🧪 **Validations:** If provided, it must contain a minimum of **20 characters** and a maximum of **500 characters**.",
             "example": "This survey aims to understand travel preferences and vacation experiences of European travelers, focusing on accommodation choices, transportation methods, and budget allocation."
+          },
+          "ignoreEmptyAnswers": {
+            "type": "boolean",
+            "default": false,
+            "example": false,
+            "description": "When `true`, questions with no answer (empty or whitespace-only) are removed from `interviewData` before validation and storage. If no questions remain, the CHS datapoint is dropped and CHS is skipped. Defaults to `false`."
           }
         },
         "required": [
