@@ -21,6 +21,36 @@ DES is available for **API v3** projects only. It is not supported on v1/v2 `add
 - Otherwise, demographics are compared per peer. Exact matches keep a low (duplicate-like) score; similar age / year of birth can add a limited penalty; any hard mismatch treats that peer as different. The final score is the **minimum** over peers.
 - Scores **below 40** are categorized as `DUPLICATE_ENTRANT`; otherwise `VALID_ENTRANT`.
 
+## Demographic types
+
+`type` is a free-form string. Any custom label is allowed and compared with **exact** match (case-insensitive after trim), except the age-like types below.
+
+**Recommended `type` values**
+
+| `type` | Notes |
+| --- | --- |
+| `age` | Age-like similarity (see below) |
+| `yearOfBirth` | Age-like similarity (see below) |
+| `ageRange` | Exact match |
+| `gender` | Exact match |
+| `country` | Exact match |
+| `city` | Exact match |
+| `zip` | Exact match |
+| `ethnicity` | Exact match |
+| `salaryRange` | Exact match |
+| `jobTitle` | Exact match |
+| `other` | Exact match; prefer a specific custom type string when possible |
+
+**Age-like types (`age`, `yearOfBirth`)**
+
+These are the only types that use similarity instead of exact match:
+
+- Numeric answers within **±3** count as **similar** (adds a limited score penalty once per peer, even if both `age` and `yearOfBirth` are similar)
+- Exact numeric matches count as **same**
+- Non-numeric or larger differences count as **different** (that peer is treated as fully different)
+
+All other types — including recommended values above and any custom string — always use exact match.
+
 ## Categories
 
 | Category | Meaning |

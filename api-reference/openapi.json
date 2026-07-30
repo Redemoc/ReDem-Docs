@@ -1643,7 +1643,7 @@
           },
           "demographics": {
             "type": "array",
-            "description": "Demographic fields used for duplicate entrance comparison.\n\n🧪 **Validations:**\n- **0–10** items accepted\n- **Fewer than 4** → request is accepted, but DES is scored as invalid (`N/A`)\n- **More than 10** → validation error\n- Each `type` must be **unique** in the array (prefer custom type strings over repeating `\"other\"`)\n\nCommon `type` values include `age`, `ageRange`, `yearOfBirth`, `gender`, `country`, `city`, `zip`, `ethnicity`, `salaryRange`, `jobTitle`, `other`, or any custom string.",
+            "description": "Demographic fields used for duplicate entrance comparison.\n\n🧪 **Validations:**\n- **0–10** items accepted\n- **Fewer than 4** → request is accepted, but DES is scored as invalid (`N/A`)\n- **More than 10** → validation error\n- Each `type` must be **unique** in the array (prefer custom type strings over repeating `\"other\"`)\n\nRecommended `type` values: `age`, `ageRange`, `yearOfBirth`, `gender`, `country`, `city`, `zip`, `ethnicity`, `salaryRange`, `jobTitle`, `other`, or any custom string.\n\n**Scoring note:** `age` and `yearOfBirth` use numeric similarity (±3). All other types use exact match. See the Duplicate Entrance Score knowledge base page.",
             "maxItems": 10,
             "items": {
               "type": "object",
@@ -1654,7 +1654,7 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "description": "Demographic field type. Must be unique within `demographics`.",
+                  "description": "Demographic field type. Must be unique within `demographics`. Free-form string. Recommended values include `age`, `ageRange`, `yearOfBirth`, `gender`, `country`, `city`, `zip`, `ethnicity`, `salaryRange`, `jobTitle`, and `other`. Only `age` and `yearOfBirth` use similarity (±3); all other types are exact match.",
                   "example": "age"
                 },
                 "answer": {
