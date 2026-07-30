@@ -39,4 +39,4 @@ When cleaning is enabled with recommended settings:
 
 ## How to use the DES?
 
-Send a single DES data point on [`POST /v3/addRespondent`](/api-reference/endpoints/v3/addRespondent) with `entranceTime`, optional `ip`, and a `demographics` array. Only **one** DES data point is allowed per respondent (`dataPointId` defaults to `"DES"`).
+Send a single DES data point on [`POST /v3/addRespondent`](/api-reference/endpoints/v3/addRespondent) with optional `entranceTime` (defaults to the current timestamp if omitted), optional `ip`, and a `demographics` array. Only **one** DES data point is allowed per respondent (`dataPointId` defaults to `"DES"`).

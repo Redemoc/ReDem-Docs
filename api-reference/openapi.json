@@ -1633,7 +1633,7 @@
           "entranceTime": {
             "type": "string",
             "format": "date-time",
-            "description": "**Required ISO 8601 timestamp** of when the respondent entered the survey. Used as the reference time for the peer comparison window.",
+            "description": "**Optional ISO 8601 timestamp** of when the respondent entered the survey. Used as the reference time for the peer comparison window. If omitted, ReDem uses the current timestamp when the request is received.",
             "example": "2026-07-28T12:00:00.000Z"
           },
           "ip": {
@@ -1685,8 +1685,7 @@
           }
         },
         "required": [
-          "qualityCheck",
-          "entranceTime"
+          "qualityCheck"
         ]
       }
     },
