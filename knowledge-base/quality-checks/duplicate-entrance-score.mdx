@@ -1,0 +1,42 @@
+---
+title: "Duplicate Entrance Score"
+description: "Learn how the Duplicate Entrance Score detects duplicate survey entrants using demographics and IP."
+icon: "user-group"
+iconType: "regular"
+---
+
+## What is the Duplicate Entrance Score?
+
+The **Duplicate Entrance Score (DES)** detects whether a respondent is likely a duplicate of another recent entrant in the same survey. It compares **demographics** and, when available, **IP address** against peers who entered shortly before.
+
+DES is available for **API v3** projects only. It is not supported on v1/v2 `addRespondent` requests.
+
+## High-level checks performed
+
+- Requires **at least 4** demographic fields to compute a valid score. Fewer than 4 demographics are accepted but scored as invalid (`N/A`).
+- Accepts **up to 10** demographics. Each demographic `type` must be unique (use custom type strings instead of repeating `"other"`).
+- Compares the current entrant against peers from the last **15 minutes** (up to a minimum of **10** peers when available; fewer peers still compared).
+- If no peers exist (first entrant in the window), the score is **100** (`VALID_ENTRANT`).
+- If any peer shares the same IP, the score is **0** (`DUPLICATE_IP`) and peer respondent IDs are returned.
+- Otherwise, demographics are compared per peer. Exact matches keep a low (duplicate-like) score; similar age / year of birth can add a limited penalty; any hard mismatch treats that peer as different. The final score is the **minimum** over peers.
+- Scores **below 40** are categorized as `DUPLICATE_ENTRANT`; otherwise `VALID_ENTRANT`.
+
+## Categories
+
+| Category | Meaning |
+| --- | --- |
+| `VALID_ENTRANT` | No strong evidence of a duplicate entrance |
+| `DUPLICATE_ENTRANT` | Demographics look highly similar to a recent peer |
+| `DUPLICATE_IP` | Same IP as a recent peer |
+| `N/A` | Score could not be computed (for example fewer than 4 demographics) |
+
+## Default cleaning
+
+When cleaning is enabled with recommended settings:
+
+- Exclude respondents with a DES score **below 40**
+- Category-based DES exclusions (`DUPLICATE_IP`, `DUPLICATE_ENTRANT`) are **off** by default
+
+## How to use the DES?
+
+Send a single DES data point on [`POST /v3/addRespondent`](/api-reference/endpoints/v3/addRespondent) with `entranceTime`, optional `ip`, and a `demographics` array. Only **one** DES data point is allowed per respondent (`dataPointId` defaults to `"DES"`).
