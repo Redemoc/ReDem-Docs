@@ -8,7 +8,7 @@ iconType: "regular"
 <Update label="2026-07-31" description="v3.1.8">
   ## OES Answer Translation
 
-  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> — OES answer translation is now generally available. Set `shouldTranslate: true` on an OES datapoint to translate non-valid, non-English answers to English during quality evaluation.
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> — Set `shouldTranslate: true` on an OES datapoint to translate non-valid, non-English answers to English during quality evaluation. This makes it easy to review and verify our results for any language.
   - Valid answers and answers already detected as English are not translated.
   - On success, the OES entry in `dataPointsSummary` includes `translatedAnswer`. If translation was requested but failed, `translationFailed` is `true` and no translation credits are charged.
   - Translation is available on API **v3** only.
