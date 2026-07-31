@@ -5,6 +5,28 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-07-31" description="v3.1.8">
+  ## OES Answer Translation
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> — OES answer translation is now generally available. Set `shouldTranslate: true` on an OES datapoint to translate non-valid, non-English answers to English during quality evaluation.
+  - Valid answers and answers already detected as English are not translated.
+  - On success, the OES entry in `dataPointsSummary` includes `translatedAnswer`. If translation was requested but failed, `translationFailed` is `true` and no translation credits are charged.
+  - Translation is available on API **v3** only.
+
+  See the [v3 addRespondent](/api-reference/endpoints/v3/addRespondent) endpoint documentation and the [ReDem Credits docs](/knowledge-base/miscellaneous/redem-credits) for credit rules.
+
+  ## Ignore Validation Errors
+
+  You can now opt in to skip specific validation errors instead of rejecting the request. All flags default to `false`.
+
+  - <code style={{ color: "green" }}> POST /v1/addRespondent </code>, <code style={{ color: "green" }}> POST /v2/addRespondent </code>, <code style={{ color: "green" }}> POST /v3/addRespondent </code>
+  - **OES** `ignoreEmptyAnswer` — When `true`, this OES datapoint is removed if `answer` is empty (including whitespace-only). If every OES datapoint is removed, OES is skipped.
+  - **OES** `ignoreAllowedLanguageError` — When `true`, invalid `allowedLanguages` codes (wrong format or non-ISO 639-1) are dropped instead of rejecting the request. Valid codes are kept. If every code is invalid, `allowedLanguages` is removed. Wrong-language scoring is unchanged for remaining valid codes.
+  - **CHS** `ignoreEmptyAnswers` — When `true`, questions with no answer (empty or whitespace-only) are removed from `interviewData`. If no questions remain, the CHS datapoint is dropped and CHS is skipped.
+
+  See the [v3 addRespondent](/api-reference/endpoints/v3/addRespondent) endpoint documentation for field details.
+</Update>
+
 <Update label="2026-07-09" description="v3.1.7">
   ## BAS: Mouse Movement and Click Tracking
 

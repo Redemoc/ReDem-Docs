@@ -5,6 +5,17 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-07-31" description="v1.6.7">
+  ## Open-Ended Score: Answer Translation
+  - OES answer translation is now generally available. When enabled on an open-ended question, ReDem translates non-valid, non-English answers to English.
+  - Translated answers appear in the respondents table, respondent details, and exports.
+  - Via the API, set `shouldTranslate: true` on OES datapoints in `POST /v3/addRespondent`.
+  - See the [ReDem Credits docs](/knowledge-base/miscellaneous/redem-credits) for translation credit rules and the [API Change Log](/changelogs/api-change-log) for request and response details.
+
+  ## BAS
+  - Fixed a bug where the Behavioral Analytics Score could occasionally show **101**. The score is now always capped at **100**.
+</Update>
+
 <Update label="2026-07-23" description="v1.6.6">
   ## File Import
   - Intellisurvey exports are now supported in Quick Import, just like Decipher and Confirmit. ReDem automatically detects the format and prepares the file.
