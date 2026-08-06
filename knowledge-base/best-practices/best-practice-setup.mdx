@@ -123,15 +123,23 @@ To ensure the Duplicate Entrance Score functions reliably, please follow the rec
 
 Use the Duplicate Entrance Score only for national or international surveys. In samples of that scale, the statistical chance that two or more different people with the same demographics enter within the same 15-minute window is basically impossible. On smaller or highly local samples, coincidental demographic overlap is more likely and can produce false duplicates.
 
-#### **2. Use enough demographics when location is coarse**
+#### **2. Prefer zip or city, and enough demographics when location is coarse**
 
-Provide at least four demographics for a valid score. If zip or city information is not available and only country-level location is used, include at least five demographics. Depending on which demographics you choose, six may be preferable so the combination remains distinctive enough to distinguish real duplicates from chance matches.
+Prefer zip or city when available — fine-grained location is one of the strongest discriminators in the comparison window. Provide at least four demographics for a valid score. If zip or city information is not available and only country-level location is used, include at least five demographics. Depending on which demographics you choose, six may be preferable so the combination remains distinctive enough to distinguish real duplicates from chance matches.
 
 #### **3. Do not use screening or quota demographics**
 
 Do not include demographics where respondents are expected to give a specific answer, or where other answers terminate them from the survey. Those fields do not discriminate between entrants and can inflate duplicate matches.
 
 For example, if you ask about ethnicity and only let Hispanics proceed, ethnicity **must not** be used for the DES.
+
+#### **4. Do not include fields that are constant for all completers**
+
+Do not include demographics that have the same value for everyone who completes the survey. They add no discrimination between entrants. For example, in a single-country study, `country` should not be used for the DES.
+
+#### **5. Do not send IP for CATI surveys**
+
+Do not include the IP address for CATI (telephone) surveys. Interviewers typically share the same office or call-center IP, which can incorrectly flag many respondents as `DUPLICATE_IP` false positives. Omit `ip` for CATI and rely on demographics instead.
 
 ---
 
