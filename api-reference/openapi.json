@@ -1060,6 +1060,50 @@
                 }
               }
             }
+          },
+          "DES": {
+            "type": "object",
+            "description": "Cleaning settings for Duplicate Entrance Score (DES).",
+            "properties": {
+              "activate": {
+                "type": "boolean",
+                "description": "Indicates whether **DES** should be applied as a cleaning parameter.",
+                "example": true
+              },
+              "score": {
+                "type": "number",
+                "description": "Minimum score threshold for DES. Respondents below this score are excluded when DES cleaning is active. Recommended default: `40`.",
+                "example": 40
+              },
+              "categories": {
+                "type": "object",
+                "description": "Optional category-based exclusion toggles. Off by default in recommended settings.",
+                "properties": {
+                  "DUPLICATE_IP": {
+                    "type": "object",
+                    "properties": {
+                      "activate": {
+                        "type": "boolean"
+                      },
+                      "minDataPoints": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "DUPLICATE_ENTRANT": {
+                    "type": "object",
+                    "properties": {
+                      "activate": {
+                        "type": "boolean"
+                      },
+                      "minDataPoints": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -1306,7 +1350,7 @@
             "items": {
               "$ref": "#/components/schemas/DataPoint_v2"
             },
-            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview.\n\n 🧪 **Validations:** \n - A **maximum of 30** `OES` data points are allowed per respondent. \n - A **maximum of 500** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 300 question/answer pairs** `CHS` data point is allowed per respondent. \n - A **maximum of 30** `BAS` data points are allowed per respondent. \n\n Exceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
+            "description": "An array of data points used for quality checks on each respondent. For the Coherence Score (CHS), only a single data point is allowed, which must contain the entire interview. For the Duplicate Entrance Score (DES), only a single data point is allowed.\n\n🧪 **Validations:** \n - A **maximum of 30** `OES` data points are allowed per respondent. \n - A **maximum of 500** `TS` data points are allowed per respondent. \n - A **maximum of 20** `GQS` data points are allowed per respondent. \n - A **maximum of 1 with 300 question/answer pairs** `CHS` data point is allowed per respondent. \n - A **maximum of 30** `BAS` data points are allowed per respondent. \n - A **maximum of 1** `DES` data point is allowed per respondent (v3 only). \n\nExceeding these limits will trigger validation errors. Ensure that the number of data points per respondent remains within the allowed limits."
           },
           "activateCleaning": {
             "type": "boolean",
@@ -1349,7 +1393,8 @@
             "TS": "#/components/schemas/TSDataPoint",
             "GQS": "#/components/schemas/GQSDataPoint",
             "CHS": "#/components/schemas/CHSDataPoint_v2",
-            "BAS": "#/components/schemas/BASDataPoint_V2"
+            "BAS": "#/components/schemas/BASDataPoint_V2",
+            "DES": "#/components/schemas/DESDataPoint"
           }
         },
         "oneOf": [
@@ -1367,6 +1412,9 @@
           },
           {
             "$ref": "#/components/schemas/BASDataPoint_V2"
+          },
+          {
+            "$ref": "#/components/schemas/DESDataPoint"
           }
         ]
       },
@@ -1599,6 +1647,82 @@
             "description": "The timestamp of the interaction. The timestamp is in the format `YYYY-MM-DDTHH:MM:SS.SSSZ`."
           }
         }
+      },
+      "DESDataPoint": {
+        "type": "object",
+        "title": "DES",
+        "description": "Duplicate Entrance Score datapoint. Available on **API v3 only**. At most one DES datapoint per respondent.",
+        "properties": {
+          "qualityCheck": {
+            "type": "string",
+            "description": "Must be `DES` for Duplicate Entrance Score evaluation.",
+            "enum": [
+              "DES"
+            ]
+          },
+          "dataPointId": {
+            "type": "string",
+            "description": "**Identifier for the DES datapoint**. Defaults to `DES` if omitted in the API. Only one DES datapoint is allowed per respondent.",
+            "example": "DES",
+            "default": "DES"
+          },
+          "entranceTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "**Optional ISO 8601 timestamp** of when the respondent entered the survey. Used as the reference time for the peer comparison window. If omitted, ReDem uses the current timestamp when the request is received.",
+            "example": "2026-07-28T12:00:00.000Z"
+          },
+          "ip": {
+            "type": "string",
+            "description": "**Optional respondent IP address**. If any peer in the comparison window has the same IP, DES returns score `0` with category `DUPLICATE_IP`.",
+            "example": "203.0.113.10"
+          },
+          "demographics": {
+            "type": "array",
+            "description": "Demographic fields used for duplicate entrance comparison.\n\n🧪 **Validations:**\n- **0–10** items accepted\n- **Fewer than 4** → request is accepted, but DES is scored as invalid (`N/A`)\n- **More than 10** → validation error\n- Each `type` must be **unique** in the array (prefer custom type strings over repeating `\"other\"`)\n\nRecommended `type` values: `age`, `ageRange`, `yearOfBirth`, `gender`, `country`, `city`, `zip`, `ethnicity`, `salaryRange`, `jobTitle`, `other`, or any custom string.\n\n**Scoring note:** `age` and `yearOfBirth` use numeric similarity (±3). All other types use exact match. See the Duplicate Entrance Score knowledge base page.",
+            "maxItems": 10,
+            "items": {
+              "type": "object",
+              "required": [
+                "type",
+                "answer"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Demographic field type. Must be unique within `demographics`. Free-form string. Recommended values include `age`, `ageRange`, `yearOfBirth`, `gender`, `country`, `city`, `zip`, `ethnicity`, `salaryRange`, `jobTitle`, and `other`. Only `age` and `yearOfBirth` use similarity (±3); all other types are exact match.",
+                  "example": "age"
+                },
+                "answer": {
+                  "type": "string",
+                  "description": "Demographic field value as a string.",
+                  "example": "34"
+                }
+              }
+            },
+            "example": [
+              {
+                "type": "age",
+                "answer": "34"
+              },
+              {
+                "type": "gender",
+                "answer": "female"
+              },
+              {
+                "type": "country",
+                "answer": "AT"
+              },
+              {
+                "type": "city",
+                "answer": "Vienna"
+              }
+            ]
+          }
+        },
+        "required": [
+          "qualityCheck"
+        ]
       }
     },
     "responses": {
@@ -5457,6 +5581,30 @@
                         "timestamp": "2024-12-01T06:23:00.272Z"
                       }
                     ]
+                  },
+                  {
+                    "qualityCheck": "DES",
+                    "dataPointId": "DES",
+                    "entranceTime": "2026-07-28T12:00:00.000Z",
+                    "ip": "203.0.113.10",
+                    "demographics": [
+                      {
+                        "type": "age",
+                        "answer": "34"
+                      },
+                      {
+                        "type": "gender",
+                        "answer": "female"
+                      },
+                      {
+                        "type": "country",
+                        "answer": "AT"
+                      },
+                      {
+                        "type": "city",
+                        "answer": "Vienna"
+                      }
+                    ]
                   }
                 ],
                 "activateCleaning": true,
@@ -5526,6 +5674,20 @@
                       "COPY_AND_PASTE": {
                         "activate": true,
                         "minDataPoints": 2
+                      }
+                    }
+                  },
+                  "DES": {
+                    "activate": true,
+                    "score": 40,
+                    "categories": {
+                      "DUPLICATE_IP": {
+                        "activate": false,
+                        "minDataPoints": 1
+                      },
+                      "DUPLICATE_ENTRANT": {
+                        "activate": false,
+                        "minDataPoints": 1
                       }
                     }
                   }
