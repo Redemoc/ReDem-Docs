@@ -1371,8 +1371,8 @@
           },
           "surveyPlatform": {
             "type": "string",
-            "description": "**Optional platform identifier** for the source system where the respondent was collected (for example, Qualtrics, Decipher, or custom panel tooling). This helps identify the origin of respondents created through API integrations. \n\n **Recommendation for integrators:** Always populate this field with a stable platform name for API-based survey tool integrations.",
-            "example": "qualtrics"
+            "description": "**Optional platform identifier** for the source system where the respondent was collected (for example, SightX, Qualtrics, or custom panel tooling). This helps identify the origin of respondents created through API integrations. \n\n **Recommendation for integrators:** Always populate this field with a stable platform name for API-based survey tool integrations.",
+            "example": "SightX"
           },
           "referenceSurveyId": {
             "type": "string",
@@ -1839,8 +1839,8 @@
         "properties": {
           "surveyPlatform": {
             "type": "string",
-            "description": "Optional survey platform identifier (for example `decipher`, `qualtrics`). Stored for logging and support only; it does not change suggestions.",
-            "example": "decipher"
+            "description": "Optional survey platform identifier (for example `SightX`, `qualtrics`). Stored for logging and support only; it does not change suggestions.",
+            "example": "SightX"
           },
           "allInclusive": {
             "type": "boolean",
@@ -5708,7 +5708,7 @@
               "example": {
                 "respondentId": "RESP497770",
                 "surveyName": "Global Vacation Insights 2024",
-                "surveyPlatform": "qualtrics",
+                "surveyPlatform": "SightX",
                 "referenceSurveyId": "SV_ext_7f2a1c9e",
                 "dataPoints": [
                   {
@@ -7563,8 +7563,8 @@
                 "properties": {
                   "surveyPlatform": {
                     "type": "string",
-                    "description": "Optional survey platform identifier (for example `decipher`, `qualtrics`). Stored for logging and support only; it does not change suggestions.",
-                    "example": "decipher"
+                    "description": "Optional survey platform identifier (for example `SightX`, `qualtrics`). Stored for logging and support only; it does not change suggestions.",
+                    "example": "SightX"
                   },
                   "allInclusive": {
                     "type": "boolean",
@@ -7582,7 +7582,7 @@
                 }
               },
               "example": {
-                "surveyPlatform": "decipher",
+                "surveyPlatform": "SightX",
                 "allInclusive": true,
                 "surveyStructure": [
                   {

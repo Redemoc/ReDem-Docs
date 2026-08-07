@@ -103,7 +103,7 @@ iconType: "regular"
   - <code style={{ color: "green" }}> POST /v3/addRespondent </code> - You can now provide `surveyPlatform` as an optional top-level field in the request body. This value is stored with the respondent and can be used to identify survey-platform-origin traffic in downstream workflows.
 
   Recommended integration approach:
-  - Send a stable platform identifier (for example, `qualtrics`, `decipher`, `keyingress`) for every respondent created through a survey tool integration.
+  - Send a stable platform identifier (for example, `SightX`, `qualtrics`, `keyingress`) for every respondent created through a survey tool integration.
   - Keep naming consistent across environments to avoid fragmented reporting (for example, use `qualtrics` instead of mixing `Qualtrics`, `QUALTRICS`, and `qtrx`).
   - If an internal connector is used, send a deterministic connector name (for example, `my-company-ingress`) instead of dynamic values.
 
