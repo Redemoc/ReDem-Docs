@@ -840,6 +840,17 @@
                         "type": "number"
                       }
                     }
+                  },
+                  "UNNATURAL_MOVEMENT": {
+                    "type": "object",
+                    "properties": {
+                      "activate": {
+                        "type": "boolean"
+                      },
+                      "minDataPoints": {
+                        "type": "number"
+                      }
+                    }
                   }
                 }
               }
@@ -1047,6 +1058,17 @@
                     }
                   },
                   "COPY_AND_PASTE": {
+                    "type": "object",
+                    "properties": {
+                      "activate": {
+                        "type": "boolean"
+                      },
+                      "minDataPoints": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "UNNATURAL_MOVEMENT": {
                     "type": "object",
                     "properties": {
                       "activate": {
@@ -1520,7 +1542,7 @@
             "items": {
               "$ref": "#/components/schemas/InteractionData_V2"
             },
-            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? See the [example implementation](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - A **minimum of 3** interactions are needed to compute a score. \n - ReDem only uses the **last 300** `MOUSE_MOVEMENT` and **last 300** `MOUSE_CLICK` events per data point. We recommend capping client-side tracking at the same limits to keep stored data small. \n",
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? See the [example implementation](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - Typing needs at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events to compute a typing score. Mouse behaviour can be scored on its own when `MOUSE_MOVEMENT` or `MOUSE_CLICK` events are present. \n - ReDem only uses the **last 300** `MOUSE_MOVEMENT` and **last 300** `MOUSE_CLICK` events per data point. We recommend capping client-side tracking at the same limits to keep stored data small. \n",
             "example": [
               {
                 "interactionType": "KEYSTROKE",
@@ -2130,9 +2152,13 @@
                     "categories": {
                       "UNNATURAL_TYPING": {
                         "activate": true,
-                        "minDataPoints": 2
+                        "minDataPoints": 1
                       },
                       "COPY_AND_PASTE": {
+                        "activate": true,
+                        "minDataPoints": 2
+                      },
+                      "UNNATURAL_MOVEMENT": {
                         "activate": true,
                         "minDataPoints": 2
                       }
@@ -3623,9 +3649,13 @@
                     "categories": {
                       "UNNATURAL_TYPING": {
                         "activate": true,
-                        "minDataPoints": 2
+                        "minDataPoints": 1
                       },
                       "COPY_AND_PASTE": {
+                        "activate": true,
+                        "minDataPoints": 2
+                      },
+                      "UNNATURAL_MOVEMENT": {
                         "activate": true,
                         "minDataPoints": 2
                       }
@@ -5669,9 +5699,13 @@
                     "categories": {
                       "UNNATURAL_TYPING": {
                         "activate": true,
-                        "minDataPoints": 2
+                        "minDataPoints": 1
                       },
                       "COPY_AND_PASTE": {
+                        "activate": true,
+                        "minDataPoints": 2
+                      },
+                      "UNNATURAL_MOVEMENT": {
                         "activate": true,
                         "minDataPoints": 2
                       }

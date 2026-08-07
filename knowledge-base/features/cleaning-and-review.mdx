@@ -45,6 +45,8 @@ Our default settings apply best-practice thresholds to the following metrics:
 - **Time Score (TS)**: Respondents with a TS below 30 are excluded.
 - **Behavioral Analytics Score (BAS)**: Respondents with a BAS below 20 and at least two valid BAS data points are excluded.
 
+  Respondents flagged for **Unnatural Typing** starting with the first valid BAS data point are excluded. Respondents flagged for **Copy and Paste** or **Unnatural Movement** in at least two valid BAS data points are excluded.
+
 ### Custom Cleaning Settings
 
 You can define your own thresholds for each quality metric. This enables fine-tuned control over what qualifies as low-quality data based on your specific needs.
@@ -69,6 +71,7 @@ Customizable elements include:
   - **BAS Categories:**
     - **Unnatural Typing:**
     - **Copy and Paste:**
+    - **Unnatural Movement:**
 
 
 Here’s an example of a cleaning settings object that can be used to customize the cleaning process via the API:
@@ -92,8 +95,9 @@ Here’s an example of a cleaning settings object that can be used to customize 
     "score": 60, 
     "minDataPoints":2,
     "categories": {
-      "UNNATURAL_TYPING": {"activate": true, "minDataPoints":2},
+      "UNNATURAL_TYPING": {"activate": true, "minDataPoints":1},
       "COPY_AND_PASTE": {"activate": true, "minDataPoints":2},
+      "UNNATURAL_MOVEMENT": {"activate": true, "minDataPoints":2},
     }
   }
 ```
@@ -116,8 +120,8 @@ The cleaning process classifies each response as either **Included** or **Exclud
 - **Time Score Threshold**: Respondent’s TS is below the default (30) or a custom threshold.
 - **Grid-Question Score Threshold**: Respondent’s GQS is below the default (20) or a custom threshold.
 - **Coherence Score Threshold**: Respondent’s CHS is below the default (30) or a custom threshold.
-- **Behavioral Analytics Score Threshold**: Respondent’s BAS is below a custom threshold.
-- **Behavioral Analytics Category**: Respondent exceeds the defined BAS category threshold.
+- **Behavioral Analytics Score Threshold**: Respondent’s BAS is below the default (20) or a custom threshold.
+- **Behavioral Analytics Category**: Respondent exceeds the defined BAS category threshold (`UNNATURAL_TYPING`, `COPY_AND_PASTE`, or `UNNATURAL_MOVEMENT`).
 
 This structured reasoning provides clear insights into exclusions, empowering users to refine their criteria based on the analysis.
 
@@ -132,7 +136,7 @@ The breakdown includes:
 
 - A chart showing the share of exclusions per main category (for example, ReDem Score threshold, Open-Ended Score threshold, Coherence Score threshold)
 - A table with the count and percentage for each category
-- Expandable rows for **Open-Ended** and **BAS** category breakdowns (for example, AI Suspect, Copy and Paste, Unnatural Typing)
+- Expandable rows for **Open-Ended** and **BAS** category breakdowns (for example, AI Suspect, Copy and Paste, Unnatural Typing, Unnatural Movement)
 
 <Steps titleSize="h3">
   <Step title="Open the Surveys page (company level)">
