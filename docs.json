@@ -117,7 +117,8 @@
                   "api-reference/endpoints/v3/deleteRespondents",
                   "api-reference/endpoints/v3/deleteSurveys",
                   "api-reference/endpoints/v3/updateRespondentsExcludedStatus",
-                  "api-reference/endpoints/v3/recalculateRespondents"
+                  "api-reference/endpoints/v3/recalculateRespondents",
+                  "api-reference/endpoints/v3/qualityCheckSuggestions"
                 ]
               },
               {
@@ -184,7 +185,8 @@
                   "knowledge-base/quality-checks/coherence-score",
                   "knowledge-base/quality-checks/time-score",
                   "knowledge-base/quality-checks/grid-question-score",
-                  "knowledge-base/quality-checks/behavior-analysis-score"
+                  "knowledge-base/quality-checks/behavior-analysis-score",
+                  "knowledge-base/quality-checks/duplicate-entrance-score"
                 ]
               },
               {
@@ -293,7 +295,8 @@
                   "knowledge-base/quality-checks/coherence-score",
                   "knowledge-base/quality-checks/time-score",
                   "knowledge-base/quality-checks/grid-question-score",
-                  "knowledge-base/quality-checks/behavior-analysis-score"
+                  "knowledge-base/quality-checks/behavior-analysis-score",
+                  "knowledge-base/quality-checks/duplicate-entrance-score"
                 ]
               },
               {

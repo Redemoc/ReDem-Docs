@@ -1,0 +1,19 @@
+---
+title: 'Quality Check Suggestions'
+openapi: 'POST /v3/qualityCheckSuggestions'
+---
+
+Generate smart quality-check suggestions from a survey questionnaire structure. Partners can use this endpoint to help their users set up API projects in ReDem with recommendations that align with [ReDem best practices](/knowledge-base/best-practices/best-practice-setup) — reducing the manual effort of choosing which questions to score and how to configure them.
+
+**What you get**
+
+- Suggested **OES** questions with keywords and duplicate-check flags
+- Suggested **GQS** grids with pattern-check recommendations
+- Suggested **CHS** question IDs plus a `surveyDescription`
+- Suggested **BAS** tracking targets (derived from suggested OES questions)
+- Recommended default **cleaning settings** for API v3
+
+**Notes**
+
+- **TS** is not suggested here; configure it separately in your integration. **DES** suggestions are coming soon.
+- Cap suggestion volume with `allInclusive` (default `true`) to match all-inclusive plan limits.

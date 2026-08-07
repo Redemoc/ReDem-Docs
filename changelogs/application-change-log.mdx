@@ -5,6 +5,27 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-08-07" description="v1.6.8">
+  ## Duplicate Entrance Score
+  - The **Duplicate Entrance Score (DES)** is coming soon. It detects likely duplicate survey entrants using demographics and IP.
+  - **API only at first** — send a DES datapoint on `POST /v3/addRespondent`. File import support will follow.
+  - See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [best-practice set-up](/knowledge-base/best-practices/best-practice-setup#duplicate-entrance-score) for details.
+  - Also see the [API Change Log](/changelogs/api-change-log) for request fields.
+
+  ## Performance
+  - Even the largest surveys in the platform now open essentially instantly, instead of showing a loading spinner.
+
+  ## Data Cleaning
+  - Fixed a bug where activating cleaning for an OES category with the threshold set to **0** excluded every respondent for that category.
+  - Fixed a bug where respondents exactly at the exclusion threshold were excluded. For example, with a Timescore threshold of **30**, a score of **30** is now kept; only scores **below** 30 are excluded.
+
+  ## File Import
+  - Fixed edge cases in Quick Import for Decipher surveys that should not have affected anyone.
+
+  ## Decipher Integration Agent
+  - Fixed a bug that could break a live survey when a page had multiple number inputs.
+</Update>
+
 <Update label="2026-07-31" description="v1.6.7">
   ## Open-Ended Score: Answer Translation
   - You can now enable translation on open-ended questions. ReDem translates non-valid, non-English answers to English so you can easily review and verify our results for any language.
