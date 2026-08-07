@@ -173,7 +173,7 @@
             "type": "boolean",
             "default": false,
             "example": false,
-            "description": "When `true`, invalid `allowedLanguages` codes (wrong format or non-ISO 639-1) are dropped instead of rejecting the request. Valid codes are kept. If every code is invalid, `allowedLanguages` is removed. Defaults to `false`. This does not change wrong-language scoring when valid codes remain."
+            "description": "When `true`, invalid `allowedLanguages` and `skipTranslationLanguages` codes (wrong format or non-ISO 639-1) are dropped instead of rejecting the request. Valid codes are kept. If every code in a field is invalid, that field is removed. Defaults to `false`. This does not change wrong-language scoring when valid `allowedLanguages` codes remain."
           },
           "ignoreEmptyAnswer": {
             "type": "boolean",
@@ -186,6 +186,17 @@
             "default": false,
             "example": true,
             "description": "When `true`, ReDem translates non-valid, non-English OES answers to English during quality evaluation (API **v3** only). Defaults to `false`. Valid and English answers are not translated. See the ReDem Credits documentation for translation credit rules."
+          },
+          "skipTranslationLanguages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "ISO 639-1 language codes that should **not** be translated when `shouldTranslate` is `true` (API **v3** only). Answers detected in these languages are left as-is. English is never translated regardless of this list. Use the same two-letter codes as `allowedLanguages`.",
+            "example": [
+              "de",
+              "fr"
+            ]
           }
         },
         "required": [
@@ -1745,6 +1756,269 @@
         "required": [
           "qualityCheck"
         ]
+      },
+      "SurveyStructureQuestion": {
+        "type": "object",
+        "required": [
+          "questionId",
+          "questionType",
+          "question"
+        ],
+        "description": "A question from your survey platform questionnaire. `questionId` values must be unique. Shape depends on `questionType`:\n- `OpenEnd`: `questionId`, `questionType`, `question`\n- `Grid`: also requires `items` and `answerOptions`; optional `isMultiSelect`, `isRandomized`\n- `Select`: also requires `answerOptions`; optional `isMultiSelect`",
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Unique question identifier within `surveyStructure`.",
+            "example": "Q1"
+          },
+          "questionType": {
+            "type": "string",
+            "enum": [
+              "OpenEnd",
+              "Grid",
+              "Select"
+            ],
+            "description": "`OpenEnd` → OES/BAS candidate. `Grid` → GQS/CHS candidate. `Select` → CHS candidate.",
+            "example": "OpenEnd"
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Full question text.",
+            "example": "Why did you choose this product?"
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Required for `Grid`. Row / item labels.",
+            "example": [
+              "Brand A",
+              "Brand B",
+              "Brand C",
+              "Brand D",
+              "Brand E"
+            ]
+          },
+          "answerOptions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Required for `Grid` and `Select`. Answer / scale labels.",
+            "example": [
+              "Very poor",
+              "Poor",
+              "Neutral",
+              "Good",
+              "Excellent"
+            ]
+          },
+          "isMultiSelect": {
+            "type": "boolean",
+            "default": false,
+            "description": "Optional for `Grid` and `Select`. Defaults to `false`."
+          },
+          "isRandomized": {
+            "type": "boolean",
+            "default": false,
+            "description": "Optional for `Grid`. Whether the grid items are shown in randomized order. Defaults to `false`."
+          }
+        }
+      },
+      "QualityCheckSuggestionsRequest": {
+        "type": "object",
+        "description": "Request body for generating quality-check suggestions for an API project setup.\n\n **🔒 Authentication:** This endpoint is only accessible via a [`PRIVATE` API key](/api-reference/api-specifications/api-keys#permission-levels).",
+        "required": [
+          "surveyStructure"
+        ],
+        "properties": {
+          "surveyPlatform": {
+            "type": "string",
+            "description": "Optional survey platform identifier (for example `decipher`, `qualtrics`). Stored for logging and support only; it does not change suggestions.",
+            "example": "decipher"
+          },
+          "allInclusive": {
+            "type": "boolean",
+            "default": true,
+            "description": "When `true` (default), suggestion counts are capped to all-inclusive plan limits (OES 5, GQS 20, CHS 100 question slots). When `false`, higher API maxima are used (OES 30, GQS 20, CHS 300 slots)."
+          },
+          "surveyStructure": {
+            "type": "array",
+            "maxItems": 500,
+            "description": "Questionnaire structure used to suggest quality checks. Maximum **500** questions. Each `questionId` must be unique.",
+            "items": {
+              "$ref": "#/components/schemas/SurveyStructureQuestion"
+            }
+          }
+        }
+      },
+      "SuggestedOes": {
+        "type": "object",
+        "required": [
+          "questionId",
+          "keywords",
+          "enableDuplicateCheck"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "example": "Q1"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Suggested keywords for the OES datapoint.",
+            "example": [
+              "price",
+              "quality",
+              "brand"
+            ]
+          },
+          "enableDuplicateCheck": {
+            "type": "boolean",
+            "description": "Whether duplicate answer / respondent detection should be enabled for this OES datapoint."
+          }
+        }
+      },
+      "SuggestedGqs": {
+        "type": "object",
+        "required": [
+          "questionId",
+          "enablePatternCheck"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "example": "Q2"
+          },
+          "enablePatternCheck": {
+            "type": "boolean",
+            "description": "Whether to enable the GQS pattern check for this suggested grid."
+          }
+        }
+      },
+      "SuggestedChs": {
+        "type": "object",
+        "required": [
+          "questionIds",
+          "surveyDescription"
+        ],
+        "description": "Suggested Coherence Score configuration.",
+        "properties": {
+          "questionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Suggested question IDs to include in the CHS interview.",
+            "example": [
+              "Q3",
+              "Q2"
+            ]
+          },
+          "surveyDescription": {
+            "type": "string",
+            "description": "Suggested survey description for CHS context.",
+            "example": "A survey about brand preference and product choice among shoppers."
+          }
+        }
+      },
+      "SuggestedBas": {
+        "type": "object",
+        "required": [
+          "questionId",
+          "keystrokes",
+          "mouse"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "description": "Mirrors a suggested OES question ID — BAS tracking is recommended on the same open ends.",
+            "example": "Q1"
+          },
+          "keystrokes": {
+            "type": "boolean",
+            "example": true
+          },
+          "mouse": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "QualityCheckSuggestionsResults": {
+        "type": "object",
+        "required": [
+          "OES",
+          "GQS",
+          "CHS",
+          "BAS",
+          "cleaningSettings"
+        ],
+        "properties": {
+          "OES": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SuggestedOes"
+            },
+            "description": "Suggested open-ended checks."
+          },
+          "GQS": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SuggestedGqs"
+            },
+            "description": "Suggested grid checks."
+          },
+          "CHS": {
+            "type": "object",
+            "required": [
+              "questionIds",
+              "surveyDescription"
+            ],
+            "description": "Suggested Coherence Score configuration.",
+            "properties": {
+              "questionIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Suggested question IDs to include in the CHS interview.",
+                "example": [
+                  "Q3",
+                  "Q2"
+                ]
+              },
+              "surveyDescription": {
+                "type": "string",
+                "description": "Suggested survey description for CHS context.",
+                "example": "A survey about brand preference and product choice among shoppers."
+              }
+            }
+          },
+          "BAS": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SuggestedBas"
+            },
+            "description": "Suggested behavior tracking targets, derived from suggested OES questions."
+          },
+          "cleaningSettings": {
+            "description": "Recommended default cleaning settings for API v3 projects (includes DES). Same shape as [`cleaningSettings` on Add Respondent](/api-reference/endpoints/v3/addRespondent#body-cleaning-settings).",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CleaningSettings_v3"
+              }
+            ]
+          }
+        }
       }
     },
     "responses": {
@@ -5457,7 +5731,10 @@
                       "de",
                       "it"
                     ],
-                    "shouldTranslate": true
+                    "shouldTranslate": true,
+                    "skipTranslationLanguages": [
+                      "de"
+                    ]
                   },
                   {
                     "qualityCheck": "TS",
@@ -7255,6 +7532,218 @@
                         "7": "\"selectedChecks.TS\" is required",
                         "8": "\"selectedChecks.GQS\" is required",
                         "9": "\"selectedChecks.BAS\" is required"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/qualityCheckSuggestions": {
+      "post": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Quality Check Suggestions",
+        "operationId": "qualityCheckSuggestionsV3",
+        "description": "Generate smart quality-check suggestions from a survey questionnaire structure. Partners can use this to help their users set up API projects in ReDem with recommendations that align with ReDem best practices — reducing manual configuration effort for OES, GQS, CHS, and BAS.\n\nUse the returned question IDs, keywords, and cleaning settings when calling `POST /v3/addRespondent`.\n\nTS is not suggested by this endpoint. DES suggestions are coming soon.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Request body for generating quality-check suggestions for an API project setup.\n\n **🔒 Authentication:** This endpoint is only accessible via a [`PRIVATE` API key](/api-reference/api-specifications/api-keys#permission-levels).",
+                "required": [
+                  "surveyStructure"
+                ],
+                "properties": {
+                  "surveyPlatform": {
+                    "type": "string",
+                    "description": "Optional survey platform identifier (for example `decipher`, `qualtrics`). Stored for logging and support only; it does not change suggestions.",
+                    "example": "decipher"
+                  },
+                  "allInclusive": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "When `true` (default), suggestion counts are capped to all-inclusive plan limits (OES 5, GQS 20, CHS 100 question slots). When `false`, higher API maxima are used (OES 30, GQS 20, CHS 300 slots)."
+                  },
+                  "surveyStructure": {
+                    "type": "array",
+                    "maxItems": 500,
+                    "description": "Questionnaire structure used to suggest quality checks. Maximum **500** questions. Each `questionId` must be unique.",
+                    "items": {
+                      "$ref": "#/components/schemas/SurveyStructureQuestion"
+                    }
+                  }
+                }
+              },
+              "example": {
+                "surveyPlatform": "decipher",
+                "allInclusive": true,
+                "surveyStructure": [
+                  {
+                    "questionId": "Q1",
+                    "questionType": "OpenEnd",
+                    "question": "Why did you choose this product?"
+                  },
+                  {
+                    "questionId": "Q2",
+                    "questionType": "Grid",
+                    "question": "Please rate the following brands.",
+                    "items": [
+                      "Brand A",
+                      "Brand B",
+                      "Brand C",
+                      "Brand D",
+                      "Brand E"
+                    ],
+                    "answerOptions": [
+                      "Very poor",
+                      "Poor",
+                      "Neutral",
+                      "Good",
+                      "Excellent"
+                    ],
+                    "isMultiSelect": false,
+                    "isRandomized": false
+                  },
+                  {
+                    "questionId": "Q3",
+                    "questionType": "Select",
+                    "question": "Which age group are you in?",
+                    "answerOptions": [
+                      "18-24",
+                      "25-34",
+                      "35-44",
+                      "45-54",
+                      "55+"
+                    ],
+                    "isMultiSelect": false
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Suggestions generated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "success",
+                    "message",
+                    "results"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Quality check suggestions generated"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/QualityCheckSuggestionsResults"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Quality check suggestions generated",
+                  "results": {
+                    "OES": [
+                      {
+                        "questionId": "Q1",
+                        "keywords": [
+                          "price",
+                          "quality",
+                          "brand"
+                        ],
+                        "enableDuplicateCheck": true
+                      }
+                    ],
+                    "GQS": [
+                      {
+                        "questionId": "Q2",
+                        "enablePatternCheck": true
+                      }
+                    ],
+                    "CHS": {
+                      "questionIds": [
+                        "Q3",
+                        "Q2"
+                      ],
+                      "surveyDescription": "A survey about brand preference and product choice among shoppers."
+                    },
+                    "BAS": [
+                      {
+                        "questionId": "Q1",
+                        "keystrokes": true,
+                        "mouse": true
+                      }
+                    ],
+                    "cleaningSettings": {
+                      "redemScore": 60,
+                      "OES": {
+                        "activate": true,
+                        "score": 40,
+                        "minDataPoints": 2
+                      },
+                      "CHS": {
+                        "activate": true,
+                        "score": 30
+                      },
+                      "GQS": {
+                        "activate": true,
+                        "score": 20,
+                        "minDataPoints": 2
+                      },
+                      "TS": {
+                        "activate": true,
+                        "score": 30
+                      },
+                      "BAS": {
+                        "activate": true,
+                        "score": 20,
+                        "minDataPoints": 2
+                      },
+                      "DES": {
+                        "activate": true,
+                        "score": 40
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "When a request fails due to validation errors, the API returns a 422 Unprocessable Entity status code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation Failed"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
                       }
                     }
                   }

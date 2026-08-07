@@ -5,6 +5,32 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-08-07" description="v3.1.9">
+  ## Duplicate Entrance Score
+
+  - Coming soon on <code style={{ color: "green" }}> POST /v3/addRespondent </code> — Send a `DES` datapoint (v3 only) with optional `entranceTime`, optional `ip`, and up to 10 demographics (at least 4 for a valid score). At most one DES datapoint per respondent.
+  - DES detects likely duplicate entrants by comparing demographics and IP against recent peers in the same survey.
+
+  See the [v3 addRespondent](/api-reference/endpoints/v3/addRespondent) endpoint documentation and the [Duplicate Entrance Score](/knowledge-base/quality-checks/duplicate-entrance-score) guide.
+
+  ## Quality Check Suggestions
+
+  - <code style={{ color: "green" }}> POST /v3/qualityCheckSuggestions </code> — New endpoint for partners: send a survey questionnaire structure and receive smart quality-check suggestions (OES, GQS, CHS, BAS) plus recommended cleaning settings.
+  - Suggestions align with ReDem best practices so end users spend less effort configuring an API project.
+  - `allInclusive` (default `true`) caps suggestion counts to all-inclusive plan limits.
+
+  See the [Quality Check Suggestions](/api-reference/endpoints/v3/qualityCheckSuggestions) endpoint documentation.
+
+  ## OES Answer Translation: Skip Languages
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> — On an OES datapoint, set `skipTranslationLanguages` to a list of ISO 639-1 language codes that should **not** be translated when `shouldTranslate` is `true`.
+  - Example: a German agency can send `skipTranslationLanguages: ["de"]` so German answers are left as-is while other non-English answers are still translated.
+  - English answers are never translated, with or without this field. Use the same two-letter codes as `allowedLanguages`.
+  - `ignoreAllowedLanguageError` also applies to `skipTranslationLanguages`: invalid codes are dropped instead of rejecting the request.
+
+  See the [v3 addRespondent](/api-reference/endpoints/v3/addRespondent) endpoint documentation for field details.
+</Update>
+
 <Update label="2026-07-31" description="v3.1.8">
   ## OES Answer Translation
 
