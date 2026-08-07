@@ -13,18 +13,6 @@ Generate smart quality-check suggestions from a survey questionnaire structure. 
 - Suggested **BAS** tracking targets (derived from suggested OES questions)
 - Recommended default **cleaning settings** for API v3
 
-**`surveyStructure` shape**
-
-Each item is a discriminated union on `questionType`:
-
-| `questionType` | Required fields | Optional | Suggested for |
-| --- | --- | --- | --- |
-| `OpenEnd` | `questionId`, `questionType`, `question` | — | OES, BAS |
-| `Grid` | `questionId`, `questionType`, `question`, `items`, `answerOptions` | `isMultiSelect`, `isRandomized` | GQS, CHS |
-| `Select` | `questionId`, `questionType`, `question`, `answerOptions` | `isMultiSelect` | CHS |
-
-Do not send fields that do not belong to the selected type (for example `answerOptions` or `isRandomized` on `OpenEnd`). `questionId` values must be unique. Maximum **500** questions.
-
 **Notes**
 
 - **TS** is not suggested here; configure it separately in your integration. **DES** suggestions are coming soon.
