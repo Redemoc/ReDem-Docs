@@ -1758,77 +1758,26 @@
         ]
       },
       "SurveyStructureQuestion": {
-        "type": "object",
-        "required": [
-          "questionId",
-          "questionType",
-          "question"
-        ],
-        "description": "A question from your survey platform questionnaire. `questionId` values must be unique. Shape depends on `questionType`:\n- `OpenEnd`: `questionId`, `questionType`, `question`\n- `Grid`: also requires `items` and `answerOptions`; optional `isMultiSelect`, `isRandomized`\n- `Select`: also requires `answerOptions`; optional `isMultiSelect`",
-        "properties": {
-          "questionId": {
-            "type": "string",
-            "minLength": 1,
-            "description": "Unique question identifier within `surveyStructure`.",
-            "example": "Q1"
-          },
-          "questionType": {
-            "type": "string",
-            "enum": [
-              "OpenEnd",
-              "Grid",
-              "Select"
-            ],
-            "description": "`OpenEnd` → OES/BAS candidate. `Grid` → GQS/CHS candidate. `Select` → CHS candidate.",
-            "example": "OpenEnd"
-          },
-          "question": {
-            "type": "string",
-            "minLength": 1,
-            "description": "Full question text.",
-            "example": "Why did you choose this product?"
-          },
-          "items": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-              "type": "string"
-            },
-            "description": "Required for `Grid`. Row / item labels.",
-            "example": [
-              "Brand A",
-              "Brand B",
-              "Brand C",
-              "Brand D",
-              "Brand E"
-            ]
-          },
-          "answerOptions": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-              "type": "string"
-            },
-            "description": "Required for `Grid` and `Select`. Answer / scale labels.",
-            "example": [
-              "Very poor",
-              "Poor",
-              "Neutral",
-              "Good",
-              "Excellent"
-            ]
-          },
-          "isMultiSelect": {
-            "type": "boolean",
-            "default": false,
-            "description": "Optional for `Grid` and `Select`. Defaults to `false`."
-          },
-          "isRandomized": {
-            "type": "boolean",
-            "default": false,
-            "description": "Optional for `Grid`. Whether the grid items are shown in randomized order. Defaults to `false`."
+        "description": "A question from your survey platform questionnaire. Discriminated by `questionType` (`OpenEnd` | `Grid` | `Select`) — each variant has its own required and optional fields. `questionId` values must be unique across `surveyStructure`.",
+        "discriminator": {
+          "propertyName": "questionType",
+          "mapping": {
+            "OpenEnd": "#/components/schemas/SurveyStructureOpenEnd",
+            "Grid": "#/components/schemas/SurveyStructureGrid",
+            "Select": "#/components/schemas/SurveyStructureSelect"
           }
-        }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SurveyStructureOpenEnd"
+          },
+          {
+            "$ref": "#/components/schemas/SurveyStructureGrid"
+          },
+          {
+            "$ref": "#/components/schemas/SurveyStructureSelect"
+          }
+        ]
       },
       "QualityCheckSuggestionsRequest": {
         "type": "object",
@@ -1850,7 +1799,7 @@
           "surveyStructure": {
             "type": "array",
             "maxItems": 500,
-            "description": "Questionnaire structure used to suggest quality checks. Maximum **500** questions. Each `questionId` must be unique.",
+            "description": "Questionnaire structure used to suggest quality checks. Maximum **500** questions. Each item is a discriminated union on `questionType` (`OpenEnd`, `Grid`, or `Select`). Each `questionId` must be unique.",
             "items": {
               "$ref": "#/components/schemas/SurveyStructureQuestion"
             }
@@ -2017,6 +1966,165 @@
                 "$ref": "#/components/schemas/CleaningSettings_v3"
               }
             ]
+          }
+        }
+      },
+      "SurveyStructureOpenEnd": {
+        "type": "object",
+        "title": "OpenEnd",
+        "description": "Open-ended question. Candidate for **OES** / **BAS** suggestions.\n\nOnly `questionId`, `questionType`, and `question` are accepted for this type — do not send `items`, `answerOptions`, `isMultiSelect`, or `isRandomized`.",
+        "required": [
+          "questionId",
+          "questionType",
+          "question"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Unique question identifier within `surveyStructure`.",
+            "example": "Q1"
+          },
+          "questionType": {
+            "type": "string",
+            "enum": [
+              "OpenEnd"
+            ],
+            "description": "Must be `OpenEnd`."
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Full question text.",
+            "example": "Why did you choose this product?"
+          }
+        }
+      },
+      "SurveyStructureGrid": {
+        "type": "object",
+        "title": "Grid",
+        "description": "Grid / matrix question. Candidate for **GQS** / **CHS** suggestions.\n\n`items` and `answerOptions` are required. `isMultiSelect` and `isRandomized` are optional (default `false`).",
+        "required": [
+          "questionId",
+          "questionType",
+          "question",
+          "items",
+          "answerOptions"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Unique question identifier within `surveyStructure`.",
+            "example": "Q2"
+          },
+          "questionType": {
+            "type": "string",
+            "enum": [
+              "Grid"
+            ],
+            "description": "Must be `Grid`."
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Full question text.",
+            "example": "Please rate the following brands."
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Row / item labels shown in the grid. At least one item required.",
+            "example": [
+              "Brand A",
+              "Brand B",
+              "Brand C",
+              "Brand D",
+              "Brand E"
+            ]
+          },
+          "answerOptions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Column / scale labels. At least one option required.",
+            "example": [
+              "Very poor",
+              "Poor",
+              "Neutral",
+              "Good",
+              "Excellent"
+            ]
+          },
+          "isMultiSelect": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether respondents can select multiple answers per row. Defaults to `false`.",
+            "example": false
+          },
+          "isRandomized": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether grid items are shown in randomized order to respondents. Defaults to `false`.",
+            "example": false
+          }
+        }
+      },
+      "SurveyStructureSelect": {
+        "type": "object",
+        "title": "Select",
+        "description": "Single- or multi-select closed question. Candidate for **CHS** suggestions.\n\n`answerOptions` is required. `isMultiSelect` is optional (default `false`). Do not send `items` or `isRandomized` for this type.",
+        "required": [
+          "questionId",
+          "questionType",
+          "question",
+          "answerOptions"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Unique question identifier within `surveyStructure`.",
+            "example": "Q3"
+          },
+          "questionType": {
+            "type": "string",
+            "enum": [
+              "Select"
+            ],
+            "description": "Must be `Select`."
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Full question text.",
+            "example": "Which age group are you in?"
+          },
+          "answerOptions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Answer choices. At least one option required.",
+            "example": [
+              "18-24",
+              "25-34",
+              "35-44",
+              "45-54",
+              "55+"
+            ]
+          },
+          "isMultiSelect": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether respondents can select multiple answers. Defaults to `false`.",
+            "example": false
           }
         }
       }
@@ -7555,31 +7663,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "description": "Request body for generating quality-check suggestions for an API project setup.\n\n **🔒 Authentication:** This endpoint is only accessible via a [`PRIVATE` API key](/api-reference/api-specifications/api-keys#permission-levels).",
-                "required": [
-                  "surveyStructure"
-                ],
-                "properties": {
-                  "surveyPlatform": {
-                    "type": "string",
-                    "description": "Optional survey platform identifier (for example `SightX`, `qualtrics`). Stored for logging and support only; it does not change suggestions.",
-                    "example": "SightX"
-                  },
-                  "allInclusive": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "When `true` (default), suggestion counts are capped to all-inclusive plan limits (OES 5, GQS 20, CHS 100 question slots). When `false`, higher API maxima are used (OES 30, GQS 20, CHS 300 slots)."
-                  },
-                  "surveyStructure": {
-                    "type": "array",
-                    "maxItems": 500,
-                    "description": "Questionnaire structure used to suggest quality checks. Maximum **500** questions. Each `questionId` must be unique.",
-                    "items": {
-                      "$ref": "#/components/schemas/SurveyStructureQuestion"
-                    }
-                  }
-                }
+                "$ref": "#/components/schemas/QualityCheckSuggestionsRequest"
               },
               "example": {
                 "surveyPlatform": "SightX",
