@@ -9,12 +9,16 @@ iconType: "regular"
 ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events per BAS data point. Cap client-side tracking at the same limits — storing more only inflates browser session data without improving scoring.
 </Note>
 
+<Note>
+**CATI / shared browser sessions:** When interviewers run back-to-back interviews in the same browser tab, clear BAS `sessionStorage` data after each interview is submitted to ReDem (success or error) and again at survey entry. Otherwise mouse and keystroke events from a prior interview can bleed into the next respondent. Do not clear on every question page — only at survey entry and after `addRespondent`, so multi-page interviews can still accumulate tracking data.
+</Note>
+
 <Steps titleSize="h3">
   <Step title="Implementing a JavaScript Tracker for User Behavior Data">
     <p> Copy the simple **JavaScript tracker code** (attached) into your survey platform’s frontend codebase or UI. This ensures that, whenever respondent complete surveys, it tracks input behavior data for open-ended questions directly from their individual browsers. </p>
   </Step>
   <Step title="Integrate ReDem API into your workflow">
-    <p>We are using this script to persist this input_behavior in the browser until you are ready to call the API</p>
+    <p>We are using this script to persist this input_behavior in the browser until you are ready to call the API.</p>
 
     ```javascript
     <script>
@@ -168,6 +172,35 @@ ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events 
     ```
   </Step>
   <Step title="Use API response to trigger your next step">
-    <p>When you are making the API call to ReDem use this structure from the session storage and make sure to connect `QUESTION_ID` during the integration process</p>
+    <p>When you are making the API call to ReDem use this structure from the session storage and make sure to connect `QUESTION_ID` during the integration process. For CATI, clear BAS keys at survey entry and again after `addRespondent` (success or error):</p>
+
+    ```javascript
+    function clearBASSessionData(questionId) {
+      sessionStorage.removeItem(questionId);
+      sessionStorage.removeItem(questionId + "_interaction_data");
+    }
+
+    // Call once on survey entry (before tracking starts)
+    clearBASSessionData(QUESTION_ID);
+
+    // After building the payload from sessionStorage, submit then clear
+    fetch("https://api.redem.io/v3/addRespondent", {
+      method: "POST",
+      headers: {
+        "api-key": "YOUR_API_KEY",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // handle response
+        clearBASSessionData(QUESTION_ID);
+      })
+      .catch((error) => {
+        // handle error
+        clearBASSessionData(QUESTION_ID);
+      });
+    ```
   </Step>
 </Steps>
