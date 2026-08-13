@@ -17,7 +17,6 @@ Each BAS data point receives a score from **0–100** and a category. When both 
 - Checks for unusually fast typing that is inconsistent with manual human input.
 - Checks for copy-&-paste patterns (e.g., large blocks inserted with minimal keystroke events).
 - Checks for highly uniform or repetitive keystroke rhythms that differ from typical human variation.
-- Flags a single keystroke that inserts many words at once (**10 or more**) as `UNNATURAL_TYPING` with a score of **0**. That pattern is typical of automated insertion rather than human typing.
 - Where instrumented, checks for behaviour metadata (e.g., pause durations between keystrokes, editing patterns) that deviate from expected human behaviour.
 - Swipe Typing (Glide Typing): Detects swipe/glide typing on Android and iPhone. Classified as `NATURAL_TYPING` with a BAS score of 60. The score is intentionally conservative to reduce the impact of potential false negatives on the overall BAS score.
 - Voice Dictation (Speech-to-Text): Detects speech-to-text input on Android and iPhone. Classified as `NATURAL_TYPING` with a BAS score of 60. The score is intentionally conservative to reduce the impact of potential false negatives on the overall BAS score.
@@ -27,7 +26,7 @@ Each BAS data point receives a score from **0–100** and a category. When both 
 Typing is scored when at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events are present for the data point.
 
 - `NATURAL_TYPING` — typing behaviour looks human-like (score ≥ 50). Also used for detected swipe typing and voice dictation (score 60).
-- `UNNATURAL_TYPING` — typing behaviour looks automated or scripted (score &lt; 50). Timing, rhythm, and editing signals that look non-human are reflected in this category — there is no separate “unnatural keystrokes” label. A single keystroke that inserts **10 or more** words is always `UNNATURAL_TYPING` with score **0**.
+- `UNNATURAL_TYPING` — typing behaviour looks automated or scripted (score &lt; 50). Timing, rhythm, and editing signals that look non-human are reflected in this category — there is no separate “unnatural keystrokes” label.
 - `COPY_AND_PASTE` — the interaction is entirely paste-based (100% of events are `COPY_AND_PASTE`). Score is **0**. Partial paste mixed with keystrokes is scored as typing instead.
 
 ## Mouse Movement and Clicks

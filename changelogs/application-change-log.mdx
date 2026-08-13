@@ -7,16 +7,15 @@ iconType: "regular"
 
 <Update label="2026-08-13" description="v1.6.9">
   ## File Import
-  - Quick Import quality-check suggestions are now much more accurate and finish faster.
+  - Quality-check suggestions in Quick Import are now more accurate, and the analysis step finishes faster.
 
   ## Duplicate Entrance Score
-  - You can now configure the **Duplicate Entrance Score (DES)** in Quick Import. Map demographic columns (and optionally IP) the same way you configure other quality checks.
-  - DES is **not** suggested automatically by the AI assistant — add it yourself during import.
+  - You can now configure the **Duplicate Entrance Score (DES)** in Quick Import. Map demographic columns — and an IP column, if you have one — in the same way as other quality checks.
+  - The AI assistant does not currently recommend DES. If you would like to include it, enable it when you configure quality checks during import.
   - See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [File Import](/features/file-import) for details.
 
   ## BAS
-  - The Behavioral Analytics Score now flags more unnatural keystroke patterns. A single keystroke that inserts many words at once (10 or more) is classified as `UNNATURAL_TYPING` with a score of **0**.
-  - See the [Behavioral Analytics Score docs](/knowledge-base/quality-checks/behavior-analysis-score) for details.
+  - The Behavioral Analytics Score now detects additional unnatural keystroke patterns.
 </Update>
 
 <Update label="2026-08-07" description="v1.6.8">

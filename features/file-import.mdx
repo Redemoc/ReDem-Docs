@@ -111,7 +111,7 @@ Follow these steps for a quick import:
       - **Grid Questions Score:** Assign a name to the data point, then select the first and last columns of the grid (minimum of 5 columns required). If the grid is not randomized and contains at least 7 items, enable the **Pattern Check** to identify fraudulent click patterns beyond simple straightlining.
       - **Coherence Score:** Select all questions you want evaluated for coherence.
       - **Time Score:** Select the variables that capture response time and/or interview length (in seconds or milliseconds).
-      - **Duplicate Entrance Score:** Map demographic columns to DES types (at least 4, up to 10). Optionally map an IP column. Column names are searchable. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [best-practice set-up](/knowledge-base/best-practices/best-practice-setup#duplicate-entrance-score).
+      - **Duplicate Entrance Score:** Map demographic columns to DES types (at least 4, up to 10). You can also map an IP column if one is available. Column names are searchable. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [best-practice set-up](/knowledge-base/best-practices/best-practice-setup#duplicate-entrance-score).
   </Step>
   <Step title="Determine Cleaning Settings">
     Decide whether to enable ReDem’s Automatic Data Cleaning. This feature applies exclusion recommendations based on predefined thresholds.
@@ -151,7 +151,7 @@ Follow these steps for a quick import:
 
 <Steps titleSize="h3">
   <Step title="Upload File">
-    Navigate to **Import Data** and select the file from your computer. If you want to reuse the configuration from a previous tracking survey, activate **Reuse settings from existing survey**, select the reference survey, and click **Use Template Settings**. Otherwise choose **“Analyze with AI”**. If your Excel file contains multiple sheets, select which sheet contains the **data** and which sheet contains the **data map**. ReDem analyzes your file, identifies the relevant questions for each quality check type, and extracts the necessary metadata. Suggestions are now faster and more accurate than before. Larger files can still take longer. During this process, you can freely navigate to other pages or even close the application.
+    Navigate to **Import Data** and select the file from your computer. If you want to reuse the configuration from a previous tracking survey, activate **Reuse settings from existing survey**, select the reference survey, and click **Use Template Settings**. Otherwise choose **“Analyze with AI”**. If your Excel file contains multiple sheets, select which sheet contains the **data** and which sheet contains the **data map**. ReDem analyzes your file to identify relevant questions for each quality check and extract the necessary metadata. Suggestions are now faster and more accurate; larger files may still take longer. During this process, you can freely navigate to other pages or even close the application.
   </Step>
   <Step title="Check and confirm the metadata">
     Check and confirm the extracted metadata for your survey. You can edit each item if needed.
@@ -182,8 +182,8 @@ Follow these steps for a quick import:
     - Select or deselect response times/interview length as needed, then confirm.
 
     **Duplicate Entrance Score (DES)**
-    - DES is **not** suggested automatically. Add it yourself if you want it on this survey.
-    - Map demographic columns to DES types (at least 4, up to 10) and optionally map an IP column. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score).
+    - The AI assistant does not currently recommend DES. If you would like to include it, add the check when you review quality checks.
+    - Map demographic columns to DES types (at least 4, up to 10). You can also map an IP column if one is available. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score).
   </Step>
   <Step title="Determine Cleaning Settings">
     Decide whether to enable ReDem’s Automatic Data Cleaning. This feature applies exclusion recommendations based on predefined thresholds.
