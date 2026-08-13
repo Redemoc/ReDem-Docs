@@ -1170,6 +1170,11 @@
           "BASDataPoints": {
             "type": "number",
             "description": "**The number of data points** to be used for the Behavioral-Analytics Score (BAS). \n **⭕ Note:** If no BAS data points are available, this value can be set to `0`."
+          },
+          "DESDataPoints": {
+            "type": "number",
+            "default": 0,
+            "description": "**The number of data points** to be used for the Duplicate Entrance Score (DES). Optional; defaults to `0` if omitted. \n **⭕ Note:** If no DES data points are available, this value can be omitted or set to `0`."
           }
         }
       },
@@ -1244,6 +1249,20 @@
               "answers": {
                 "type": "number",
                 "description": "Number of BAS data points estimated for a respondent"
+              }
+            }
+          },
+          "DES": {
+            "type": "object",
+            "description": "Detailed breakdown of the number of DES credits estimated for a respondent",
+            "properties": {
+              "credits": {
+                "type": "number",
+                "description": "Number of DES credits estimated for a respondent"
+              },
+              "dataPoints": {
+                "type": "number",
+                "description": "Number of DES data points estimated for a respondent"
               }
             }
           }
