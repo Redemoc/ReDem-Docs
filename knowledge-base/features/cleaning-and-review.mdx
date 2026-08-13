@@ -43,6 +43,7 @@ Our default settings apply best-practice thresholds to the following metrics:
 - **Coherence Score (CHS)**: Respondents with a CHS below 30 are excluded.
 - **Grid-Question Score (GQS)**: Respondents with a GQS below 20 and at least two valid grid-question responses are excluded.
 - **Time Score (TS)**: Respondents with a TS below 30 are excluded.
+- **Duplicate Entrance Score (DES)**: Respondents with a DES below 40 are excluded. Category-based DES exclusions (`DUPLICATE_IP`, `DUPLICATE_ENTRANT`) are off by default.
 - **Behavioral Analytics Score (BAS)**: Respondents with a BAS below 20 and at least two valid BAS data points are excluded.
 
   Respondents flagged for **Unnatural Typing** starting with the first valid BAS data point are excluded. Respondents flagged for **Copy and Paste** or **Unnatural Movement** in at least two valid BAS data points are excluded.
@@ -65,6 +66,10 @@ Customizable elements include:
     - **Off Topic:**
     - **AI Suspect:**
 - **Time Score (TS):** Threshold + min. number of time data points
+- **Duplicate Entrance Score (DES):** Threshold + optional category-based exclusion logic
+  - **DES Categories:**
+    - **Duplicate IP:**
+    - **Duplicate Entrant:**
 - **Grid-Question Score (GQS):** Threshold + min. valid grid questions
 - **Coherence Score (CHS):** Threshold + min. number of coherence data points
 - **Behavioral Analytics Score (BAS):** Threshold + min. valid BAS data points + category-based exclusion logic
@@ -90,6 +95,7 @@ Here’s an example of a cleaning settings object that can be used to customize 
   "CHS": {"activate": true,"score": 50},
   "GQS": {"activate": true,"score": 40, "minDataPoints":2},
   "TS": {"activate": true,"score": 30},
+  "DES": {"activate": true,"score": 40},
   "BAS": {
     "activate": true,
     "score": 60, 
@@ -118,6 +124,7 @@ The cleaning process classifies each response as either **Included** or **Exclud
 - **Open-Ended Score Threshold**: Respondent’s OES is below the default (40) or a custom threshold.
 - **Open Ended Category**: Respondent exceeds the defined category threshold.
 - **Time Score Threshold**: Respondent’s TS is below the default (30) or a custom threshold.
+- **Duplicate Entrance Score Threshold**: Respondent’s DES is below the default (40) or a custom threshold.
 - **Grid-Question Score Threshold**: Respondent’s GQS is below the default (20) or a custom threshold.
 - **Coherence Score Threshold**: Respondent’s CHS is below the default (30) or a custom threshold.
 - **Behavioral Analytics Score Threshold**: Respondent’s BAS is below the default (20) or a custom threshold.

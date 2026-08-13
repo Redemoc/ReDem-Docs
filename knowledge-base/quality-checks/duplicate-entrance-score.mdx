@@ -9,7 +9,7 @@ iconType: "regular"
 
 The **Duplicate Entrance Score (DES)** detects whether a respondent is likely a duplicate of another recent entrant in the same survey. It compares **demographics** and, when available, **IP address** against peers who entered shortly before.
 
-DES is available for **API v3** projects only. It is not supported on v1/v2 `addRespondent` requests.
+DES is available in **Quick Import** and on **API v3**. It is not supported on v1/v2 `addRespondent` requests.
 
 ## High-level checks performed
 
@@ -68,5 +68,13 @@ When cleaning is enabled with recommended settings:
 - Category-based DES exclusions (`DUPLICATE_IP`, `DUPLICATE_ENTRANT`) are **off** by default
 
 ## How to use the DES?
+
+### Quick Import
+
+During file import, add the **Duplicate Entrance Score** quality check and map survey columns to demographic types (at least **4**, up to **10**). Optionally map an IP column. Column names are searchable.
+
+The AI assistant does **not** suggest DES automatically — add it yourself. Settings are kept when you change quality checks, add respondents, or reuse a previous survey’s setup. See [File Import](/features/file-import).
+
+### API
 
 Send a single DES data point on [`POST /v3/addRespondent`](/api-reference/endpoints/v3/addRespondent) with optional `entranceTime` (defaults to the current timestamp if omitted), optional `ip`, and a `demographics` array. Only **one** DES data point is allowed per respondent (`dataPointId` defaults to `"DES"`).
