@@ -127,11 +127,13 @@ Use the Duplicate Entrance Score only for national or international surveys. In 
 
 Prefer zip or city when available — fine-grained location is one of the strongest discriminators in the comparison window. Provide at least four demographics for a valid score. If zip or city information is not available and only country-level location is used, include at least five demographics. Depending on which demographics you choose, six may be preferable so the combination remains distinctive enough to distinguish real duplicates from chance matches.
 
-#### **3. Do not use screening or quota demographics**
+#### **3. Do not use screening or single-group quota demographics**
 
-Do not include demographics where respondents are expected to give a specific answer, or where other answers terminate them from the survey. Those fields do not discriminate between entrants and can inflate duplicate matches.
+Do not include demographics where only one answer is allowed to complete the survey. Those fields are the same for every completer, so they do not discriminate between entrants and can inflate duplicate matches.
 
-For example, if you ask about ethnicity and only let Hispanics proceed, ethnicity **must not** be used for the DES.
+This applies to screeners and to quotas that accept only one group. For example, if you ask about ethnicity and only let Hispanics proceed, ethnicity **must not** be used for the DES.
+
+Balanced quotas are fine. If a quota only sets how many of each group you need, and answers still vary among completers, keep that field. A 50% male / 50% female quota does **not** mean gender should be excluded from the DES.
 
 #### **4. Do not include fields that are constant for all completers**
 
