@@ -191,6 +191,24 @@ The response is identical or highly similar to another response provided by the 
 
 Activate the duplicate check only if identical or highly similar responses to open ends within interviews are implausible.
 
+## Automatic scoring adjustments
+
+For some question types, ReDem automatically adjusts which Open-Ended Score checks run. These adjustments are based on the question wording, not on the individual answer. They can override the survey setup so that expected answer patterns do not unfairly lower a respondent's score.
+
+When an adjustment is applied, Respondent Details shows it under **Automatic scoring adjustments**.
+
+### End-of-survey feedback: AI-suspect only
+
+Questions that ask for feedback on the survey or questionnaire itself (for example wrap-up comments after "thank you for completing the survey") often receive short, playful, or nonsense answers. That is expected and should not reduce the Open-Ended Score.
+
+For these questions ReDem runs **only the AI-suspect check**. Other open-ended categories such as gibberish, off topic, or no answer are skipped.
+
+### Short-label questions: duplicate check skipped
+
+Questions whose natural answer is a short label — a brand, place, name, or single preference — often produce identical answers across respondents (for example unaided brand awareness: "first sports brand that comes to mind").
+
+ReDem turns **duplicate detection off** for these questions even if it is enabled in the survey setup. The Active duplicate detection setting still shows the original setup; the adjustment is listed separately so you can see why no duplicate was assigned.
+
 ## Use of GPT for Open-Ended Score
 
 ReDem uses the most advanced GPT large language models (LLMs) from OpenAI, to analyze and categorize open-ended responses. This enables precise and reliable scoring by leveraging cutting-edge language understanding.
