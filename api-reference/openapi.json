@@ -1673,6 +1673,17 @@
                   "y": {
                     "type": "number",
                     "description": "The vertical click position in viewport pixels."
+                  },
+                  "pointerType": {
+                    "type": "string",
+                    "nullable": true,
+                    "enum": [
+                      "mouse",
+                      "pen",
+                      "touch",
+                      null
+                    ],
+                    "description": "The pointer that produced the click (`mouse`, `pen`, or `touch`). Optional. Omitted, empty, and any other value are stored as `null`."
                   }
                 },
                 "required": [
@@ -1689,7 +1700,8 @@
                   "offsetX": 120,
                   "offsetY": 24,
                   "x": 512,
-                  "y": 384
+                  "y": 384,
+                  "pointerType": "mouse"
                 }
               }
             ]
