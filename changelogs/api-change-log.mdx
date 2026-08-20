@@ -8,7 +8,7 @@ iconType: "regular"
 <Update label="2026-08-07" description="v3.1.9">
   ## Duplicate Entrance Score
 
-  - Coming soon on <code style={{ color: "green" }}> POST /v3/addRespondent </code> — Send a `DES` datapoint (v3 only) with optional `entranceTime`, optional `ip`, and up to 10 demographics (at least 4 for a valid score). At most one DES datapoint per respondent.
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> — Send a `DES` datapoint (v3 only) with optional `entranceTime`, optional `ip`, and up to 10 demographics (at least 4 for a valid score). At most one DES datapoint per respondent.
   - DES detects likely duplicate entrants by comparing demographics and IP against recent peers in the same survey.
   - <code style={{ color: "green" }}> POST /creditCalculation </code> — Optional `DESDataPoints` (default `0`) for estimating Duplicate Entrance Score credits. Existing clients that omit the field keep working.
 

@@ -5,6 +5,22 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-08-20" description="v1.7.0">
+  ## Guest Access
+  - You can now share a survey with people **outside your company**. From **Share**, type their email address to send an invite. Guests register or log in, then see only the surveys shared with them.
+  - Guest access is **read-only**: guests can review results, but they cannot download data, change quality checks, clean, recalculate, or add respondents.
+  - You can revoke guest access at any time. Emails that already belong to a ReDem user cannot be invited as guests.
+  - Company admins can brand guest invites and the guest experience (logo, display name, and support email) under **Administration → Guest invite settings**.
+  - Guest access is enabled per company. Contact ReDem if you would like it turned on.
+
+  ## Open-Ended Score
+  - ReDem now automatically turns off or restricts certain Open-Ended Score checks based on the **question type**, so expected answer patterns do not unfairly lower a respondent's score.
+  - End-of-survey feedback questions run **only the AI-suspect check** (short or playful wrap-up answers are expected).
+  - Short-label questions, such as unaided brand awareness, skip **duplicate detection** even when that check is enabled in the survey setup.
+  - When an adjustment is applied, Respondent Details shows it under **Automatic scoring adjustments**.
+  - See the [Open-Ended Score docs](/knowledge-base/quality-checks/open-ended-score#automatic-scoring-adjustments) for details.
+</Update>
+
 <Update label="2026-08-13" description="v1.6.9">
   ## File Import
   - Quality-check suggestions in the Quick Import are now more accurate, and the analysis step finishes faster.
