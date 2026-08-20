@@ -1991,7 +1991,7 @@
       "SurveyStructureOpenEnd": {
         "type": "object",
         "title": "OpenEnd",
-        "description": "Open-ended question. Candidate for **OES** / **BAS** suggestions.\n\nOnly `questionId`, `questionType`, and `question` are accepted for this type — do not send `items`, `answerOptions`, `isMultiSelect`, or `isRandomized`.",
+        "description": "Open-ended question. Candidate for **OES** / **BAS** suggestions.\n\nOnly `questionId`, `questionType`, and `question` are accepted for this type — do not send `items`, `answerOptions`, `isMultiSelect`.",
         "required": [
           "questionId",
           "questionType",
@@ -2022,7 +2022,7 @@
       "SurveyStructureGrid": {
         "type": "object",
         "title": "Grid",
-        "description": "Grid / matrix question. Candidate for **GQS** / **CHS** suggestions.\n\n`items` and `answerOptions` are required. `isMultiSelect` and `isRandomized` are optional (default `false`).",
+        "description": "Grid / matrix question. Candidate for **GQS** / **CHS** suggestions.\n\n`items` and `answerOptions` are required. `isMultiSelect` is optional (default `false`).",
         "required": [
           "questionId",
           "questionType",
@@ -2085,19 +2085,13 @@
             "default": false,
             "description": "Whether respondents can select multiple answers per row. Defaults to `false`.",
             "example": false
-          },
-          "isRandomized": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether grid items are shown in randomized order to respondents. Defaults to `false`.",
-            "example": false
           }
         }
       },
       "SurveyStructureSelect": {
         "type": "object",
         "title": "Select",
-        "description": "Single- or multi-select closed question. Candidate for **CHS** suggestions.\n\n`answerOptions` is required. `isMultiSelect` is optional (default `false`). Do not send `items` or `isRandomized` for this type.",
+        "description": "Single- or multi-select closed question. Candidate for **CHS** suggestions.\n\n`answerOptions` is required. `isMultiSelect` is optional (default `false`). Do not send `items` for this type.",
         "required": [
           "questionId",
           "questionType",
@@ -7711,8 +7705,7 @@
                       "Good",
                       "Excellent"
                     ],
-                    "isMultiSelect": false,
-                    "isRandomized": false
+                    "isMultiSelect": false
                   },
                   {
                     "questionId": "Q3",
