@@ -19,6 +19,14 @@ iconType: "regular"
   - Short-label questions, such as unaided brand awareness, skip **duplicate detection** even when that check is enabled in the survey setup.
   - When an adjustment is applied, Respondent Details shows it under **Automatic scoring adjustments**.
   - See the [Open-Ended Score docs](/knowledge-base/quality-checks/open-ended-score#automatic-scoring-adjustments) for details.
+
+  ## Small Fixes and Improvements
+  - Sorting by Respondent ID now works for mixed IDs (for example `1`, `2`, `10`, `1a`, `10a`), not only numeric IDs.
+  - You can recalculate at most **100** respondents at a time. Recalculate is disabled above that limit so the request cannot fail.
+  - Question Text Row must be **1** or higher. Entering **0** now shows a validation error instead of failing later in the import.
+  - Changing quality checks no longer fails when some respondents have no answer for a newly added check.
+  - Empty typing or copy-paste events no longer cause the Behavioral Analytics Score to fail for that respondent.
+  - DES respondent details now show IP in the comparison table (Match / Different) and use readable labels for demographics such as Age and Gender.
 </Update>
 
 <Update label="2026-08-13" description="v1.6.9">
