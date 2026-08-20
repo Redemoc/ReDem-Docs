@@ -642,6 +642,10 @@
           },
           "OES": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -655,7 +659,7 @@
               },
               "minDataPoints": {
                 "type": "number",
-                "description": "Minimum number of data points required",
+                "description": "Optional. Minimum number of valid open-ended data points required before the score threshold is applied. When provided, a respondent is excluded only if their OES falls below the threshold **and** they have at least this many valid open-ended data points. When omitted, a respondent is excluded whenever their OES falls below the threshold, regardless of how many open-ended data points they have.",
                 "example": 2
               },
               "categories": {
@@ -766,6 +770,10 @@
           },
           "CHS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -781,6 +789,10 @@
           },
           "GQS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -794,13 +806,17 @@
               },
               "minDataPoints": {
                 "type": "number",
-                "description": "Minimum number of data points required",
+                "description": "Optional. Minimum number of valid grid-question data points required before the score threshold is applied. When provided, a respondent is excluded only if their GQS falls below the threshold **and** they have at least this many valid grid-question data points. When omitted, a respondent is excluded whenever their GQS falls below the threshold, regardless of how many grid-question data points they have.",
                 "example": 2
               }
             }
           },
           "TS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -816,6 +832,10 @@
           },
           "BAS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -826,6 +846,11 @@
                 "type": "number",
                 "description": "Minimum score threshold for BAS checks",
                 "example": 20
+              },
+              "minDataPoints": {
+                "type": "number",
+                "description": "Optional. Minimum number of valid BAS data points required before the score threshold is applied. When provided, a respondent is excluded only if their BAS falls below the threshold **and** they have at least this many valid BAS data points. When omitted, a respondent is excluded whenever their BAS falls below the threshold, regardless of how many BAS data points they have.",
+                "example": 2
               },
               "categories": {
                 "type": "object",
@@ -880,6 +905,10 @@
           },
           "OES": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -893,7 +922,7 @@
               },
               "minDataPoints": {
                 "type": "number",
-                "description": "Minimum number of data points required",
+                "description": "Optional. Minimum number of valid open-ended data points required before the score threshold is applied. When provided, a respondent is excluded only if their OES falls below the threshold **and** they have at least this many valid open-ended data points. When omitted, a respondent is excluded whenever their OES falls below the threshold, regardless of how many open-ended data points they have.",
                 "example": 2
               },
               "categories": {
@@ -993,6 +1022,10 @@
           },
           "CHS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -1008,6 +1041,10 @@
           },
           "GQS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -1021,13 +1058,17 @@
               },
               "minDataPoints": {
                 "type": "number",
-                "description": "Minimum number of data points required",
+                "description": "Optional. Minimum number of valid grid-question data points required before the score threshold is applied. When provided, a respondent is excluded only if their GQS falls below the threshold **and** they have at least this many valid grid-question data points. When omitted, a respondent is excluded whenever their GQS falls below the threshold, regardless of how many grid-question data points they have.",
                 "example": 2
               }
             }
           },
           "TS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -1043,6 +1084,10 @@
           },
           "BAS": {
             "type": "object",
+            "required": [
+              "activate",
+              "score"
+            ],
             "properties": {
               "activate": {
                 "type": "boolean",
@@ -1053,6 +1098,11 @@
                 "type": "number",
                 "description": "Minimum score threshold for BAS checks",
                 "example": 20
+              },
+              "minDataPoints": {
+                "type": "number",
+                "description": "Optional. Minimum number of valid BAS data points required before the score threshold is applied. When provided, a respondent is excluded only if their BAS falls below the threshold **and** they have at least this many valid BAS data points. When omitted, a respondent is excluded whenever their BAS falls below the threshold, regardless of how many BAS data points they have.",
+                "example": 2
               },
               "categories": {
                 "type": "object",
