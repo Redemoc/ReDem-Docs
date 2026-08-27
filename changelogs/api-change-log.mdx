@@ -5,6 +5,15 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-08-27" description="v3.1.11">
+  ## Ignore Empty Respondent Attributes
+
+  - <code style={{ color: "green" }}> POST /v1/addRespondent </code>, <code style={{ color: "green" }}> POST /v2/addRespondent </code>, <code style={{ color: "green" }}> POST /v3/addRespondent </code>
+  - `ignoreEmptyRespondentAttributes` — When `true`, empty `respondentAttributes` values (including whitespace-only and `null`) are dropped instead of rejecting the request. Valid attributes are kept. If every attribute is empty, `respondentAttributes` is removed. Defaults to `false`.
+
+  See the [v3 addRespondent](/api-reference/endpoints/v3/addRespondent) endpoint documentation for field details.
+</Update>
+
 <Update label="2026-08-27" description="v3.1.10">
   ## Quality Check Suggestions
 
