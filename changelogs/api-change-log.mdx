@@ -5,6 +5,20 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-08-27">
+  ## Missing score reason
+
+  When a quality-check datapoint score is `-999` (the check did not produce a real 0–100 score), the API now includes `missingScoreReason` — an uppercase machine code. Valid scores omit the field. Existing `status`, `error`, `reason`, and categories are unchanged.
+
+  - Present on `dataPointsSummary` for TS, OES, BAS, GQS, and DES.
+  - For **CHS**, the code is on `qualityScoreSummary` (CHS has no datapoint summary).
+  - Example codes: `TIMEOUT`, `RATE_LIMIT`, `CONTENT_FILTER`, `MAX_RETRIES`, `UNAVAILABLE`, `INSUFFICIENT_RESPONDENTS`, `MISSING_DURATION`, `INSUFFICIENT_INTERACTION`, `INSUFFICIENT_DEMOGRAPHICS`.
+  - Clients should map codes to display text. ReDem UI does this mapping.
+
+  See [DataPointsQualityResponse](/api-reference/openapi) and the quality-check guides.
+
+</Update>
+
 <Update label="2026-08-07" description="v3.1.9">
   ## Duplicate Entrance Score
 

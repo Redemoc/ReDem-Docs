@@ -23,7 +23,7 @@ Each BAS data point receives a score from **0–100** and a category. When both 
 
 ## Typing categories
 
-Typing is scored when at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events are present for the data point.
+Typing is scored when at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events are present for the data point. If there is not enough interaction data (including fewer than 3 keystrokes and no usable mouse events), the datapoint has no BAS score.
 
 - `NATURAL_TYPING` — typing behaviour looks human-like (score ≥ 50). Also used for detected swipe typing and voice dictation (score 60).
 - `UNNATURAL_TYPING` — typing behaviour looks automated or scripted (score &lt; 50). Timing, rhythm, and editing signals that look non-human are reflected in this category — there is no separate “unnatural keystrokes” label.
