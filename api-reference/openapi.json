@@ -454,7 +454,7 @@
               "INSUFFICIENT_INTERACTION",
               "INSUFFICIENT_DEMOGRAPHICS"
             ],
-            "description": "**Machine code** explaining why the datapoint score is `-999`. Omitted for valid 0–100 scores. Clients should map this code to display text.",
+            "description": "Explains why the datapoint score is `-999`.",
             "example": "INSUFFICIENT_RESPONDENTS"
           }
         }
@@ -529,7 +529,7 @@
               "INSUFFICIENT_INTERACTION",
               "INSUFFICIENT_DEMOGRAPHICS"
             ],
-            "description": "**Machine code** explaining why the datapoint score is `-999`. Omitted for valid 0–100 scores. Clients should map this code to display text.",
+            "description": "Explains why the datapoint score is `-999`.",
             "example": "INSUFFICIENT_RESPONDENTS"
           }
         }
@@ -585,7 +585,7 @@
               "INSUFFICIENT_INTERACTION",
               "INSUFFICIENT_DEMOGRAPHICS"
             ],
-            "description": "**Machine code** explaining why a score is `-999`. Set on **CHS** `qualityScoreSummary` when Coherence Score could not be calculated (CHS has no datapoint summary). Not set on other aggregated quality-check scores.",
+            "description": "Explains why a score is `-999`. Set on **CHS** `qualityScoreSummary` when Coherence Score could not be calculated (CHS has no datapoint summary). Not set on other aggregated quality-check scores.",
             "example": "TIMEOUT"
           }
         }
