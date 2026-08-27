@@ -5,6 +5,15 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-08-27" description="v3.1.10">
+  ## Quality Check Suggestions
+
+  - <code style={{ color: "green" }}> POST /v3/qualityCheckSuggestions </code> — Now returns **DES** demographic mappings (`type` + `questionId`) when suitable demographics are present.
+  - Optional `qualityChecks` limits which checks are suggested (`OES`, `GQS`, `CHS`, `BAS`, `DES`). Omit it to suggest all of them.
+
+  See the [Quality Check Suggestions](/api-reference/endpoints/v3/qualityCheckSuggestions) endpoint documentation.
+</Update>
+
 <Update label="2026-08-07" description="v3.1.9">
   ## Duplicate Entrance Score
 

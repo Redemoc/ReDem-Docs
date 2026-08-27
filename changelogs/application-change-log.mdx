@@ -5,6 +5,23 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-08-27" description="v1.7.1">
+  ## File Import
+  - Quick Import is much faster for [supported survey platforms](/features/file-import#supported-survey-tools), and quality-check suggestions are more accurate.
+
+  ## Open-Ended Score
+  - True-positive detection of AI-generated answers is higher. Answers that previously slipped through as valid are now flagged as `AI_SUSPECT` more reliably — for example: *"I like mangoes the most. It offers a rich and sweet flavor, along with a smooth and pleasant texture."*
+  - See the [Open-Ended Score docs](/knowledge-base/quality-checks/open-ended-score#5-ai-suspect-probable-non-human-generated-response) for details.
+
+  ## Duplicate Entrance Score
+  - When you select the **Duplicate Entrance Score (DES)** as a quality check, ReDem now recommends which demographic questions to use.
+  - Small UI polish in the import flow and respondent table so DES feels more consistent with the other quality checks.
+  - See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [File Import](/features/file-import) for details.
+
+  ## Coherence Score
+  - Fixed a bug where respondent details sometimes highlighted the wrong questions or answers as incoherent. The view now shows only the questions that actually contribute to the incoherency.
+</Update>
+
 <Update label="2026-08-20" description="v1.7.0">
   ## Guest Access
   - You can now share a survey with people **outside your company**. From **Share**, type their email address to send an invite. Guests register or log in, then see only the surveys shared with them.

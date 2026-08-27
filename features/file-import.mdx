@@ -31,6 +31,7 @@ ReDem also recognizes exports from common survey platforms and prepares them aut
 - **AYTM**
 - **Confirmit**
 - **Quantilope**
+- **IntelliSurvey**
 
 Upload the original export file from your platform — no separate conversion step is required. ReDem detects the format, maps sheets and metadata, and continues with the normal Quick Import flow. See [Supported Survey Tools](#supported-survey-tools) below for platform-specific export steps.
 
@@ -182,8 +183,8 @@ Follow these steps for a quick import:
     - Select or deselect response times/interview length as needed, then confirm.
 
     **Duplicate Entrance Score (DES)**
-    - The AI assistant does not currently recommend DES. If you would like to include it, add the check when you review quality checks.
-    - Map demographic columns to DES types (at least 4, up to 10). You can also map an IP column if one is available. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score).
+    - Add the check when you review quality checks if it is not already selected. When DES is selected, ReDem recommends which demographic questions to map.
+    - Review the suggested demographics, adjust as needed (at least 4, up to 10), and map an IP column if one is available. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score).
   </Step>
   <Step title="Determine Cleaning Settings">
     Decide whether to enable ReDem’s Automatic Data Cleaning. This feature applies exclusion recommendations based on predefined thresholds.
@@ -374,3 +375,7 @@ Confirmit exports include `interview_start` and `interview_end` timestamps but n
 ### Quantilope
 
 Export your survey from Quantilope and upload the Excel file directly to the Quick Import. ReDem detects the Quantilope format and prepares the codebook and data sheets automatically.
+
+### IntelliSurvey
+
+Export your survey from IntelliSurvey and upload the Excel file directly to the Quick Import. ReDem detects the IntelliSurvey format and prepares the file for the import steps that follow.

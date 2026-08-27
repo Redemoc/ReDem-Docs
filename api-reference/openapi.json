@@ -1815,6 +1815,29 @@
             "default": true,
             "description": "When `true` (default), suggestion counts are capped to all-inclusive plan limits (OES 5, GQS 20, CHS 100 question slots). When `false`, higher API maxima are used (OES 30, GQS 20, CHS 300 slots)."
           },
+          "qualityChecks": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "OES",
+                "GQS",
+                "CHS",
+                "BAS",
+                "DES"
+              ]
+            },
+            "description": "Optional subset of quality checks to suggest. When omitted, suggestions run for OES, GQS, CHS, BAS, and DES.",
+            "example": [
+              "OES",
+              "GQS",
+              "CHS",
+              "BAS",
+              "DES"
+            ]
+          },
           "surveyStructure": {
             "type": "array",
             "maxItems": 500,
@@ -1921,6 +1944,38 @@
           }
         }
       },
+      "SuggestedDes": {
+        "type": "object",
+        "required": [
+          "type",
+          "questionId"
+        ],
+        "description": "Suggested Duplicate Entrance Score demographic mapping.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Recommended DES demographic type.",
+            "enum": [
+              "age",
+              "ageRange",
+              "yearOfBirth",
+              "gender",
+              "country",
+              "city",
+              "zip",
+              "ethnicity",
+              "salaryRange",
+              "jobTitle"
+            ],
+            "example": "ageRange"
+          },
+          "questionId": {
+            "type": "string",
+            "description": "Survey question ID to map to this demographic type.",
+            "example": "Q3"
+          }
+        }
+      },
       "QualityCheckSuggestionsResults": {
         "type": "object",
         "required": [
@@ -1928,6 +1983,7 @@
           "GQS",
           "CHS",
           "BAS",
+          "DES",
           "cleaningSettings"
         ],
         "properties": {
@@ -1977,6 +2033,13 @@
               "$ref": "#/components/schemas/SuggestedBas"
             },
             "description": "Suggested behavior tracking targets, derived from suggested OES questions."
+          },
+          "DES": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SuggestedDes"
+            },
+            "description": "Suggested DES demographic mappings (`type` + `questionId`). Empty when DES was not requested or no suitable demographics were found."
           },
           "cleaningSettings": {
             "description": "Recommended default cleaning settings for API v3 projects (includes DES). Same shape as [`cleaningSettings` on Add Respondent](/api-reference/endpoints/v3/addRespondent#body-cleaning-settings).",
@@ -7670,7 +7733,7 @@
         ],
         "summary": "Quality Check Suggestions",
         "operationId": "qualityCheckSuggestionsV3",
-        "description": "Generate smart quality-check suggestions from a survey questionnaire structure. Partners can use this to help their users set up API projects in ReDem with recommendations that align with ReDem best practices — reducing manual configuration effort for OES, GQS, CHS, and BAS.\n\nUse the returned question IDs, keywords, and cleaning settings when calling `POST /v3/addRespondent`.\n\nTS is not suggested by this endpoint. DES suggestions are coming soon.",
+        "description": "Generate smart quality-check suggestions from a survey questionnaire structure. Partners can use this to help their users set up API projects in ReDem with recommendations that align with ReDem best practices — reducing manual configuration effort for OES, GQS, CHS, BAS, and DES.\n\nUse the returned question IDs, keywords, and cleaning settings when calling `POST /v3/addRespondent`.\n\nTS is not suggested by this endpoint. Pass `qualityChecks` to limit which checks are suggested.",
         "requestBody": {
           "required": true,
           "content": {
@@ -7784,6 +7847,12 @@
                         "questionId": "Q1",
                         "keystrokes": true,
                         "mouse": true
+                      }
+                    ],
+                    "DES": [
+                      {
+                        "type": "ageRange",
+                        "questionId": "Q3"
                       }
                     ],
                     "cleaningSettings": {
