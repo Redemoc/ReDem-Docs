@@ -255,7 +255,7 @@
             "items": {
               "type": "number"
             },
-            "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**. \n\n The grid pattern should be sent in the same order as the respondent saw it in the survey, especially for randomized grid questions, to ensure accurate analysis. \n\n 🧪 **Validations:**  \n - A **minimum of 5** and a **maximum of 50** answers are allowed for each grid question. \n - Pattern checks beyond straightlining are applied only for grids with **7 or more** answers. \n - Each answer must be provided as a **numeric value**.",
+            "description": "A variable that contains all the **answers provided by a specific respondent for a particular grid question**. \n\n The grid pattern should be sent in the same order as the respondent saw it in the survey, especially for randomized grid questions, to ensure accurate analysis. \n\n 🧪 **Validations:**  \n - A **minimum of 5** answers are allowed for each grid question. \n - Pattern checks beyond straightlining are applied only for grids with **7 or more** answers. \n - Each answer must be provided as a **numeric value**.",
             "example": [
               5,
               4,
@@ -1141,10 +1141,9 @@
         }
       },
       "CreditCalculationRequest": {
-        "description": "Request body for calculating the maximum number of credits needed for a respondent \n\n **🔒 Authentication:** Requires a **private** API key. Public keys may only call `addRespondent`.",
+        "description": "Request body for calculating the maximum number of credits needed for a respondent. Send exactly one of `GQSDataPoints` or `GQSAnswers`. Sending both returns 400.\n\n **🔒 Authentication:** Requires a **private** API key. Public keys may only call `addRespondent`.",
         "required": [
           "OESDataPoints",
-          "GQSAnswers",
           "TSDataPoints",
           "CHSAnswers",
           "BASDataPoints"
@@ -1155,9 +1154,13 @@
             "type": "number",
             "description": "**The number of data points** to be used for the Open-Ended Score (OES). \n **⭕ Note:** If no OES data points are available, this value can be set to `0`."
           },
+          "GQSDataPoints": {
+            "type": "number",
+            "description": "**The number of GQS data points** to price. Modular: `min(0.2 × n, 2)`. All-inclusive: `min(0.2 × max(0, n − 5), 2)`. Send this or `GQSAnswers`, not both."
+          },
           "GQSAnswers": {
             "type": "number",
-            "description": "**The number of data points** to be used for the Grid-Question Score (GQS). \n **⭕ Note:** If no GQS answers are available, this value can be set to `0`."
+            "description": "Legacy GQS item count. Converted to data points as `floor(GQSAnswers / 5)` before pricing. Deprecated; prefer `GQSDataPoints`."
           },
           "TSDataPoints": {
             "type": "number",
@@ -1204,9 +1207,13 @@
                 "type": "number",
                 "description": "Number of GQS credits estimated for a respondent"
               },
+              "dataPoints": {
+                "type": "number",
+                "description": "Number of GQS data points. Present when the request used `GQSDataPoints`."
+              },
               "answers": {
                 "type": "number",
-                "description": "Number of GQS answers estimated for a respondent"
+                "description": "Echo of the request `GQSAnswers` value. Present when the request used `GQSAnswers`."
               }
             }
           },
@@ -1813,7 +1820,7 @@
           "allInclusive": {
             "type": "boolean",
             "default": true,
-            "description": "When `true` (default), suggestion counts are capped to all-inclusive plan limits (OES 5, GQS 20, CHS 100 question slots). When `false`, higher API maxima are used (OES 30, GQS 20, CHS 300 slots)."
+            "description": "When `true` (default), suggestion counts are capped to all-inclusive plan limits (OES 5, GQS 5, CHS 100 question slots). When `false`, higher API maxima are used (OES 30, GQS 20, CHS 300 slots)."
           },
           "qualityChecks": {
             "type": "array",
@@ -3718,7 +3725,7 @@
               },
               "example": {
                 "OESDataPoints": 2,
-                "GQSAnswers": 35,
+                "GQSDataPoints": 7,
                 "TSDataPoints": 2,
                 "CHSAnswers": 25,
                 "BASDataPoints": 2
@@ -3780,8 +3787,8 @@
                           "dataPoints": 2
                         },
                         "GQS": {
-                          "credits": 3,
-                          "answers": 35
+                          "credits": 1.4,
+                          "dataPoints": 7
                         },
                         "TS": {
                           "credits": 1,
@@ -3827,7 +3834,7 @@
                       "message": "Validation Error",
                       "errors": {
                         "0": "\"OESDataPoints\" is required",
-                        "1": "\"GQSAnswers\" is required",
+                        "1": "\"value\" must contain at least one of [GQSAnswers, GQSDataPoints]",
                         "2": "\"TSDataPoints\" is required",
                         "3": "\"CHSAnswers\" is required",
                         "4": "\"BASDataPoints\" is required"
@@ -5451,7 +5458,7 @@
               },
               "example": {
                 "OESDataPoints": 2,
-                "GQSAnswers": 35,
+                "GQSDataPoints": 7,
                 "TSDataPoints": 2,
                 "CHSAnswers": 25,
                 "BASDataPoints": 2
@@ -5513,8 +5520,8 @@
                           "dataPoints": 2
                         },
                         "GQS": {
-                          "credits": 3,
-                          "answers": 35
+                          "credits": 1.4,
+                          "dataPoints": 7
                         },
                         "TS": {
                           "credits": 1,
@@ -5560,7 +5567,7 @@
                       "message": "Validation Error",
                       "errors": {
                         "0": "\"OESDataPoints\" is required",
-                        "1": "\"GQSAnswers\" is required",
+                        "1": "\"value\" must contain at least one of [GQSAnswers, GQSDataPoints]",
                         "2": "\"TSDataPoints\" is required",
                         "3": "\"CHSAnswers\" is required",
                         "4": "\"BASDataPoints\" is required"
@@ -7374,7 +7381,7 @@
               },
               "example": {
                 "OESDataPoints": 2,
-                "GQSAnswers": 35,
+                "GQSDataPoints": 7,
                 "TSDataPoints": 2,
                 "CHSAnswers": 25,
                 "BASDataPoints": 2
@@ -7425,8 +7432,8 @@
                           "dataPoints": 2
                         },
                         "GQS": {
-                          "credits": 3,
-                          "answers": 35
+                          "credits": 1.4,
+                          "dataPoints": 7
                         },
                         "TS": {
                           "credits": 1,
@@ -7472,7 +7479,7 @@
                       "message": "Validation Error",
                       "errors": {
                         "0": "\"OESDataPoints\" is required",
-                        "1": "\"GQSAnswers\" is required",
+                        "1": "\"value\" must contain at least one of [GQSAnswers, GQSDataPoints]",
                         "2": "\"TSDataPoints\" is required",
                         "3": "\"CHSAnswers\" is required",
                         "4": "\"BASDataPoints\" is required"
