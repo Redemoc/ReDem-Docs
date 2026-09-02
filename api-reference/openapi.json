@@ -1160,7 +1160,7 @@
           },
           "GQSAnswers": {
             "type": "number",
-            "description": "Legacy GQS item count. Converted to data points as `floor(GQSAnswers / 5)` before pricing. Deprecated; prefer `GQSDataPoints`."
+            "description": "Legacy alias for GQS. Deprecated; prefer `GQSDataPoints`. Send this or `GQSDataPoints`, not both."
           },
           "TSDataPoints": {
             "type": "number",

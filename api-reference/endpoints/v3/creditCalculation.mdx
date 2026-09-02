@@ -9,7 +9,3 @@ If you need to estimate the number of credits required to add a respondent, you 
 
 `DESDataPoints` is optional and defaults to `0` if omitted.
 
-Send exactly one of `GQSDataPoints` or `GQSAnswers`. `GQSDataPoints` is the GQS data-point count. `GQSAnswers` is the legacy item count and is converted with `floor(GQSAnswers / 5)` before pricing. Sending both returns 400.
-
-The GQS breakdown uses `dataPoints` when you send `GQSDataPoints`, and echoes `answers` when you send `GQSAnswers`.
-
