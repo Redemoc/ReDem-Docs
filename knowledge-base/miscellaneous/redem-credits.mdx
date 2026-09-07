@@ -164,4 +164,55 @@ Use **Download** to export transactions matching your current search and filters
 
 Here’s an example of how credits are calculated for an individual respondent:
 
-<img classname="block dark:hidden" src="/images/Credit-Calculation-Example.png" />
+<table>
+  <thead>
+    <tr>
+      <th style={{border: '1px solid #e3e3e3', padding: '10px', textAlign: 'left'}} className="bg-gray-100 dark:bg-gray-800">Quality Check</th>
+      <th style={{border: '1px solid #e3e3e3', padding: '10px', textAlign: 'left'}} className="bg-gray-100 dark:bg-gray-800">Details</th>
+      <th style={{border: '1px solid #e3e3e3', padding: '10px', textAlign: 'left'}} className="bg-gray-100 dark:bg-gray-800">Calculation</th>
+      <th style={{border: '1px solid #e3e3e3', padding: '10px', textAlign: 'left'}} className="bg-gray-100 dark:bg-gray-800">Credits</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Open-Ended-Score</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>2 Questions</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1st Question - 3 credits; 2nd Question - 0.25 credits</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px', fontWeight: 'bold'}}>3.25</td>
+    </tr>
+
+    <tr>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Grid-Question-Score</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>8 Data Points</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>0.2 credits per Data Point (max 2 credits)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px', fontWeight: 'bold'}}>1.6</td>
+    </tr>
+
+    <tr>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Time-Score</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>2 Interview Durations</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1 credit per respondent</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px', fontWeight: 'bold'}}>1</td>
+    </tr>
+
+    <tr>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Coherence-Score</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>125 Answers</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1st 100 Questions: 4 credits; Additional 25 Questions: 0.03 credits each (0.03 x 25 = 0.75 credits)</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px', fontWeight: 'bold'}}>4.75</td>
+    </tr>
+
+    <tr>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>Behavioural-Analytics-Score</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>2 Data Points</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px'}}>1st Data Point - 2 credits; 2nd Data Point - 0.25 credits</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px', fontWeight: 'bold'}}>2.25</td>
+    </tr>
+
+    <tr>
+      <td colSpan={3} style={{border: '1px solid #e3e3e3', padding: '10px', fontWeight: 'bold'}} className="bg-blue-50 dark:bg-blue-950">Total Credits for This Respondent</td>
+      <td style={{border: '1px solid #e3e3e3', padding: '10px', fontWeight: 'bold'}} className="bg-blue-50 dark:bg-blue-950">12.85</td>
+    </tr>
+  </tbody>
+</table>
