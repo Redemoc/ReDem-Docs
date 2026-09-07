@@ -6,7 +6,7 @@ iconType: "regular"
 ---
 
 <Note>
-ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events per BAS data point. Cap client-side tracking at the same limits — storing more only inflates browser session data without improving scoring.
+ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per BAS data point. Store them in the same array and drop from the front when over the cap — otherwise leftover clicks look like cold clicks. Cap client-side tracking at the same limit — storing more only inflates browser session data without improving scoring.
 </Note>
 
 <Note>
@@ -36,12 +36,10 @@ ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events 
       
         // Question ID - This would typically come from your survey tool, you need to edit this
         const QUESTION_ID = "<BAS_QuestionID>";
-        const MAX_MOUSE_MOVEMENT_EVENTS = 300;
-        const MAX_MOUSE_CLICK_EVENTS = 300;
+        const MAX_MOUSE_EVENTS = 300;
         const INTERACTION_STORAGE_KEY = QUESTION_ID + "_interaction_data";
 
-        const movementEvents = [];
-        const clickEvents = [];
+        const mouseEvents = [];
         const keystrokeEvents = [];
 
         const createInteractionRecord = (value, interactionType) => ({
@@ -56,25 +54,23 @@ ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events 
             }
         };
 
-        const pushToCappedBuffer = (buffer, record, maxEvents) => {
-            buffer.push(record);
-            applyCap(buffer, maxEvents);
+        const pushMouseEvent = (record) => {
+            mouseEvents.push(record);
+            applyCap(mouseEvents, MAX_MOUSE_EVENTS);
         };
 
         const splitIntoInteractionBuffers = (interactionData) => {
             interactionData.forEach((event) => {
-                if (event.interactionType === INTERACTION_TYPES.MOUSE_MOVEMENT) {
-                    movementEvents.push(event);
-                    return;
-                }
-                if (event.interactionType === INTERACTION_TYPES.MOUSE_CLICK) {
-                    clickEvents.push(event);
+                if (
+                    event.interactionType === INTERACTION_TYPES.MOUSE_MOVEMENT ||
+                    event.interactionType === INTERACTION_TYPES.MOUSE_CLICK
+                ) {
+                    mouseEvents.push(event);
                     return;
                 }
                 keystrokeEvents.push(event);
             });
-            applyCap(movementEvents, MAX_MOUSE_MOVEMENT_EVENTS);
-            applyCap(clickEvents, MAX_MOUSE_CLICK_EVENTS);
+            applyCap(mouseEvents, MAX_MOUSE_EVENTS);
         };
 
         const loadInteractionBuffers = () => {
@@ -86,7 +82,7 @@ ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events 
         };
 
         const mergeInteractionDataChronologically = () =>
-        [...movementEvents, ...clickEvents, ...keystrokeEvents].sort((a, b) =>
+        [...mouseEvents, ...keystrokeEvents].sort((a, b) =>
             a.timestamp.localeCompare(b.timestamp)
         );
 
@@ -101,13 +97,11 @@ ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events 
 
         // Handle mouse movement events
         document.addEventListener("pointermove", (e) => {
-            pushToCappedBuffer(
-                movementEvents,
+            pushMouseEvent(
                 createInteractionRecord(
                     { x: e.clientX, y: e.clientY },
                     INTERACTION_TYPES.MOUSE_MOVEMENT
-                ),
-                MAX_MOUSE_MOVEMENT_EVENTS
+                )
             );
         });
 
@@ -117,13 +111,11 @@ ReDem only uses the last 300 `MOUSE_MOVEMENT` and last 300 `MOUSE_CLICK` events 
             if (!target) return;
 
             const rect = target.getBoundingClientRect();
-            pushToCappedBuffer(
-                clickEvents,
+            pushMouseEvent(
                 createInteractionRecord(
                     { width: rect.width, height: rect.height, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, x: e.clientX, y: e.clientY },
                     INTERACTION_TYPES.MOUSE_CLICK
-                ),
-                MAX_MOUSE_CLICK_EVENTS
+                )
             );
         });
         
