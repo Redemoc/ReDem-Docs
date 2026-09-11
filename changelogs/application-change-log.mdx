@@ -5,6 +5,12 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-07" description="v1.7.3">
+  ## Grid-Question Score billing
+  - GQS is now billed per **data point** (grid), not per grid item. Modular: **0.2 credits** per grid, capped at **2**. All-inclusive includes **5** grids; extra grids are 0.2 each, still capped at 2.
+  - Import no longer blocks grids with more than 50 items. Grids still need at least 5 items (7 for pattern check).
+</Update>
+
 <Update label="2026-09-03" description="v1.7.2">
   ## BAS: Unnatural Mouse Detection
   - Unnatural mouse detection is now available and is recommended for every BAS integration. Track `MOUSE_MOVEMENT` and `MOUSE_CLICK` alongside keystrokes.

@@ -5,6 +5,15 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-01">
+  ## Grid-Question Score
+  - GQS credits are calculated per **data point**, not per `gridAnswersPattern` item. Modular: **0.2 credits** per GQS data point, capped at **2**. All-inclusive includes **5** GQS data points.
+  - `gridAnswersPattern` no longer has a maximum length of 50. The minimum of 5 items remains.
+  - All-inclusive quality-check suggestions now cap GQS at **5** (was 20). The API maximum is still 20 GQS data points.
+  - <code style={{ color: "green" }}> POST /creditCalculation </code> (v1, v2, v3) — Prefer `GQSDataPoints`. `GQSAnswers` is a legacy alias. Sending both fields returns 400.
+  - Response `calculationBreakdown.GQS` uses `dataPoints` when you send `GQSDataPoints`, and echoes `answers` when you send `GQSAnswers`.
+</Update>
+
 <Update label="2026-08-27" description="v3.1.10">
   ## Quality Check Suggestions
 
