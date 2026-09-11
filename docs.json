@@ -27,7 +27,7 @@
               {
                 "group": "Core Features",
                 "pages": [
-                  "features/file-import",
+                  "features/quick-import",
                   "features/respondent-insights",
                   "features/teams"
                 ]
@@ -154,7 +154,7 @@
               {
                 "group": "Core Features",
                 "pages": [
-                  "features/file-import",
+                  "features/quick-import",
                   "features/respondent-insights",
                   "features/teams"
                 ]
@@ -391,5 +391,11 @@
     "metatags": {
       "robots": "noindex"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/features/file-import",
+      "destination": "/features/quick-import"
+    }
+  ]
 }
