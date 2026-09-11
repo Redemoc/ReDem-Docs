@@ -5,6 +5,43 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-07" description="v1.7.3">
+  ## Grid-Question Score billing
+  - GQS is now billed per **data point** (grid), not per grid item. Modular: **0.2 credits** per grid, capped at **2**. All-inclusive includes **5** grids; extra grids are 0.2 each, still capped at 2.
+  - Import no longer blocks grids with more than 50 items. Grids still need at least 5 items (7 for pattern check).
+</Update>
+
+<Update label="2026-09-03" description="v1.7.2">
+  ## BAS: Unnatural Mouse Detection
+  - Unnatural mouse detection is now available and is recommended for every BAS integration. Track `MOUSE_MOVEMENT` and `MOUSE_CLICK` alongside keystrokes.
+  - ReDem scores typing and mouse behaviour separately and uses the **lower** score for the data point. If both scores are equal, the typing category is used.
+  - Mouse behaviour is flagged as `UNNATURAL_MOVEMENT` when it looks automated or scripted. Human-like pointer behaviour is `NATURAL_MOVEMENT`.
+  - See the [Behavioral Analytics Score docs](/knowledge-base/quality-checks/behavior-analysis-score#mouse-movement-and-clicks) and the [Behavior Tracking guide](/api-reference/others/behavior-tracking) for details.
+
+  ## BAS Typing
+  - Typing detection is more accurate: more true positives for unnatural typing, and fewer false positives on genuine respondents. In particular, very slow typers are no longer flagged as unnatural when their typing is actually human.
+
+  ## Respondent Details
+  - When a quality-check score is missing for a respondent, the UI now explains why — for example a timeout, rate limit, content filter, or not enough data to score that check.
+</Update>
+
+<Update label="2026-08-27" description="v1.7.1">
+  ## Quick Import
+  - Quick Import is much faster for [supported survey platforms](/features/quick-import#supported-survey-tools), and quality-check suggestions are more accurate.
+
+  ## Open-Ended Score
+  - True-positive detection of AI-generated answers is higher. Answers that previously slipped through as valid are now flagged as `AI_SUSPECT` more reliably — for example: *"I like mangoes the most. It offers a rich and sweet flavor, along with a smooth and pleasant texture."*
+  - See the [Open-Ended Score docs](/knowledge-base/quality-checks/open-ended-score#5-ai-suspect-probable-non-human-generated-response) for details.
+
+  ## Duplicate Entrance Score
+  - When you select the **Duplicate Entrance Score (DES)** as a quality check, ReDem now recommends which demographic questions to use.
+  - Small UI polish in the import flow and respondent table so DES feels more consistent with the other quality checks.
+  - See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [Quick Import](/features/quick-import) for details.
+
+  ## Coherence Score
+  - Fixed a bug where respondent details sometimes highlighted the wrong questions or answers as incoherent. The view now shows only the questions that actually contribute to the incoherency.
+</Update>
+
 <Update label="2026-08-20" description="v1.7.0">
   ## Guest Access
   - You can now share a survey with people **outside your company**. From **Share**, type their email address to send an invite. Guests register or log in, then see only the surveys shared with them.
@@ -30,13 +67,13 @@ iconType: "regular"
 </Update>
 
 <Update label="2026-08-13" description="v1.6.9">
-  ## File Import
+  ## Quick Import
   - Quality-check suggestions in the Quick Import are now more accurate, and the analysis step finishes faster.
 
   ## Duplicate Entrance Score
   - You can now configure the **Duplicate Entrance Score (DES)** in the Quick Import. Map demographic columns — and an IP column, if you have one — in the same way as other quality checks.
   - The AI assistant does not currently recommend DES. If you would like to include it, enable it when you configure quality checks during import.
-  - See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [File Import](/features/file-import) for details.
+  - See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [Quick Import](/features/quick-import) for details.
 
   ## BAS
   - The Behavioral Analytics Score now detects additional unnatural keystroke patterns.
@@ -45,7 +82,7 @@ iconType: "regular"
 <Update label="2026-08-07" description="v1.6.8">
   ## Duplicate Entrance Score
   - The **Duplicate Entrance Score (DES)** is coming soon. It detects likely duplicate survey entrants using demographics and IP.
-  - **API only at first** — send a DES datapoint on `POST /v3/addRespondent`. File import support will follow.
+  - **API only at first** — send a DES datapoint on `POST /v3/addRespondent`. Quick Import support will follow.
   - See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [best-practice set-up](/knowledge-base/best-practices/best-practice-setup#duplicate-entrance-score) for details.
   - Also see the [API Change Log](/changelogs/api-change-log) for request fields.
 
@@ -56,7 +93,7 @@ iconType: "regular"
   - Fixed a bug where activating cleaning for an OES category with the threshold set to **0** excluded every respondent for that category.
   - Fixed a bug where respondents exactly at the exclusion threshold were excluded. For example, with a Timescore threshold of **30**, a score of **30** is now kept; only scores **below** 30 are excluded.
 
-  ## File Import
+  ## Quick Import
   - Fixed edge cases in Quick Import for Decipher surveys that should not have affected anyone.
 
   ## Decipher Integration Agent
@@ -75,7 +112,7 @@ iconType: "regular"
 </Update>
 
 <Update label="2026-07-23" description="v1.6.6">
-  ## File Import
+  ## Quick Import
   - Intellisurvey exports are now supported in Quick Import, just like Decipher and Confirmit. ReDem automatically detects the format and prepares the file.
   - When a file has duplicate values in the header row, the import now shows exactly which values are duplicated.
 
@@ -103,7 +140,7 @@ iconType: "regular"
   - **Employees** see a breakdown across all surveys they uploaded. **Admins** see a breakdown for the whole company.
   - Per-survey breakdowns on the survey **results** page are unchanged. See the [Data Cleaning guide](/knowledge-base/features/cleaning-and-review#view-exclusion-reason-breakdown) for details.
 
-  ## File Import
+  ## Quick Import
   - Post-processing after the last respondent is scored now finishes much faster. Results are available almost immediately instead of keeping the progress bar visible for up to three minutes.
 
   ## Confirmit Import
@@ -127,14 +164,14 @@ iconType: "regular"
 
   ## Change Quality Check Settings
   - Quality check settings can now be changed for API projects after the initial upload, including **BAS**. Use the same **Quality Checks** workflow as for manual imports.
-  - See the [File Import guide](/features/file-import#change-quality-check-settings) for details.
+  - See the [Quick Import guide](/features/quick-import#change-quality-check-settings) for details.
 
   ## Performance
   - Opening larger surveys feels much faster now, especially when loading many respondents at once (for example, 1,000 respondents).
 </Update>
 
 <Update label="2026-06-25" description="v1.6.2">
-  ## File Import
+  ## Quick Import
   - AYTM, Confirmit, and Quantilope exports can now be uploaded directly in Quick Import. We automatically detect the format and prepare the file. No separate conversion step is required.
 
   ## Respondent Insights
@@ -151,7 +188,7 @@ iconType: "regular"
   - You can now create teams in ReDem to control which employees can access which surveys.
   - See the [Teams guide](/features/teams) for details.
 
-  ## File Import
+  ## Quick Import
   - The import process now detects Confirmit files more accurately.
   - For very large surveys, columns with a low response rate are removed automatically during upload. The separate [Column Cleaner](https://app.redem.io/integrationAssistance/clean-excel) utility is no longer required.
   - You can delete multiple suggested datapoints in the upload process at once.
@@ -166,7 +203,7 @@ iconType: "regular"
 <Update label="2026-06-11" description="v1.6.0">
   ## Change Quality Check Settings
   - After the initial upload you can now change the quality check settings for any manually imported survey. ReDem only re-runs checks that changed and only deducts credits for those changes.
-  - See the [File Import guide](/features/file-import#change-quality-check-settings) for details.
+  - See the [Quick Import guide](/features/quick-import#change-quality-check-settings) for details.
 
   ## Import Assistant
   - The import assistant can now process files with any amount of respondents. Larger files may take longer, but AI suggestions are much more reliable, especially for the CHS.
@@ -332,7 +369,7 @@ iconType: "regular"
 </Update>
 
 <Update label="2026-02-26" description="v1.4.8">
-  ## File Import
+  ## Quick Import
   - The upload of respondents is noticeably faster, such that results are available much earlier.
   - We improved the import process for Decipher files. The import is now more reliable and configuring the survey is way faster than before.
   - In case a file contains duplicate respondent IDs, the import will now point to the exact IDs that are duplicates.
@@ -436,9 +473,9 @@ iconType: "regular"
 </Update>
 
 <Update label="2025-12-04" description="v1.3.3">
-  ## File Import: OES Keywords Paste Support
+  ## Quick Import: OES Keywords Paste Support
 
-  - **Flexible keyword input**: OES keywords can now be pasted directly into the UI during file import with semicolons, commas, or newlines as separators.
+  - **Flexible keyword input**: OES keywords can now be pasted directly into the UI during Quick Import with semicolons, commas, or newlines as separators.
   - **Automatic separation**: The system automatically detects and separates keywords regardless of delimiter format.
   - **Improved workflow**: Copy and paste keyword lists from spreadsheets or other sources without manual reformatting.
 </Update>
@@ -481,7 +518,7 @@ iconType: "regular"
 </Update>
 
 <Update label="2025-11-06" description="v1.2.5">
-  ## File Import: Multi-Sheet Excel Support
+  ## Quick Import: Multi-Sheet Excel Support
 
   - Users can upload Excel files where the data map is on a separate sheet. The system automatically relates columns in the data sheet with the data map sheet using AI.
 
@@ -524,10 +561,10 @@ iconType: "regular"
 </Update>
 
 <Update label="2025-10-07" description="v1.2.2">
-  ## Bulk Cleaning and File Import UX
+  ## Bulk Cleaning and Quick Import UX
 
   - Bulk cleaning: New backend endpoint and UI to clean all respondents from the survey results page with reusable settings.
-  - File import: Immediate progress bar after confirmation showing the total respondents being processed.
+  - Quick Import: Immediate progress bar after confirmation showing the total respondents being processed.
 </Update>
 
 <Update label="2025-09-29" description="v1.2.1">
@@ -547,14 +584,14 @@ iconType: "regular"
 </Update>
 
 <Update label="2025-09-19" description="v1.2.0">
-  ## File Import: CSV and Excel with AI Suggestions
+  ## Quick Import: CSV and Excel with AI Suggestions
 
   You can now manually upload respondents from CSV (.csv) or Excel (.xlsx) files on the Import page. After uploading, the app provides AI-powered suggestions for the best quality checks to enable (e.g. OES, CHS, GQS, TS) based on your data.
 
   - Supported file types: <code>.csv</code>, <code>.xlsx</code>
   - AI suggestions: recommends quality checks and pre-fills survey metadata (title, row indexes, missing values, etc.)
 
-  👉 [Read the full guide](/features/file-import)
+  👉 [Read the full guide](/features/quick-import)
 
   ## Authentication: Letter Capitalization Fix
 
