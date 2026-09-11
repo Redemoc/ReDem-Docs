@@ -5,7 +5,7 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
-<Update label="2026-08-27">
+<Update label="2026-09-03">
   ## Missing score reason
 
   When a quality-check datapoint score is `-999` (the check did not produce a real 0–100 score), the API now includes `missingScoreReason`. Existing `status`, `error`, `reason`, and categories are unchanged.
@@ -15,7 +15,24 @@ iconType: "regular"
   - Example codes: `TIMEOUT`, `RATE_LIMIT`, `CONTENT_FILTER`, `MAX_RETRIES`, `UNAVAILABLE`, `INSUFFICIENT_RESPONDENTS`, `MISSING_DURATION`, `INSUFFICIENT_INTERACTION`, `INSUFFICIENT_DEMOGRAPHICS`.
 
   See [DataPointsQualityResponse](/api-reference/openapi) and the quality-check guides.
+</Update>
 
+<Update label="2026-09-01">
+  ## Grid-Question Score
+  - GQS credits are calculated per **data point**, not per `gridAnswersPattern` item. Modular: **0.2 credits** per GQS data point, capped at **2**. All-inclusive includes **5** GQS data points.
+  - `gridAnswersPattern` no longer has a maximum length of 50. The minimum of 5 items remains.
+  - All-inclusive quality-check suggestions now cap GQS at **5** (was 20). The API maximum is still 20 GQS data points.
+  - <code style={{ color: "green" }}> POST /creditCalculation </code> (v1, v2, v3) — Prefer `GQSDataPoints`. `GQSAnswers` is a legacy alias. Sending both fields returns 400.
+  - Response `calculationBreakdown.GQS` uses `dataPoints` when you send `GQSDataPoints`, and echoes `answers` when you send `GQSAnswers`.
+</Update>
+
+<Update label="2026-08-27" description="v3.1.10">
+  ## Quality Check Suggestions
+
+  - <code style={{ color: "green" }}> POST /v3/qualityCheckSuggestions </code> — Now returns **DES** demographic mappings (`type` + `questionId`) when suitable demographics are present.
+  - Optional `qualityChecks` limits which checks are suggested (`OES`, `GQS`, `CHS`, `BAS`, `DES`). Omit it to suggest all of them.
+
+  See the [Quality Check Suggestions](/api-reference/endpoints/v3/qualityCheckSuggestions) endpoint documentation.
 </Update>
 
 <Update label="2026-08-07" description="v3.1.9">
