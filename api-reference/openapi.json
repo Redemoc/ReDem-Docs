@@ -415,7 +415,8 @@
               "TS",
               "GQS",
               "CHS",
-              "BAS"
+              "BAS",
+              "DES"
             ],
             "description": "**Type of quality check** performed for the data point",
             "example": "OES"
@@ -427,7 +428,7 @@
           },
           "score": {
             "type": "number",
-            "description": "**Quality score for the data point**, ranging from 0 to 100",
+            "description": "**Quality score for the data point**, ranging from 0 to 100. `-999` means the check did not produce a real score.",
             "example": 85
           },
           "category": {
@@ -439,6 +440,22 @@
             "type": "string",
             "description": "**Explanation** for the score, this will be only available if the quality check type is set to `GQS`",
             "example": "Straightliner, Partial Straightliner"
+          },
+          "missingScoreReason": {
+            "type": "string",
+            "enum": [
+              "TIMEOUT",
+              "RATE_LIMIT",
+              "CONTENT_FILTER",
+              "MAX_RETRIES",
+              "UNAVAILABLE",
+              "INSUFFICIENT_RESPONDENTS",
+              "MISSING_DURATION",
+              "INSUFFICIENT_INTERACTION",
+              "INSUFFICIENT_DEMOGRAPHICS"
+            ],
+            "description": "Explains why the datapoint score is `-999`.",
+            "example": "INSUFFICIENT_RESPONDENTS"
           }
         }
       },
@@ -453,7 +470,8 @@
               "TS",
               "GQS",
               "CHS",
-              "BAS"
+              "BAS",
+              "DES"
             ],
             "description": "**Type of quality check** performed for the data point",
             "example": "OES"
@@ -465,7 +483,7 @@
           },
           "score": {
             "type": "number",
-            "description": "**Quality score for the data point**, ranging from 0 to 100",
+            "description": "**Quality score for the data point**, ranging from 0 to 100. `-999` means the check did not produce a real score.",
             "example": 85
           },
           "category": {
@@ -497,6 +515,22 @@
             "type": "boolean",
             "description": "True when translation was requested but failed. Present only when `shouldTranslate` was `true`.",
             "example": false
+          },
+          "missingScoreReason": {
+            "type": "string",
+            "enum": [
+              "TIMEOUT",
+              "RATE_LIMIT",
+              "CONTENT_FILTER",
+              "MAX_RETRIES",
+              "UNAVAILABLE",
+              "INSUFFICIENT_RESPONDENTS",
+              "MISSING_DURATION",
+              "INSUFFICIENT_INTERACTION",
+              "INSUFFICIENT_DEMOGRAPHICS"
+            ],
+            "description": "Explains why the datapoint score is `-999`.",
+            "example": "INSUFFICIENT_RESPONDENTS"
           }
         }
       },
@@ -511,14 +545,15 @@
               "TS",
               "GQS",
               "CHS",
-              "BAS"
+              "BAS",
+              "DES"
             ],
             "description": "**The specific type of quality check** applied to a respondent.",
             "example": "OES"
           },
           "score": {
             "type": "number",
-            "description": "A **numerical score from 0 to 100** that represents the overall result of a specific quality check. It is calculated based on the combined evaluation of all data point scores of the same quality type.",
+            "description": "A **numerical score from 0 to 100** that represents the overall result of a specific quality check. It is calculated based on the combined evaluation of all data point scores of the same quality type. `-999` means no real aggregated score could be calculated.",
             "example": 78
           },
           "reason": {
@@ -536,6 +571,22 @@
               "Q1",
               "Q2"
             ]
+          },
+          "missingScoreReason": {
+            "type": "string",
+            "enum": [
+              "TIMEOUT",
+              "RATE_LIMIT",
+              "CONTENT_FILTER",
+              "MAX_RETRIES",
+              "UNAVAILABLE",
+              "INSUFFICIENT_RESPONDENTS",
+              "MISSING_DURATION",
+              "INSUFFICIENT_INTERACTION",
+              "INSUFFICIENT_DEMOGRAPHICS"
+            ],
+            "description": "Explains why a score is `-999`. Set on **CHS** `qualityScoreSummary` when Coherence Score could not be calculated (CHS has no datapoint summary). Not set on other aggregated quality-check scores.",
+            "example": "TIMEOUT"
           }
         }
       },
