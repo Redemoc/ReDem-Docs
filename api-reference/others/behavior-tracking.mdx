@@ -106,14 +106,18 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
         });
 
         // Handle mouse click events
-        document.addEventListener("click", (e) => {
+        document.addEventListener("pointerup", (e) => {
+            if (e.button !== 0) return;
             const target = e.target instanceof Element ? e.target : null;
             if (!target) return;
 
             const rect = target.getBoundingClientRect();
+            const pointerType = e.pointerType === "mouse" || e.pointerType === "pen" || e.pointerType === "touch"
+                ? e.pointerType
+                : null;
             pushMouseEvent(
                 createInteractionRecord(
-                    { width: rect.width, height: rect.height, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, x: e.clientX, y: e.clientY },
+                    { width: rect.width, height: rect.height, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, x: e.clientX, y: e.clientY, pointerType },
                     INTERACTION_TYPES.MOUSE_CLICK
                 )
             );
