@@ -1796,12 +1796,12 @@
           },
           "ip": {
             "type": "string",
-            "description": "**Optional respondent IP address**. If any peer in the comparison window has the same IP, DES returns score `0` with category `DUPLICATE_IP`.",
+            "description": "**Optional respondent IP address**. If any peer in the comparison window has the same IP, DES returns score `0` with category `DUPLICATE_IP`. IP-only DES (no demographics, or fewer than 4) is valid.",
             "example": "203.0.113.10"
           },
           "demographics": {
             "type": "array",
-            "description": "Demographic fields used for duplicate entrance comparison.\n\n🧪 **Validations:**\n- **0–10** items accepted\n- **Fewer than 4** → request is accepted, but DES is scored as invalid (`N/A`)\n- **More than 10** → validation error\n- Each `type` must be **unique** in the array (prefer custom type strings over repeating `\"other\"`)\n\nRecommended `type` values: `age`, `ageRange`, `yearOfBirth`, `gender`, `country`, `city`, `zip`, `ethnicity`, `salaryRange`, `jobTitle`, `other`, or any custom string.\n\n**Scoring note:** `age` and `yearOfBirth` use numeric similarity (±3). All other types use exact match. See the Duplicate Entrance Score knowledge base page.",
+            "description": "Demographic fields used for duplicate entrance comparison. Optional when `ip` is provided.\n\n🧪 **Validations:**\n- **0–10** items accepted\n- **Fewer than 4** and **no IP** → request is accepted, but DES is scored as invalid (`N/A`)\n- **Fewer than 4** **with IP** → IP-only check (`DUPLICATE_IP` / `VALID_ENTRANT`)\n- **More than 10** → validation error\n- Each `type` must be **unique** in the array (prefer custom type strings over repeating `\"other\"`)\n\nRecommended `type` values: `age`, `ageRange`, `yearOfBirth`, `gender`, `country`, `city`, `zip`, `ethnicity`, `salaryRange`, `jobTitle`, `other`, or any custom string.\n\n**Scoring note:** `age` and `yearOfBirth` use numeric similarity (±3). All other types use exact match. See the Duplicate Entrance Score knowledge base page.",
             "maxItems": 10,
             "items": {
               "type": "object",

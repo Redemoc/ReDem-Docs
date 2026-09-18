@@ -1,25 +1,26 @@
 ---
 title: "Duplicate Entrance Score"
-description: "Learn how the Duplicate Entrance Score detects duplicate survey entrants using demographics and IP."
+description: "Learn how the Duplicate Entrance Score detects duplicate survey entrants using IP and/or demographics."
 icon: "user-group"
 iconType: "regular"
 ---
 
 ## What is the Duplicate Entrance Score?
 
-The **Duplicate Entrance Score (DES)** detects whether a respondent is likely a duplicate of another recent entrant in the same survey. It compares **demographics** and, when available, **IP address** against peers who entered shortly before.
+The **Duplicate Entrance Score (DES)** detects whether a respondent is likely a duplicate of another recent entrant in the same survey. It compares **IP address** and/or **demographics** against peers who entered shortly before. You can run it as an IP-only check, a demographics check, or both.
 
 DES is available in the **Quick Import** and on **API v3**. It is not supported on v1/v2 `addRespondent` requests.
 
 ## High-level checks performed
 
-- Requires **at least 4** demographic fields to compute a valid score. Fewer than 4 demographics are accepted but scored as invalid (`N/A`).
+- Needs **either** an IP **or** at least **4** demographic fields to compute a valid score. IP-only is enough for the IP duplicate check. No IP and fewer than 4 demographics is accepted but scored as invalid (`N/A`).
 - Accepts **up to 10** demographics. Each demographic `type` must be unique (use custom type strings instead of repeating `"other"`).
 - Compares the current entrant against peers from the last **15 minutes** (up to a minimum of **10** peers when available; fewer peers still compared).
 - If no peers exist (first entrant in the window), the score is **100** (`VALID_ENTRANT`).
 - If any peer shares the same IP, the score is **0** (`DUPLICATE_IP`) and peer respondent IDs are returned.
 - Otherwise, demographics are compared per peer. Exact matches keep a low (duplicate-like) score; similar age / year of birth can add a limited penalty; any hard mismatch treats that peer as different. The final score is the **minimum** over peers.
 - Scores **below 40** are categorized as `DUPLICATE_ENTRANT`; otherwise `VALID_ENTRANT`.
+- After a **Quick Import**, ReDem also flags the **first respondent** in a `DUPLICATE_ENTRANT` chain. Previously that original entrant stayed `VALID_ENTRANT` even though later respondents listed them as a duplicate.
 
 ## Demographic types
 
@@ -58,7 +59,7 @@ All other types — including recommended values above and any custom string —
 | `VALID_ENTRANT` | No strong evidence of a duplicate entrance |
 | `DUPLICATE_ENTRANT` | Demographics look highly similar to a recent peer |
 | `DUPLICATE_IP` | Same IP as a recent peer |
-| `N/A` | Score could not be computed (for example fewer than 4 demographics, or the check was unavailable) |
+| `N/A` | Score could not be computed (for example no IP and fewer than 4 demographics, or the check was unavailable) |
 
 ## Default cleaning
 
@@ -71,10 +72,10 @@ When cleaning is enabled with recommended settings:
 
 ### Quick Import
 
-In the Quick Import, add the **Duplicate Entrance Score** quality check and map survey columns to demographic types (at least **4**, up to **10**). You can also map an IP column if one is available. Column names are searchable.
+In the Quick Import, add the **Duplicate Entrance Score** quality check and map an **IP** column, demographic columns (at least **4**, up to **10**), or both. IP-only is enough for the IP duplicate check. Column pickers show **Header ID** and **Question Text**, and both are searchable.
 
 When you select DES, ReDem recommends which demographic questions to use. Review and adjust the suggestions as needed. Your mapping is kept when you change quality checks, add respondents, or reuse a previous survey’s setup. See [Quick Import](/features/quick-import).
 
 ### API
 
-Send a single DES data point on [`POST /v3/addRespondent`](/api-reference/endpoints/v3/addRespondent) with optional `entranceTime` (defaults to the current timestamp if omitted), optional `ip`, and a `demographics` array. Only **one** DES data point is allowed per respondent (`dataPointId` defaults to `"DES"`).
+Send a single DES data point on [`POST /v3/addRespondent`](/api-reference/endpoints/v3/addRespondent) with optional `entranceTime` (defaults to the current timestamp if omitted), optional `ip`, and an optional `demographics` array. Provide an IP, at least 4 demographics, or both. Only **one** DES data point is allowed per respondent (`dataPointId` defaults to `"DES"`).
