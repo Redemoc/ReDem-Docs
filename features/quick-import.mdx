@@ -104,7 +104,7 @@ Follow these steps for a quick import:
   </Step>
   <Step title="Select Quality Checks and Questions">
     - **Add a New Quality Check:**  For example, choose *Open-Ended Score*.
-    - **Choose Data Points:** Select the relevant open-ended question.
+    - **Choose Data Points:** Select the relevant open-ended question. Column pickers show both the **Header ID** and the **Question Text**; you can search either.
     - **Determine Settings:** Add the question text, enrich it with keywords if needed, specify the allowed languages (leave empty to allow all languages), and activate or deactivate the duplication check.
       - **Recommendation:** Activate the duplicate check only if identical or highly similar responses to open-ends among and within the interviews are implausible.
     - **Add Additional Open-Ended Questions:** Repeat as necessary, then confirm.
@@ -112,7 +112,7 @@ Follow these steps for a quick import:
       - **Grid Questions Score:** Assign a name to the data point, then select the first and last columns of the grid (minimum of 5 columns required). If the grid is not randomized and contains at least 7 items, enable the **Pattern Check** to identify fraudulent click patterns beyond simple straightlining.
       - **Coherence Score:** Select all questions you want evaluated for coherence.
       - **Time Score:** Select the variables that capture response time and/or interview length (in seconds or milliseconds).
-      - **Duplicate Entrance Score:** Map demographic columns to DES types (at least 4, up to 10). You can also map an IP column if one is available. Column names are searchable. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [best-practice set-up](/knowledge-base/best-practices/best-practice-setup#duplicate-entrance-score).
+      - **Duplicate Entrance Score:** Map an IP column, demographic columns (at least 4, up to 10), or both. IP-only is enough for the IP duplicate check. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [best-practice set-up](/knowledge-base/best-practices/best-practice-setup#duplicate-entrance-score).
   </Step>
   <Step title="Determine Cleaning Settings">
     Decide whether to enable ReDem’s Automatic Data Cleaning. This feature applies exclusion recommendations based on predefined thresholds.
@@ -184,7 +184,7 @@ Follow these steps for a quick import:
 
     **Duplicate Entrance Score (DES)**
     - Add the check when you review quality checks if it is not already selected. When DES is selected, ReDem recommends which demographic questions to map.
-    - Review the suggested demographics, adjust as needed (at least 4, up to 10), and map an IP column if one is available. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score).
+    - Review the suggested demographics, adjust as needed (at least 4, up to 10), and map an IP column if one is available. IP-only is enough for the IP duplicate check. See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score).
   </Step>
   <Step title="Determine Cleaning Settings">
     Decide whether to enable ReDem’s Automatic Data Cleaning. This feature applies exclusion recommendations based on predefined thresholds.

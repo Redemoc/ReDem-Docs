@@ -5,6 +5,16 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-17">
+  ## Duplicate Entrance Score
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> — DES can run as an **IP-only** check.
+  - `INSUFFICIENT_DEMOGRAPHICS` now means there was **no IP and fewer than 4 demographics**. An IP with fewer than 4 demographics is a valid IP-only check.
+  - After a Quick Import, the first respondent in a `DUPLICATE_ENTRANT` chain is also marked as a duplicate (previously left as `VALID_ENTRANT`).
+
+  See the [Duplicate Entrance Score](/knowledge-base/quality-checks/duplicate-entrance-score) guide.
+</Update>
+
 <Update label="2026-09-03">
   ## Missing score reason
 

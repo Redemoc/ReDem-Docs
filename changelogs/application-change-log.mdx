@@ -5,6 +5,19 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-17" description="v1.7.4">
+  ## Duplicate Entrance Score
+  - You can now run DES as an **IP-only** check.
+  - After a Quick Import, the **first respondent** in a `DUPLICATE_ENTRANT` chain is also marked as a duplicate. Previously that original entrant stayed `VALID_ENTRANT` even though later respondents pointed at them.
+  - See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score) and [Quick Import](/features/quick-import) for details.
+
+  ## Quick Import
+  - When you select columns, the picker now always shows both the **Header ID** and the **Question Text**. You can search either value.
+
+  ## BAS
+  - Fixed a bug in mouse movement detection that could flag genuine behaviour as `UNNATURAL_MOVEMENT` on **4K+** displays and with very fast mouse movements.
+</Update>
+
 <Update label="2026-09-07" description="v1.7.3">
   ## Grid-Question Score billing
   - GQS is now billed per **data point** (grid), not per grid item. Modular: **0.2 credits** per grid, capped at **2**. All-inclusive includes **5** grids; extra grids are 0.2 each, still capped at 2.
