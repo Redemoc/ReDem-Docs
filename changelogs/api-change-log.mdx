@@ -5,6 +5,23 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-24">
+  ## Coherence Score
+
+  - `surveyDescription` on a CHS datapoint can include custom exclusion rules as well as survey context.
+  - Question text that appears **3 or more times** in the interview is omitted from the coherence evaluation.
+
+  ## Open-Ended Score
+
+  - An open-ended answer that contains an em dash (`—`) is returned as `AI_SUSPECT`. A hyphen (`-`) does not trigger this.
+
+  ## Duplicate Entrance Score
+
+  - A peer comparison scores **100** when either respondent has a demographic `type` the other lacks, even if every shared demographic matches.
+
+  See the [Coherence Score](/knowledge-base/quality-checks/coherence-score), [Open-Ended Score](/knowledge-base/quality-checks/open-ended-score), and [Duplicate Entrance Score](/knowledge-base/quality-checks/duplicate-entrance-score) guides.
+</Update>
+
 <Update label="2026-09-17">
   ## Duplicate Entrance Score
 

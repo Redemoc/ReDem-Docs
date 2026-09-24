@@ -5,6 +5,21 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-24">
+  ## Coherence Score
+  - In Quick Import, use **Survey Description & Exclusion Rules** for survey context and for custom rules, such as removing respondents who pick a specific answer. ReDem keeps that text with the import settings.
+  - Questions whose text appears **3 or more times** are left out of the coherence check. Repeated wording with different unseen stimuli, such as several ads, is no longer treated as a contradiction.
+  - See the [Coherence Score guide](/knowledge-base/quality-checks/coherence-score).
+
+  ## Open-Ended Score
+  - An answer that contains an **em dash** (`—`) is classified as `AI_SUSPECT`, including short answers. A hyphen (`-`) does not trigger this.
+  - See the [Open-Ended Score docs](/knowledge-base/quality-checks/open-ended-score#5-ai-suspect-probable-non-human-generated-response).
+
+  ## Duplicate Entrance Score
+  - If one respondent has a demographic type the other does not, that pair scores **100** (not a duplicate), even when the shared demographics match.
+  - See the [Duplicate Entrance Score guide](/knowledge-base/quality-checks/duplicate-entrance-score).
+</Update>
+
 <Update label="2026-09-17" description="v1.7.4">
   ## Duplicate Entrance Score
   - You can now run DES as an **IP-only** check.

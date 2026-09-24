@@ -35,6 +35,12 @@ The Coherence Score can be enhanced by providing a **survey description** that g
 
 When submitting CHS data points via the API, you can include a `surveyDescription` field that provides supplementary information about what the survey aims to measure or understand.
 
+In Quick Import this is the **Survey Description & Exclusion Rules** field. You can also put custom exclusion rules in that text, for example: remove respondents who select a brand that does not exist. ReDem stores it with the import settings and sends it as `surveyDescription`.
+
+## Repeated question text
+
+If the same question text appears **3 or more times**, those questions are left out of the Coherence Score. This avoids false contradictions when the wording is reused for different stimuli the model cannot see, such as several ads.
+
 ### When Survey Description is Especially Useful
 
 The survey description is particularly valuable when your survey asks about **current events that occurred after the training cutoff date of the large language models**. Examples include:
