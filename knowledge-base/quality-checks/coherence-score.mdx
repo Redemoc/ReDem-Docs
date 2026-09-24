@@ -31,26 +31,38 @@ If Coherence Score cannot be calculated (for example a timeout or the check is u
 
 ## Survey Description
 
-The Coherence Score can be enhanced by providing a **survey description** that gives additional context about the purpose and intent of the survey. This optional field helps improve the quality and accuracy of the Coherence Score evaluation by giving the AI model better context about the survey's objectives.
+The survey description is extra context you give the Coherence Score (CHS) before scoring. It is **not** part of the respondent's answers. ReDem passes it to the AI as analyst notes so the model can interpret the interview with the right background and apply any extra rules you set.
 
-When submitting CHS data points via the API, you can include a `surveyDescription` field that provides supplementary information about what the survey aims to measure or understand.
+You can add it in Quick Import as **Survey Description & Exclusion Rules**, or via the API as `surveyDescription` on the CHS data point. If your organization requires it, the field is mandatory on import. When provided, it must be between 20 and 500 characters.
 
-In Quick Import this is the **Survey Description & Exclusion Rules** field. You can also put custom exclusion rules in that text, for example: remove respondents who select a brand that does not exist.
+### How it works
 
-### When Survey Description is Especially Useful
+1. Write a short description of the survey and any extra scoring rules.
+2. ReDem includes that text when each interview is scored.
+3. The AI uses it as background only. It does not treat anything in the description as something the respondent said or selected.
 
-The survey description is particularly valuable when your survey asks about **current events after the model's training cutoff of May 18, 2026**. Examples include:
+<Info>
+**AI knowledge cutoff:** The AI model has a knowledge cutoff of **May 18, 2026**. It may not recognize products, brands, venues, or events released after this date. If the survey covers anything newer, include it in the survey description so the Coherence Score does not treat unfamiliar names as implausible.
+</Info>
 
-- **Recent openings or events**: Newly opened facilities (e.g., a shopping mall that opened two months ago)
-- **Current political events**: Recent political developments, elections, or policy changes
-- **Product launches**: Newly released products (e.g., a new smartphone model)
-- **Recent market changes**: Current economic conditions or industry developments
+### What you can add
 
-In these cases, provide as much detail as possible in the survey description to help the AI model understand the context and make more accurate coherence assessments.
+Use the survey description for:
 
-### Example: Survey About a Recently Opened Mall
+- **Survey topic and purpose**: what the study is about and what it aims to measure
+- **When it was conducted**: the fieldwork date or period
+- **Recent context the model may not know**: newly opened facilities, product launches, political events, or market changes after May 18, 2026
+- **Custom exclusion rules**: extra scoring rules, for example excluding respondents who choose a non-existing brand or a specific answer
+
+Provide as much relevant detail as the character limit allows. Clear, specific context leads to more accurate coherence assessments.
+
+### Example: Survey about a recently opened mall
 
 > This survey evaluates shopping experiences at the Grand Central Mall, a new shopping center that opened in downtown Springfield in June 2026. The mall features over 150 stores including major retailers, restaurants, a cinema complex, and an entertainment area. The survey aims to understand visitor experiences, shopping patterns, and satisfaction with the new facility.
+
+### Example: Exclusion rule
+
+> Exclude respondents who select a brand that does not exist in this market. The survey was conducted in June 2026 and covers awareness of brands launched after May 2026.
 
 ## Use of GPT for Coherence-Score
 
