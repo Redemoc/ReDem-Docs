@@ -18,7 +18,7 @@ DES is available in the **Quick Import** and on **API v3**. It is not supported 
 - Compares the current entrant against peers from the last **15 minutes** (up to a minimum of **10** peers when available; fewer peers still compared).
 - If no peers exist (first entrant in the window), the score is **100** (`VALID_ENTRANT`).
 - If any peer shares the same IP, the score is **0** (`DUPLICATE_IP`) and peer respondent IDs are returned.
-- Otherwise, demographics are compared per peer. If either respondent has a demographic type the other does not, that pair scores **100**, even when the shared fields match. Exact matches keep a low (duplicate-like) score; similar age / year of birth can add a limited penalty; any hard mismatch treats that peer as different. The final score is the **minimum** over peers.
+- Otherwise, demographics are compared per peer. Exact matches keep a low (duplicate-like) score; similar age / year of birth can add a limited penalty; any hard mismatch treats that peer as different. The final score is the **minimum** over peers.
 - Scores **below 40** are categorized as `DUPLICATE_ENTRANT`; otherwise `VALID_ENTRANT`.
 - After a **Quick Import**, ReDem also flags the **first respondent** in a `DUPLICATE_ENTRANT` chain. Previously that original entrant stayed `VALID_ENTRANT` even though later respondents listed them as a duplicate.
 
