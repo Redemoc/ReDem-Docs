@@ -33,7 +33,7 @@ If Coherence Score cannot be calculated (for example a timeout or the check is u
 
 The survey description is extra context you give the Coherence Score (CHS) before scoring. It is **not** part of the respondent's answers. ReDem passes it to the AI as analyst notes so the model can interpret the interview with the right background and apply any extra rules you set.
 
-You can add it during data import, or via the API as `surveyDescription` on the CHS data point. If your organization requires it, the field is mandatory on import. When provided, it must be between 20 and 500 characters.
+You can add it in Quick Import as **Survey Description & Exclusion Rules**, or via the API as `surveyDescription` on the CHS data point. If your organization requires it, the field is mandatory on import. When provided, it must be between 20 and 500 characters.
 
 ### How it works
 
@@ -42,7 +42,7 @@ You can add it during data import, or via the API as `surveyDescription` on the 
 3. The AI uses it as background only. It does not treat anything in the description as something the respondent said or selected.
 
 <Info>
-**AI knowledge cutoff:** The AI model has a knowledge cutoff of **late September 2024**. It may not recognize products, brands, venues, or events released after this date. If the survey covers anything newer, include it in the survey description so the Coherence Score does not treat unfamiliar names as implausible.
+**AI knowledge cutoff:** The AI model has a knowledge cutoff of **May 18, 2026**. It may not recognize products, brands, venues, or events released after this date. If the survey covers anything newer, include it in the survey description so the Coherence Score does not treat unfamiliar names as implausible.
 </Info>
 
 ### What you can add
@@ -51,18 +51,18 @@ Use the survey description for:
 
 - **Survey topic and purpose**: what the study is about and what it aims to measure
 - **When it was conducted**: the fieldwork date or period
-- **Recent context the model may not know**: newly opened facilities, product launches, political events, or market changes after late September 2024
+- **Recent context the model may not know**: newly opened facilities, product launches, political events, or market changes after May 18, 2026
 - **Custom exclusion rules**: extra scoring rules, for example excluding respondents who choose a non-existing brand or a specific answer
 
 Provide as much relevant detail as the character limit allows. Clear, specific context leads to more accurate coherence assessments.
 
 ### Example: Survey about a recently opened mall
 
-> This survey evaluates shopping experiences at the Grand Central Mall, a new shopping center that opened in downtown Springfield in November 2025. The mall features over 150 stores including major retailers, restaurants, a cinema complex, and an entertainment area. The survey aims to understand visitor experiences, shopping patterns, and satisfaction with the new facility.
+> This survey evaluates shopping experiences at the Grand Central Mall, a new shopping center that opened in downtown Springfield in June 2026. The mall features over 150 stores including major retailers, restaurants, a cinema complex, and an entertainment area. The survey aims to understand visitor experiences, shopping patterns, and satisfaction with the new facility.
 
 ### Example: Exclusion rule
 
-> Exclude respondents who select a brand that does not exist in this market. The survey was conducted in March 2026 and covers awareness of brands launched after 2024.
+> Exclude respondents who select a brand that does not exist in this market. The survey was conducted in June 2026 and covers awareness of brands launched after May 2026.
 
 ## Use of GPT for Coherence-Score
 

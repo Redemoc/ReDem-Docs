@@ -5,6 +5,18 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-24">
+  ## Coherence Score
+  - In Quick Import, use **Survey Description & Exclusion Rules** for survey context and for custom rules, such as removing respondents who pick a specific answer.
+  - Questions whose text appears **3 or more times** are left out of the coherence check. This reduces false positives for some surveys.
+
+  ## Open-Ended Score
+  - An answer that contains an **em dash** (`—`) is very likely to be classified as AI_SUSPECT, including short answers. A hyphen (`-`) does not trigger this.
+
+  ## Duplicate Entrance Score
+  - If one respondent has a demographic type the other does not, that pair scores **100** (not a duplicate), even when the shared demographics match. Previously those pairs were scored **0**, which was not the expected behavior.
+</Update>
+
 <Update label="2026-09-17" description="v1.7.4">
   ## Duplicate Entrance Score
   - You can now run DES as an **IP-only** check.
