@@ -5,6 +5,14 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-24">
+  ## API v1 is no longer supported
+
+  API version **v1** has been retired. Requests to <code style={{ color: "red" }}> POST /v1/...</code> now return **404 Not Found**.
+
+  Integrations still using `/v1` must migrate to `/v2` or `/v3`. Existing surveys cannot be upgraded in place — create a new survey with the updated endpoints. See the [API Version Migration Guide](/api-reference/others/migration-guide).
+</Update>
+
 <Update label="2026-09-17">
   ## Duplicate Entrance Score
 
