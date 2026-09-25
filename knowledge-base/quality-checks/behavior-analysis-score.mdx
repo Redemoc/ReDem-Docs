@@ -34,7 +34,7 @@ Typing is scored when at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events are 
 When your integration tracks pointer behaviour, BAS evaluates mouse movement and clicks alongside typing. Send `MOUSE_MOVEMENT` and `MOUSE_CLICK` events in the same `interactionData` array as keystrokes. See the [Behavior Tracking guide](/api-reference/others/behavior-tracking) for a sample implementation.
 
 <Note>
-Mouse movement analysis is especially effective and fine-tuned for **grid questions** (also known as matrix questions). Grids produce rich pointer behaviour as respondents click across rows and columns, so this is the strongest use case for mouse scoring. We recommend tracking mouse events on grids you already score with the [Grid-Question Score](/knowledge-base/quality-checks/grid-question-score) — those data points can be scored from mouse events alone, without keystrokes.
+Mouse movement analysis is especially effective and fine-tuned for **grid questions**. Grids produce rich pointer behaviour as respondents click across rows and columns, so this is the strongest use case for mouse scoring. We recommend tracking mouse events on grids you already score with the [Grid-Question Score](/knowledge-base/quality-checks/grid-question-score).
 </Note>
 
 **How scoring works**
