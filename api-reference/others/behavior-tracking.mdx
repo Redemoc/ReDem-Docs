@@ -6,7 +6,7 @@ iconType: "regular"
 ---
 
 <Note>
-ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per BAS data point. Store them in the same array and drop from the front when over the cap — otherwise leftover clicks look like cold clicks. Cap client-side tracking at the same limit — storing more only inflates browser session data without improving scoring.
+ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per BAS data point. Cap client-side tracking at the same limit — storing more only inflates browser session data without improving scoring.
 </Note>
 
 <Note>
@@ -15,32 +15,109 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
 
 <Steps titleSize="h3">
   <Step title="Implementing a JavaScript Tracker for User Behavior Data">
-    <p> Copy the simple **JavaScript tracker code** (attached) into your survey platform’s frontend codebase or UI. This ensures that, whenever respondent complete surveys, it tracks input behavior data for open-ended questions directly from their individual browsers. </p>
+    <p>Copy the **typing** sample, the **mouse movement** sample, or both into your survey platform’s frontend. Typing is for open-ended questions. Mouse tracking is especially useful on [grid questions](/knowledge-base/quality-checks/grid-question-score). If you track both for the same data point, merge them by timestamp into a single `interactionData` array when you save.</p>
   </Step>
   <Step title="Integrate ReDem API into your workflow">
-    <p>We are using this script to persist this input_behavior in the browser until you are ready to call the API.</p>
+    <p>These scripts persist interaction data in the browser until you are ready to call the API.</p>
+
+    <h4>Typing</h4>
 
     ```javascript
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const textarea = document.getElementById("input_behavior");
         const submitButton = document.getElementById("submit_button");
-      
-        // Constants
+
         const INTERACTION_TYPES = {
-            KEYSTROKE: 'KEYSTROKE',
-            COPYPASTE: 'COPY_AND_PASTE',
+            KEYSTROKE: "KEYSTROKE",
+            COPYPASTE: "COPY_AND_PASTE",
+        };
+
+        const QUESTION_ID = "<BAS_QuestionID>";
+        const INTERACTION_STORAGE_KEY = QUESTION_ID + "_interaction_data";
+
+        const keystrokeEvents = [];
+
+        const createInteractionRecord = (value, interactionType) => ({
+            value,
+            interactionType,
+            timestamp: new Date().toISOString()
+        });
+
+        const loadKeystrokeEvents = () => {
+            const stored = sessionStorage.getItem(INTERACTION_STORAGE_KEY);
+            if (!stored) {
+                return;
+            }
+            JSON.parse(stored).forEach((event) => {
+                if (
+                    event.interactionType === INTERACTION_TYPES.KEYSTROKE ||
+                    event.interactionType === INTERACTION_TYPES.COPYPASTE
+                ) {
+                    keystrokeEvents.push(event);
+                }
+            });
+        };
+
+        const saveInteractionDataToSession = () => {
+            sessionStorage.setItem(INTERACTION_STORAGE_KEY, JSON.stringify(keystrokeEvents));
+        };
+
+        loadKeystrokeEvents();
+
+        textarea.addEventListener("input", (e) => {
+            if (e.inputType === "insertFromPaste") return;
+
+            keystrokeEvents.push(createInteractionRecord(e.target.value, INTERACTION_TYPES.KEYSTROKE));
+        });
+
+        textarea.addEventListener("paste", (e) => {
+            const selectionStart = e.target.selectionStart;
+            const selectionEnd = e.target.selectionEnd;
+            const currentValue = e.target.value;
+            const pastedText = e.clipboardData?.getData("text") || "";
+            const newText = currentValue.slice(0, selectionStart) + pastedText + currentValue.slice(selectionEnd);
+
+            keystrokeEvents.push(createInteractionRecord(newText, INTERACTION_TYPES.COPYPASTE));
+        });
+
+        submitButton.addEventListener("click", function () {
+            saveBASDataPerQuestion();
+        });
+
+        window.addEventListener("pagehide", saveInteractionDataToSession);
+
+        const saveBASDataPerQuestion = () => {
+            const basData = {
+                "qualityCheck": "BAS",
+                "dataPointId": QUESTION_ID,
+                "interactionData": keystrokeEvents
+            };
+
+            sessionStorage.setItem(QUESTION_ID, JSON.stringify(basData));
+            saveInteractionDataToSession();
+        };
+      });
+    </script>
+    ```
+
+    <h4>Mouse movement</h4>
+
+    ```javascript
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const submitButton = document.getElementById("submit_button");
+
+        const INTERACTION_TYPES = {
             MOUSE_MOVEMENT: "MOUSE_MOVEMENT",
             MOUSE_CLICK: "MOUSE_CLICK",
         };
-      
-        // Question ID - This would typically come from your survey tool, you need to edit this
+
         const QUESTION_ID = "<BAS_QuestionID>";
         const MAX_MOUSE_EVENTS = 300;
         const INTERACTION_STORAGE_KEY = QUESTION_ID + "_interaction_data";
 
         const mouseEvents = [];
-        const keystrokeEvents = [];
 
         const createInteractionRecord = (value, interactionType) => ({
             value,
@@ -59,43 +136,28 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
             applyCap(mouseEvents, MAX_MOUSE_EVENTS);
         };
 
-        const splitIntoInteractionBuffers = (interactionData) => {
-            interactionData.forEach((event) => {
+        const loadMouseEvents = () => {
+            const stored = sessionStorage.getItem(INTERACTION_STORAGE_KEY);
+            if (!stored) {
+                return;
+            }
+            JSON.parse(stored).forEach((event) => {
                 if (
                     event.interactionType === INTERACTION_TYPES.MOUSE_MOVEMENT ||
                     event.interactionType === INTERACTION_TYPES.MOUSE_CLICK
                 ) {
                     mouseEvents.push(event);
-                    return;
                 }
-                keystrokeEvents.push(event);
             });
             applyCap(mouseEvents, MAX_MOUSE_EVENTS);
         };
 
-        const loadInteractionBuffers = () => {
-            const stored = sessionStorage.getItem(INTERACTION_STORAGE_KEY);
-            if (!stored) {
-                return;
-            }
-            splitIntoInteractionBuffers(JSON.parse(stored));
-        };
-
-        const mergeInteractionDataChronologically = () =>
-        [...mouseEvents, ...keystrokeEvents].sort((a, b) =>
-            a.timestamp.localeCompare(b.timestamp)
-        );
-
         const saveInteractionDataToSession = () => {
-            sessionStorage.setItem(
-                INTERACTION_STORAGE_KEY,
-                JSON.stringify(mergeInteractionDataChronologically())
-            );
+            sessionStorage.setItem(INTERACTION_STORAGE_KEY, JSON.stringify(mouseEvents));
         };
 
-        loadInteractionBuffers();
+        loadMouseEvents();
 
-        // Handle mouse movement events
         document.addEventListener("pointermove", (e) => {
             pushMouseEvent(
                 createInteractionRecord(
@@ -105,7 +167,6 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
             );
         });
 
-        // Handle mouse click events
         document.addEventListener("pointerup", (e) => {
             if (e.button !== 0) return;
             const target = e.target instanceof Element ? e.target : null;
@@ -122,44 +183,20 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
                 )
             );
         });
-        
-      
-        // Handle Keystroke events
-        textarea.addEventListener("input", (e) => {
-            // Ignore paste events as they're handled separately
-            if (e.inputType === "insertFromPaste") return;
-          
-            keystrokeEvents.push(createInteractionRecord(e.target.value, INTERACTION_TYPES.KEYSTROKE));
-        });
-      
-        // Handle paste events
-        textarea.addEventListener("paste", (e) => {
-            const selectionStart = e.target.selectionStart;
-            const selectionEnd = e.target.selectionEnd;
-            const currentValue = e.target.value;
-            const pastedText = e.clipboardData?.getData("text") || "";
-            const newText = currentValue.slice(0, selectionStart) + pastedText + currentValue.slice(selectionEnd);
 
-            keystrokeEvents.push(createInteractionRecord(newText, INTERACTION_TYPES.COPYPASTE));
-        });
-      
-        // Handle form submission
         submitButton.addEventListener("click", function () {
             saveBASDataPerQuestion();
         });
 
         window.addEventListener("pagehide", saveInteractionDataToSession);
 
-
-        // Function to save data in BAS format
         const saveBASDataPerQuestion = () => {
-            const interactionData = mergeInteractionDataChronologically();
             const basData = {
                 "qualityCheck": "BAS",
                 "dataPointId": QUESTION_ID,
-                "interactionData": interactionData
+                "interactionData": mouseEvents
             };
-          
+
             sessionStorage.setItem(QUESTION_ID, JSON.stringify(basData));
             saveInteractionDataToSession();
         };
