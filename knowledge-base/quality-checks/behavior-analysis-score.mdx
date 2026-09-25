@@ -31,7 +31,7 @@ Typing is scored when at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events are 
 
 ## Mouse Movement and Clicks
 
-When your integration tracks pointer behaviour, BAS evaluates mouse movement and clicks alongside typing. Send `MOUSE_MOVEMENT` and `MOUSE_CLICK` events in the same `interactionData` array as keystrokes. Track all mouse events in **one** client-side array (do not keep movements and clicks in separate buffers). See the [Behavior Tracking guide](/api-reference/others/behavior-tracking) for separate typing and mouse sample scripts.
+When your integration tracks pointer behaviour, BAS evaluates mouse movement and clicks alongside typing. Send `MOUSE_MOVEMENT` and `MOUSE_CLICK` events in the same `interactionData` array as keystrokes. See the [Behavior Tracking guide](/api-reference/others/behavior-tracking) for typing and mouse sample scripts.
 
 <Note>
 Mouse movement analysis is especially effective and fine-tuned for **grid questions**. Grids produce rich pointer behaviour as respondents click across rows and columns, so this is the strongest use case for mouse scoring. We recommend tracking mouse events on grids you already score with the [Grid-Question Score](/knowledge-base/quality-checks/grid-question-score).
@@ -42,7 +42,7 @@ Mouse movement analysis is especially effective and fine-tuned for **grid questi
 - ReDem scores typing and mouse behaviour separately.
 - The **lower** score is used for the BAS data point. If both scores are equal, the typing category is used.
 - Typing still requires at least **3** keystroke or copy-paste events. Mouse behaviour can be scored on its own when movement or click events are present.
-- ReDem only uses the **last 300** mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per data point. Store them in the same array.
+- ReDem only uses the **last 300** mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per data point.
 
 **What mouse behaviour is checked**
 

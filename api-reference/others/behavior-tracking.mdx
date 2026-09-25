@@ -6,7 +6,7 @@ iconType: "regular"
 ---
 
 <Note>
-ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per BAS data point. Store them in the **same array** and drop from the front when over the cap — otherwise leftover clicks look like cold clicks. Cap client-side tracking at the same limit — storing more only inflates browser session data without improving scoring.
+ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per BAS data point. Cap client-side tracking at the same limit — storing more only inflates browser session data without improving scoring.
 </Note>
 
 <Note>
@@ -15,7 +15,7 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
 
 <Steps titleSize="h3">
   <Step title="Implementing a JavaScript Tracker for User Behavior Data">
-    <p>Copy the **typing** sample, the **mouse movement** sample, or both into your survey platform’s frontend. Typing is for open-ended questions. Mouse tracking is especially useful on [grid questions](/knowledge-base/quality-checks/grid-question-score). If you track both for the same data point, keep all mouse events in one array, keep keystrokes in another, then merge by timestamp into a single `interactionData` array when you save.</p>
+    <p>Copy the **typing** sample, the **mouse movement** sample, or both into your survey platform’s frontend. Typing is for open-ended questions. Mouse tracking is especially useful on [grid questions](/knowledge-base/quality-checks/grid-question-score). If you track both for the same data point, merge them by timestamp into a single `interactionData` array when you save.</p>
   </Step>
   <Step title="Integrate ReDem API into your workflow">
     <p>These scripts persist interaction data in the browser until you are ready to call the API.</p>
@@ -102,8 +102,6 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
     ```
 
     <h4>Mouse movement</h4>
-
-    <p>Put `MOUSE_MOVEMENT` and `MOUSE_CLICK` in **one** array and cap that array at 300. Separate movement and click arrays drop old movements while leftover clicks stay behind, which looks like cold-click behaviour.</p>
 
     ```javascript
     <script>
