@@ -1630,7 +1630,7 @@
             "items": {
               "$ref": "#/components/schemas/InteractionData_V2"
             },
-            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? See the [example implementation](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - Typing needs at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events to compute a typing score. Mouse behaviour can be scored on its own when `MOUSE_MOVEMENT` or `MOUSE_CLICK` events are present. \n - ReDem only uses the **last 300** `MOUSE_MOVEMENT` and **last 300** `MOUSE_CLICK` events per data point. We recommend capping client-side tracking at the same limits to keep stored data small. \n",
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract typing or mouse patterns directly from individual browsers? See the [example implementations](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - Typing needs at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events to compute a typing score. Mouse behaviour can be scored on its own when `MOUSE_MOVEMENT` or `MOUSE_CLICK` events are present. \n - ReDem only uses the **last 300** mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per data point. Store them in the same array and cap client-side tracking at the same limit. \n",
             "example": [
               {
                 "interactionType": "KEYSTROKE",
@@ -1647,7 +1647,7 @@
         ]
       },
       "InteractionData_V2": {
-        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract keystroke patterns directly from individual browsers? See the [example implementation](/api-reference/others/behavior-tracking).",
+        "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract typing or mouse patterns directly from individual browsers? See the [example implementations](/api-reference/others/behavior-tracking).",
         "type": "object",
         "required": [
           "value",
