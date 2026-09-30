@@ -644,7 +644,7 @@
               },
               "exclusionCategories": {
                 "type": "object",
-                "description": "**v3 only.** Categories that triggered a category-based exclusion. Present only when a category exclusion fired. Omitted for score-only exclusions and when no category rule triggered. Keys are `OES`, `BAS`, and `DES`. Additional category values may be added without a new API version.",
+                "description": "Only available in **v3**. Categories that triggered a category-based exclusion. Present when a category exclusion fired. Keys are `OES`, `BAS`, and `DES`. Additional category values may be added without a new API version.",
                 "properties": {
                   "OES": {
                     "type": "array",
