@@ -641,6 +641,39 @@
                   "$ref": "#/components/schemas/DataPointsQualityResponse_v3"
                 },
                 "description": "Detailed results of quality checks performed at the individual data point level (includes `effort` for applicable OES categories)."
+              },
+              "exclusionCategories": {
+                "type": "object",
+                "description": "**v3 only.** Categories that triggered a category-based exclusion. Present only when a category exclusion fired. Omitted for score-only exclusions and when no category rule triggered. Keys are `OES`, `BAS`, and `DES`. Additional category values may be added without a new API version.",
+                "properties": {
+                  "OES": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "OES categories that triggered exclusion. Current values: `NO_ANSWER`, `BAD_LANGUAGE`, `GIBBERISH`, `DUPLICATE_ANSWER`, `DUPLICATE_RESPONDENT`, `OFF_TOPIC`, `WRONG_LANGUAGE`, `AI_SUSPECT`.",
+                    "example": [
+                      "GIBBERISH"
+                    ]
+                  },
+                  "BAS": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "BAS categories that triggered exclusion. Current values: `UNNATURAL_TYPING`, `UNNATURAL_MOVEMENT`, `COPY_AND_PASTE`."
+                  },
+                  "DES": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "DES categories that triggered exclusion. Current values: `DUPLICATE_IP`, `DUPLICATE_ENTRANT`.",
+                    "example": [
+                      "DUPLICATE_IP"
+                    ]
+                  }
+                }
               }
             }
           }
@@ -6396,6 +6429,14 @@
                             "Open Ended Score Threshold",
                             "Coherence Score Threshold"
                           ],
+                          "exclusionCategories": {
+                            "OES": [
+                              "GIBBERISH"
+                            ],
+                            "DES": [
+                              "DUPLICATE_IP"
+                            ]
+                          },
                           "redemScore": 85,
                           "qualityScoreSummary": [
                             {
@@ -6685,6 +6726,14 @@
                             "Open Ended Score Threshold",
                             "Coherence Score Threshold"
                           ],
+                          "exclusionCategories": {
+                            "OES": [
+                              "GIBBERISH"
+                            ],
+                            "DES": [
+                              "DUPLICATE_IP"
+                            ]
+                          },
                           "redemScore": 85,
                           "qualityScoreSummary": [
                             {

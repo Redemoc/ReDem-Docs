@@ -59,6 +59,8 @@ Mouse movement analysis is especially effective and fine-tuned for **grid questi
 
 `UNNATURAL_TYPING`, `COPY_AND_PASTE`, and `UNNATURAL_MOVEMENT` can be used as category-based cleaning and exclusion rules. See the [Data Cleaning guide](/knowledge-base/features/cleaning-and-review).
 
+On API **v3**, `respondentQuality.exclusionCategories.BAS` lists which of those categories caused a category-based exclusion. The field is omitted when no BAS category rule fired. ReDem may add category values without a new API version. See [Add Respondent](/api-reference/endpoints/v3/addRespondent).
+
 ## How to use the BAS?
 
 The BAS is designed to be used in real-time, via our API, or through survey software with integrated ReDem functionalities. This quality check is not available via the Quick Import.

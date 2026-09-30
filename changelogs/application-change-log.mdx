@@ -5,6 +5,16 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-30">
+  ## Quick Import
+  - **Qualtrics** and **Conjointly** exports can now be uploaded directly. ReDem detects the format and prepares the file. No separate conversion step is required.
+  - See [Quick Import](/features/quick-import#supported-survey-tools) for details.
+
+  ## Exclusion categories
+  - When a category-based cleaning rule excludes a respondent, the v3 API now returns which categories fired (`exclusionCategories`), next to `reasonsForExclusion`.
+  - See the [Open-Ended Score](/knowledge-base/quality-checks/open-ended-score), [Behavioral Analytics Score](/knowledge-base/quality-checks/behavior-analysis-score), and [Duplicate Entrance Score](/knowledge-base/quality-checks/duplicate-entrance-score) guides.
+</Update>
+
 <Update label="2026-09-24">
   ## Coherence Score
   - In Quick Import, use **Survey Description & Exclusion Rules** for survey context and for custom rules, such as removing respondents who pick a specific answer.

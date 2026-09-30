@@ -32,6 +32,8 @@ ReDem also recognizes exports from common survey platforms and prepares them aut
 - **Confirmit**
 - **Quantilope**
 - **IntelliSurvey**
+- **Qualtrics**
+- **Conjointly**
 
 Upload the original export file from your platform — no separate conversion step is required. ReDem detects the format, maps sheets and metadata, and continues with the normal Quick Import flow. See [Supported Survey Tools](#supported-survey-tools) below for platform-specific export steps.
 
@@ -379,3 +381,11 @@ Export your survey from Quantilope and upload the Excel file directly to the Qui
 ### IntelliSurvey
 
 Export your survey from IntelliSurvey and upload the Excel file directly to the Quick Import. ReDem detects the IntelliSurvey format and prepares the file for the import steps that follow.
+
+### Qualtrics
+
+Export your survey from Qualtrics as Excel (labels in the export) and upload that file to the Quick Import. ReDem detects Qualtrics from metadata columns such as `StartDate` and `ResponseId`, then prepares the codebook and respondent rows automatically.
+
+### Conjointly
+
+Export your survey from Conjointly and upload the Excel file directly to the Quick Import. ReDem detects Conjointly from metadata columns such as `participant_id` and `datetime of participant creation`, then prepares open-ends and grids for the import steps that follow.

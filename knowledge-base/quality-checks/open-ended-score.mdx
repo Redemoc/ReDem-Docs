@@ -191,6 +191,21 @@ The response is identical or highly similar to another response provided by the 
 
 Activate the duplicate check only if identical or highly similar responses to open ends within interviews are implausible.
 
+## API exclusion categories
+
+On API **v3**, `respondentQuality.exclusionCategories.OES` lists which open-ended categories caused a category-based exclusion. Current values:
+
+- `NO_ANSWER`
+- `BAD_LANGUAGE`
+- `GIBBERISH`
+- `DUPLICATE_ANSWER`
+- `DUPLICATE_RESPONDENT`
+- `OFF_TOPIC`
+- `WRONG_LANGUAGE`
+- `AI_SUSPECT`
+
+The field is omitted when no OES category rule fired. ReDem may add category values without a new API version. See [Add Respondent](/api-reference/endpoints/v3/addRespondent).
+
 ## Automatic scoring adjustments
 
 For some question types, ReDem automatically adjusts which Open-Ended Score checks run. These adjustments are based on the question wording, not on the individual answer. They can override the survey setup so that expected answer patterns do not unfairly lower a respondent's score.

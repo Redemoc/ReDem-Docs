@@ -118,6 +118,8 @@ For **live surveys** that are still in the field, you should also update the **p
 
 The cleaning process classifies each response as either **Included** or **Excluded**, with clear reasons provided for exclusions. Only one exclusion condition needs to be met for a respondent to be removed.
 
+On API **v3**, when a category-based rule is what excluded the respondent, `respondentQuality` also includes `exclusionCategories` (keys `OES`, `BAS`, `DES`). `reasonsForExclusion` is unchanged. The field is omitted for score-only exclusions. ReDem may add category values without a new API version.
+
 **Reasons for Exclusion** (only one needs to be true):
 
 - **ReDem Score Threshold**: Respondent’s ReDem Score is below the default (60) or a custom threshold.
