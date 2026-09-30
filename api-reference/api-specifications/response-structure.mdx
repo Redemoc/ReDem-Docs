@@ -38,6 +38,8 @@ Success responses are structured as follows:
 }
 ```
 
+`exclusionCategories` is only available in **v3**. When a category-based cleaning rule excluded the respondent, `respondentQuality` may include it. See the [API Change Log](/changelogs/api-change-log).
+
 ### ⚠️ Error Response
 The error response of the ReDem API is returned when a request fails due to various reasons. This response provides clear, actionable information to help developers identify and resolve the cause of the error. The response format is consistent, ensuring easy parsing and fast debugging.
 

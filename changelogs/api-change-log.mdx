@@ -5,6 +5,20 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-09-30">
+  ## Exclusion categories
+
+  - <code style={{ color: "green" }}> POST /v3/addRespondent </code> — `respondentQuality` now includes `exclusionCategories` when a category-based exclusion fired. `reasonsForExclusion` is unchanged.
+  - The field is only available in **v3**.
+  - Keys are `OES`, `BAS`, and `DES`. Current values:
+    - **OES:** `NO_ANSWER`, `BAD_LANGUAGE`, `GIBBERISH`, `DUPLICATE_ANSWER`, `DUPLICATE_RESPONDENT`, `OFF_TOPIC`, `WRONG_LANGUAGE`, `AI_SUSPECT`
+    - **BAS:** `UNNATURAL_TYPING`, `UNNATURAL_MOVEMENT`, `COPY_AND_PASTE`
+    - **DES:** `DUPLICATE_IP`, `DUPLICATE_ENTRANT`
+  - ReDem may add category values without a new API version.
+
+  See [Add Respondent](/api-reference/endpoints/v3/addRespondent).
+</Update>
+
 <Update label="2026-09-24">
   ## API v1 is no longer supported
 
