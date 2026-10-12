@@ -7845,6 +7845,309 @@
         }
       }
     },
+    "/v3/changeCleaningSettings": {
+      "post": {
+        "tags": [
+          "Respondent"
+        ],
+        "summary": "Change cleaning settings",
+        "operationId": "changeCleaningSettingsV3",
+        "description": "Applies new cleaning settings to **all respondents** in a survey, or turns cleaning off for them. Scores are not recalculated and no credits are charged. Any saved AI explanation on an affected respondent is cleared.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Request body for changing cleaning settings.",
+                "properties": {
+                  "surveyName": {
+                    "type": "string",
+                    "description": "The survey name."
+                  },
+                  "activateCleaning": {
+                    "type": "boolean",
+                    "description": "`true` applies `cleaningSettings` and excludes respondents that fall below the thresholds. `false` turns cleaning off for all respondents and clears their exclusions."
+                  },
+                  "cleaningSettings": {
+                    "type": "object",
+                    "description": "Cleaning thresholds stored on every respondent in the survey. Unknown keys are rejected.",
+                    "properties": {
+                      "redemScore": {
+                        "type": "number",
+                        "description": "Minimum ReDem Score (0-100). Respondents below this are excluded."
+                      },
+                      "OES": {
+                        "type": "object",
+                        "description": "Open-Ended Score rules. Use `categories` with OES category names to exclude specific answer types.",
+                        "properties": {
+                          "activate": {
+                            "type": "boolean",
+                            "description": "Whether this check contributes to exclusion."
+                          },
+                          "score": {
+                            "type": "number",
+                            "description": "Minimum score (0-100). Respondents below this are excluded."
+                          },
+                          "minDataPoints": {
+                            "type": "number",
+                            "description": "Minimum number of data points needed before the check is applied."
+                          },
+                          "categories": {
+                            "type": "object",
+                            "description": "Category-level exclusion rules.",
+                            "additionalProperties": {
+                              "type": "object",
+                              "properties": {
+                                "activate": {
+                                  "type": "boolean",
+                                  "description": "Whether this category excludes the respondent."
+                                },
+                                "minDataPoints": {
+                                  "type": "number",
+                                  "description": "Minimum number of flagged data points before the category excludes the respondent."
+                                }
+                              },
+                              "required": [
+                                "activate",
+                                "minDataPoints"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "activate",
+                          "score"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "BAS": {
+                        "type": "object",
+                        "description": "Behavioral Analytics Score rules. Categories: `UNNATURAL_TYPING`, `UNNATURAL_MOVEMENT`, `COPY_AND_PASTE`.",
+                        "properties": {
+                          "activate": {
+                            "type": "boolean",
+                            "description": "Whether this check contributes to exclusion."
+                          },
+                          "score": {
+                            "type": "number",
+                            "description": "Minimum score (0-100). Respondents below this are excluded."
+                          },
+                          "minDataPoints": {
+                            "type": "number",
+                            "description": "Minimum number of data points needed before the check is applied."
+                          },
+                          "categories": {
+                            "type": "object",
+                            "description": "Category-level exclusion rules.",
+                            "additionalProperties": {
+                              "type": "object",
+                              "properties": {
+                                "activate": {
+                                  "type": "boolean",
+                                  "description": "Whether this category excludes the respondent."
+                                },
+                                "minDataPoints": {
+                                  "type": "number",
+                                  "description": "Minimum number of flagged data points before the category excludes the respondent."
+                                }
+                              },
+                              "required": [
+                                "activate",
+                                "minDataPoints"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "activate",
+                          "score"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "DES": {
+                        "type": "object",
+                        "description": "Duplicate Entrance Score rules. Categories: `DUPLICATE_IP`, `DUPLICATE_ENTRANT`.",
+                        "properties": {
+                          "activate": {
+                            "type": "boolean",
+                            "description": "Whether this check contributes to exclusion."
+                          },
+                          "score": {
+                            "type": "number",
+                            "description": "Minimum score (0-100). Respondents below this are excluded."
+                          },
+                          "categories": {
+                            "type": "object",
+                            "description": "Category-level exclusion rules.",
+                            "additionalProperties": {
+                              "type": "object",
+                              "properties": {
+                                "activate": {
+                                  "type": "boolean",
+                                  "description": "Whether this category excludes the respondent."
+                                },
+                                "minDataPoints": {
+                                  "type": "number",
+                                  "description": "Minimum number of flagged data points before the category excludes the respondent."
+                                }
+                              },
+                              "required": [
+                                "activate",
+                                "minDataPoints"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "activate",
+                          "score"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "TS": {
+                        "type": "object",
+                        "description": "Time Score rules.",
+                        "properties": {
+                          "activate": {
+                            "type": "boolean",
+                            "description": "Whether this check contributes to exclusion."
+                          },
+                          "score": {
+                            "type": "number",
+                            "description": "Minimum score (0-100). Respondents below this are excluded."
+                          }
+                        },
+                        "required": [
+                          "activate",
+                          "score"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "GQS": {
+                        "type": "object",
+                        "description": "Grid-Question Score rules.",
+                        "properties": {
+                          "activate": {
+                            "type": "boolean",
+                            "description": "Whether this check contributes to exclusion."
+                          },
+                          "score": {
+                            "type": "number",
+                            "description": "Minimum score (0-100). Respondents below this are excluded."
+                          },
+                          "minDataPoints": {
+                            "type": "number",
+                            "description": "Minimum number of data points needed before the check is applied."
+                          }
+                        },
+                        "required": [
+                          "activate",
+                          "score"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "CHS": {
+                        "type": "object",
+                        "description": "Coherence Score rules.",
+                        "properties": {
+                          "activate": {
+                            "type": "boolean",
+                            "description": "Whether this check contributes to exclusion."
+                          },
+                          "score": {
+                            "type": "number",
+                            "description": "Minimum score (0-100). Respondents below this are excluded."
+                          }
+                        },
+                        "required": [
+                          "activate",
+                          "score"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "redemScore"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "surveyName",
+                  "activateCleaning",
+                  "cleaningSettings"
+                ]
+              },
+              "example": {
+                "surveyName": "Customer-Satisfaction-2025",
+                "activateCleaning": true,
+                "cleaningSettings": {
+                  "redemScore": 60,
+                  "GQS": {
+                    "activate": true,
+                    "score": 20,
+                    "minDataPoints": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "When a request is successfully processed, the API returns a 200 OK status code along with the result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the operation succeeded."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Human-readable summary."
+                    },
+                    "results": {
+                      "type": "object",
+                      "properties": {
+                        "updated": {
+                          "type": "number",
+                          "description": "Number of respondents updated."
+                        },
+                        "surveyName": {
+                          "type": "string",
+                          "description": "The survey name."
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Successfully updated 120 respondents",
+                  "results": {
+                    "updated": 120,
+                    "surveyName": "Customer-Satisfaction-2025"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The survey was not found, or the API key has no access to it. Returns a 400 Bad Request status code."
+          },
+          "422": {
+            "description": "Validation failed, for example a missing `redemScore` or an unknown field. Returns a 422 Unprocessable Entity status code."
+          }
+        }
+      }
+    },
     "/v3/qualityCheckSuggestions": {
       "post": {
         "tags": [
