@@ -1,0 +1,19 @@
+---
+title: 'Change Cleaning Settings'
+openapi: 'POST /v3/changeCleaningSettings'
+---
+
+This endpoint applies cleaning settings to **every respondent** in a survey. Use it when you change your cleaning rules and want existing respondents to match them, without resubmitting each respondent.
+
+- **Turn cleaning on** (`activateCleaning: true`): stores `cleaningSettings` on each respondent and re-evaluates exclusion against the new thresholds.
+- **Turn cleaning off** (`activateCleaning: false`): removes the stored settings and clears exclusions for all respondents in the survey.
+
+In both cases:
+
+- Scores are **not** recalculated. Only exclusion status and reasons change.
+- No credits are charged.
+- Any saved AI explanation on an affected respondent is cleared.
+
+The same endpoint is also available at `POST /v2/changeCleaningSettings`.
+
+For the structure of `cleaningSettings`, see [Add Respondent](/api-reference/endpoints/v3/addRespondent). The request uses the same thresholds and categories.
