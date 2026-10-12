@@ -5,19 +5,6 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
-<Update label="2026-10-12">
-  ## Change Cleaning Settings
-
-  - <code style={{ color: "green" }}> POST /v3/changeCleaningSettings </code> — Apply cleaning settings to **every respondent** in a survey, or turn cleaning off for them. Also available at `POST /v2/changeCleaningSettings`.
-  - Scores are not recalculated and no credits are charged.
-  - Any saved AI explanation on an affected respondent is cleared.
-  - See the [endpoint docs](/api-reference/endpoints/v3/changeCleaningSettings) for request and response details.
-
-  ## OES Answer Translation
-
-  - Answers classified as **GIBBERISH** are not translated. No `translatedAnswer` is returned for them, and no translation credits are charged.
-</Update>
-
 <Update label="2026-09-30">
   ## Exclusion categories
 
