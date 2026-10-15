@@ -103,6 +103,10 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
 
     <h4>Mouse movement</h4>
 
+    <Note>
+    Mouse pixel fields (`x`, `y`, `width`, `height`, `offsetX`, `offsetY`) must be **integers**. Browsers can emit fractional `clientX`/`clientY` and `getBoundingClientRect()` values (zoom, subpixel layout). The sample rounds them with `Math.round` before storing. Fractional values are rejected.
+    </Note>
+
     ```javascript
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -118,6 +122,8 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
         const INTERACTION_STORAGE_KEY = QUESTION_ID + "_interaction_data";
 
         const mouseEvents = [];
+
+        const roundCoord = (coordinate) => Math.round(coordinate);
 
         const createInteractionRecord = (value, interactionType) => ({
             value,
@@ -161,7 +167,7 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
         document.addEventListener("pointermove", (e) => {
             pushMouseEvent(
                 createInteractionRecord(
-                    { x: e.clientX, y: e.clientY },
+                    { x: roundCoord(e.clientX), y: roundCoord(e.clientY) },
                     INTERACTION_TYPES.MOUSE_MOVEMENT
                 )
             );
@@ -178,7 +184,15 @@ ReDem only uses the last 300 mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` to
                 : null;
             pushMouseEvent(
                 createInteractionRecord(
-                    { width: rect.width, height: rect.height, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, x: e.clientX, y: e.clientY, pointerType },
+                    {
+                        width: roundCoord(rect.width),
+                        height: roundCoord(rect.height),
+                        offsetX: roundCoord(e.clientX - rect.left),
+                        offsetY: roundCoord(e.clientY - rect.top),
+                        x: roundCoord(e.clientX),
+                        y: roundCoord(e.clientY),
+                        pointerType
+                    },
                     INTERACTION_TYPES.MOUSE_CLICK
                 )
             );

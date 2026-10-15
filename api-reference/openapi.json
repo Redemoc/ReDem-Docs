@@ -1719,11 +1719,11 @@
                 "description": "Used when `interactionType` is `MOUSE_MOVEMENT`.",
                 "properties": {
                   "x": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "The horizontal pointer position in pixels."
                   },
                   "y": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "The vertical pointer position in pixels."
                   }
                 },
@@ -1742,27 +1742,27 @@
                 "description": "Used when `interactionType` is `MOUSE_CLICK`.",
                 "properties": {
                   "width": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "The width of the clicked element in pixels."
                   },
                   "height": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "The height of the clicked element in pixels."
                   },
                   "offsetX": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "The horizontal click position relative to the clicked element."
                   },
                   "offsetY": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "The vertical click position relative to the clicked element."
                   },
                   "x": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "The horizontal click position in viewport pixels."
                   },
                   "y": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "The vertical click position in viewport pixels."
                   },
                   "pointerType": {
