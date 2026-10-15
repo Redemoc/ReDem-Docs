@@ -1663,7 +1663,7 @@
             "items": {
               "$ref": "#/components/schemas/InteractionData_V2"
             },
-            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract typing or mouse patterns directly from individual browsers? See the [example implementations](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - Typing needs at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events to compute a typing score. Mouse behaviour can be scored on its own when `MOUSE_MOVEMENT` or `MOUSE_CLICK` events are present. \n - ReDem only uses the **last 300** mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per data point. Cap client-side tracking at the same limit. \n - Mouse pixel fields (`x`, `y`, `width`, `height`, `offsetX`, `offsetY`) must be integers. Round fractional browser values before sending. \n",
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract typing or mouse patterns directly from individual browsers? See the [example implementations](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - Typing needs at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events to compute a typing score. Mouse behaviour can be scored on its own when `MOUSE_MOVEMENT` or `MOUSE_CLICK` events are present. \n - ReDem only uses the **last 300** mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per data point. Cap client-side tracking at the same limit. \n",
             "example": [
               {
                 "interactionType": "KEYSTROKE",
@@ -1720,11 +1720,11 @@
                 "properties": {
                   "x": {
                     "type": "integer",
-                    "description": "The horizontal pointer position in integer pixels."
+                    "description": "The horizontal pointer position in pixels."
                   },
                   "y": {
                     "type": "integer",
-                    "description": "The vertical pointer position in integer pixels."
+                    "description": "The vertical pointer position in pixels."
                   }
                 },
                 "required": [
@@ -1743,27 +1743,27 @@
                 "properties": {
                   "width": {
                     "type": "integer",
-                    "description": "The width of the clicked element in integer pixels."
+                    "description": "The width of the clicked element in pixels."
                   },
                   "height": {
                     "type": "integer",
-                    "description": "The height of the clicked element in integer pixels."
+                    "description": "The height of the clicked element in pixels."
                   },
                   "offsetX": {
                     "type": "integer",
-                    "description": "The horizontal click position relative to the clicked element, in integer pixels."
+                    "description": "The horizontal click position relative to the clicked element."
                   },
                   "offsetY": {
                     "type": "integer",
-                    "description": "The vertical click position relative to the clicked element, in integer pixels."
+                    "description": "The vertical click position relative to the clicked element."
                   },
                   "x": {
                     "type": "integer",
-                    "description": "The horizontal click position in integer viewport pixels."
+                    "description": "The horizontal click position in viewport pixels."
                   },
                   "y": {
                     "type": "integer",
-                    "description": "The vertical click position in integer viewport pixels."
+                    "description": "The vertical click position in viewport pixels."
                   },
                   "pointerType": {
                     "type": "string",
