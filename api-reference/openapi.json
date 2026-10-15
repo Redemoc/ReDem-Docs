@@ -1663,7 +1663,7 @@
             "items": {
               "$ref": "#/components/schemas/InteractionData_V2"
             },
-            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract typing or mouse patterns directly from individual browsers? See the [example implementations](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - Typing needs at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events to compute a typing score. Mouse behaviour can be scored on its own when `MOUSE_MOVEMENT` or `MOUSE_CLICK` events are present. \n - ReDem only uses the **last 300** mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per data point. Cap client-side tracking at the same limit. \n",
+            "description": "This variable compiles all relevant information about the interaction of the respondent with the data point. \n\n 🔦 **Tip:** Need a template to extract typing or mouse patterns directly from individual browsers? See the [example implementations](/api-reference/others/behavior-tracking). \n\n ⭕ **Note:** \n - Typing needs at least **3** `KEYSTROKE` or `COPY_AND_PASTE` events to compute a typing score. Mouse behaviour can be scored on its own when `MOUSE_MOVEMENT` or `MOUSE_CLICK` events are present. \n - ReDem only uses the **last 300** mouse events (`MOUSE_MOVEMENT` and `MOUSE_CLICK` together) per data point. Cap client-side tracking at the same limit. \n - Mouse pixel fields (`x`, `y`, `width`, `height`, `offsetX`, `offsetY`) must be integers. Round fractional browser values before sending. \n",
             "example": [
               {
                 "interactionType": "KEYSTROKE",
@@ -1719,12 +1719,12 @@
                 "description": "Used when `interactionType` is `MOUSE_MOVEMENT`.",
                 "properties": {
                   "x": {
-                    "type": "number",
-                    "description": "The horizontal pointer position in pixels."
+                    "type": "integer",
+                    "description": "The horizontal pointer position in integer pixels."
                   },
                   "y": {
-                    "type": "number",
-                    "description": "The vertical pointer position in pixels."
+                    "type": "integer",
+                    "description": "The vertical pointer position in integer pixels."
                   }
                 },
                 "required": [
@@ -1742,28 +1742,28 @@
                 "description": "Used when `interactionType` is `MOUSE_CLICK`.",
                 "properties": {
                   "width": {
-                    "type": "number",
-                    "description": "The width of the clicked element in pixels."
+                    "type": "integer",
+                    "description": "The width of the clicked element in integer pixels."
                   },
                   "height": {
-                    "type": "number",
-                    "description": "The height of the clicked element in pixels."
+                    "type": "integer",
+                    "description": "The height of the clicked element in integer pixels."
                   },
                   "offsetX": {
-                    "type": "number",
-                    "description": "The horizontal click position relative to the clicked element."
+                    "type": "integer",
+                    "description": "The horizontal click position relative to the clicked element, in integer pixels."
                   },
                   "offsetY": {
-                    "type": "number",
-                    "description": "The vertical click position relative to the clicked element."
+                    "type": "integer",
+                    "description": "The vertical click position relative to the clicked element, in integer pixels."
                   },
                   "x": {
-                    "type": "number",
-                    "description": "The horizontal click position in viewport pixels."
+                    "type": "integer",
+                    "description": "The horizontal click position in integer viewport pixels."
                   },
                   "y": {
-                    "type": "number",
-                    "description": "The vertical click position in viewport pixels."
+                    "type": "integer",
+                    "description": "The vertical click position in integer viewport pixels."
                   },
                   "pointerType": {
                     "type": "string",
