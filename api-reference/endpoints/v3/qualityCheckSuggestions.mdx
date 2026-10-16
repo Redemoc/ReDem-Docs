@@ -10,7 +10,7 @@ Generate smart quality-check suggestions from a survey questionnaire structure. 
 - Suggested **OES** questions with keywords and duplicate-check flags
 - Suggested **GQS** grids with pattern-check recommendations
 - Suggested **CHS** question IDs plus a `surveyDescription`
-- Suggested **BAS** tracking targets (derived from suggested OES questions)
+- Suggested **BAS** tracking targets: open ends (`keystrokes: true`) and grids with **5 or more** items (`mouse: true`)
 - Suggested **DES** demographic mappings (`type` + `questionId`) when suitable demographics are present
 - Recommended default **cleaning settings** for API v3
 
@@ -18,4 +18,5 @@ Generate smart quality-check suggestions from a survey questionnaire structure. 
 
 - **TS** is not suggested here; configure it separately in your integration.
 - Optional `qualityChecks` limits which checks are suggested (`OES`, `GQS`, `CHS`, `BAS`, `DES`). Omit it to suggest all of them.
+- **BAS** is built from the other suggestions: every suggested open end, plus every suggested grid with 5 or more items. Grid-only surveys therefore get BAS suggestions when those grids qualify.
 - Cap suggestion volume with `allInclusive` (default `true`) to match all-inclusive plan limits.
