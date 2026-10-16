@@ -2034,16 +2034,18 @@
         "properties": {
           "questionId": {
             "type": "string",
-            "description": "Mirrors a suggested OES question ID — BAS tracking is recommended on the same open ends.",
+            "description": "Question to track. Open ends come from suggested OES questions. Grids come from suggested GQS questions with 5 or more items.",
             "example": "Q1"
           },
           "keystrokes": {
             "type": "boolean",
+            "description": "`true` for open ends. `false` for grids.",
             "example": true
           },
           "mouse": {
             "type": "boolean",
-            "example": true
+            "description": "`true` for grids with 5 or more items. `false` for open ends.",
+            "example": false
           }
         }
       },
@@ -2135,7 +2137,7 @@
             "items": {
               "$ref": "#/components/schemas/SuggestedBas"
             },
-            "description": "Suggested behavior tracking targets, derived from suggested OES questions."
+            "description": "Suggested behavior tracking targets. Open ends use `keystrokes: true`. Grids with 5 or more items use `mouse: true`."
           },
           "DES": {
             "type": "array",
@@ -8268,6 +8270,11 @@
                       {
                         "questionId": "Q1",
                         "keystrokes": true,
+                        "mouse": false
+                      },
+                      {
+                        "questionId": "Q2",
+                        "keystrokes": false,
                         "mouse": true
                       }
                     ],
