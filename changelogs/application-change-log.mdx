@@ -5,6 +5,21 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-10-22" description="v1.7.9">
+  ## Open-Ended Score
+  - On **API v3**, **Gibberish**, **Off Topic**, and **No Answer** flags are more accurate. This does not apply to v2.
+
+  ## Quality Check Suggestions
+  - `POST /v3/qualityCheckSuggestions` now suggests **grids** for the BAS mouse-movement check (grids with 5 or more items), not only open ends for keystrokes.
+
+  ## Cleaning Settings
+  - Fixed a bug that prevented changing cleaning settings for **API (live)** surveys in the app.
+
+  ## Decipher Integration Assistant
+  - You can run the assistant more than once on the same survey XML. Each run replaces previously generated ReDem integration code with the new version.
+  - See [Decipher (Assistant)](/integration-guides/decipher) for details.
+</Update>
+
 <Update label="2026-10-16" description="v1.7.8">
   ## Quick Import
   - The last step now has an **Approve & Import Data** button. It replaces the confirmation dialog.
