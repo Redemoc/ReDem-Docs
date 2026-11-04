@@ -25,10 +25,11 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
 
 1. You pick the Qualtrics survey in ReDem.
 2. ReDem reads the questionnaire and suggests quality checks for you to approve.
-3. You choose a public API key and a unique ReDem survey name.
-4. ReDem writes QuestionJS and embedded data into that Qualtrics survey in place.
-5. You **publish** in Qualtrics. Preview and live links use the last published version, not the unpublished draft.
-6. The ReDem survey is created when the **first completed interview** arrives, under the company of the public API key.
+3. Cleaning is on by default with ReDem's recommended settings. You can customize them or turn cleaning off.
+4. You choose a public API key and a unique ReDem survey name.
+5. ReDem writes QuestionJS and embedded data into that Qualtrics survey in place.
+6. You **publish** in Qualtrics. Preview and live links use the last published version, not the unpublished draft.
+7. The ReDem survey is created when the **first completed interview** arrives, under the company of the public API key.
 
 <Steps titleSize="h3">
     <Step title="Save your Qualtrics API token">
@@ -95,6 +96,16 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
         - Deselect pages you do not want timed, then confirm.
     </Step>
 
+    <Step title="Set cleaning settings">
+        Cleaning is **on by default**, pre-filled with ReDem's recommended thresholds for the quality checks you approved.
+
+        1. Leave **Enable Data Cleaning** on to apply those rules to every interview Qualtrics sends.
+        2. Use ReDem's recommended settings, or customize thresholds.
+        3. Turn cleaning off if you do not want exclusion rules injected into the survey.
+
+        These settings are written into the Qualtrics send payload. They are applied automatically when each complete arrives in ReDem. You can still change them later on the ReDem survey. See [Cleaning and review](/knowledge-base/features/cleaning-and-review).
+    </Step>
+
     <Step title="Choose a survey name and a public API key">
         1. Enter a **unique** ReDem survey name (letters, numbers, spaces, hyphens, and underscores). The ReDem survey is **not** created in this step — it appears when the first complete arrives.
         2. Select a **public** ReDem API key. That key is placed in the survey JavaScript and can only call `addRespondent`.
@@ -121,8 +132,6 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
         1. Take the published survey and complete it (click **Next** on the last page of a completing path).
         2. Do **not** use a screen-out or quota-met exit for this test — those are not sent.
         3. In ReDem, open the new survey (named as you entered in the wizard) and review the interview.
-
-        Cleaning settings are not part of this wizard. After the ReDem survey exists, open it and configure cleaning there if you want exclusion recommendations. See [Cleaning and review](/knowledge-base/features/cleaning-and-review).
     </Step>
 
     <Step title="Re-run the assistant on the same survey">
