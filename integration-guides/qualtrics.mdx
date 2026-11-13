@@ -38,10 +38,10 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
 1. You pick the Qualtrics survey in ReDem.
 2. ReDem reads the questionnaire and suggests quality checks for you to approve.
 3. Cleaning is on by default with ReDem's recommended settings. You can customize them or turn cleaning off.
-4. You choose a public API key and a unique ReDem survey name.
-5. ReDem writes QuestionJS and embedded data into that Qualtrics survey in place.
+4. You choose a public API key and a ReDem survey name.
+5. ReDem writes QuestionJS and embedded data into that Qualtrics survey in place. Each question loads the ReDem runtime from a CDN; capture scripts stay on the questions.
 6. You **publish** in Qualtrics. Preview and live links use the last published version, not the unpublished draft.
-7. The ReDem survey is created when the **first completed interview** arrives, under the company of the public API key.
+7. The ReDem survey is created when the **first completed interview** arrives, under the company of the public API key. If you reuse an existing ReDem survey name, new respondents are added to that survey.
 
 <Steps titleSize="h3">
     <Step title="Save your Qualtrics API token">
@@ -49,12 +49,12 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
 
         1. In Qualtrics, open **Account Settings → Qualtrics IDs**.
         2. Copy your **API token** (generate one if you do not have it yet) and your **Datacenter ID** (for example `iad1` or `co1`).
-        3. In ReDem, go to **Administration → Password & Security**.
+        3. In ReDem, go to **Administration → Integrations**.
         4. Expand **Qualtrics integration**, paste the token and datacenter, and click **Save credentials**.
 
         You can also start from **Integrations → Qualtrics** and click **Configure Qualtrics token**. That opens the same settings and returns you to the assistant after save.
 
-        <img src="/images/qualtrics-save-api-token.jpg" alt="Password and Security — Qualtrics integration token and datacenter" />
+        <img src="/images/qualtrics-save-api-token.jpg" alt="Administration → Integrations — Qualtrics integration token and datacenter" />
     </Step>
 
     <Step title="Open the Qualtrics assistant">
@@ -77,9 +77,9 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
 
         Only questions on pages with **one respondent-visible question** are suggested. Timing questions, text/graphics, Captcha, Meta, and always-hidden questions do not count toward that limit. Questions that share a page with another visible question are omitted from every score, including OES, GQS, CHS, BAS, and Time Score.
 
-        The review step also lists the **survey-end pages** ReDem will send from, and any screen-out / quota / term exits that will **not** be sent.
+        Screen-outs, quota met, and other term exits are not sent. Completes are sent when the respondent clicks **Next** on the last page of a completing path.
 
-        <img src="/images/qualtrics-review-quality-checks.jpg" alt="Qualtrics assistant — review suggested quality checks and survey-end pages" />
+        <img src="/images/qualtrics-review-quality-checks.jpg" alt="Qualtrics assistant — review suggested quality checks" />
 
         **Open-Ended Score (OES)**
         - Suggested for open-end questions that are alone on their page.
@@ -96,8 +96,11 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
 
         **Behavioral Analytics Score (BAS)**
         - Open ends are tracked for keystrokes. Grids are tracked for mouse movement.
+        - The list shows whether each data point captures **Mouse Movement**, **Keystroke**, or **Both**.
         - Only suggested for questions that are alone on their page, so two mouse trackers never share the same page events.
         - Confirm alignment with the questions you care about.
+
+        <img src="/images/qualtrics-bas-capture.jpg" alt="Qualtrics assistant — BAS capture type for each data point" />
 
         **Coherence Score (CHS)**
         - Includes visible questions that are alone on their page. Select or deselect as needed, then confirm.
@@ -106,9 +109,12 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
         <img src="/images/Redem-decipher-integration-assistance-CHS-datapoint.png" alt="Coherence Score interview questions" />
 
         **Time Score (TS)**
-        - Uses the first **30** eligible pages in survey flow order. A page is eligible only if it has one respondent-visible question that is used for another quality check.
+        - Uses the first **100** eligible pages in survey flow order. A page is eligible only if it has one respondent-visible question that is used for another quality check.
         - Questions inside Loop & Merge blocks are not timed.
+        - You can include **total survey duration** as an extra Time Score data point.
         - Deselect pages you do not want timed, then confirm.
+
+        <img src="/images/qualtrics-ts-total-duration.jpg" alt="Qualtrics assistant — Time Score first 100 pages and optional total duration" />
     </Step>
 
     <Step title="Set cleaning settings">
@@ -124,9 +130,10 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
     </Step>
 
     <Step title="Choose a survey name and a public API key">
-        1. Enter a **unique** ReDem survey name (letters, numbers, spaces, hyphens, and underscores). The ReDem survey is **not** created in this step — it appears when the first complete arrives.
-        2. Select a **public** ReDem API key. That key is placed in the survey JavaScript and can only call `addRespondent`.
-        3. Review the summary of confirmed quality checks.
+        1. Enter a ReDem survey name (letters, numbers, spaces, hyphens, and underscores). The ReDem survey is **not** created in this step — it appears when the first complete arrives.
+        2. If that name already exists, ReDem asks you to confirm updating the existing survey. New respondents are added there after you publish again.
+        3. Select a **public** ReDem API key, or create one from this step if you do not have one yet. That key is placed in the survey JavaScript and can only call `addRespondent`.
+        4. Review the summary of confirmed quality checks.
 
         <img src="/images/qualtrics-api-access.jpg" alt="Qualtrics assistant — public API key, survey name, and Inject into Qualtrics" />
 
@@ -134,7 +141,7 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
     </Step>
 
     <Step title="Publish in Qualtrics">
-        After a successful inject you will see which questions were updated and which existing pages send to ReDem. No new Qualtrics page is added.
+        After a successful inject you will see which questions were updated. No new Qualtrics page is added.
 
         <img src="/images/qualtrics-complete.jpg" alt="Qualtrics assistant — inject complete, with Open in Qualtrics" />
 
@@ -148,11 +155,11 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
     <Step title="Send a test complete and review in ReDem">
         1. Take the published survey and complete it (click **Next** on the last page of a completing path).
         2. Do **not** use a screen-out or quota-met exit for this test — those are not sent.
-        3. In ReDem, open the new survey (named as you entered in the wizard) and review the interview.
+        3. In ReDem, open the survey (named as you entered in the wizard) and review the interview.
     </Step>
 
     <Step title="Re-run the assistant on the same survey">
-        You can inject again after changing quality checks or the survey structure.
+        You can inject again after changing quality checks or the survey structure. Reuse the same ReDem survey name to add new respondents to the existing survey — ReDem asks you to confirm the update.
 
         Each run replaces ReDem QuestionJS that this assistant previously wrote (`/* REDEM:BEGIN */` … `/* REDEM:END */`). Existing customer QuestionJS on those questions is kept. You do not need to strip the old ReDem scripts by hand.
 
@@ -168,7 +175,7 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
 | Screen-outs and terms | Not sent. |
 | Last-page drop-off | Not sent. The respondent must click **Next** on the survey-end page. |
 | Speeder / complete logic **after** that last Next | Still sent in this version. Qualtrics decisions that happen after the last page are not visible to the in-survey send. |
-| Time Score | First 30 eligible non-loop pages in flow order. Pages with more than one visible question are not timed. |
+| Time Score | First 100 eligible non-loop pages in flow order. Pages with more than one visible question are not timed. Total survey duration is optional. |
 | Coherence Score | Up to 300 interview answers per respondent. Only questions alone on a page are suggested. |
 | Behavioral Analytics | Long mouse/keystroke payloads are trimmed so the browser can send them on page leave. Mouse tracking is not suggested when two visible questions share a page. |
 | Multi-question pages | Questions that share a page with another visible question are not suggested and do not get quality-check QuestionJS. Send / `addRespondent` may still land on the survey-end page. |
