@@ -75,12 +75,14 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
     <Step title="Review quality checks">
         ReDem suggests quality checks from the questionnaire. Suggestions are a starting point — review each score, adjust as needed, and confirm. Use **Confirm all** to approve every suggested check at once and continue. Every quality check on the list must be approved (or removed) before you continue.
 
+        Only questions on pages with **one respondent-visible question** are suggested. Timing questions, text/graphics, Captcha, Meta, and always-hidden questions do not count toward that limit. Questions that share a page with another visible question are omitted from every score, including OES, GQS, CHS, BAS, and Time Score.
+
         The review step also lists the **survey-end pages** ReDem will send from, and any screen-out / quota / term exits that will **not** be sent.
 
         <img src="/images/qualtrics-review-quality-checks.jpg" alt="Qualtrics assistant — review suggested quality checks and survey-end pages" />
 
         **Open-Ended Score (OES)**
-        - Suggested for open-end questions.
+        - Suggested for open-end questions that are alone on their page.
         - Add keywords (optional), set allowed languages (recommended), and turn duplicate detection on or off.
         - Remove any open ends you do not want scored.
         - Piped question or loop text is filled in per respondent when the survey is taken.
@@ -88,22 +90,23 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
         <img src="/images/Redem-decipher-integration-assistance-OES-datapoint.png" alt="Open-Ended Score data points" />
 
         **Grid-Questions Score (GQS)**
-        - Suggested for grids (typically 5 or more rows). Loop & Merge grids can be included with fewer rows.
+        - Suggested for grids that are alone on their page (typically 5 or more rows). Loop & Merge grids can be included with fewer rows.
         - Remove a grid if a straight-line pattern is an acceptable answer.
         - Confirm your selections.
 
         **Behavioral Analytics Score (BAS)**
         - Open ends are tracked for keystrokes. Grids are tracked for mouse movement.
+        - Only suggested for questions that are alone on their page, so two mouse trackers never share the same page events.
         - Confirm alignment with the questions you care about.
 
         **Coherence Score (CHS)**
-        - Includes visible questions in the interview. Select or deselect as needed, then confirm.
+        - Includes visible questions that are alone on their page. Select or deselect as needed, then confirm.
         - You can select up to **300** questions. Loop & Merge can produce more answers than that; ReDem still sends at most 300 answers per respondent.
 
         <img src="/images/Redem-decipher-integration-assistance-CHS-datapoint.png" alt="Coherence Score interview questions" />
 
         **Time Score (TS)**
-        - Uses the first **30** eligible pages in survey flow order.
+        - Uses the first **30** eligible pages in survey flow order. A page is eligible only if it has one respondent-visible question that is used for another quality check.
         - Questions inside Loop & Merge blocks are not timed.
         - Deselect pages you do not want timed, then confirm.
     </Step>
@@ -165,9 +168,10 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
 | Screen-outs and terms | Not sent. |
 | Last-page drop-off | Not sent. The respondent must click **Next** on the survey-end page. |
 | Speeder / complete logic **after** that last Next | Still sent in this version. Qualtrics decisions that happen after the last page are not visible to the in-survey send. |
-| Time Score | First 30 eligible non-loop pages in flow order. |
-| Coherence Score | Up to 300 interview answers per respondent. |
-| Behavioral Analytics | Long mouse/keystroke payloads are trimmed so the browser can send them on page leave. |
+| Time Score | First 30 eligible non-loop pages in flow order. Pages with more than one visible question are not timed. |
+| Coherence Score | Up to 300 interview answers per respondent. Only questions alone on a page are suggested. |
+| Behavioral Analytics | Long mouse/keystroke payloads are trimmed so the browser can send them on page leave. Mouse tracking is not suggested when two visible questions share a page. |
+| Multi-question pages | Questions that share a page with another visible question are not suggested and do not get quality-check QuestionJS. Send / `addRespondent` may still land on the survey-end page. |
 
 <Note>
   **Important notes**
