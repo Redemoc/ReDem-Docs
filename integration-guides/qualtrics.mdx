@@ -61,11 +61,11 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
         1. Log in to ReDem.
         2. In the sidebar, open **Integrations** and choose **Qualtrics**.
 
-        The first step explains the flow and asks you to search for a survey. The assistant stays locked until a token is saved.
+        The first step explains the flow and asks you to search for a survey.
     </Step>
 
     <Step title="Select and analyze your survey">
-        1. Type at least two characters of the survey **name**. Matching surveys appear as you type; the Qualtrics survey ID is shown as a subtitle.
+        1. Type at least two characters of the survey **name** or **ID**. Matching surveys appear as you type; the Qualtrics survey ID is shown as a subtitle.
         2. Pick the survey. ReDem will update **that** project in place.
         3. Click **Analyze survey**.
 
@@ -172,7 +172,6 @@ When a respondent clicks **Next** on the last page of a completing path, the sur
 | Topic | Behavior |
 | --- | --- |
 | Completing paths | Every complete must end on a page that can run JavaScript. The wizard refuses if a completing End Survey has no such page, or if that page is inside Loop & Merge. |
-| Screen-outs and terms | Not sent. |
 | Last-page drop-off | Not sent. The respondent must click **Next** on the survey-end page. |
 | Speeder / complete logic **after** that last Next | Still sent in this version. Qualtrics decisions that happen after the last page are not visible to the in-survey send. |
 | Time Score | First 100 eligible non-loop pages in flow order. Pages with more than one visible question are not timed. Total survey duration is optional. |
