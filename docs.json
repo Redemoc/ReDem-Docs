@@ -36,7 +36,8 @@
                 "group": "Integrations",
                 "pages": [
                   "integration-guides/keyingress",
-                  "integration-guides/decipher"
+                  "integration-guides/decipher",
+                  "integration-guides/qualtrics"
                 ]
               },
               {
@@ -164,7 +165,8 @@
                 "group": "Integrations",
                 "pages": [
                   "integration-guides/keyingress",
-                  "integration-guides/decipher"
+                  "integration-guides/decipher",
+                  "integration-guides/qualtrics"
                 ]
               },
               {
