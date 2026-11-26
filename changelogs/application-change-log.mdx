@@ -5,6 +5,18 @@ icon: "bullhorn"
 iconType: "regular"
 ---
 
+<Update label="2026-11-26" description="v1.8.4">
+  ## Open-Ended Score
+  - Very short answers now keep the same category when the same question and answer appear again in a survey. Identical text, such as "I don't know", stays in one category across respondents.
+
+  ## Invite sign-up
+  - Fixed a bug where a password that failed the strength check showed "Internal server error" and left the invited account unactivated. The password step now explains what to change, including when the password has appeared in a data breach.
+
+  ## Accounts
+  - Test credit plans stay one-time. They do not roll into a new term when they end.
+  - A company stays active for 3 months after a paid contract ends when that contract does not auto-renew. The company overview counts down to deactivation, for example "Deactivation in 45 days".
+</Update>
+
 <Update label="2026-11-19" description="v1.8.3">
   ## Quick Import
   - After you start a Quick Import from a supported survey export, ReDem processes the file in the background. You can leave the page. You get an email with a link when respondents are ready, or an error email if the import fails.
